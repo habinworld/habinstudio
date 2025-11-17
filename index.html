@@ -1391,8 +1391,16 @@ loadProfile();
     }
   },true);
 })();
+/* ================================
+   🔘 관리자 토글 기능  ← ★ 여기에 추가
+================================ */
+document.getElementById("admin-toggle-btn").addEventListener("click", ()=>{
+  const panel = document.getElementById("admin-panel");
+  panel.style.display = (panel.style.display === "block") ? "none" : "block";
+});  
 </script>
 </body>
 </html>
+
 
 
