@@ -213,6 +213,30 @@ aside * {
 }
 #adminState{margin-left:6px}
 .admin input { width:80px; }
+/* 관리자 토글 버튼 */
+.admin-toggle-btn{
+  background:#FFF5D1;
+  border:1.5px solid #3558A8;
+  padding:8px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  text-align:center;
+  font-size:14px;
+  font-family:'Noto Sans KR', sans-serif;
+  margin-top:15px;
+  color:#3558A8;
+}
+
+/* 숨겨진 관리자 패널 */
+.admin-panel{
+  display:none;
+  margin-top:10px;
+  padding:10px;
+  background:#FFEBA0;
+  border:1.5px solid #3558A8;
+  border-radius:10px;
+  font-size:13px;
+}
 
 /* 프로필 에디터(관리자 전용) */
 .profile-editor{
@@ -616,7 +640,16 @@ footer .no-bold{font-weight:400}
       <span class="admin note">* HTML 지원 (이미지/링크 가능)</span>
     </div>
   </div>
+ <!-- 관리자 기능 토글 버튼 -->
+  <div id="admin-toggle-btn" class="admin-toggle-btn">관리자 기능</div>
 
+  <!-- 숨겨진 관리자 토글 패널 -->
+  <div id="admin-panel" class="admin-panel">
+    <b style="color:var(--brand)">🔧 관리자 메뉴</b>
+    <p style="margin:6px 0 0 0;font-size:12px;">관리자 키 입력</p>
+    <input type="password" id="admin-key" placeholder="관리자키(HAB)">
+    <button id="admin-onoff" style="margin-top:6px;">확인</button>
+  </div>
   <!-- 하빈 문장 : 글은 마음에 진동한다 -->
   <div style="font-family:'함초롱바탕','HCR Batang',serif;
               font-size:15px;
@@ -1361,4 +1394,5 @@ loadProfile();
 </script>
 </body>
 </html>
+
 
