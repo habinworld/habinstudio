@@ -620,18 +620,7 @@ footer .no-bold{font-weight:400}
     <div id="weather">🌤 날씨 로딩중...</div>
   </div>
 
-  <!-- 관리자 패널 -->
-  <div class="admin">
-    <b style="color:var(--brand)">🔧 관리자</b>
-    <div class="note">글 등록/삭제, 프로필 편집</div>
-    <div style="display:flex;gap:6px;margin-top:6px;align-items:center;">
-      <input id="adminKey" type="password" placeholder="관리자키(HABIN)">
-      <button type="button" onclick="toggleAdmin()">토글</button>
-      <span id="adminState" class="note">OFF</span>
-    </div>
-  </div>
-
-  <!-- 프로필 에디터(관리자 전용) -->
+   <!-- 프로필 에디터(관리자 전용) -->
   <div id="profileEditor" class="profile-editor">
     <b style="color:var(--brand)">👤 프로필 수정</b>
     <textarea id="profileTextarea" placeholder="여기에 HTML/텍스트로 프로필을 작성하세요."></textarea>
@@ -1401,6 +1390,7 @@ document.getElementById("admin-toggle-btn").addEventListener("click", ()=>{
 </script>
 </body>
 </html>
+
 
 
 
