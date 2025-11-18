@@ -1145,7 +1145,7 @@ function editPost(id){
   document.getElementById("author").value  = p.author || "";
   document.getElementById("content").value = p.content || "";
   // 이미지 업로드 필드는 일단 비워둠
-  document.getElementById("imgUpload")..value = "";
+  document.getElementById("imgUpload").value = "";
 
   // 지금 어떤 글을 수정 중인지 표시 (전역 플래그)
   window.hbEditingId = id;
@@ -1647,6 +1647,7 @@ const HABIN_IMAGE_PATHS = [
 </script>
 </body>
 </html>
+
 
 
 
