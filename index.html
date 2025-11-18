@@ -924,7 +924,7 @@ setInterval(updateDate, 1000);
   }
 
   function timeIcon(){
-    const h = (new Date().getUTCHours()+9)%24;
+    const h = New Date().getHours();
     if(h>=6 && h<18) return '☀️';
     else if(h>=18 && h<22) return '🌇';
     return '🌙';
@@ -1469,7 +1469,9 @@ if(adminBtn){
     }
   });
 }
-  
+function isAdmin(){
+  return localStorage.getItem("habin-admin") === "on";
+}
 /* ================================
    🖼 하빈 스튜디오 이미지 자동 목록
    (현재 존재하는 images/ 폴더 기준)
@@ -1540,6 +1542,7 @@ const HABIN_IMAGE_PATHS = [
 </script>
 </body>
 </html>
+
 
 
 
