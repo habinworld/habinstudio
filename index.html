@@ -1459,7 +1459,8 @@ const adminBtn = document.getElementById("admin-onoff");
 if(adminBtn){
   adminBtn.addEventListener("click", ()=>{
     const key = document.getElementById("admin-key").value.trim();
-
+// ★ 여기 한 줄만 삽입!
+    alert("입력된 값 = [" + key + "]");
     if(key === "글진동"){  // ★ 하빈 비번
       localStorage.setItem("habin-admin", "on");
       alert("관리자 모드 활성화!");
@@ -1542,6 +1543,7 @@ const HABIN_IMAGE_PATHS = [
 </script>
 </body>
 </html>
+
 
 
 
