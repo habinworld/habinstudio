@@ -529,6 +529,42 @@ main{
   color:var(--brand);
   font-weight:700;
 }
+/* ======================
+   📄 리스트형 게시판
+====================== */
+.list-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.list-table th, .list-table td {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 10px 6px;
+  text-align: left;
+}
+
+.list-table th {
+  background: #F5F8FF;
+  color: #3558A8;
+  font-weight: 700;
+}
+
+.list-title {
+  color: #000;
+  cursor: pointer;
+}
+
+.list-title:hover {
+  text-decoration: underline;
+}
+
+.list-date {
+  width: 150px;
+  color: #5C8EDB;
+  text-align: right;
+}
 
 /* 다녀간 흔적 */
 .visitor-wrap{
@@ -767,8 +803,18 @@ footer .no-bold{font-weight:400}
       <span id="spamNote" class="admin note">스팸방지 활성화(허니팟+3초 제한)</span>
     </div>
   </section>
+<div id="viewModeBox" style="margin:12px 0; display:flex; gap:8px;">
+  <button id="btnCardView"
+          style="padding:6px 12px; border:1px solid #3558A8; border-radius:6px; background:#fff; cursor:pointer;">
+    📦 카드형 보기
+  </button>
 
-  <!-- 게시판 -->
+  <button id="btnListView"
+          style="padding:6px 12px; border:1px solid #3558A8; border-radius:6px; background:#fff; cursor:pointer;">
+    📄 리스트형 보기
+  </button>
+</div>
+ <!-- 게시판 -->
   <section id="board">
     <h2>📚 한글 게시판</h2>
     <div class="card-grid" id="cards"></div>
@@ -1643,10 +1689,109 @@ const HABIN_IMAGE_PATHS = [
     }
   });
 })();
+/* ============================================
+   📦 카드형 ↔ 📄 리스트형 보기 전환 시스템
+============================================ */
+let viewMode = localStorage.getItem("habin-viewMode") || "card";
+
+/* 버튼 요소 */
+const btnCard = document.getElementById("btnCardView");
+const btnList = document.getElementById("btnListView");
+
+/* 버튼 UI 업데이트 */
+function updateViewButtons(){
+  if(btnCard && btnList){
+    if(viewMode === "card"){
+      btnCard.style.background = "#FFEBA0";
+      btnList.style.background = "#fff";
+    }else{
+      btnList.style.background = "#FFEBA0";
+      btnCard.style.background = "#fff";
+    }
+  }
+}
+updateViewButtons();
+
+/* 버튼 클릭 */
+if(btnCard){
+  btnCard.addEventListener("click", ()=>{
+    viewMode = "card";
+    localStorage.setItem("habin-viewMode","card");
+    renderPosts();
+    updateViewButtons();
+  });
+}
+
+if(btnList){
+  btnList.addEventListener("click", ()=>{
+    viewMode = "list";
+    localStorage.setItem("habin-viewMode","list");
+    renderPosts();
+    updateViewButtons();
+  });
+}
+
+/* 기존 renderPosts 재정의(확장) */
+const oldRender = renderPosts;
+renderPosts = function(){
+  const cardsBox = document.getElementById("cards");
+
+  if(viewMode === "card"){
+    cardsBox.className = "card-grid";
+    oldRender();
+    return;
+  }
+
+  /* 리스트뷰 모드 */
+  const start = (page-1)*per;
+  const end = start + per;
+  const list = posts.slice(start,end);
+
+  let html = `
+    <table class="list-table">
+      <tr>
+        <th style="width:60%;">제목</th>
+        <th style="width:20%;">작성자</th>
+        <th style="width:20%;">날짜</th>
+      </tr>
+  `;
+
+  list.forEach(p=>{
+    html += `
+      <tr>
+        <td class="list-title" onclick="openPost(${p.id})">${p.title}</td>
+        <td>${p.author}</td>
+        <td class="list-date">${p.date}</td>
+      </tr>
+    `;
+  });
+
+  html += `</table>`;
+  cardsBox.className = "";
+  cardsBox.innerHTML = html;
+
+  /* 페이지네이션은 기존 그대로 */
+  const pages = document.getElementById("pages");
+  const total = Math.ceil(posts.length/per) || 1;
+
+  pages.innerHTML = "";
+  for(let i=1;i<=total;i++){
+    const b = document.createElement("button");
+    b.className="page-btn";
+    if(i===page) b.classList.add("active");
+    b.textContent = i;
+    b.onclick = ()=>{page=i; renderPosts();};
+    pages.appendChild(b);
+  }
+};
+
+/* 초기 렌더 */
+renderPosts();
   
 </script>
 </body>
 </html>
+
 
 
 
