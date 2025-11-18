@@ -784,18 +784,7 @@ footer .no-bold{font-weight:400}
       <input id="title" placeholder="제목 (#태그 가능)">
       <input id="author" placeholder="작성자" value="하빈">
     </div>
- <!-- 사진 넣기 버튼 -->
-  <button id="insertImgBtn" class="habin-img-btn" type="button">📷 사진 넣기(자동)</button>
-
-  <!-- 모달 -->
-  <div id="imgModal" class="habin-modal">
-    <div class="habin-modal-content">
-      <h3>하빈 스튜디오 이미지 선택</h3>
-      <div id="imgList" class="habin-img-list"></div>
-      <button id="closeModal" class="habin-close">닫기</button>
-    </div>
-  </div>
-   <textarea id="content" placeholder="내용(이미지는 아래 버튼으로 삽입)"></textarea>
+    <textarea id="content" placeholder="내용(이미지는 아래 버튼으로 삽입)"></textarea>
     <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
       <input type="file" id="imgUpload" accept="image/*" style="display:none">
       <button type="button" onclick="document.getElementById('imgUpload').click()">📷 이미지 첨부</button>
@@ -1724,6 +1713,7 @@ renderPosts();
 </script>
 </body>
 </html>
+
 
 
 
