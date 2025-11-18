@@ -1622,73 +1622,6 @@ function isAdmin(){
     }
   }
 })();
-
-  /* ================================
-   🖼 하빈 스튜디오 이미지 자동 목록
-   (현재 존재하는 images/ 폴더 기준)
-================================ */
-
-// 자동으로 불러올 이미지 경로 목록
-const HABIN_IMAGE_PATHS = [
-  // root images
-  "images/habin_logo.png",
-
-  // hero 폴더 (네가 실제로 사용하는 것만 유지)
-  "images/hero/hero-main.png",
-  "images/hero/hero-1.png",
-  "images/hero/hero-2.png",
-  "images/hero/hero-3.png",
-  "images/hero/hero-habin.png",
-
-  // logo 폴더
-  "images/logo/habin-logo-alt1.png"
-];
-
-/* ================================
-   📷 사진 넣기(자동) 기능
-================================ */
-(function(){
-  const btn = document.getElementById("insertImgBtn");
-  const modal = document.getElementById("imgModal");
-  const listBox = document.getElementById("imgList");
-  const closeBtn = document.getElementById("closeModal");
-  const content = document.getElementById("content");
-
-  if(!btn || !modal || !listBox || !closeBtn || !content){
-    console.warn("하빈 이미지 자동삽입 요소를 찾지 못했습니다.");
-    return;
-  }
-
-  // ① 버튼 클릭 → 모달 열고 이미지 목록 생성
-  btn.addEventListener("click", ()=>{
-    listBox.innerHTML = "";
-    HABIN_IMAGE_PATHS.forEach(src=>{
-      const img = document.createElement("img");
-      img.src = src;
-      img.alt = "";
-      img.style.maxWidth = "100%";
-      img.style.cursor = "pointer";
-      img.onclick = ()=>{
-        content.value += `\n<img src="${src}" style="max-width:100%">\n`;
-        modal.style.display = "none";
-      };
-      listBox.appendChild(img);
-    });
-    modal.style.display = "block";
-  });
-
-  // ② 닫기 버튼
-  closeBtn.addEventListener("click", ()=>{
-    modal.style.display = "none";
-  });
-
-  // ③ 모달 바깥 클릭 → 닫기
-  window.addEventListener("click", e=>{
-    if(e.target === modal){
-      modal.style.display = "none";
-    }
-  });
-})();
 /* ============================================
    📦 카드형 ↔ 📄 리스트형 보기 전환 시스템
 ============================================ */
@@ -1791,6 +1724,7 @@ renderPosts();
 </script>
 </body>
 </html>
+
 
 
 
