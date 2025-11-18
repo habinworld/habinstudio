@@ -497,7 +497,18 @@ main{
   font-size:11px;
   display:none;
 }
-
+.card .edit {
+  position:absolute;
+  top:6px; left:6px;
+  border:1px solid #3558A8;
+  color:#3558A8;
+  background:#fff;
+  border-radius:4px;
+  cursor:pointer;
+  padding:2px 6px;
+  font-size:11px;
+  display:none;
+}
 /* 페이지네이션 */
 .pagination{
   display:flex;
@@ -1025,6 +1036,41 @@ function createPost(){
     return;
   }
 
+  // 🔥 수정모드인지 먼저 체크!
+  if(window.hbEditingId){
+    const id = window.hbEditingId;
+    const idx = posts.findIndex(p => p.id === id);
+
+    if(idx !== -1){
+      posts[idx].title   = document.getElementById("title").value;
+      posts[idx].author  = document.getElementById("author").value || "익명";
+      posts[idx].content = document.getElementById("content").value;
+
+      const f = document.getElementById("imgUpload").files[0];
+      if(f){
+        posts[idx].img = URL.createObjectURL(f);
+      }
+    }
+
+    savePosts();
+    renderPosts();
+
+    // 수정모드 종료
+    window.hbEditingId = null;
+
+    // 입력창 초기화
+    document.getElementById("title").value="";
+    document.getElementById("content").value="";
+    document.getElementById("imgUpload").value="";
+
+    alert("수정이 완료되었습니다!");
+    return;  // ⭐ 여기서 끝!
+  }
+
+  // ========================
+  // 🔽 여기부터는 '새 글 만들기' 로직
+  // ========================
+
   if(!document.getElementById("title").value.trim()){
     alert("제목을 입력하세요.");
     return;
@@ -1056,10 +1102,13 @@ function createPost(){
 
   savePosts();
   renderPosts();
+
+  // 새글 초기화
   document.getElementById("title").value="";
   document.getElementById("content").value="";
   document.getElementById("imgUpload").value="";
 }
+
 
 function deletePost(id){
   if(localStorage.getItem("habin-admin")!=="on"){
@@ -1070,6 +1119,38 @@ function deletePost(id){
   posts = posts.filter(p=>p.id!==id);
   savePosts();
   renderPosts();
+}
+function editPost(id){
+  // 관리자만 수정 가능
+  if(localStorage.getItem("habin-admin") !== "on"){
+    alert("관리자 전용 기능입니다.");
+    return;
+  }
+
+  // 해당 글 찾기
+  const p = posts.find(x => x.id === id);
+  if(!p){
+    alert("해당 글을 찾을 수 없습니다.");
+    return;
+  }
+
+  // 글쓰기 패널 보이기
+  const editor = document.getElementById("editor");
+  if(editor){
+    editor.style.display = "block";
+  }
+
+  // 기존 내용 폼에 채워넣기
+  document.getElementById("title").value   = p.title || "";
+  document.getElementById("author").value  = p.author || "";
+  document.getElementById("content").value = p.content || "";
+  // 이미지 업로드 필드는 일단 비워둠
+  document.getElementById("imgUpload")..value = "";
+
+  // 지금 어떤 글을 수정 중인지 표시 (전역 플래그)
+  window.hbEditingId = id;
+
+  alert("이 글을 수정할 수 있습니다.\n수정 후 '등록' 버튼을 누르면 저장됩니다.");
 }
 
 function renderPosts(){
@@ -1099,6 +1180,7 @@ function renderPosts(){
       <div class="body">
         <div class="title">${p.title}</div>
         <div class="meta">${p.author} · ${p.date}</div>
+        <div class="edit" onclick="event.stopPropagation();editPost(${p.id})">수정</div>
         <div class="del" onclick="event.stopPropagation();deletePost(${p.id})">삭제</div>
       </div>
     `;
@@ -1472,6 +1554,30 @@ function isAdmin(){
   return localStorage.getItem("habin-admin") === "on";
 }
 /* ================================
+   🟡 관리자 모드: 수정/삭제/글쓰기 활성화
+================================ */
+(function(){
+  if(localStorage.getItem("habin-admin") === "on"){
+
+    // 수정 버튼 활성화
+    document.querySelectorAll(".edit").forEach(btn=>{
+      btn.style.display = "block";
+    });
+
+    // 삭제 버튼 활성화
+    document.querySelectorAll(".del").forEach(btn=>{
+      btn.style.display = "block";
+    });
+
+    // 글쓰기 에디터 자동 표시
+    const editor = document.getElementById("editor");
+    if(editor){
+      editor.style.display = "block";
+    }
+  }
+})();
+
+  /* ================================
    🖼 하빈 스튜디오 이미지 자동 목록
    (현재 존재하는 images/ 폴더 기준)
 ================================ */
@@ -1541,6 +1647,7 @@ const HABIN_IMAGE_PATHS = [
 </script>
 </body>
 </html>
+
 
 
 
