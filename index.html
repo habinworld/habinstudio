@@ -924,7 +924,7 @@ setInterval(updateDate, 1000);
   }
 
   function timeIcon(){
-    const h = New Date().getHours();
+    const h = (new Date().getUTCHours()+9)%24;
     if(h>=6 && h<18) return '☀️';
     else if(h>=18 && h<22) return '🌇';
     return '🌙';
@@ -1542,6 +1542,7 @@ const HABIN_IMAGE_PATHS = [
 </script>
 </body>
 </html>
+
 
 
 
