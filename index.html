@@ -682,7 +682,8 @@ footer .no-bold{font-weight:400}
               font-style:italic;
               text-align:center;
               margin-top:0px;
-              width:100%;">
+              width:100%;
+              cursor:pointer;">
     글은 마음에 진동한다.
   </div>
 </aside>
@@ -1427,13 +1428,27 @@ loadProfile();
     }
   },true);
 })();
-/* ================================
-   🔘 관리자 토글 기능  ← ★ 여기에 추가
-================================ */
-document.getElementById("admin-toggle-btn").addEventListener("click", ()=>{
+/* 🔘 글은 마음에 진동한다 → 관리자 패널 토글 */
+document.getElementById("secretAdminBtn").addEventListener("click", ()=>{
   const panel = document.getElementById("admin-panel");
   panel.style.display = (panel.style.display === "block") ? "none" : "block";
 });
+/* 🔐 관리자 비번 인증 */
+const adminBtn = document.getElementById("admin-onoff");
+if(adminBtn){
+  adminBtn.addEventListener("click", ()=>{
+    const key = document.getElementById("admin-key").value.trim();
+
+    if(key === "글진동"){  // ★ 하빈 비번
+      localStorage.setItem("habin-admin", "on");
+      alert("관리자 모드 활성화!");
+      location.reload();
+    } else {
+      alert("비밀번호가 틀렸습니다.");
+    }
+  });
+}
+  
 /* ================================
    🖼 하빈 스튜디오 이미지 자동 목록
    (현재 존재하는 images/ 폴더 기준)
@@ -1504,6 +1519,7 @@ const HABIN_IMAGE_PATHS = [
 </script>
 </body>
 </html>
+
 
 
 
