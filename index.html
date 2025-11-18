@@ -674,19 +674,44 @@ footer .no-bold{font-weight:400}
       <span class="admin note">* HTML 지원 (이미지/링크 가능)</span>
     </div>
   </div>
+<!-- 🔧 숨겨진 관리자 패널 (비밀) -->
+<div id="admin-panel" class="admin-panel"
+     style="display:none; margin-top:10px; padding:10px;
+            background:#FFEBA0; border:1.5px solid #3558A8;
+            border-radius:10px; font-size:13px;">
+    <b style="color:var(--brand)">🔧 관리자 메뉴</b>
+    <p style="margin:6px 0 4px;font-size:12px;">관리자 키 입력</p>
+
+    <input type="password" id="admin-key"
+           placeholder="비밀번호 입력"
+           style="width:100%; padding:8px; border:1px solid #cbd5e1;
+                  border-radius:6px; margin-bottom:8px;">
+
+    <button id="admin-onoff"
+            style="width:100%; padding:8px 0; border:1px solid #3558A8;
+                   border-radius:6px; background:#fff; cursor:pointer;">
+        확인
+    </button>
+
+    <span class="admin note"
+          style="font-size:11px; color:#64748b; display:block; margin-top:6px;">
+        * 비밀번호: 글진동
+    </span>
+</div>
 
   <!-- 하빈 문장 : 글은 마음에 진동한다 -->
-  <div id="secretAdminBtn"
-    style="font-family:'함초롱바탕','HCR Batang',serif;
-              font-size:14px;
-              color:#C0C0C0;
-              font-style:italic;
-              text-align:center;
-              margin-top:0px;
-              width:100%;
-              cursor:pointer;">
+<div id="secretAdminBtn"
+     style="font-family:'함초롱바탕','HCR Batang',serif;
+            font-size:14px;
+            color:#C0C0C0;
+            font-style:italic;
+            text-align:center;
+            margin-top:0px;
+            width:100%;
+            cursor:pointer;">
     글은 마음에 진동한다.
-  </div>
+</div>
+
 </aside>
 
 <!-- =========================
@@ -1520,6 +1545,7 @@ const HABIN_IMAGE_PATHS = [
 </script>
 </body>
 </html>
+
 
 
 
