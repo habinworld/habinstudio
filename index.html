@@ -1139,7 +1139,7 @@ function createPost(){
     const idx = posts.findIndex(p => p.id === id);
     if(idx !== -1){
       posts[idx].title   = document.getElementById("title").value;
-      posts[idx].author  = document.getElementById("author").value || "익명";
+      posts[idx].author = (document.getElementById("author")?.value || "하빈");
       posts[idx].content = document.getElementById("content").innerHTML;
       const f = document.getElementById("imgUpload").files[0];
       if(f){
@@ -1169,7 +1169,7 @@ function createPost(){
     return;
   }
   const t = document.getElementById("title").value;
-  const a = document.getElementById("author").value || "익명";
+  const a = (document.getElementById("author")?.value || "하빈");
   const c = document.getElementById("content").innerHTML;
   const f = document.getElementById("imgUpload").files[0];
   let imgURL = "";
@@ -1756,6 +1756,7 @@ function hbInsertImg(){
 </script>
 </body>
 </html>
+
 
 
 
