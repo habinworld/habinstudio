@@ -740,9 +740,10 @@ footer .no-bold{font-weight:400}
 } 
 /* 🟡 커서 진입 활성화(결계 우회) */
 #content {
-  user-select: text !important;
-  -webkit-user-select: text !important;
-}  
+  -webkit-user-select:text !important;
+  -moz-user-select:text !important;
+  user-select:text !important;
+}
 </style>
 </head>
 <body
@@ -1756,6 +1757,7 @@ function hbInsertImg(){
 </script>
 </body>
 </html>
+
 
 
 
