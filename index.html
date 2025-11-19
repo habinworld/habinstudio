@@ -637,6 +637,107 @@ footer .no-bold{font-weight:400}
   text-shadow:0 0 8px rgba(230,230,255,0.8);
   z-index:1000000;
 }
+/* ===============================
+   ✨ STEP 3 — 하빈 에디터 전체 스타일
+   종이 질감 + 툴바 + 제목줄
+================================ */
+/* 제목 입력칸 */
+.hb-title-input{
+  width:100%;
+  padding:10px 14px;
+  border:1.5px solid #3558A8;
+  border-radius:8px;
+  font-size:18px;
+  font-family:'Noto Sans KR', sans-serif;
+  font-weight:600;
+  color:#000;
+  background:#fff;
+  margin-bottom:10px;
+}
+/* 제목 + 버튼 + 작성자 영역 */
+.hb-editor-header{
+  margin-bottom:10px;
+}
+/* 버튼 묶음 */
+.hb-title-tools{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  flex-wrap:wrap;
+  margin-top:6px;
+}
+/* 등록/수정/삭제 버튼 */
+.hb-btn.blue{
+  background:#3558A8;
+  color:#fff;
+  border:none;
+  padding:4px 10px;
+  border-radius:6px;
+  font-size:13px;
+  cursor:pointer;
+}
+.hb-btn.blue:hover{
+  background:#4b6ac9;
+}
+/* 작성자 */
+.hb-author{
+  color:#3558A8;
+  font-weight:600;
+  margin-left:6px;
+  font-size:13px;
+}
+/* -------------------------------
+   🟦 툴바
+-------------------------------- */
+.hb-toolbar{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  padding:8px 10px;
+  margin:10px 0 12px;
+  background:#F7F7F7;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+}
+/* 툴바 버튼 */
+.hb-tool-btn{
+  border:1px solid #3558A8;
+  background:#fff;
+  color:#3558A8;
+  border-radius:6px;
+  padding:4px 10px;
+  font-size:13px;
+  cursor:pointer;
+}
+.hb-tool-btn:hover{
+  background:#3558A8;
+  color:#fff;
+}
+/* 툴바 select 박스 */
+.hb-toolbar select{
+  padding:4px;
+  border-radius:6px;
+  border:1px solid #bbb;
+  font-size:13px;
+}
+/* -------------------------------
+   📄 본문 contenteditable 스타일
+-------------------------------- */
+.hb-editor-content{
+  width:100%;
+  min-height:350px;
+  padding:20px;
+  background:#FFFDF5 url('https://i.imgur.com/Zk5lX1X.png');
+  background-size:cover;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  font-family:'Noto Sans KR', sans-serif;
+  font-size:15px;
+  line-height:1.8;
+  color:#333;
+  white-space:pre-wrap;
+  overflow-wrap:break-word;
+}
 </style>
 </head>
 <body
@@ -755,7 +856,36 @@ footer .no-bold{font-weight:400}
       <span class="hb-author">&lt;작성자 : 하빈&gt;</span>
     </div>
   </div>
-    <textarea id="content" placeholder="내용(이미지는 아래 버튼으로 삽입)"></textarea>
+  <!-- 🟦 하빈 본문 에디터 툴바 -->
+<div class="hb-toolbar">
+  <!-- 폰트 변경 -->
+  <select id="hb-font" onchange="hbExec('fontName', this.value)">
+    <option value="'Noto Sans KR'">고딕</option>
+    <option value="'HCR Batang'">함초롱바탕</option>
+    <option value="'Nanum Myeongjo'">명조</option>
+    <option value="'Gungsuh'">궁서</option>
+  </select>
+  <!-- 글자 크기 -->
+  <select id="hb-size" onchange="hbExec('fontSize', this.value)">
+    <option value="3">15px (기본)</option>
+    <option value="4">17px</option>
+    <option value="5">19px</option>
+    <option value="6">21px</option>
+  </select>
+  <!-- 굵게 -->
+  <button type="button" onclick="hbExec('bold')" class="hb-tool-btn"><b>B</b></button>
+  <!-- 기울임 -->
+  <button type="button" onclick="hbExec('italic')" class="hb-tool-btn"><i>I</i></button>
+  <!-- 글자색 -->
+  <input type="color" onchange="hbExec('foreColor', this.value)">
+  <!-- 이미지 삽입 -->
+  <button type="button" class="hb-tool-btn" onclick="document.getElementById('hb-img').click()">🖼 이미지</button>
+  <input type="file" id="hb-img" accept="image/*" style="display:none" onchange="hbInsertImg()">
+</div>
+    <div id="content"
+     contenteditable="true"
+     class="hb-editor-content"
+     placeholder="내용을 입력하세요"></div>
     <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
       <input type="file" id="imgUpload" accept="image/*" style="display:none">
       <button type="button" onclick="document.getElementById('imgUpload').click()">📷 이미지 첨부</button>
@@ -1011,7 +1141,7 @@ function createPost(){
     if(idx !== -1){
       posts[idx].title   = document.getElementById("title").value;
       posts[idx].author  = document.getElementById("author").value || "익명";
-      posts[idx].content = document.getElementById("content").value;
+      posts[idx].content = document.getElementById("content").innerHTML;
       const f = document.getElementById("imgUpload").files[0];
       if(f){
         posts[idx].img = URL.createObjectURL(f);
@@ -1041,7 +1171,7 @@ function createPost(){
   }
   const t = document.getElementById("title").value;
   const a = document.getElementById("author").value || "익명";
-  const c = document.getElementById("content").value;
+  const c = document.getElementById("content").innerHTML;
   const f = document.getElementById("imgUpload").files[0];
   let imgURL = "";
   if(f){
@@ -1594,9 +1724,40 @@ window.addEventListener("hashchange", ()=>{
 document.addEventListener("DOMContentLoaded", ()=>{
   applyAdminUI();
 });  
+/* =============================================
+   STEP 4 — 하빈 본문 에디터 툴바 기능 연결
+============================================= */
+// 공통 실행 함수 (execCommand 기반)
+function hbExec(cmd, val = null){
+  document.execCommand(cmd, false, val);
+  document.getElementById("content").focus();
+}
+// 이미지 삽입 기능
+function hbInsertImg(){
+  const file = document.getElementById('hb-img').files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    // 본문 위치에 이미지 삽입
+    document.execCommand('insertImage', false, e.target.result);
+    // 삽입된 이미지 스타일 자동 조정
+    setTimeout(()=>{
+      const imgs = document.querySelectorAll("#content img");
+      const last = imgs[imgs.length - 1];
+      if(last){
+        last.style.maxWidth = "100%";
+        last.style.borderRadius = "8px";
+        last.style.margin = "10px 0";
+      }
+    }, 10);
+  };
+
+  reader.readAsDataURL(file);
+}
 </script>
 </body>
 </html>
+
 
 
 
