@@ -69,7 +69,6 @@
   --ink:#2b2b2b;
   --bgmain:#FFFDF8;
 }
-
 /* ===== 글로벌 결계(복사/선택) ===== */
 *{ -webkit-tap-highlight-color:transparent; }
 html,body{ height:100%; }
@@ -87,7 +86,6 @@ body{
   user-select:none;
   -webkit-touch-callout:none;
 }
-
 /* 🌙 문라이트 결계 (밤 8시~아침 6시) */
 body.night-mode {
   background: linear-gradient(180deg,#DDE3F7 0%,#F2F4FA 100%) !important;
@@ -98,7 +96,6 @@ body.night-mode main {
 body.night-mode aside {
   background: rgba(255,244,201,0.92) !important;
 }
-
 input,textarea,button{
   -webkit-user-select:text;
   user-select:text;
@@ -107,7 +104,6 @@ input,textarea,button{
 a,button{ cursor:pointer; }
 img{ -webkit-user-drag:none; }
 *::selection{ background:#FFEBA0; color:#3558A8 }
-
 /* ===== 사이드바 ===== */
 aside{
   width:260px;
@@ -127,7 +123,6 @@ aside * {
   margin-left:auto;
   margin-right:auto;
 }
-
 .logo-area{text-align:center}
 .logo-area img{
   width:161px;
@@ -137,7 +132,6 @@ aside * {
   background:#fff;
   box-shadow:0 2px 6px rgba(53,88,168,.25);
 }
-
 /* 프로필 블록 */
 .poetic-block {
   background:#FFF8D9;
@@ -171,7 +165,6 @@ aside * {
   font-family:'Malgun Gothic','맑은 고딕',sans-serif !important;
   color:#000;
 }
-
 /* 🌿 시 블록 (사이드바 안 중앙 정렬 ) */
 #profileBlock.poetic-block {
   width:calc(100% - 20px);
@@ -183,7 +176,6 @@ aside * {
   border:1.5px solid rgba(53,88,168,0.25);
   box-shadow:0 2px 6px rgba(0,0,0,0.05);
 }
-
 /* 인장 */
 .badge {
   font-family:'HaBinFont','HCR Batang',serif;
@@ -209,7 +201,6 @@ aside * {
   font-weight:1000;
   text-shadow: 0 0 3px rgba(255,105,180,0.4);
 }
-
 /* 접이식 메뉴 */
 .nav summary{
   cursor:pointer;
@@ -227,7 +218,6 @@ aside * {
   color:var(--brand2);
   text-decoration:underline;
 }
-
 /* 날짜/시계/날씨 */
 #datetime{
   font-size:12px;
@@ -245,7 +235,6 @@ aside * {
   height:90px;
 }
 #weather { color: #000 !important; } /* 🌤️ 날씨 글자색 고정 결계 */
-
 /* 관리자 패널 */
 .admin{
   border:1px dashed var(--brand);
@@ -272,7 +261,6 @@ aside * {
   margin-top:0px;
   color:#3558A8;
 }
-
 /* 숨겨진 관리자 패널 */
 .admin-panel{
   display:none;
@@ -283,7 +271,6 @@ aside * {
   border-radius:10px;
   font-size:13px;
 }
-
 /* 프로필 에디터(관리자 전용) */
 .profile-editor{
   display:none;
@@ -301,7 +288,6 @@ aside * {
   font-family:'HaBinFont';
   font-size:12.5px;
 }
-
 /* ===== 메인 ===== */
 main{
   margin-left:260px;
@@ -313,7 +299,6 @@ main{
   position:relative;
   z-index:3;
 }
-
 /* 히어로 대표 이미지 영역 */
 .hero{
   height:clamp(240px,22vh,320px);
@@ -331,7 +316,6 @@ main{
   object-fit:top;
   display:block;
 }
-
 /* 상단 메뉴 - 8개 무지개 카드형 탑메뉴 */
 .topmenu{
   margin:18px 0 22px;
@@ -370,7 +354,6 @@ main{
   transform:translateY(-2px);
   box-shadow:0 4px 10px rgba(92,142,219,0.18);
 }
-
 /* 🌈 무지개 파스텔 7색 + 1 골드 (탑메뉴 순서대로) */
 .topmenu a:nth-child(1){
   background:#F8C4C4;
@@ -404,7 +387,6 @@ main{
   background:#F5D686;
   border-color:rgba(250,240,230,0.7);
 }
-
 /* 관리자 전용 글쓰기 */
 .post-editor{
   display:none;
@@ -428,7 +410,11 @@ main{
   flex-wrap:wrap;
 }
 .post-editor .row input{flex:1}
-
+/* 🔥 글쓰기 textarea 세로 고정 추가 */
+.post-editor textarea{
+  min-height:300px !important;
+  height:300px !important;
+}
 /* 카드형 게시판 */
 .card-grid{
   display:grid;
@@ -438,7 +424,6 @@ main{
 @media(max-width:1000px){.card-grid{grid-template-columns:repeat(3,1fr);}}
 @media(max-width:800px){.card-grid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:560px){.card-grid{grid-template-columns:1fr;}}
-
 .card{
   border:1px solid var(--border);
   border-radius:6px;
@@ -538,34 +523,28 @@ main{
   margin-top: 10px;
   font-size: 14px;
 }
-
 .list-table th, .list-table td {
   border-bottom: 1px solid #e5e7eb;
   padding: 10px 6px;
   text-align: left;
 }
-
 .list-table th {
   background: #F5F8FF;
   color: #3558A8;
   font-weight: 700;
 }
-
 .list-title {
   color: #000;
   cursor: pointer;
 }
-
 .list-title:hover {
   text-decoration: underline;
 }
-
 .list-date {
   width: 150px;
   color: #5C8EDB;
   text-align: right;
 }
-
 /* 다녀간 흔적 */
 .visitor-wrap{
   background:#FFFBEA;
@@ -596,7 +575,6 @@ main{
   font-size:12.5px;
   background:#fff;
 }
-
 /* 푸터(햇살결계 버전) */
 footer{
   margin:24px 0 10px;
@@ -619,7 +597,6 @@ footer .no-bold{font-weight:400}
   pointer-events:none;
   z-index:999;
 }
-
 /* =============================================
    🌕 Ha-Bin Lightbox v2 (CSS)
 ============================================= */
@@ -662,12 +639,10 @@ footer .no-bold{font-weight:400}
 }
 </style>
 </head>
-
 <body
   oncontextmenu="return false"
   ondragstart="return false"
   onselectstart="return false">
-
 <!-- =========================
      사이드바
 ========================= -->
@@ -676,13 +651,11 @@ footer .no-bold{font-weight:400}
   <div class="logo-area">
     <img id="sidebarLogo" src="images/habin_logo.png" alt="Ha-Bin Studio 대표이미지">
   </div>
-
   <!-- 프로필 -->
   <div id="profileBlock" class="poetic-block">
     <h2>뿌리깊은 고목, 하빈</h2>
     <p>뿌리는 심연에 닿고,<br>가지는 하늘에 뻗어,<br>물처럼 흐르고 별처럼<br>빛나는 길을 걷는다.</p>
   </div>
-
   <!-- 대문 인장(굵게) -->
   <div class="badge">
     <span class="fl">✿</span>
@@ -691,7 +664,6 @@ footer .no-bold{font-weight:400}
     <span class="brand-bold" style="color:#3558A8; font-size:1.1em;">제2025-000004호</span><br>
     <span class="brand-bold" style="color:#3558A8; font-size:1.1em;">Since 2025.08.21.</span>
   </div>
-
   <!-- 접이식 메뉴 -->
   <nav class="nav">
     <details open>
@@ -704,14 +676,12 @@ footer .no-bold{font-weight:400}
       </div>
     </details>
   </nav>
-
   <!-- 날짜·시계·날씨 -->
   <div id="datetime">
     <div id="todayDate">📅 날짜 불러오는 중...</div>
     <canvas id="clockCanvas" width="90" height="90" aria-label="아날로그 시계"></canvas>
     <div id="weather">🌤 날씨 로딩중...</div>
   </div>
-
    <!-- 프로필 에디터(관리자 전용) -->
   <div id="profileEditor" class="profile-editor">
     <b style="color:var(--brand)">👤 프로필 수정</b>
@@ -728,19 +698,16 @@ footer .no-bold{font-weight:400}
             border-radius:10px; font-size:13px;">
     <b style="color:var(--brand)">🔧 관리자 메뉴</b>
     <p style="margin:6px 0 4px;font-size:12px;">관리자 키 입력</p>
-
     <input type="password" id="admin-key"
            placeholder="비밀번호 입력"
            style="width:100%; padding:8px; border:1px solid #cbd5e1;
                   border-radius:6px; margin-bottom:8px;">
-
     <button id="admin-onoff"
             style="width:100%; padding:8px 0; border:1px solid #3558A8;
                    border-radius:6px; background:#fff; cursor:pointer;">
         확인
     </button>
   </div>
-
   <!-- 하빈 문장 : 글은 마음에 진동한다 -->
 <div id="secretAdminBtn"
      style="font-family:'함초롱바탕','HCR Batang',serif;
@@ -753,9 +720,7 @@ footer .no-bold{font-weight:400}
             cursor:pointer;">
     글은 마음에 진동한다.
 </div>
-
 </aside>
-
 <!-- =========================
      메인
 ========================= -->
@@ -764,7 +729,6 @@ footer .no-bold{font-weight:400}
   <section id="hero" class="hero">
     <img src="images/hero/hero-main.png" alt="Ha-Bin Studio 대표 이미지" id="heroMainImage">
   </section>
-
   <!-- 상단 8개 카드형 탑메뉴 -->
   <nav class="topmenu">
     <a href="#board">📚 한글 게시판</a>
@@ -776,7 +740,6 @@ footer .no-bold{font-weight:400}
     <a href="#notice">📢 공지사항</a>
     <a href="#etc">✳️ 기타</a>
   </nav>
-
   <!-- 관리자 전용 글쓰기 + 스팸방지(허니팟) -->
   <section id="editor" class="post-editor" aria-label="글쓰기">
     <input id="hp" type="text" aria-hidden="true" tabindex="-1" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
@@ -797,7 +760,6 @@ footer .no-bold{font-weight:400}
           style="padding:6px 12px; border:1px solid #3558A8; border-radius:6px; background:#fff; cursor:pointer;">
     📦 카드형 보기
   </button>
-
   <button id="btnListView"
           style="padding:6px 12px; border:1px solid #3558A8; border-radius:6px; background:#fff; cursor:pointer;">
     📄 리스트형 보기
@@ -809,7 +771,6 @@ footer .no-bold{font-weight:400}
     <div class="card-grid" id="cards"></div>
     <div class="pagination" id="pages"></div>
   </section>
-
   <!-- 다녀간 흔적 -->
   <section id="visitor" class="visitor-wrap" aria-label="다녀간 흔적">
     <h3>💬 다녀간 흔적</h3>
@@ -819,9 +780,7 @@ footer .no-bold{font-weight:400}
     </div>
     <div class="visitor-list" id="vlist"></div>
   </section>
-
   <!-- (추후 영어/질문/대장간/갤러리/동영상/공지/기타 섹션 추가 가능) -->
-
   <!-- 🌞 하빈 스튜디오 · 햇살결계 푸터 v2 -->
   <footer id="ha-bin-footer" style="
     position:fixed;
@@ -858,7 +817,6 @@ footer .no-bold{font-weight:400}
                  opacity:0.9;">
       Writing resonates in the mind.
     </span>
-
     <!-- 제로폭 이중 워터마크 (하빈 결계 보호문) -->
     <span style="font-size:0;opacity:0;">
       하&#8203;빈&#8203;꺼&#8203;&#8203;!&#8203;!&#8203;!&#8203;함&#8203;부&#8203;로&#8203;&#8203;퍼&#8203;가&#8203;지&#8203;마&#8203;&#8203;!&#8203;!&#8203;!&#8203;빛&#8203;은&#8203;내&#8203;이&#8203;름&#8203;을&#8203;알&#8203;고&#8203;있&#8203;다&#8203;.
@@ -868,16 +826,13 @@ footer .no-bold{font-weight:400}
     </span>
   </footer>
 </main>
-
 <!-- 사계절 캔버스 -->
 <canvas id="seasonCanvas"></canvas>
-
 <!-- 🌕 Lightbox HTML -->
 <div id="lightboxOverlay">
   <div id="lightboxClose">×</div>
   <img id="lightboxImage" src="" alt="expanded image">
 </div>
-
 <script>
 /* ================================
    📅 날짜 + 시간 (오전/오후) 표시
@@ -888,33 +843,26 @@ function updateDate(){
   const m = now.getMonth() + 1;
   const d = now.getDate();
   const w = ['일','월','화','수','목','금','토'][now.getDay()];
-
   let hour = now.getHours();
   const minute = now.getMinutes().toString().padStart(2,'0');
-
   const ampm = hour < 12 ? '오전' : '오후';
   let hour12 = hour % 12;
   if(hour12 === 0) hour12 = 12;
-
   const text = `📅 ${y}. ${m}. ${d}. (${w}) · ${ampm} ${hour12}:${minute}`;
-
   const el = document.getElementById('todayDate');
   if(el){
     el.innerHTML = `<span style="color:#FF7F00;">${text}</span>`;
   }
 }
-
 updateDate();
 // 초 단위로 돌려야 시·분 변화가 바로 보임
 setInterval(updateDate, 1000);
-
 /* ======아날로그 시계======= */
 (function drawClock(){
   const c=document.getElementById('clockCanvas'); 
   const ctx=c.getContext('2d'); 
   const r=c.height/2; 
   ctx.translate(r,r);
-
   function hand(pos,len,w,color='#3558A8'){
     ctx.beginPath();
     ctx.lineWidth=w;
@@ -926,10 +874,8 @@ setInterval(updateDate, 1000);
     ctx.stroke();
     ctx.rotate(-pos);
   }
-
   (function loop(){
     ctx.clearRect(-r,-r,c.width,c.height);
-
     ctx.beginPath();
     ctx.arc(0,0,r*0.92,0,Math.PI*2);
     ctx.fillStyle='#FFF'; 
@@ -937,16 +883,13 @@ setInterval(updateDate, 1000);
     ctx.lineWidth=2; 
     ctx.strokeStyle='#3558A8'; 
     ctx.stroke();
-
     const now=new Date();
     let h=now.getHours()%12,
         m=now.getMinutes(),
         s=now.getSeconds();
-
     hand((Math.PI/6)*h+(Math.PI/360)*m+(Math.PI/21600)*s,r*0.5,4);
     hand((Math.PI/30)*m+(Math.PI/1800)*s,r*0.7,2.5);
     hand((Math.PI/30)*s,r*0.8,1.2,'#FF69B4');
-
     requestAnimationFrame(loop);
   })();
 })();
@@ -957,7 +900,6 @@ setInterval(updateDate, 1000);
   const key = "0cf8445721f18dd3251564b7fb9693f4";
   const box = document.getElementById('weather');
   if(!box) return;
-
   function prettifyWeather(desc){
     const map = {
       '튼구름':'구름 많음','약간흐림':'구름 조금','구름 약간':'구름 많음',
@@ -968,55 +910,45 @@ setInterval(updateDate, 1000);
     };
     return map[desc] || desc || '정보 없음';
   }
-
   function timeIcon(){
     const h = (new Date().getUTCHours()+9)%24;
     if(h>=6 && h<18) return '☀️';
     else if(h>=18 && h<22) return '🌇';
     return '🌙';
   }
-
   function render(region, desc, temp, icon){
     const i = icon
       ? `<img src="https://openweathermap.org/img/wn/${icon}.png" width="22" height="22" style="vertical-align:middle;margin-right:3px;">`
       : timeIcon();
-
     box.innerHTML = `${i} <b style="color:#3558A8">${region}</b> · ${prettifyWeather(desc)}, ${temp?.toFixed?.(1) ?? '—'}℃`;
-
     const w = prettifyWeather(desc);
     if(/맑|구름 조금/.test(w)) box.style.background='#FFF8D0';
     else if(/구름|흐림/.test(w)) box.style.background='#FFF2B0';
     else if(/비|소나기|눈/.test(w)) box.style.background='#FFEBA0';
     else box.style.background='#FFF5D1';
-
     box.style.padding='4px 8px';
     box.style.borderRadius='8px';
     box.style.display='inline-block';
     box.style.color='#5C8EDB';
     box.style.fontWeight='500';
   }
-
   async function load(lat,lon){
     try{
       const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}&units=metric&lang=kr`);
       const d = await res.json();
       if(!d.weather || !d.main) throw new Error("Invalid data");
-
       const icon = d.weather[0].icon;
       let region = d.name || '';
-
       try{
         const g = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${key}&lang=kr`).then(r=>r.json());
         region = g?.[0]?.local_names?.ko || g?.[0]?.name || region;
       }catch{}
-
       render(region || '서울', d.weather[0].description, d.main.temp, icon);
     }catch{
       box.textContent = "🌤 날씨 정보를 불러오지 못함";
       box.style.background='#FFF5D1';
     }
   }
-
   function success(pos){
     const {latitude,longitude}=pos.coords;
     window.currentCoords = {lat:latitude,lon:longitude};
@@ -1025,18 +957,15 @@ setInterval(updateDate, 1000);
   function fail(){
     load(37.5665,126.9780);
   }
-
   if(navigator.geolocation){
     navigator.geolocation.getCurrentPosition(success,fail,{timeout:8000});
   } else fail();
-
   setInterval(()=>{
     if(window.currentCoords){
       load(window.currentCoords.lat,window.currentCoords.lon);
     } else fail();
   },1000*60*30);
 })();
-
 /* ================================
    🌙 문라이트 결계 (자동)
 ================================ */
@@ -1052,7 +981,6 @@ setInterval(updateDate, 1000);
   applyMode();
   setInterval(applyMode,1000*60*10);
 })();
-
 /* ================================
    📚 게시판 CRUD + 이미지 첨부
    (habin-posts)
@@ -1060,72 +988,57 @@ setInterval(updateDate, 1000);
 let posts = JSON.parse(localStorage.getItem("habin-posts") || "[]");
 let page = 1;
 const per = 12;
-
 function savePosts(){
   localStorage.setItem("habin-posts",JSON.stringify(posts));
 }
-
 function createPost(){
   if(!isAdmin()){
     alert("관리자만 글 작성 가능합니다.");
     return;
   }
-
   // 🔥 수정모드인지 먼저 체크!
   if(window.hbEditingId){
     const id = window.hbEditingId;
     const idx = posts.findIndex(p => p.id === id);
-
     if(idx !== -1){
       posts[idx].title   = document.getElementById("title").value;
       posts[idx].author  = document.getElementById("author").value || "익명";
       posts[idx].content = document.getElementById("content").value;
-
       const f = document.getElementById("imgUpload").files[0];
       if(f){
         posts[idx].img = URL.createObjectURL(f);
       }
     }
-
     savePosts();
     renderPosts();
-
     // 수정모드 종료
     window.hbEditingId = null;
-
     // 입력창 초기화
     document.getElementById("title").value="";
     document.getElementById("content").value="";
     document.getElementById("imgUpload").value="";
-
     alert("수정이 완료되었습니다!");
     return;  // ⭐ 여기서 끝!
   }
-
   // ========================
   // 🔽 여기부터는 '새 글 만들기' 로직
   // ========================
-
   if(!document.getElementById("title").value.trim()){
     alert("제목을 입력하세요.");
     return;
   }
-
   if(document.getElementById("hp").value!==""){
     alert("스팸 의심");
     return;
   }
-
   const t = document.getElementById("title").value;
   const a = document.getElementById("author").value || "익명";
   const c = document.getElementById("content").value;
   const f = document.getElementById("imgUpload").files[0];
-
   let imgURL = "";
   if(f){
     imgURL = URL.createObjectURL(f);
   }
-
   posts.unshift({
     id:Date.now(),
     title:t,
@@ -1134,17 +1047,13 @@ function createPost(){
     img:imgURL,
     date:new Date().toLocaleString()
   });
-
   savePosts();
   renderPosts();
-
   // 새글 초기화
   document.getElementById("title").value="";
   document.getElementById("content").value="";
   document.getElementById("imgUpload").value="";
 }
-
-
 function deletePost(id){
   if(localStorage.getItem("habin-admin")!=="on"){
     alert("관리자 전용");
@@ -1161,55 +1070,45 @@ function editPost(id){
     alert("관리자 전용 기능입니다.");
     return;
   }
-
   // 해당 글 찾기
   const p = posts.find(x => x.id === id);
   if(!p){
     alert("해당 글을 찾을 수 없습니다.");
     return;
   }
-
   // 글쓰기 패널 보이기
   const editor = document.getElementById("editor");
   if(editor){
     editor.style.display = "block";
   }
-
   // 기존 내용 폼에 채워넣기
   document.getElementById("title").value   = p.title || "";
   document.getElementById("author").value  = p.author || "";
   document.getElementById("content").value = p.content || "";
   // 이미지 업로드 필드는 일단 비워둠
   document.getElementById("imgUpload").value = "";
-
   // 지금 어떤 글을 수정 중인지 표시 (전역 플래그)
   window.hbEditingId = id;
-
   alert("이 글을 수정할 수 있습니다.\n수정 후 '등록' 버튼을 누르면 저장됩니다.");
 }
-
 function renderPosts(){
   const cards = document.getElementById("cards");
   const pages = document.getElementById("pages");
   if(!cards || !pages) return;
   cards.innerHTML="";
-
   const start = (page-1)*per;
   const end = start+per;
   const list = posts.slice(start,end);
-
   list.forEach(p=>{
     const div = document.createElement("div");
     div.className="card";
     div.onclick=()=>openPost(p.id);
-
     let thumb = "";
     if(p.img){
       thumb = `<img class="thumb" src="${p.img}" alt="" oncontextmenu="return false">`;
     }else{
       thumb = `<div class="thumb placeholder">${p.title[0] || "H"}</div>`;
     }
-
     div.innerHTML = `
       ${thumb}
       <div class="body">
@@ -1219,14 +1118,11 @@ function renderPosts(){
         <div class="del" onclick="event.stopPropagation();deletePost(${p.id})">삭제</div>
       </div>
     `;
-
     if(localStorage.getItem("habin-admin")==="on"){
       div.querySelector(".del").style.display="block";
     }
-
     cards.appendChild(div);
   });
-
   const total = Math.ceil(posts.length/per) || 1;
   pages.innerHTML="";
   for(let i=1;i<=total;i++){
@@ -1239,11 +1135,9 @@ function renderPosts(){
   }
 }
 renderPosts();
-
 function openPost(id){
   const p = posts.find(x=>x.id===id);
   if(!p) return;
-
   let modal = document.getElementById("postModal");
   if(!modal){
     modal = document.createElement("div");
@@ -1263,10 +1157,8 @@ function openPost(id){
     document.body.appendChild(modal);
     modal.onclick=(e)=>{if(e.target===modal) modal.remove();};
   }
-
   const box = modal.querySelector("#postBox");
   const imgHTML = p.img ? `<img src="${p.img}" style="width:100%;border-radius:8px;margin-bottom:12px;" alt="">` : "";
-
   box.innerHTML = `
     <h2 style="margin-top:0;color:#3558A8;">${p.title}</h2>
     <div style="color:#5C8EDB;font-size:12px;margin-bottom:8px;">
@@ -1281,19 +1173,15 @@ function openPost(id){
       닫기
     </button>
   `;
-
   modal.style.display="flex";
 }
-
 /* ================================
    💬 다녀간 흔적 (habin-visitor)
 ================================ */
 let visitor = JSON.parse(localStorage.getItem("habin-visitor") || "[]");
-
 function saveVisitor(){
   localStorage.setItem("habin-visitor", JSON.stringify(visitor));
 }
-
 function addVisitorComment(){
   const t = document.getElementById("vtext").value.trim();
   if(!t) return;
@@ -1305,7 +1193,6 @@ function addVisitorComment(){
   renderVisitor();
   document.getElementById("vtext").value="";
 }
-
 function renderVisitor(){
   const v = document.getElementById("vlist");
   if(!v) return;
@@ -1317,7 +1204,6 @@ function renderVisitor(){
   `).join("");
 }
 renderVisitor();
-
 /* ================================
    ❄️ 사계절 캔버스 효과
 ================================ */
@@ -1325,18 +1211,15 @@ renderVisitor();
   const c = document.getElementById("seasonCanvas");
   if(!c) return;
   const ctx = c.getContext("2d");
-
   function resize(){
     c.width = innerWidth;
     c.height = innerHeight;
   }
   resize();
   window.addEventListener("resize",resize);
-
   let parts=[];
   function season(){
     const m=new Date().getMonth()+1;
-
     if(m>=3&&m<=5){ // 봄
       parts=Array.from({length:30},()=>({
         x:Math.random()*c.width,
@@ -1380,7 +1263,6 @@ renderVisitor();
     }
   }
   season();
-
   function draw(){
     ctx.clearRect(0,0,c.width,c.height);
     parts.forEach(p=>{
@@ -1388,10 +1270,8 @@ renderVisitor();
       ctx.arc(p.x,p.y,p.s,0,Math.PI*2);
       ctx.fillStyle=p.color;
       ctx.fill();
-
       p.x+=p.vx;
       p.y+=p.vy;
-
       if(p.y>c.height+20) p.y=-10;
       if(p.x< -20) p.x=c.width+10;
       if(p.x>c.width+20) p.x=-10;
@@ -1400,7 +1280,6 @@ renderVisitor();
   }
   draw();
 })();
-
 /* ================================
    👤 프로필 저장/로드 (최신 정식 버전)
 ================================ */
@@ -1408,14 +1287,12 @@ function defaultProfileHTML(){
   return `<h2>뿌리깊은 고목, 하빈</h2>
 <p>뿌리는 심연에 닿고,<br>가지는 하늘에 뻗어,<br>물처럼 흐르고 별처럼<br>빛나는 길을 걷는다.</p>`;
 }
-
 function loadProfile(){
   const html = localStorage.getItem("hb.profile") || defaultProfileHTML();
   document.getElementById('profileBlock').innerHTML = html;
   document.getElementById('profileTextarea').value =
     html.replace(/<br>/g, "\n");
 }
-
 function saveProfile(){
   const v = document.getElementById('profileTextarea').value.trim();
   const html = v ? v.replace(/\n/g,"<br>") : defaultProfileHTML();
@@ -1423,9 +1300,7 @@ function saveProfile(){
   loadProfile();
   alert("프로필이 저장되었습니다!");
 }
-
 loadProfile();
-
 /* ================================
    🌕 Lightbox v2 Script
 ================================ */
@@ -1433,25 +1308,19 @@ loadProfile();
   const overlay = document.getElementById("lightboxOverlay");
   const imgBox = document.getElementById("lightboxImage");
   const closeBtn = document.getElementById("lightboxClose");
-
   if(!overlay || !imgBox || !closeBtn) return;
-
   document.addEventListener("click", e=>{
     const target = e.target;
-
     if(target.closest("#lightboxOverlay")) return;
-
     if(target.tagName === "IMG"){
       overlay.classList.add("active");
       imgBox.src = target.src;
     }
   });
-
   function close(){
     overlay.classList.remove("active");
     imgBox.src = "";
   }
-
   closeBtn.addEventListener("click", close);
   overlay.addEventListener("click", e=>{
     if(e.target === overlay) close();
@@ -1460,7 +1329,6 @@ loadProfile();
     if(e.key === "Escape") close();
   });
 })();
-
 /* ================================
    🖼 사이드바 로고 / 히어로 자동 관리
 ================================ */
@@ -1471,12 +1339,10 @@ loadProfile();
   ];
   const logoEl = document.getElementById("sidebarLogo");
   if(!logoEl) return;
-
   const savedLogo = localStorage.getItem("habin-logo");
   if(savedLogo && logoList.includes(savedLogo)){
     logoEl.src = savedLogo;
   }
-
   logoEl.addEventListener('click', ()=>{
     if(localStorage.getItem("habin-admin")!=="on"){
       alert("관리자 모드에서만 로고를 변경할 수 있습니다.");
@@ -1484,10 +1350,8 @@ loadProfile();
     }
     const next = prompt(
 `교체할 로고 번호를 입력하세요:
-
 1) 기본 로고
 2) 대체 로고 1
-
 예: 1`
     );
     if(!next) return;
@@ -1501,11 +1365,9 @@ loadProfile();
     }
   });
 })();
-
 (function(){
   const heroEl = document.getElementById("heroMainImage");
   if(!heroEl) return;
-
   const heroList = [
     "images/hero/hero-main.png",
     "images/hero/hero-1.png",
@@ -1513,20 +1375,17 @@ loadProfile();
     "images/hero/hero-3.png",
     "images/hero/hero-habin.png"
   ];
-
   let idx = 0;
   const savedHero = localStorage.getItem("habin-hero");
   if(savedHero && heroList.includes(savedHero)){
     heroEl.src = savedHero;
     idx = heroList.indexOf(savedHero);
   }
-
   setInterval(()=>{
     idx = (idx + 1) % heroList.length;
     heroEl.src = heroList[idx];
     localStorage.setItem("habin-hero", heroList[idx]);
   }, 3 * 60 * 60 * 1000); // 3시간
-
   heroEl.addEventListener('click', ()=>{
     if(localStorage.getItem("habin-admin")!=="on") return;
     idx = (idx + 1) % heroList.length;
@@ -1535,14 +1394,12 @@ loadProfile();
     alert("대표 이미지가 변경되었습니다!");
   });
 })();
-
 /* ================================
    🔐 보호 결계 (강화)
 ================================ */
 (function(){
   document.addEventListener('contextmenu',e=>e.preventDefault());
   document.addEventListener('dragstart',e=>e.preventDefault());
-
   document.addEventListener('copy', e=>{
     e.preventDefault();
     alert('하빈 스튜디오 저작물 보호 중 🌕\n\n복사/붙여넣기가 차단되었습니다.');
@@ -1551,7 +1408,6 @@ loadProfile();
     e.preventDefault();
     alert('하빈 스튜디오 저작물 보호 중 🌕');
   });
-
   document.addEventListener('keydown', e=>{
     const k=e.key.toLowerCase();
     const ctrl=e.ctrlKey||e.metaKey, shift=e.shiftKey;
@@ -1594,17 +1450,14 @@ function isAdmin(){
 ================================ */
 (function(){
   if(localStorage.getItem("habin-admin") === "on"){
-
     // 수정 버튼 활성화
     document.querySelectorAll(".edit").forEach(btn=>{
       btn.style.display = "block";
     });
-
     // 삭제 버튼 활성화
     document.querySelectorAll(".del").forEach(btn=>{
       btn.style.display = "block";
     });
-
     // 글쓰기 에디터 자동 표시
     const editor = document.getElementById("editor");
     if(editor){
@@ -1616,11 +1469,9 @@ function isAdmin(){
    📦 카드형 ↔ 📄 리스트형 보기 전환 시스템
 ============================================ */
 let viewMode = localStorage.getItem("habin-viewMode") || "card";
-
 /* 버튼 요소 */
 const btnCard = document.getElementById("btnCardView");
 const btnList = document.getElementById("btnListView");
-
 /* 버튼 UI 업데이트 */
 function updateViewButtons(){
   if(btnCard && btnList){
@@ -1634,7 +1485,6 @@ function updateViewButtons(){
   }
 }
 updateViewButtons();
-
 /* 버튼 클릭 */
 if(btnCard){
   btnCard.addEventListener("click", ()=>{
@@ -1644,7 +1494,6 @@ if(btnCard){
     updateViewButtons();
   });
 }
-
 if(btnList){
   btnList.addEventListener("click", ()=>{
     viewMode = "list";
@@ -1653,23 +1502,19 @@ if(btnList){
     updateViewButtons();
   });
 }
-
 /* 기존 renderPosts 재정의(확장) */
 const oldRender = renderPosts;
 renderPosts = function(){
   const cardsBox = document.getElementById("cards");
-
   if(viewMode === "card"){
     cardsBox.className = "card-grid";
     oldRender();
     return;
   }
-
   /* 리스트뷰 모드 */
   const start = (page-1)*per;
   const end = start + per;
   const list = posts.slice(start,end);
-
   let html = `
     <table class="list-table">
       <tr>
@@ -1678,7 +1523,6 @@ renderPosts = function(){
         <th style="width:20%;">날짜</th>
       </tr>
   `;
-
   list.forEach(p=>{
     html += `
       <tr>
@@ -1688,15 +1532,12 @@ renderPosts = function(){
       </tr>
     `;
   });
-
   html += `</table>`;
   cardsBox.className = "";
   cardsBox.innerHTML = html;
-
   /* 페이지네이션은 기존 그대로 */
   const pages = document.getElementById("pages");
   const total = Math.ceil(posts.length/per) || 1;
-
   pages.innerHTML = "";
   for(let i=1;i<=total;i++){
     const b = document.createElement("button");
@@ -1707,7 +1548,6 @@ renderPosts = function(){
     pages.appendChild(b);
   }
 };
-
 /* 초기 렌더 */
 renderPosts();
 /* ============================================
@@ -1716,18 +1556,15 @@ renderPosts();
 function isBoardPage() {
   return location.hash === "#board";
 }
-
 /* ============================================
    🔥 2번: 관리자 UI 처리
 ============================================ */
 function applyAdminUI() {
   const onBoard = isBoardPage();
   const admin = isAdmin();
-
   // 글쓰기
   const editor = document.getElementById("editor");
   if(editor) editor.style.display = (admin && onBoard ? "block" : "none");
-
   // 수정/삭제 버튼
   document.querySelectorAll(".edit").forEach(el=>{
     el.style.display = (admin && onBoard ? "block" : "none");
@@ -1736,7 +1573,6 @@ function applyAdminUI() {
     el.style.display = (admin && onBoard ? "block" : "none");
   });
 }
-
 /* ============================================
    🔥 3번: 해시(#) 변경 시 자동 적용
 ============================================ */
@@ -1744,7 +1580,6 @@ window.addEventListener("hashchange", ()=>{
   renderPosts();
   applyAdminUI();
 });
-
 /* ============================================
    🔥 4번: 첫 로딩 시 1회 적용
 ============================================ */
@@ -1754,6 +1589,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
 </script>
 </body>
 </html>
+
 
 
 
