@@ -699,7 +699,12 @@ footer .no-bold{font-weight:400}
   border:1px solid #d1d5db;
   border-radius:8px;
 }
-/* 툴바 버튼 */
+/* 🧹 툴바 오염 방지 (본문 스타일 전염 차단) */
+.hb-toolbar b,
+.hb-toolbar i {
+  all: unset;
+}
+  /* 툴바 버튼 */
 .hb-tool-btn{
   border:1px solid #3558A8;
   background:#fff;
@@ -1751,6 +1756,7 @@ function hbInsertImg(){
 </script>
 </body>
 </html>
+
 
 
 
