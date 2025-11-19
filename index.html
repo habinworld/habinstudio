@@ -848,6 +848,10 @@ footer .no-bold{font-weight:400}
   </nav>
   <!-- 관리자 전용 글쓰기 + 스팸방지(허니팟) -->
   <section id="editor" class="post-editor" aria-label="글쓰기">
+ <button onclick="localStorage.removeItem('habin-posts'); alert('초기화 완료! 새로고침하세요.');" 
+          style="padding:6px 12px; background:red; color:#fff; border:none; border-radius:6px; margin:10px 0;">
+    🔥 게시판 초기화 버튼
+  </button>
     <input id="hp" type="text" aria-hidden="true" tabindex="-1" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
     <!-- ⭐⭐⭐ A안 제목 + 버튼 + 작성자 UI ⭐⭐⭐ -->
   <div class="hb-editor-header">
@@ -1756,6 +1760,7 @@ function hbInsertImg(){
 </script>
 </body>
 </html>
+
 
 
 
