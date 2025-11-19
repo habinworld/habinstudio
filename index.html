@@ -1216,7 +1216,7 @@ function editPost(id){
   // 기존 내용 폼에 채워넣기
   document.getElementById("title").value   = p.title || "";
   document.getElementById("author").value  = p.author || "";
-  document.getElementById("content").value = p.content || "";
+  document.getElementById("content").innerHTM = p.content || "";
   // 이미지 업로드 필드는 일단 비워둠
   document.getElementById("imgUpload").value = "";
   // 지금 어떤 글을 수정 중인지 표시 (전역 플래그)
@@ -1751,6 +1751,7 @@ function hbInsertImg(){
 </script>
 </body>
 </html>
+
 
 
 
