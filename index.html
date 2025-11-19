@@ -1710,10 +1710,51 @@ renderPosts = function(){
 
 /* 초기 렌더 */
 renderPosts();
-  
+/* ============================================
+   🔥 1번: 게시판 감지 (여기부터 붙인다!)
+============================================ */
+function isBoardPage() {
+  return location.hash === "#board";
+}
+
+/* ============================================
+   🔥 2번: 관리자 UI 처리
+============================================ */
+function applyAdminUI() {
+  const onBoard = isBoardPage();
+  const admin = isAdmin();
+
+  // 글쓰기
+  const editor = document.getElementById("editor");
+  if(editor) editor.style.display = (admin && onBoard ? "block" : "none");
+
+  // 수정/삭제 버튼
+  document.querySelectorAll(".edit").forEach(el=>{
+    el.style.display = (admin && onBoard ? "block" : "none");
+  });
+  document.querySelectorAll(".del").forEach(el=>{
+    el.style.display = (admin && onBoard ? "block" : "none");
+  });
+}
+
+/* ============================================
+   🔥 3번: 해시(#) 변경 시 자동 적용
+============================================ */
+window.addEventListener("hashchange", ()=>{
+  renderPosts();
+  applyAdminUI();
+});
+
+/* ============================================
+   🔥 4번: 첫 로딩 시 1회 적용
+============================================ */
+document.addEventListener("DOMContentLoaded", ()=>{
+  applyAdminUI();
+});  
 </script>
 </body>
 </html>
+
 
 
 
