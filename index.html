@@ -1230,6 +1230,7 @@ function editPost(id){
   document.getElementById("title").value   = p.title || "";
   document.getElementById("author").value  = p.author || "";
   document.getElementById("content").innerHTML = p.content || "";
+  document.getElementById("imgUpload").value = "";
    // 지금 어떤 글을 수정 중인지 표시 (전역 플래그)
   window.hbEditingId = id;
   alert("이 글을 수정할 수 있습니다.\n수정 후 '등록' 버튼을 누르면 저장됩니다.");
@@ -1762,6 +1763,7 @@ function hbInsertImg(){
 </script>
 </body>
 </html>
+
 
 
 
