@@ -639,7 +639,7 @@ footer .no-bold{font-weight:400}
 }
 /* ===============================
    ✨ STEP 3 — 하빈 에디터 전체 스타일
-   종이 질감 + 툴바 + 제목줄
+   툴바 + 제목줄
 ================================ */
 /* 제목 입력칸 */
 .hb-title-input{
@@ -872,21 +872,33 @@ footer .no-bold{font-weight:400}
     <option value="'Gungsuh'">궁서</option>
   </select>
   <!-- 글자 크기 -->
-  <select id="hb-size" onchange="hbExec('fontSize', this.value)">
-    <option value="3">15px (기본)</option>
-    <option value="4">17px</option>
-    <option value="5">19px</option>
-    <option value="6">21px</option>
-  </select>
-  <!-- 굵게 -->
-  <button type="button" onclick="hbExec('bold')" class="hb-tool-btn"><b>B</b></button>
-  <!-- 기울임 -->
-  <button type="button" onclick="hbExec('italic')" class="hb-tool-btn"><i>I</i></button>
-  <!-- 글자색 -->
-  <input type="color" onchange="hbExec('foreColor', this.value)">
-  <!-- 이미지 삽입 -->
-  <button type="button" class="hb-tool-btn" onclick="document.getElementById('hb-img').click()">🖼 이미지</button>
-  <input type="file" id="hb-img" accept="image/*" style="display:none" onchange="hbInsertImg()">
+<select id="hb-size" onchange="hbExec('fontSize', this.value)">
+  <option value="3">15px (기본)</option>
+  <option value="4">17px</option>
+  <option value="5">19px</option>
+  <option value="6">21px</option>
+</select>
+
+<!-- 굵게 -->
+<button type="button" onclick="hbExec('bold')" class="hb-tool-btn">
+  <span style="font-weight:bold;">B</span>
+</button>
+
+<!-- 기울임 -->
+<button type="button" onclick="hbExec('italic')" class="hb-tool-btn">
+  <span style="font-style:italic;">I</span>
+</button>
+
+<!-- 글자색 -->
+<input type="color" onchange="hbExec('foreColor', this.value)">
+
+<!-- 이미지 삽입 -->
+<button type="button" class="hb-tool-btn"
+        onclick="document.getElementById('hb-img').click()">🖼 이미지</button>
+
+<input type="file" id="hb-img" accept="image/*"
+       style="display:none" onchange="hbInsertImg()">
+
 </div>
     <div id="content"
      contenteditable="true"
@@ -1757,6 +1769,7 @@ function hbInsertImg(){
 </script>
 </body>
 </html>
+
 
 
 
