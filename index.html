@@ -1160,7 +1160,7 @@ function createPost(){
     window.hbEditingId = null;
     // 입력창 초기화
     document.getElementById("title").value="";
-    document.getElementById("content").value="";
+    document.getElementById("content").innerHTML="";
     document.getElementById("imgUpload").value="";
     alert("수정이 완료되었습니다!");
     return;  // ⭐ 여기서 끝!
@@ -1229,10 +1229,8 @@ function editPost(id){
   // 기존 내용 폼에 채워넣기
   document.getElementById("title").value   = p.title || "";
   document.getElementById("author").value  = p.author || "";
-  document.getElementById("content").innerHTM = p.content || "";
-  // 이미지 업로드 필드는 일단 비워둠
-  document.getElementById("imgUpload").value = "";
-  // 지금 어떤 글을 수정 중인지 표시 (전역 플래그)
+  document.getElementById("content").innerHTML = p.content || "";
+   // 지금 어떤 글을 수정 중인지 표시 (전역 플래그)
   window.hbEditingId = id;
   alert("이 글을 수정할 수 있습니다.\n수정 후 '등록' 버튼을 누르면 저장됩니다.");
 }
@@ -1764,6 +1762,7 @@ function hbInsertImg(){
 </script>
 </body>
 </html>
+
 
 
 
