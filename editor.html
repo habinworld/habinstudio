@@ -1,1 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>글쓰기 · Ha-Bin Studio</title>
+<link rel="stylesheet" href="editor.css">
+</head>
+
+<body>
+
+<div id="editor-wrapper">
+
+  <!-- 🔷 제목 입력 -->
+  <input type="text" id="post-title" placeholder="제목을 입력하세요">
+
+  <!-- 🔷 툴바 -->
+  <div id="toolbar"></div>
+
+  <!-- 🔷 본문 -->
+  <div id="editor" contenteditable="true"></div>
+
+  <!-- 🔷 버튼 -->
+  <div id="editor-buttons">
+    <button id="saveBtn">저장</button>
+    <button id="cancelBtn">취소</button>
+  </div>
+
+</div>
+
+<script src="toolbar.js"></script>
+
+<script>
+/* -----------------------------------------------------
+   📌 수정 모드인지 확인 (editor.html?id=3 구조)
+----------------------------------------------------- */
+const params = new URLSearchParams(window.location.search);
+const editId = params.get('id');
+let habin_posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+
+if (editId) {
+  const post = habin_posts.find(p => p.id == editId);
+  if (post) {
+    document.getElementById("post-title").value = post.title;
+    document.getElementById("editor").innerHTML = post.content;
+  }
+}
+
+/* -----------------------------------------------------
+   📌 저장 버튼
+----------------------------------------------------- */
+document.getElementById("saveBtn").addEventListener("click", () => {
+  const title = document.getElementById("post-title").value.trim();
+  const content = document.getElementById("editor").innerHTML.trim();
+
+  if (!title) {
+    alert("제목을 입력하세요.");
+    return;
+  }
+
+  const now = new Date();
+  const date = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+  if (editId) {
+    // 수정 모드
+    const post = habin_posts.find(p => p.id == editId);
+    post.title = title;
+    post.content = content;
+    post.date = date;
+
+  } else {
+    // 새 글
+    const newPost = {
+      id: Date.now(),
+      title,
+      content,
+      date,
+      writer: "하빈"
+    };
+    habin_posts.push(newPost);
+  }
+
+  localStorage.setItem("habin_posts", JSON.stringify(habin_posts));
+  window.location.href = "list.html";
+});
+
+/* -----------------------------------------------------
+   📌 취소 버튼
+----------------------------------------------------- */
+document.getElementById("cancelBtn").addEventListener("click", () => {
+  history.back();
+});
+</script>
+
+</body>
+</html>
 
