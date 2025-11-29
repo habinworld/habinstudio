@@ -13,6 +13,9 @@ function updateDateTime() {
   const el = document.getElementById("current-datetime");
   if (!el) return;
 
+  // 날짜 글자색 적용 (주황)
+  el.style.color = "#D35400";
+   
   const now = new Date();
   const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -59,17 +62,17 @@ function drawClock() {
   const hourAngle = (Math.PI / 6) * hour + (Math.PI / 360) * minute;
   const minAngle = (Math.PI / 30) * minute;
 
-  /* 테두리 — 짙은 주황 (#D35400) */
+  /* 테두리 — 남색 (#001F3F) */
   ctx.beginPath();
   ctx.arc(0, 0, r - 5, 0, 2 * Math.PI);
   ctx.lineWidth = 3;
-  ctx.strokeStyle = "#D35400";
+  ctx.strokeStyle = "#001F3F";
   ctx.stroke();
 
   /* 시침 */
   ctx.beginPath();
   ctx.lineWidth = 4;
-  ctx.strokeStyle = "#D35400";
+  ctx.strokeStyle = "#001F3F";
   ctx.moveTo(0, 0);
   ctx.rotate(hourAngle);
   ctx.lineTo(0, -(r * 0.45));
@@ -79,7 +82,7 @@ function drawClock() {
   /* 분침 */
   ctx.beginPath();
   ctx.lineWidth = 2;
-  ctx.strokeStyle = "#D35400";
+  ctx.strokeStyle = "#001F3F";
   ctx.moveTo(0, 0);
   ctx.rotate(minAngle);
   ctx.lineTo(0, -(r * 0.65));
