@@ -37,7 +37,7 @@ function updateDateTime() {
 
   /* 날짜 출력 최종 포맷 */
   el.textContent =
-    `${year}년 ${month}월 ${date}일 (${weekday})  •  ` +
+    `${year}년 ${month}월 ${date}일 (${weekday}) • ` +
     `${ampm} ${hourStr}시 ${minute}분`;
 }
 
