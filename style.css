@@ -212,7 +212,7 @@ body {
 #menu-toggle {
   font-size: 14px;
   font-weight: 700;
-  margin-top: 12px;
+  margin-top: 8px;
   cursor: pointer;
   text-align: center;
 }
@@ -220,7 +220,7 @@ body {
 .menu-row {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
+  margin: 6px 0;
 }
 
 .menu-row a {
