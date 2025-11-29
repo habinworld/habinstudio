@@ -286,16 +286,16 @@ body {
 .menu-row {
   display: flex;
   justify-content: space-between;
-  margin: 6px 0;
+  margin: 3px 0;
 }
 
 .menu-row a {
   width: 48%;
-  padding: 8px 0;
+  padding: 4px 0;
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 6px;
-  font-size: 13px;
+  font-size: 14px;
   text-align: center;
   text-decoration: none;
   color: #333;
