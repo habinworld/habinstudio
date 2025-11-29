@@ -153,9 +153,36 @@
 <script src="main.js"></script>
 <script src="particles.js"></script>
 <script src="weather.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  const logo = document.getElementById('main-logo');
+  if (!logo) return;
+
+  // 현재 시간이 Moonlight 조건인지 판단
+  const now = new Date();
+  const hour = now.getHours();
+
+  // Moonlight: 20시~06시
+  const isNight = hour >= 20 || hour < 6;
+
+  // 이미 관리자(GOLD) 모드이면 Moonlight 적용 금지
+  if (logo.classList.contains('logo-gold')) return;
+
+  if (isNight) {
+    logo.classList.remove('logo-off', 'logo-gold');
+    logo.classList.add('logo-moon');
+  } else {
+    logo.classList.remove('logo-moon', 'logo-gold');
+    logo.classList.add('logo-off');
+  }
+
+});
+</script>
 
 </body>
 </html>
+
 
 
 
