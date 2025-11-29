@@ -68,18 +68,18 @@ body {
 
 /* 기본 로고 박스 */
 .logo { 
-  width: 100%;       /* 사이드바 폭 안으로 제한 */
-  max-width: 180px;  /* 로고 실제 최대 크기 */
-  font-size: 26px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  text-align: center;
-  margin-bottom: 20px;
-  padding: 12px 0;
-  border-radius: 8px;
+  /* 이미지 로고 전용 */
+#main-logo {
+  width: 100%;           /* 사이드바 폭 기준 */
+  max-width: 180px;      /* 로고 실제 크기 제한 */
+  display: block;
+  margin: 0 auto 20px;   /* 가운데 정렬 */
+  padding: 12px;
   border: 2px solid #FF8C00;
-  color: #FF8C00;
-  transition: 0.28s ease;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
 }
 
 /* OFF 모드 */
