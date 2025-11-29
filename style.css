@@ -311,26 +311,23 @@ body {
   font-size: 15px;
 }
 /* --------------------------------------------------
-   🌙 하빈 스튜디오 v2 — 푸터 완전 결계판 (2줄 설정)
+   🌞 하빈 스튜디오 · 햇살결계 푸터 v2 (본문 아래 자연 배치)
 -------------------------------------------------- */
-
-body {
-  padding-bottom: 95px;
-  height: auto;
-}
 
 /* 푸터 전체 */
 #habin-footer {
   width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 9999;
+  position: relative;   /* ← 예전 방식 */
+  margin-top: 40px;     /* 본문과 여백 */
   text-align: center;
-  padding: 16px 0 20px;
-  background: rgba(92, 142, 219, 0.12);
-  backdrop-filter: blur(4px);
-  border-top: 1px solid rgba(0,0,0,0.06);
+  padding: 14px 0 16px;
+
+  /* 햇살결계 배경 */
+  background: #FFF5D1;
+  color: #0F2167;
+
+  border-top: 1px solid rgba(0,0,0,0.08);
+
   font-family: 'HCR Batang','Batang',serif;
 }
 
@@ -338,7 +335,6 @@ body {
   line-height: 1.8;
 }
 
-/* 라인 간격 */
 .footer-line1,
 .footer-line2 {
   margin: 4px 0;
@@ -346,13 +342,13 @@ body {
 
 /* 저작권 텍스트 */
 .ft-sub {
-  color: #5C8EDB;
+  color: #0F2167;
   font-size: 13px;
   font-weight: 600;
   margin: 0 4px;
 }
 
-/* 골드 ✦ 라인 */
+/* 골드 라인 */
 .ft-star {
   color: #DAA520;
   font-weight: 700;
@@ -363,12 +359,12 @@ body {
   font-style: italic;
 }
 
-/* ★ 마지막 문장: 은회색 + 절대 우선순위 */
+/* 은회색 문장 (강제 적용) */
 .ft-hidden {
   color: #C0C0C0 !important;
   font-size: 15px;
   font-style: italic;
-  margin-left: 6px;
+  margin-left: 8px;
   opacity: 0.9;
 }
 
