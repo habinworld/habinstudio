@@ -246,6 +246,7 @@ body {
 #content {
   flex: 1;
   padding: 40px;
+  padding-bottom: 120px; 
   overflow-y: auto;
   position: relative;
   z-index: 100;
