@@ -84,13 +84,18 @@
     </div>
   </div>
 
-  <!-- 비밀의 문 (부모 구조) -->
-  <div id="secret-box">
-    <div id="secret-title">비밀의 문</div>
-    <input type="password" id="secret-input" placeholder="관리자 키 입력">
-    <button id="secret-btn">입력</button>
-    <div id="secret-msg"></div>
-  </div>
+  <!-- 관리자 문장 (토글 버튼) -->
+<div class="secret-toggle" id="secret-toggle">
+  글은 마음에 진동한다.
+</div>
+
+<!-- 비밀의 문 (관리자 키 입력 박스) -->
+<div class="secret-box" id="secret-box">
+  <input type="password" id="secret-input" placeholder="관리자 키 입력">
+  <button id="secret-btn">입력</button>
+  <div id="secret-msg"></div>
+</div>
+
  </aside>
 
 <!-- 🔷 메인 콘텐츠 -->
@@ -184,6 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
 
 
 
