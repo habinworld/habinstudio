@@ -310,4 +310,55 @@ body {
   color: #444;
   font-size: 15px;
 }
+/* --------------------------------------------------
+   🌙 하빈 스튜디오 공식 푸터 (전 페이지 공통)
+-------------------------------------------------- */
+#habin-footer {
+  width: 100%;
+  text-align: center;
+  padding: 16px 0 18px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 9999;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(3px);
+  border-top: 1px solid rgba(0,0,0,0.08);
+  font-family: 'HCR Batang','Batang',serif;
+}
+
+.footer-inner {
+  line-height: 1.8;
+}
+
+.footer-line1, .footer-line2 {
+  margin: 3px 0;
+}
+
+.ft-fl {
+  color: #FF69B4;
+  font-weight: 900;
+}
+
+.ft-brand {
+  color: #5C8EDB;
+  font-weight: 900;
+}
+
+.ft-sub {
+  color: #5C8EDB;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ft-star {
+  color: #DAA520;
+  font-weight: 700;
+}
+
+.ft-quote {
+  color: #C0C0C0;
+  font-style: italic;
+  font-size: 13.5px;
+}
 
