@@ -76,7 +76,7 @@ body {
 }
 
 #main-logo {
-  width: 150px;                 /* 최신 사이드바 로고 표준 크기 */
+  width: 210px;                 /* 최신 사이드바 로고 표준 크기 */
   height: auto;
   border-radius: 10px;
   border: 2px solid #FF8C00;    /* OFF 모드 기본 */
