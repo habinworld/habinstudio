@@ -66,6 +66,7 @@ body {
   z-index: 2000;
 }
 
+/* 기본 로고 박스 */
 .logo {
   font-size: 26px;
   font-weight: 900;
@@ -76,20 +77,28 @@ body {
   border-radius: 8px;
   border: 2px solid #FF8C00;
   color: #FF8C00;
+  transition: 0.28s ease;
+}
+
+/* OFF 모드 */
+.logo-off {
+  border-color: #FF8C00;
+  color: #FF8C00;
+  box-shadow: none;
 }
 
 /* Gold 모드 */
 .logo-gold {
   border-color: #DAA520;
   color: #DAA520;
-  box-shadow: 0 0 8px rgba(218,165,32,0.5);
+  box-shadow: 0 0 8px rgba(218,165,32,0.55);
 }
 
 /* Moonlight 모드 */
 .logo-moon {
   border-color: #5C8EDB;
   color: #5C8EDB;
-  box-shadow: 0 0 10px rgba(92,142,219,0.55);
+  box-shadow: 0 0 12px rgba(92,142,219,0.55);
 }
 
 /* -------- 프로필 블록 -------- */
