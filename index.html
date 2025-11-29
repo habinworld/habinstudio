@@ -78,10 +78,11 @@
       <div class="hand minute"></div>
     </div>
   </div>
- <!-- 날씨 -->
-  <div id="weather-box" style="text-align:center; font-size:13px; color:#000; margin-bottom:20px;">
-    불러오는 중...
-  </div>
+<div id="weather-area" style="color:#000;">
+  <span id="weather-location">지역</span>
+  <span id="weather-box"></span>
+</div>
+
   <!-- 관리자 문장 (토글 버튼) -->
 <div class="secret-toggle" id="secret-toggle">
   글은 마음에 진동한다.
@@ -185,17 +186,16 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 <!-- 관리자 모드: 비밀문 스크립트 -->
-<script src="js/secret-toggle.js"></script>
-<script src="js/secret-gate.js"></script>
-<script src="js/weather.js"></script>
+<script src="secret-toggle.js"></script>
+<script src="secret-gate.js"></script>
+<script src="weather.js"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    startWeather();
-  });
+  startWeather();
 </script>
- 
+
 </body>
 </html>
+
 
 
 
