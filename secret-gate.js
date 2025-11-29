@@ -23,7 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // 🔥 GOLD 모드 적용
       logo.classList.remove('logo-off', 'logo-moon', 'logo-gold');
       logo.classList.add('logo-gold');
-
+      // 🌟 여기! → 입력창 닫기
+  const box = document.getElementById('secret-box');
+  if (box) box.style.display = 'none';
       setTimeout(() => {
         msg.textContent = '';
       }, 3000);
