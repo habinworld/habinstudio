@@ -311,54 +311,90 @@ body {
   font-size: 15px;
 }
 /* --------------------------------------------------
-   🌙 하빈 스튜디오 공식 푸터 (전 페이지 공통)
+   🌙 하빈 스튜디오 v2 — 푸터 완전 결계판
+   (은청 배경 · 3줄 구조 · 브랜드 색상 고정)
 -------------------------------------------------- */
+
+/* 푸터가 본문을 가리지 않도록 */
+body {
+  padding-bottom: 95px;
+  height: auto;
+}
+
+/* 푸터 전체 레이아웃 */
 #habin-footer {
   width: 100%;
-  text-align: center;
-  padding: 16px 0 18px;
   position: fixed;
   bottom: 0;
   left: 0;
   z-index: 9999;
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(3px);
-  border-top: 1px solid rgba(0,0,0,0.08);
+
+  text-align: center;
+  padding: 16px 0 20px;
+
+  /* ✨ 은청빛 배경 + 부드러운 흐림 */
+  background: rgba(92, 142, 219, 0.12);
+  backdrop-filter: blur(4px);
+
+  border-top: 1px solid rgba(0,0,0,0.06);
+
   font-family: 'HCR Batang','Batang',serif;
 }
 
+/* 내부 라인 기본 구조 */
 .footer-inner {
   line-height: 1.8;
 }
 
-.footer-line1, .footer-line2 {
+/* 각 줄 간격 */
+.footer-line1,
+.footer-line2,
+.footer-line3 {
   margin: 3px 0;
 }
 
+/* ✿ 핑크 아이콘 */
 .ft-fl {
   color: #FF69B4;
   font-weight: 900;
+  font-size: 15px;
 }
 
+/* 출처 : 하빈 스튜디오 */
 .ft-brand {
   color: #5C8EDB;
   font-weight: 900;
+  font-size: 14px;
 }
 
+/* 저작권 부가 텍스트 */
 .ft-sub {
   color: #5C8EDB;
   font-size: 13px;
   font-weight: 600;
+  margin-left: 4px;
 }
 
+/* ✦ 골드 라인 */
 .ft-star {
   color: #DAA520;
   font-weight: 700;
+  font-size: 14px;
 }
 
-.ft-quote {
-  color: #C0C0C0;
+/* 골드 명언 문구 */
+.footer-line2 em {
   font-style: italic;
-  font-size: 13.5px;
+}
+
+/* 마지막 숨겨진 문장 (속삭임 라인) */
+.ft-hidden {
+  display: inline-block;
+  font-family: 'Times New Roman','HCR Batang',serif;
+  font-size: 18px;
+  color:#C0C0C0;
+  font-style: italic;
+  opacity: 0.9;
+  margin-top: 2px;
 }
 
