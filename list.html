@@ -1,1 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>하빈 스튜디오 · 게시판 목록</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- 🔐 비밀의 문 -->
+<script src="secret-gate.js"></script>
+
+<div class="page-container">
+
+  <h1 class="page-title">📚 한글 게시판</h1>
+
+  <div class="top-actions">
+    <a href="editor.html" class="write-btn">✏ 글쓰기</a>
+  </div>
+
+  <table class="post-table">
+    <thead>
+      <tr>
+        <th style="width:50px;">번호</th>
+        <th>제목</th>
+        <th style="width:120px;">작성자</th>
+        <th style="width:150px;">날짜</th>
+      </tr>
+    </thead>
+    <tbody id="post-list">
+      <!-- JS가 자동 출력 -->
+    </tbody>
+  </table>
+
+  <!-- 페이지네이션 -->
+  <div id="pagination" class="pagination"></div>
+
+</div>
+
+<script>
+/* ---------------------------------------------------
+   📌 localStorage에서 글 목록 불러오기
+--------------------------------------------------- */
+const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+
+/* 최신 글이 위로 */
+posts.sort((a, b) => b.id - a.id);
+
+const itemsPerPage = 10;
+const urlParams = new URLSearchParams(window.location.search);
+let currentPage = parseInt(urlParams.get("page")) || 1;
+
+function renderList() {
+  const start = (currentPage - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const pagePosts = posts.slice(start, end);
+
+  const tbody = document.getElementById("post-list");
+  tbody.innerHTML = "";
+
+  if (pagePosts.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="4" class="empty">작성된 글이 없습니다.</td></tr>`;
+    return;
+  }
+
+  pagePosts.forEach((p, idx) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${posts.length - (start + idx)}</td>
+      <td><a href="view.html?id=${p.id}" class="title-link">${p.title}</a></td>
+      <td>${p.writer}</td>
+      <td>${p.date}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+/* ---------------------------------------------------
+   📌 페이지네이션 출력
+--------------------------------------------------- */
+function renderPagination() {
+  const totalPages = Math.ceil(posts.length / itemsPerPage);
+  const pag = document.getElementById("pagination");
+  pag.innerHTML = "";
+
+  if (totalPages <= 1) return;
+
+  if (currentPage > 1) {
+    pag.innerHTML += `<a href="?page=${currentPage - 1}" class="page-btn">이전</a>`;
+  }
+
+  for (let i = 1; i <= totalPages; i++) {
+    pag.innerHTML += `<a href="?page=${i}" class="page-btn ${i === currentPage ? "active" : ""}">${i}</a>`;
+  }
+
+  if (currentPage < totalPages) {
+    pag.innerHTML += `<a href="?page=${currentPage + 1}" class="page-btn">다음</a>`;
+  }
+}
+
+renderList();
+renderPagination();
+
+</script>
+
+</body>
+</html>
 
