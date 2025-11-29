@@ -20,7 +20,7 @@ body {
   min-height: 100vh;
  /* 🔥 문제 해결 포인트 */
   overflow-x: hidden;    /* 가로만 막음 */
-  overflow-y: auto;      /* 세로 스크롤 정상 동작 */
+  overflow-y: hidden;      /* 세로는 body에서 안 쓰고, 안쪽에서만 씀 */
 
   /* ✔ 푸터가 본문을 가리지 않게 */
   padding-bottom: 110px !important;
@@ -63,6 +63,8 @@ body {
   background: #F7FAFF;
   border-right: 1px solid #e5e7eb;
   padding: 20px;
+/* 🔥 사이드바 고정 높이 + 자기 스크롤 */
+  height: 100vh;
   overflow-y: auto;
   z-index: 2000;
 }
