@@ -25,10 +25,10 @@ if (menuToggle && sidebarMenu) {
   menuToggle.addEventListener('click', () => {
     if (sidebarMenu.style.display === 'none' || sidebarMenu.style.display === '') {
       sidebarMenu.style.display = 'block';
-      menuToggle.textContent = '메뉴 ▲';
+      menuToggle.textContent = '접이식 메뉴 ▲';
     } else {
       sidebarMenu.style.display = 'none';
-      menuToggle.textContent = '메뉴 ▼';
+      menuToggle.textContent = '접이식 메뉴 ▼';
     }
   });
 }
