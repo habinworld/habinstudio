@@ -66,17 +66,11 @@
       <a href="#etc">✳ 기타</a>
     </div>
   </nav>
-  <!-- 날짜/시간 -->
-  <div id="datetime-box">
-    <span id="datetime"></span>
-  </div>
+<div id="current-datetime" style="font-size:13px; margin-top:10px;"></div>
 
-   <!-- 아날로그 시계 -->
-  <div id="clock-box">
-    <div id="clock">
-      <div class="hand hour"></div>
-      <div class="hand minute"></div>
-    </div>
+<canvas id="clock" width="120" height="120"
+        style="display:block; margin:10px auto;"></canvas>
+
   </div>
 <div id="weather-area" style="color:#000;">
   <span id="weather-location">지역</span>
@@ -192,9 +186,13 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
   startWeather();
 </script>
-
+<script src="datetime_clock.js"></script>
+<script>
+  startDateTimeClock();
+</script>
 </body>
 </html>
+
 
 
 
