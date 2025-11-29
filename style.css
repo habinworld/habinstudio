@@ -188,40 +188,91 @@ body {
   transform-origin: bottom;
 }
 
-/* -------- 비밀의 문 -------- */
-#secret-box {
-  margin: 25px 0;
-  text-align: center;
-}
+/* -----------------------------------------------------
+   🔐 관리자 모드 — 비밀의 문 스타일 (Secret Gate)
+   Ha-Bin Studio Official CSS (2025)
+----------------------------------------------------- */
 
-#secret-title {
+/* 📌 1) 토글 문장 (글은 마음에 진동한다) */
+.secret-toggle {
+  font-family: 'HCR Batang', serif;
   font-size: 15px;
-  margin-bottom: 10px;
-  font-weight: 700;
-}
-
-#secret-input {
-  width: 90%;
-  padding: 7px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-#secret-btn {
-  margin-top: 10px;
-  padding: 7px 12px;
-  border: none;
-  background: #3558A8;
-  color: #fff;
-  border-radius: 6px;
+  color: #C0C0C0;
+  font-style: italic;
+  text-align: center;
   cursor: pointer;
+  margin-top: 14px;
+  margin-bottom: 6px;
+  transition: 0.25s ease;
 }
 
+.secret-toggle:hover {
+  color: #5C8EDB;
+}
+
+/* 📌 2) 비밀문 박스(기본: 숨김) */
+.secret-box {
+  display: none;
+  width: 90%;
+  margin: 10px auto 0;
+  padding: 14px 12px;
+
+  background: #F4FAFF;                /* 연하늘 배경 */
+  border: 1.5px solid #3558A8;        /* 은남색 테두리 */
+  border-radius: 10px;
+
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* 📌 3) 입력창 */
+.secret-box input {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+
+  border-radius: 6px;
+  border: 1px solid #A2C0E6;          /* 은청 라인 */
+  background: #ffffff;
+  font-size: 14px;
+
+  outline: none;
+  transition: 0.25s ease;
+}
+
+.secret-box input:focus {
+  border-color: #5C8EDB;
+  box-shadow: 0 0 4px rgba(92,142,219,0.4);
+}
+
+/* 📌 4) 버튼 */
+.secret-box button {
+  width: 100%;
+  padding: 8px 10px;
+
+  background: #5C8EDB;               /* 은청 파랑 */
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.secret-box button:hover {
+  background: #3558A8;               /* 은남색 눌림 */
+}
+
+/* 📌 5) 메시지 */
 #secret-msg {
   margin-top: 8px;
-  font-size: 13px;
-  color: #3558A8;
+  font-size: 14px;
+  font-weight: 600;
 }
+
 
 /* -------- 접이식 메뉴 -------- */
 #menu-toggle {
