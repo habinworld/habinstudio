@@ -65,7 +65,7 @@ function drawClock() {
   ctx.beginPath();
   ctx.arc(0, 0, r - 5, 0, 2 * Math.PI);
   ctx.lineWidth = 3;
-  ctx.strokeStyle = "#001F3F";
+  ctx.strokeStyle = "#3A67C9";
   ctx.stroke();
 
   /* 시침 */
