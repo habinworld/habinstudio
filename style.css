@@ -1,6 +1,6 @@
 /* -----------------------------------------------------
-   🌙✨ Ha-Bin Studio — style.css (완전 결계판)
-   GitHub 레고조각 전용 UI 스타일
+   🌙✨ Ha-Bin Studio — style.css (완전 결계판 v2)
+   2025.11.29 — 햇살결계 + 사이드바 안정판 + 푸터 안정판
 ----------------------------------------------------- */
 
 /* 기본 세팅 */
@@ -14,9 +14,15 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
   background: var(--bgmain, #FFFDF8);
   color: #2b2b2b;
+  
+  /* ✔ 레이아웃 유지 — 절대 삭제 금지 */
   display: flex;
+  
   height: 100vh;
   overflow: hidden;
+
+  /* ✔ 푸터가 본문을 가리지 않게 */
+  padding-bottom: 110px !important;
 }
 
 /* -------- 계절 입자 캔버스 -------- */
@@ -68,7 +74,7 @@ body {
   margin-bottom: 20px;
   padding: 12px 0;
   border-radius: 8px;
-  border: 2px solid #FF8C00; /* 기본: OFF 모드 주황 */
+  border: 2px solid #FF8C00;
   color: #FF8C00;
 }
 
@@ -86,7 +92,7 @@ body {
   box-shadow: 0 0 10px rgba(92,142,219,0.55);
 }
 
-/* -------- 프로필(시·문학 블록) -------- */
+/* -------- 프로필 블록 -------- */
 .poetic-block {
   background: #A9DCFF;
   border: 1.5px solid rgba(53,88,168,0.25);
@@ -108,7 +114,7 @@ body {
   line-height: 1.6;
 }
 
-/* -------- 대문 인장(문패) -------- */
+/* -------- 대문 인장 -------- */
 .badge {
   font-family: 'HCR Batang', serif;
   text-align: center;
@@ -310,23 +316,24 @@ body {
   color: #444;
   font-size: 15px;
 }
+
 /* --------------------------------------------------
-   🌞 하빈 스튜디오 · 햇살결계 푸터 v2 (본문 아래 자연 배치)
+   🌞 하빈 스튜디오 · 햇살결계 푸터 v3 (안정판)
 -------------------------------------------------- */
 
-/* 푸터 전체 */
 #habin-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  position: relative;   /* ← 예전 방식 */
-  margin-top: 40px;     /* 본문과 여백 */
-  text-align: center;
-  padding: 14px 0 16px;
 
-  /* 햇살결계 배경 */
   background: #FFF5D1;
-  color: #0F2167;
+  border-top: 1px solid rgba(0,0,0,0.1);
 
-  border-top: 1px solid rgba(0,0,0,0.08);
+  text-align: center;
+  padding: 12px 0 14px;
+
+  z-index: 9999;
 
   font-family: 'HCR Batang','Batang',serif;
 }
@@ -337,15 +344,14 @@ body {
 
 .footer-line1,
 .footer-line2 {
-  margin: 4px 0;
+  margin: 2px 0;
 }
 
-/* 저작권 텍스트 */
+/* 저작권 문구 */
 .ft-sub {
-  color: #0F2167;
-  font-size: 13px;
+  color: #0F2167 !important;
   font-weight: 600;
-  margin: 0 4px;
+  font-size: 13px;
 }
 
 /* 골드 라인 */
@@ -359,12 +365,13 @@ body {
   font-style: italic;
 }
 
-/* 은회색 문장 (강제 적용) */
+/* 은회색 문장 */
 .ft-hidden {
   color: #C0C0C0 !important;
-  font-size: 15px;
-  font-style: italic;
-  margin-left: 8px;
+  font-size: 15px !important;
+  font-style: italic !important;
+  margin-left: 6px;
   opacity: 0.9;
 }
+
 
