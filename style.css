@@ -311,90 +311,64 @@ body {
   font-size: 15px;
 }
 /* --------------------------------------------------
-   🌙 하빈 스튜디오 v2 — 푸터 완전 결계판
-   (은청 배경 · 3줄 구조 · 브랜드 색상 고정)
+   🌙 하빈 스튜디오 v2 — 푸터 완전 결계판 (2줄 설정)
 -------------------------------------------------- */
 
-/* 푸터가 본문을 가리지 않도록 */
 body {
   padding-bottom: 95px;
   height: auto;
 }
 
-/* 푸터 전체 레이아웃 */
+/* 푸터 전체 */
 #habin-footer {
   width: 100%;
   position: fixed;
   bottom: 0;
   left: 0;
   z-index: 9999;
-
   text-align: center;
   padding: 16px 0 20px;
-
-  /* ✨ 은청빛 배경 + 부드러운 흐림 */
   background: rgba(92, 142, 219, 0.12);
   backdrop-filter: blur(4px);
-
   border-top: 1px solid rgba(0,0,0,0.06);
-
   font-family: 'HCR Batang','Batang',serif;
 }
 
-/* 내부 라인 기본 구조 */
 .footer-inner {
   line-height: 1.8;
 }
 
-/* 각 줄 간격 */
+/* 라인 간격 */
 .footer-line1,
-.footer-line2,
-.footer-line3 {
-  margin: 3px 0;
+.footer-line2 {
+  margin: 4px 0;
 }
 
-/* ✿ 핑크 아이콘 */
-.ft-fl {
-  color: #FF69B4;
-  font-weight: 900;
-  font-size: 15px;
-}
-
-/* 출처 : 하빈 스튜디오 */
-.ft-brand {
-  color: #5C8EDB;
-  font-weight: 900;
-  font-size: 14px;
-}
-
-/* 저작권 부가 텍스트 */
+/* 저작권 텍스트 */
 .ft-sub {
   color: #5C8EDB;
   font-size: 13px;
   font-weight: 600;
-  margin-left: 4px;
+  margin: 0 4px;
 }
 
-/* ✦ 골드 라인 */
+/* 골드 ✦ 라인 */
 .ft-star {
   color: #DAA520;
   font-weight: 700;
   font-size: 14px;
 }
 
-/* 골드 명언 문구 */
 .footer-line2 em {
   font-style: italic;
 }
 
-/* 마지막 숨겨진 문장 (속삭임 라인) */
+/* ★ 마지막 문장: 은회색 + 절대 우선순위 */
 .ft-hidden {
-  display: inline-block;
-  font-family: 'Times New Roman','HCR Batang',serif;
-  font-size: 18px;
-  color:#C0C0C0;
+  color: #C0C0C0 !important;
+  font-size: 15px;
   font-style: italic;
+  margin-left: 6px;
   opacity: 0.9;
-  margin-top: 2px;
 }
 
