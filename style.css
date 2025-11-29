@@ -1,1 +1,313 @@
+/* -----------------------------------------------------
+   🌙✨ Ha-Bin Studio — style.css (완전 결계판)
+   GitHub 레고조각 전용 UI 스타일
+----------------------------------------------------- */
+
+/* 기본 세팅 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bgmain, #FFFDF8);
+  color: #2b2b2b;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* -------- 계절 입자 캔버스 -------- */
+#season-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* -------- 모바일 헤더 -------- */
+#mobile-header {
+  display: none;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  background: #3558A8;
+  color: #fff;
+  z-index: 3000;
+  align-items: center;
+  padding: 0 14px;
+  justify-content: space-between;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+#drawer-btn {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* -------- 사이드바 -------- */
+#sidebar {
+  width: 260px;
+  background: #F7FAFF;
+  border-right: 1px solid #e5e7eb;
+  padding: 20px;
+  overflow-y: auto;
+  z-index: 2000;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 12px 0;
+  border-radius: 8px;
+  border: 2px solid #FF8C00; /* 기본: OFF 모드 주황 */
+  color: #FF8C00;
+}
+
+/* Gold 모드 */
+.logo-gold {
+  border-color: #DAA520;
+  color: #DAA520;
+  box-shadow: 0 0 8px rgba(218,165,32,0.5);
+}
+
+/* Moonlight 모드 */
+.logo-moon {
+  border-color: #5C8EDB;
+  color: #5C8EDB;
+  box-shadow: 0 0 10px rgba(92,142,219,0.55);
+}
+
+/* -------- 프로필(시·문학 블록) -------- */
+.poetic-block {
+  background: #A9DCFF;
+  border: 1.5px solid rgba(53,88,168,0.25);
+  padding: 20px 14px 22px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  margin-bottom: 25px;
+}
+
+.poetic-block h2 {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.poetic-block p {
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+/* -------- 대문 인장(문패) -------- */
+.badge {
+  font-family: 'HCR Batang', serif;
+  text-align: center;
+  margin: 0 auto 28px;
+  padding: 10px 16px;
+  width: fit-content;
+  background: #FFEBA0;
+  border: 1.5px solid #3558A8;
+  border-radius: 10px;
+  line-height: 1.9;
+  color: #5C8EDB;
+}
+
+.badge .brand-bold {
+  font-weight: 900;
+  -webkit-text-stroke: 0.3px #3558A8;
+  text-shadow: 0.6px 0.8px 1.5px rgba(53,88,168,0.35);
+}
+
+.badge .fl {
+  color: #FF69B4;
+  font-weight: 900;
+}
+
+/* -------- 날짜/시간 -------- */
+#datetime-box {
+  margin: 15px 0;
+  font-size: 13px;
+  text-align: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* -------- 아날로그 시계 -------- */
+#clock-box {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0 25px;
+}
+
+#clock {
+  width: 85px;
+  height: 85px;
+  border: 2px solid #5C8EDB;
+  border-radius: 50%;
+  position: relative;
+}
+
+.hand {
+  width: 2px;
+  height: 35%;
+  background: #3558A8;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: bottom;
+}
+
+/* -------- 비밀의 문 -------- */
+#secret-box {
+  margin: 25px 0;
+  text-align: center;
+}
+
+#secret-title {
+  font-size: 15px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+#secret-input {
+  width: 90%;
+  padding: 7px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+#secret-btn {
+  margin-top: 10px;
+  padding: 7px 12px;
+  border: none;
+  background: #3558A8;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#secret-msg {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #3558A8;
+}
+
+/* -------- 접이식 메뉴 -------- */
+#menu-toggle {
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 12px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.menu-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+
+.menu-row a {
+  width: 48%;
+  padding: 8px 0;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 13px;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  transition: 0.2s;
+}
+
+.menu-row a:hover {
+  background: #F0F4FF;
+  border-color: #3558A8;
+  color: #3558A8;
+}
+
+/* -------- 메인 영역 -------- */
+#content {
+  flex: 1;
+  padding: 40px;
+  overflow-y: auto;
+  position: relative;
+  z-index: 100;
+}
+
+/* -------- 탑메뉴 -------- */
+.top-menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.top-menu a {
+  padding: 6px 12px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 14px;
+  text-decoration: none;
+  color: #333;
+  transition: 0.2s;
+}
+
+.top-menu a:hover {
+  background: #EEF4FF;
+  border-color: #3558A8;
+  color: #3558A8;
+}
+
+/* -------- 모바일 -------- */
+@media (max-width: 768px) {
+  #mobile-header {
+    display: flex;
+  }
+
+  #sidebar {
+    position: fixed;
+    left: -260px;
+    top: 0;
+    height: 100%;
+    transition: 0.3s;
+  }
+
+  #content {
+    padding-top: 70px;
+  }
+}
+
+/* -------- 모바일 드로어 -------- */
+#drawer {
+  position: fixed;
+  left: -70%;
+  top: 0;
+  width: 70%;
+  height: 100%;
+  background: #FFFDF8;
+  z-index: 3500;
+  transition: 0.3s;
+  padding: 20px;
+}
+
+.drawer-inner a {
+  display: block;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  text-decoration: none;
+  color: #444;
+  font-size: 15px;
+}
 
