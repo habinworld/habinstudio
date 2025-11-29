@@ -347,14 +347,14 @@ body {
 .ft-sub {
   color: #0F2167 !important;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 /* 골드 라인 */
 .ft-star {
   color: #DAA520;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .footer-line2 em {
