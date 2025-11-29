@@ -40,7 +40,7 @@ function updateDateTime() {
 
   /* 날짜 출력 최종 포맷 */
   el.textContent =
-    `${year}.${month}.${date}(${weekday}) • ${ampm} ${hourStr}:${minute}`;
+    `${year}. ${month}. ${date}. (${weekday})  •  ${ampm}  ${hourStr}:${minute}`;
 }
 
 /* 아날로그 시계 */
