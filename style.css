@@ -105,13 +105,13 @@ body {
 
 .poetic-block h2 {
   margin-bottom: 10px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
 }
 
 .poetic-block p {
-  font-size: 13.5px;
-  line-height: 1.6;
+  font-size: 14.5px;
+  line-height: 1.7;
 }
 
 /* -------- 대문 인장 -------- */
