@@ -308,6 +308,7 @@ body {
   border: 1px solid #e5e7eb;
   border-radius: 6px;
   font-size: 14px;
+  font-weight: 700;   /* ← 굵게 */ 
   text-align: center;
   text-decoration: none;
   color: #333;
