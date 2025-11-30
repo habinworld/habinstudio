@@ -483,22 +483,13 @@ body {
   background: #E6F2FF;
   box-shadow: 0 4px 14px rgba(53,88,168,0.15);
 
-  display: block;
-
-  /* 핵심: 너무 얇게 나오는 것만 방지 */
-  min-height: 240px;
-
-  /* content 내부 스크롤을 위해 반드시 필요함 */
-  height: auto;
+  /* 🔥 핵심! A3 비율 + 최소/최대 높이 모두 만족시키는 공식 */
+  height: clamp(240px, calc(100vw * 0.30), 330px);
 }
-
 .hero img {
   width: 100%;
-  height: auto;            /* height:100% 절대 금지 */
-  display: block;
-
-  object-fit: cover;       /* 전체가 잘 보이는 비율 */
+  height: 100%;
+  object-fit: cover;   /* contain → cover로 변경 (A3를 자연스럽게) */
   object-position: center;
 }
-
 
