@@ -472,27 +472,4 @@ body {
   opacity: 0.9;
 }
 
-/* -----------------------------------------------------
-   🌄 Ha-Bin Studio HERO (A3 가로형 분재 + 전체비율 유지)
------------------------------------------------------ */
-.hero {
-  width: 100%;
-  margin: 18px 0 28px;
-  border-radius: 14px;
-  overflow: hidden;
-  background: #E6F2FF;
-  box-shadow: 0 4px 14px rgba(53,88,168,0.15);
-
-  /* 🔥 content 안에서 ‘딱 이 높이’로만 존재해야 레이아웃이 안 깨짐 */
-  height: 280px;      /* ← 딱 이거. 고정 수치. */
-}
-
-.hero img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;   /* A3 감성 유지 + 항상 꽉 채움 */
-  object-position: center 35%;
-  display: block;
-}
-
 
