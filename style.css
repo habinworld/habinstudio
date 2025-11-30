@@ -471,20 +471,21 @@ body {
   margin-left: 6px;
   opacity: 0.9;
 }
+
 /* -----------------------------------------------------
-   🌄 Ha-Bin Studio HERO (A3 가로형 분재 + 옛버전 조화)
+   🌄 Ha-Bin Studio — HERO (옛 감성 완전 재현)
 ----------------------------------------------------- */
 
 .hero {
   width: 100%;
-  height: 300px;
+  height: clamp(260px, 28vh, 360px);  /* 옛 사진과 동일한 체감 높이 */
   border-radius: 14px;
   overflow: hidden;
-  margin: 16px 0 30px;
+  background: #E6F2FF;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #E6F2FF;
+  margin: 10px 0 26px;        /* 옛날과 같은 위치감 */
   box-shadow: 0 4px 14px rgba(53,88,168,0.15);
 }
 
@@ -492,7 +493,11 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
+
+  /* 🔥 옛날 감성 핵심 — ‘상단 25~30% 컷’ */
+  object-position: center 28%;
+
+  display: block;
 }
 
 
