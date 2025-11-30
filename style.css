@@ -200,6 +200,25 @@ body {
   left: 50%;
   transform-origin: bottom;
 }
+/* ----- 날씨 영역 ----- */
+#weather-area {
+  font-size: 13px;
+  text-align: center;
+  margin-top: 2px;
+  color: #000; /* 전체를 검정으로 */
+}
+
+/* 지역명 */
+#weather-location {
+  font-weight: 600;
+  color: #000; /* 검정 */
+}
+
+/* 날씨 데이터 */
+#weather-box {
+  font-weight: 700;
+  color: #000; /* 검정 */
+}
 
 /* -----------------------------------------------------
    🔐 관리자 모드 — 비밀의 문 스타일 (Secret Gate)
