@@ -345,39 +345,29 @@ body {
 /* -------- 메인 영역 -------- */
 #content {
   flex: 1;
-  padding: 0 10px 120px;
-  overflow-y: auto;
+  padding: 0 10px 120px;  /* 아래 120px는 푸터 공간 */
   position: relative;
   z-index: 100;
   min-height: 100vh;
-
-  /* 🔥 flex 영향 강제 차단 */
-  display: block !important;
-  width: 100%;
-  max-width: 100%;
-  flex: none !important;
-}
 /* --------------------------------------------------
    🔷 Ha-Bin Studio — 히어로 대표 이미지 (옛날 안정판)
 -------------------------------------------------- */
+./* --------------------------------------------------
+   🌟 Ha-Bin Studio — 히어로 완전 순정 안정판
+   (A3 가로형 그림 전체 노출, 찌그러짐 없음)
+-------------------------------------------------- */
 .hero {
   width: 100%;
- border-radius: 14px;
+  border-radius: 14px;
   overflow: hidden;
   background: #E6F2FF;
- box-shadow: 0 4px 14px rgba(53,88,168,0.15);
+  box-shadow: 0 4px 14px rgba(53,88,168,0.15);
   margin-bottom: 24px;
 }
-
 .hero img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;         /* 그림 가득 채우기 */
- display: block;
-}
-.hero {
-  position: relative;
-  z-index: 999999;
+  display: block;
+  width: 100%;   /* 가로폭에 맞춰 축소 */
+  height: auto;  /* 세로는 비율대로 자동 */
 }
 /* -------- 탑메뉴 -------- */
 .top-menu {
