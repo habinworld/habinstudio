@@ -307,8 +307,6 @@ body {
   font-size: 14px;
   font-weight: 600;
 }
-
-
 /* -------- 접이식 메뉴 -------- */
 #menu-toggle {
   font-size: 14px;
@@ -353,8 +351,31 @@ body {
   position: relative;
   z-index: 100;
   min-height: 100vh; 
-   
 }
+/* --------------------------------------------------
+   🔷 Ha-Bin Studio — 히어로 대표 이미지 (옛날 안정판)
+-------------------------------------------------- */
+.hero {
+  width: 100%;
+  height: clamp(240px, 22vh, 320px);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #E6F2FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(53,88,168,0.15);
+  margin-bottom: 24px;
+}
+
+.hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        /* 그림 가득 채우기 */
+  object-position: center top;  /* 상단 중심(하늘+중앙부 우선) */
+  display: block;
+}
+
 /* -------- 탑메뉴 -------- */
 .top-menu {
   display: flex;
