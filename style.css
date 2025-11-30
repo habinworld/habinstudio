@@ -472,32 +472,28 @@ body {
   opacity: 0.9;
 }
 
-/* -----------------------------------------------------
-   🌄 Ha-Bin Studio — HERO (옛 감성만 최신판에 이식)
------------------------------------------------------ */
-
+/* ===== HERO 강제 우선 적용 (디버깅용) ===== */
 .hero {
-  width: 100%;
-  height: clamp(240px, 22vh, 320px);   /* 옛날 동일 비율 */
-  border-radius: 14px;
-  overflow: hidden;
-  background: #E6F2FF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 14px 0 30px;     /* ← 최신 레이아웃에서 이게 최적 */
-  box-shadow: 0 4px 14px rgba(53,88,168,0.15);
+  height: clamp(240px, 22vh, 320px) !important;
+  width: 100% !important;
+  margin: 18px 0 28px !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+
+  background: #E6F2FF !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  box-shadow: 0 4px 14px rgba(53,88,168,0.15) !important;
 }
 
 .hero img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-
-  /* ★ 옛날 스샷에서 글자·나무 위치가 예뻤던 핵심 컷 포인트 */
-  object-position: center 24%;
-
-  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  display: block !important;
 }
 
 
