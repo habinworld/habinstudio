@@ -344,11 +344,18 @@ body {
 
 /* -------- 메인 영역 -------- */
 #content {
- flex: 1;
-  padding: 0 10px 120px; 
+  flex: 1;
+  padding: 0 10px 120px;
   overflow-y: auto;
   position: relative;
   z-index: 100;
+  min-height: 100vh;
+
+  /* 🔥 flex 영향 강제 차단 */
+  display: block !important;
+  width: 100%;
+  max-width: 100%;
+  flex: none !important;
 }
 /* --------------------------------------------------
    🔷 Ha-Bin Studio — 히어로 대표 이미지 (옛날 안정판)
