@@ -176,7 +176,7 @@ body {
 }
 
 /* 실제 텍스트 */
-#datetime {
+#current-datetime {
   font-weight: 600;  /* 여기만 굵기 */
 }
 
