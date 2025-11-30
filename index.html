@@ -52,24 +52,21 @@
       <a href="list.html">📚 한글 게시판</a>
       <a href="#english">🌐 영어 게시판</a>
     </div>
-
     <div class="menu-row">
       <a href="#question">❓ 질문의 공간</a>
       <a href="#forge">⚒ 대장간</a>
     </div>
-
     <div class="menu-row">
       <a href="#gallery">🖼 갤러리</a>
       <a href="#video">🎬 동영상</a>
     </div>
-
     <div class="menu-row">
       <a href="#notice">📢 공지사항</a>
       <a href="#etc">✳ 기타</a>
     </div>
   </nav>
 
-  <!-- 날짜·시간 -->
+  <!-- 날짜/시간 -->
   <div id="datetime-box">
     <div id="current-datetime"></div>
   </div>
@@ -106,19 +103,9 @@
 <!-- 🔷 메인 콘텐츠 -->
 <main id="content">
 
-  <!-- ✨ 본문 대표 이미지 (images/hero/hero-main.png) -->
-  <div class="main-feature-image" style="
-    text-align:center;
-    margin-bottom:28px;
-    margin-top:10px;
-  ">
-    <img src="images/hero/hero-main.png"
-         alt="Ha-Bin Studio Main Feature"
-         style="
-           max-width:100%;
-           border-radius:14px;
-           box-shadow:0 3px 10px rgba(0,0,0,0.15);
-         ">
+  <!-- 🔶 HERO 대표 이미지 (A3 기본비율 최적화) -->
+  <div class="hero">
+    <img src="images/hero/hero-main.png" alt="Ha-Bin Hero Image">
   </div>
 
   <!-- 🔷 탑메뉴 -->
@@ -133,7 +120,7 @@
     <a href="#etc">✳ 기타</a>
   </div>
 
-  <!-- 본문 내용 -->
+  <!-- 본문 -->
   <div class="main-inner">
     <h1>Ha-Bin Studio</h1>
     <p>지금은 테스트 중입니다.</p>
@@ -177,7 +164,7 @@
   </div>
 </footer>
 
-<!-- 🔷 JS (중복 제거 + 안정판 순서) -->
+<!-- 🔷 JS 모듈 -->
 <script src="main.js"></script>
 <script src="particles.js"></script>
 <script src="weather.js"></script>
@@ -189,10 +176,10 @@
 <script src="datetime_clock.js"></script>
 
 <script>
-  startWeather();   // 1회 실행
+  startWeather();
 </script>
 
-<!-- 로고 자동 모드 (Moonlight / Sunshine) -->
+<!-- 로고 자동 모드 -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const logo = document.getElementById('main-logo');
@@ -210,6 +197,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </body>
 </html>
+
+
+
 
 
 
