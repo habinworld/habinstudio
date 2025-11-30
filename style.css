@@ -347,18 +347,14 @@ body {
 
 /* -------- 메인 영역 -------- */
 #content {
+  width: calc(100vw - 260px) 
   flex: 1;
   padding: 0 10px 120px; 
   overflow-y: auto;
   position: relative;
   z-index: 100;
   min-height: 100vh; 
-}
-/* 히어로 전체폭 적용 패치 */
-#content {
-  width: 100%;
-  max-width: 100%;
-  flex: 1 0 auto;
+   
 }
 /* -------- 탑메뉴 -------- */
 .top-menu {
