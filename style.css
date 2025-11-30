@@ -491,7 +491,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;   /* A3 감성 유지 + 항상 꽉 채움 */
-  object-position: center top;
+  object-position: center 35%;
   display: block;
 }
 
