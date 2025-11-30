@@ -341,30 +341,6 @@ body {
   min-height: 100vh;
 }
 
-/* --------------------------------------------------
-   🌟 Ha-Bin Studio — 히어로 안정판
--------------------------------------------------- */
-.hero {
-  width: 100%;
-  height: 340px;               /* 필요하면 300~380 사이로 조절 */
-  border-radius: 14px;
-  overflow: hidden;
-  background: #E6F2FF;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 14px rgba(53,88,168,0.15);
-  margin-bottom: 24px;
-}
-
-.hero img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;           /* 꽉 차게 */
-  object-position: center;     /* 중앙 기준 */
-}
-
 /* -------- 탑메뉴 -------- */
 .top-menu {
   display: flex;
