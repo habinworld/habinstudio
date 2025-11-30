@@ -473,19 +473,19 @@ body {
 }
 
 /* -----------------------------------------------------
-   🌄 Ha-Bin Studio — HERO (옛 감성 완전 재현)
+   🌄 Ha-Bin Studio — HERO (옛 감성만 최신판에 이식)
 ----------------------------------------------------- */
 
 .hero {
   width: 100%;
-  height: clamp(260px, 28vh, 360px);  /* 옛 사진과 동일한 체감 높이 */
+  height: clamp(240px, 22vh, 320px);   /* 옛날 동일 비율 */
   border-radius: 14px;
   overflow: hidden;
   background: #E6F2FF;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px 0 26px;        /* 옛날과 같은 위치감 */
+  margin: 10px 0 30px;     /* ← 최신 레이아웃에서 이게 최적 */
   box-shadow: 0 4px 14px rgba(53,88,168,0.15);
 }
 
@@ -494,9 +494,8 @@ body {
   height: 100%;
   object-fit: cover;
 
-  /* 🔥 옛날 감성 핵심 — ‘상단 25~30% 컷’ */
+  /* ★ 옛날 스샷에서 글자·나무 위치가 예뻤던 핵심 컷 포인트 */
   object-position: center 24%;
-
   display: block;
 }
 
