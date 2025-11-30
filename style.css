@@ -92,7 +92,7 @@ body {
   border: 2px solid #FF8C00;    /* OFF 모드 기본 */
   box-sizing: border-box;
   padding: 10px;
-  background: #ffffff;
+  background: #FFF4C9;
   transition: 0.3s ease;
   box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
@@ -170,6 +170,7 @@ body {
 #datetime-box {
   margin: 15px 0;
   font-size: 13px;
+  font-weight: 500;
   text-align: center;
   padding: 8px 0;
   border-bottom: 1px solid #e5e7eb;
@@ -304,7 +305,7 @@ body {
 .menu-row a {
   width: 48%;
   padding: 4px 0;
-  background: #fff;
+  background: #FFF4C9;
   border: 1px solid #e5e7eb;
   border-radius: 6px;
   font-size: 14px;
