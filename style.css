@@ -467,7 +467,7 @@ body {
 }
 .top-banner {
   width: 100%;
-  background: #1B1E45; /* 푸터와 동일 색상 */
+  background: #26214F; /* 보라빛 네이비 추천 */
   color: #FFFFFF;
   height: 85px; /* ← 세로폭 넓힘 */
   display: flex;
