@@ -65,6 +65,16 @@ body {
   overflow-y: auto;
   z-index: 2000;
 }
+/* 사이드바 스크롤바 */
+#sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+#sidebar::-webkit-scrollbar-track {
+  background: #F3F3F3;
+}
+#sidebar::-webkit-scrollbar-thumb {
+  background: #D5D5D5;
+}
 
 /* ----------------------------------------
    ⭐ Ha-Bin Studio — 사이드바 로고 최신 버전
