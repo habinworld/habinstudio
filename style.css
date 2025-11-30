@@ -59,7 +59,7 @@ body {
   width: 260px;
   background: #FFF4C9;
   border-right: 2px solid #3A67C9;
-  padding: 20px;
+  padding: 10px;
 /* 🔥 사이드바 고정 높이 + 자기 스크롤 */
   height: 100vh;
   overflow-y: auto;
