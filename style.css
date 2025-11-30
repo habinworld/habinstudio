@@ -204,7 +204,14 @@ body {
   left: 50%;
   transform-origin: bottom;
 }
-
+/* 날짜/시간 — 전체 글자색 주황 */
+#current-datetime {
+  color: #FF8C00 !important;
+}
+/* 아날로그 시계 — 초침만 주황색 */
+.hand.second {
+  background: #FF8C00 !important;
+}
 /* ----- 날씨 영역 ----- */
 #weather-area {
   font-size: 13px;
