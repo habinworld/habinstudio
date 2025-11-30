@@ -348,19 +348,19 @@ body {
   min-height: 100vh;
 }
 
-/* -------- 탑메뉴 (PC 절대 1줄 정렬 엔진) -------- */
+/* -------- 탑메뉴 (PC 절대 1줄 + 버튼폭 균등화) -------- */
 .top-menu {
   display: flex;
-  flex-wrap: nowrap;               /* 🔥 PC에서 절대 줄바꿈 금지 */
-  justify-content: space-between;  /* 양 끝 균형 */
+  flex-wrap: nowrap;
+  justify-content: space-between;
   gap: 8px;
   margin-bottom: 30px;
   width: 100%;
 }
 
 .top-menu a {
-  flex: 1 0 auto;                  /* 🔥 8개 균등 폭 */
-  min-width: 0;                    /* 텍스트 길이 충돌 제거 */
+  flex: 1 0 0;            /* 🔥 버튼폭 완전 동일화 */
+  min-width: 0;
 
   padding: 10px 0;
   background: #fff;
