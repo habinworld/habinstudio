@@ -210,7 +210,7 @@ body {
 }
 /* 아날로그 시계 — 초침만 주황색 */
 .hand.second {
-  background: #FF8C00 !important;
+  background: #FF0000 !important;
 }
 /* ----- 날씨 영역 ----- */
 #weather-area {
