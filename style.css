@@ -368,8 +368,7 @@ body {
   width: 100%;
   height: auto;
   object-fit: contain;         /* 그림 가득 채우기 */
-  object-position: center top;  /* 상단 중심(하늘+중앙부 우선) */
-  display: block;
+ display: block;
 }
 .hero {
   position: relative;
