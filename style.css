@@ -469,7 +469,7 @@ body {
   width: 100%;
   background: #1B1E45; /* 푸터와 동일 색상 */
   color: #FFFFFF;
-  height: 110px; /* ← 세로폭 넓힘 */
+  height: 90px; /* ← 세로폭 넓힘 */
   display: flex;
   align-items: center;
   justify-content: center;
