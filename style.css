@@ -467,17 +467,20 @@ body {
 }
 .top-banner {
   width: 100%;
-  background: #1B1E45;   /* 푸터 색깔 동일 */
+  background: #1B1E45; /* 푸터와 동일 색상 */
   color: #FFFFFF;
-  height: 70px;          /* 너가 요청한 크기 */
+  height: 110px; /* ← 세로폭 넓힘 */
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: 'HCR Batang','Batang',serif;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   border-radius: 0;
   margin-bottom: 20px;
+  padding: 0;           /* 여백 제거 → 푸터와 완전 동일한 느낌 */
+  box-shadow: none;     /* 미세 그림자 제거 → 색 차이 방지 */
+  border: none;         /* 테두리 제거 → 푸터와 동일 */
 }
 
 
