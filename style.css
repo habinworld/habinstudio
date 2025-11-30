@@ -481,6 +481,8 @@ body {
   
   margin-bottom: 22px;
   font-family: 'HCR Batang','Batang',serif;
+  margin-left: -10px;         /* ← content의 padding-left(10px) 상쇄 */
+  margin-right: -10px;        /* ← content의 padding-right(10px) 상쇄 */ 
   position: relative;
   z-index: 10;
 }
