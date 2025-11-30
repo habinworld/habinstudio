@@ -375,7 +375,10 @@ body {
   object-position: center top;  /* 상단 중심(하늘+중앙부 우선) */
   display: block;
 }
-
+.hero {
+  position: relative;
+  z-index: 999999;
+}
 /* -------- 탑메뉴 -------- */
 .top-menu {
   display: flex;
