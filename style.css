@@ -472,28 +472,33 @@ body {
   opacity: 0.9;
 }
 
-/* ===== HERO 강제 우선 적용 (디버깅용) ===== */
+/* -----------------------------------------------------
+   🌄 Ha-Bin Studio HERO (A3 가로형 분재 + 전체비율 유지)
+----------------------------------------------------- */
+
 .hero {
-  height: clamp(240px, 22vh, 320px) !important;
-  width: 100% !important;
-  margin: 18px 0 28px !important;
-  border-radius: 14px !important;
-  overflow: hidden !important;
+  height: clamp(240px, 22vh, 320px);   /* 옛 비율 그대로 */
+  width: 100%;
+  margin: 18px 0 28px;                 /* 사이드바와 자연스럽게 맞추는 여백 */
+  border-radius: 14px;
+  overflow: hidden;
 
-  background: #E6F2FF !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
+  background: #E6F2FF;                 /* 옛 대문 감성 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  box-shadow: 0 4px 14px rgba(53,88,168,0.15) !important;
+  box-shadow: 0 4px 14px rgba(53,88,168,0.15);
 }
 
 .hero img {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
-  object-position: center top !important;
-  display: block !important;
-}
+  width: 100%;
+  height: 100%;
+  
+  /* ★ 핵심 포인트 — 전체 이미지 보이게 (잘림 없음) */
+  object-fit: contain;       /* ← cover가 아니라 contain! */
+  object-position: center top;
 
+  display: block;
+}
 
