@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
 <title>하빈 스튜디오 · 사계정원</title>
+
 <link rel="stylesheet" href="style.css">
 </head>
 
@@ -23,27 +24,28 @@
 <!-- 🔷 사이드바 -->
 <aside id="sidebar">
 
-  <!-- 로고 (로고3단 모드 적용: OFF/Gold/Moonlight) -->
+  <!-- 로고 (3단 모드) -->
   <div class="logo-block">
-  <img src="images/habin_logo.png" id="main-logo" class="logo-off" alt="Ha-Bin Logo">
-</div>
+    <img src="images/habin_logo.png" id="main-logo" class="logo-off" alt="Ha-Bin Logo">
+  </div>
 
-  <!-- 프로필 블록 (공식 저장 버전) -->
+  <!-- 프로필 -->
   <div id="profileBlock" class="poetic-block">
     <h2>뿌리깊은 고목, 하빈</h2>
-    <p>뿌리는 심연에 닿고,<br>가지는 하늘에 뻗어,<br>물처럼 흐르고 별처럼<br> 빛나는 길을 걷는다.</p>
+    <p>뿌리는 심연에 닿고,<br>가지는 하늘에 뻗어,<br>물처럼 흐르고 별처럼<br>빛나는 길을 걷는다.</p>
   </div>
 
-  <!-- 대문 인장 (문패) -->
+  <!-- 대문 인장 -->
   <div class="badge">
     <span class="fl">✿</span>
-    <span class="brand-bold" style="color:#3558A8; font-size:1.2em;">하빈 스튜디오</span>
-    <span class="fl">✿</span><br> 
-    <span class="brand-bold" style="color:#3558A8; font-size:1.1em;">제2025-000004호</span><br> 
-    <span class="brand-bold" style="color:#3558A8; font-size:1.1em;">Since 2025.08.21.</span>
+    <span class="brand-bold" style="font-size:1.2em;">하빈 스튜디오</span>
+    <span class="fl">✿</span><br>
+    <span class="brand-bold" style="font-size:1.1em;">제2025-000004호</span><br>
+    <span class="brand-bold" style="font-size:1.1em;">Since 2025.08.21.</span>
   </div>
-<!-- 접이식 메뉴 -->
-  <div id="menu-toggle"> 접이식 메뉴 ▼</div>
+
+  <!-- 접이식 메뉴 -->
+  <div id="menu-toggle">접이식 메뉴 ▼</div>
 
   <nav id="sidebar-menu">
     <div class="menu-row">
@@ -66,33 +68,60 @@
       <a href="#etc">✳ 기타</a>
     </div>
   </nav>
-<div id="current-datetime" style="font-size:13px; margin-top:10px; text-align:center;"></div>
-<canvas id="clock" width="120" height="120"
-        style="display:block; margin:10px auto;"></canvas>
+
+  <!-- 날짜·시간 -->
+  <div id="datetime-box">
+    <div id="current-datetime"></div>
   </div>
-<div id="weather-area" style="font-size:13px;text-align:center;">
-  <span id="weather-location">지역</span>
-  <span id="weather-box"></span>
-</div>
 
-  <!-- 관리자 문장 (토글 버튼) -->
-<div class="secret-toggle" id="secret-toggle">
-  글은 마음에 진동한다.
-</div>
+  <!-- 3바늘 아날로그 시계 -->
+  <div id="clock-box">
+    <div id="clock">
+      <div class="hand hour"></div>
+      <div class="hand minute"></div>
+      <div class="hand second"></div>
+    </div>
+  </div>
 
-<!-- 비밀의 문 (관리자 키 입력 박스) -->
-<div class="secret-box" id="secret-box">
-  <input type="password" id="secret-input" placeholder="관리자 키 입력">
-  <button id="secret-btn">입력</button>
-  <div id="secret-msg"></div>
-</div>
+  <!-- 날씨 -->
+  <div id="weather-area">
+    <span id="weather-location">지역</span>
+    <span id="weather-box"></span>
+  </div>
 
- </aside>
+  <!-- 관리자 토글 -->
+  <div class="secret-toggle" id="secret-toggle">
+    글은 마음에 진동한다.
+  </div>
+
+  <!-- 비밀문 -->
+  <div class="secret-box" id="secret-box">
+    <input type="password" id="secret-input" placeholder="관리자 키 입력">
+    <button id="secret-btn">입력</button>
+    <div id="secret-msg"></div>
+  </div>
+
+</aside>
 
 <!-- 🔷 메인 콘텐츠 -->
 <main id="content">
 
-  <!-- 🔷 탑메뉴 (8개 메뉴 / 아이콘 포함) -->
+  <!-- ✨ 본문 대표 이미지 (images/hero/hero-main.png) -->
+  <div class="main-feature-image" style="
+    text-align:center;
+    margin-bottom:28px;
+    margin-top:10px;
+  ">
+    <img src="images/hero/hero-main.png"
+         alt="Ha-Bin Studio Main Feature"
+         style="
+           max-width:100%;
+           border-radius:14px;
+           box-shadow:0 3px 10px rgba(0,0,0,0.15);
+         ">
+  </div>
+
+  <!-- 🔷 탑메뉴 -->
   <div class="top-menu">
     <a href="list.html">📚 한글 게시판</a>
     <a href="#english">🌐 영어 게시판</a>
@@ -104,10 +133,10 @@
     <a href="#etc">✳ 기타</a>
   </div>
 
-  <!-- 🔷 본문 기본 영역 -->
+  <!-- 본문 내용 -->
   <div class="main-inner">
     <h1>Ha-Bin Studio</h1>
-    <p> 지금은 테스트 중입니다.</p>
+    <p>지금은 테스트 중입니다.</p>
   </div>
 
 </main>
@@ -126,7 +155,7 @@
   </div>
 </div>
 
- <!-- 🔷 🌞 하빈 스튜디오 · 푸터 v3 -->
+<!-- 🌞 푸터 -->
 <footer id="habin-footer">
   <div class="footer-inner">
 
@@ -139,57 +168,50 @@
     <div class="footer-line2">
       <span class="ft-star">✦</span>
       <span class="ft-star">On my own</span>
-      <span class="ft-star">✦ </span>
+      <span class="ft-star">✦</span>
       <span class="ft-star"><em>빛은 내 이름을 알고 있다.</em></span>
       <span class="ft-star">“The light knows my name.”</span>
       <span class="ft-hidden">Writing resonates in the mind.</span>
     </div>
+
   </div>
-</footer> 
-<!-- JS 레고조각 로딩 -->
-<script src="secret-gate.js"></script>
+</footer>
+
+<!-- 🔷 JS (중복 제거 + 안정판 순서) -->
 <script src="main.js"></script>
 <script src="particles.js"></script>
 <script src="weather.js"></script>
+<script src="secret-toggle.js"></script>
+<script src="secret-gate.js"></script>
+<script src="drawer.js"></script>
 
-  <script>
+<!-- 날짜/시간 + 아날로그 시계 -->
+<script src="datetime_clock.js"></script>
+
+<script>
+  startWeather();   // 1회 실행
+</script>
+
+<!-- 로고 자동 모드 (Moonlight / Sunshine) -->
+<script>
 document.addEventListener('DOMContentLoaded', () => {
-
   const logo = document.getElementById('main-logo');
   if (!logo) return;
 
-  // 현재 시간이 Moonlight 조건인지 판단
-  const now = new Date();
-  const hour = now.getHours();
-
-  // Moonlight: 20시~06시
+  const hour = new Date().getHours();
   const isNight = hour >= 20 || hour < 6;
 
-  // 이미 관리자(GOLD) 모드이면 Moonlight 적용 금지
   if (logo.classList.contains('logo-gold')) return;
 
-  if (isNight) {
-    logo.classList.remove('logo-off', 'logo-gold');
-    logo.classList.add('logo-moon');
-  } else {
-    logo.classList.remove('logo-moon', 'logo-gold');
-    logo.classList.add('logo-off');
-  }
+  logo.classList.remove('logo-off','logo-moon','logo-gold');
+  logo.classList.add(isNight ? 'logo-moon' : 'logo-off');
 });
 </script>
-<!-- 관리자 모드: 비밀문 스크립트 -->
-<script src="secret-toggle.js"></script>
-<script src="secret-gate.js"></script>
-<script src="weather.js"></script>
-<script>
-  startWeather();
-</script>
-<script src="datetime_clock.js"></script>
-<script>
-  startDateTimeClock();
-</script>
+
 </body>
 </html>
+
+
 
 
 
