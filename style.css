@@ -16,8 +16,7 @@ body {
   color: #2b2b2b;
   
   /* ✔ 레이아웃 유지 — 절대 삭제 금지 */
-  display: flex;
-  min-height: 100vh;
+    min-height: 100vh;
  /* 🔥 문제 해결 포인트 */
   overflow-x: hidden;    /* 가로만 막음 */
    }
