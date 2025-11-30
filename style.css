@@ -495,7 +495,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top; /* 상단 강조 + 여백 없이 분재 스타일 */
+   object-position: center 25%; /* 상단 25% 중심으로 잡기 + 여백 없이 분재 스타일 */
   display: block;
 }
 
