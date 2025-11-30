@@ -483,13 +483,16 @@ body {
   background: #E6F2FF;
   box-shadow: 0 4px 14px rgba(53,88,168,0.15);
 
-  /* 🔥 핵심! A3 비율 + 최소/최대 높이 모두 만족시키는 공식 */
-  height: clamp(240px, calc(100vw * 0.30), 330px);
+  /* 🔥 content 안에서 ‘딱 이 높이’로만 존재해야 레이아웃이 안 깨짐 */
+  height: 280px;      /* ← 딱 이거. 고정 수치. */
 }
+
 .hero img {
   width: 100%;
   height: 100%;
-  object-fit: cover;   /* contain → cover로 변경 (A3를 자연스럽게) */
+  object-fit: cover;   /* A3 감성 유지 + 항상 꽉 채움 */
   object-position: center;
+  display: block;
 }
+
 
