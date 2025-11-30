@@ -1,5 +1,5 @@
 /* -----------------------------------------------------
-   🌙✨ Ha-Bin Studio — style.css (완전 결계판 v2)
+   🌙✨ Ha-Bin Studio — style.css (완전 결계판 v2 복구본)
    2025.11.29 — 햇살결계 + 사이드바 안정판 + 푸터 안정판
 ----------------------------------------------------- */
 
@@ -14,19 +14,20 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
   background: var(--bgmain, #FFFDF8);
   color: #2b2b2b;
-  
+
   /* ✔ 레이아웃 유지 — 절대 삭제 금지 */
-   display:flex;
-   min-height: 100vh;
- /* 🔥 문제 해결 포인트 */
+  display: flex;
+  min-height: 100vh;
   overflow-x: hidden;    /* 가로만 막음 */
-   }
+}
 
 /* -------- 계절 입자 캔버스 -------- */
 #season-canvas {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0; 
+  left: 0;
+  width: 100%; 
+  height: 100%;
   pointer-events: none;
   z-index: 0;
 }
@@ -59,11 +60,13 @@ body {
   background: #FFF4C9;
   border-right: 2px solid #3A67C9;
   padding: 10px;
-/* 🔥 사이드바 고정 높이 + 자기 스크롤 */
+
+  /* 사이드바 고정 높이 + 자기 스크롤 */
   height: 100vh;
   overflow-y: auto;
   z-index: 2000;
 }
+
 /* 사이드바 스크롤바 */
 #sidebar::-webkit-scrollbar {
   width: 8px;
@@ -114,12 +117,11 @@ body {
   box-shadow: 0 0 12px rgba(218,165,32,0.55) !important;
 }
 
-
 /* -------- 프로필 블록 -------- */
 .poetic-block {
   width: calc(100% - 16px);
-   margin: 0 auto 8px; 
-   background: #A9DCFF;
+  margin: 0 auto 8px; 
+  background: #A9DCFF;
   border: 1.5px solid rgba(53,88,168,0.25);
   padding: 10px 6px 10px;
   border-radius: 14px;
@@ -174,9 +176,8 @@ body {
   border-bottom: 1px solid #e5e7eb;
 }
 
-/* 실제 텍스트 */
 #current-datetime {
-  font-weight: 600;  /* 여기만 굵기 */
+  font-weight: 600;
 }
 
 /* -------- 아날로그 시계 -------- */
@@ -203,32 +204,29 @@ body {
   left: 50%;
   transform-origin: bottom;
 }
+
 /* ----- 날씨 영역 ----- */
 #weather-area {
   font-size: 13px;
   text-align: center;
   margin-top: 2px;
-  color: #000; /* 전체를 검정으로 */
+  color: #000;
 }
 
-/* 지역명 */
 #weather-location {
   font-weight: 600;
-  color: #000; /* 검정 */
+  color: #000;
 }
 
-/* 날씨 데이터 */
 #weather-box {
   font-weight: 600;
-  color: #000; /* 검정 */
+  color: #000;
 }
 
 /* -----------------------------------------------------
    🔐 관리자 모드 — 비밀의 문 스타일 (Secret Gate)
-   Ha-Bin Studio Official CSS (2025)
 ----------------------------------------------------- */
 
-/* 📌 1) 토글 문장 (글은 마음에 진동한다) */
 .secret-toggle {
   font-family: 'HCR Batang', serif;
   font-size: 15px;
@@ -245,32 +243,26 @@ body {
   color: #5C8EDB;
 }
 
-/* 📌 2) 비밀문 박스(기본: 숨김) */
 .secret-box {
   display: none;
   width: 90%;
   margin: 10px auto 0;
   padding: 14px 12px;
-
-  background: #F4FAFF;                /* 연하늘 배경 */
-  border: 1.5px solid #3558A8;        /* 은남색 테두리 */
+  background: #F4FAFF;
+  border: 1.5px solid #3558A8;
   border-radius: 10px;
-
   text-align: center;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-/* 📌 3) 입력창 */
 .secret-box input {
   width: 100%;
   padding: 8px 10px;
   margin-bottom: 8px;
-
   border-radius: 6px;
-  border: 1px solid #A2C0E6;          /* 은청 라인 */
+  border: 1px solid #A2C0E6;
   background: #ffffff;
   font-size: 14px;
-
   outline: none;
   transition: 0.25s ease;
 }
@@ -280,33 +272,29 @@ body {
   box-shadow: 0 0 4px rgba(92,142,219,0.4);
 }
 
-/* 📌 4) 버튼 */
 .secret-box button {
   width: 100%;
   padding: 8px 10px;
-
-  background: #5C8EDB;               /* 은청 파랑 */
+  background: #5C8EDB;
   color: #ffffff;
   border: none;
   border-radius: 6px;
-
   font-size: 14px;
   font-weight: 700;
-
   cursor: pointer;
   transition: 0.25s ease;
 }
 
 .secret-box button:hover {
-  background: #3558A8;               /* 은남색 눌림 */
+  background: #3558A8;
 }
 
-/* 📌 5) 메시지 */
 #secret-msg {
   margin-top: 8px;
   font-size: 14px;
   font-weight: 600;
 }
+
 /* -------- 접이식 메뉴 -------- */
 #menu-toggle {
   font-size: 14px;
@@ -329,7 +317,7 @@ body {
   border: 1px solid #e5e7eb;
   border-radius: 6px;
   font-size: 14px;
-  font-weight: 700;   /* ← 굵게 */ 
+  font-weight: 700;
   text-align: center;
   text-decoration: none;
   color: #333;
@@ -345,29 +333,38 @@ body {
 /* -------- 메인 영역 -------- */
 #content {
   flex: 1;
+  width: calc(100vw - 260px);
   padding: 0 10px 120px;  /* 아래 120px는 푸터 공간 */
-  overflow-y: visible;
-   position: relative;
+  overflow-y: auto;
+  position: relative;
   z-index: 100;
   min-height: 100vh;
+}
 
 /* --------------------------------------------------
-   🌟 Ha-Bin Studio — 히어로 완전 순정 안정판
-   (A3 가로형 그림 전체 노출, 찌그러짐 없음)
+   🌟 Ha-Bin Studio — 히어로 안정판
 -------------------------------------------------- */
 .hero {
   width: 100%;
+  height: 340px;               /* 필요하면 300~380 사이로 조절 */
   border-radius: 14px;
   overflow: hidden;
   background: #E6F2FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 4px 14px rgba(53,88,168,0.15);
   margin-bottom: 24px;
 }
+
 .hero img {
   display: block;
-  width: 100%;   /* 가로폭에 맞춰 축소 */
-  height: auto;  /* 세로는 비율대로 자동 */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;           /* 꽉 차게 */
+  object-position: center;     /* 중앙 기준 */
 }
+
 /* -------- 탑메뉴 -------- */
 .top-menu {
   display: flex;
@@ -409,6 +406,12 @@ body {
 
   #content {
     padding-top: 70px;
+    width: 100%;
+  }
+
+  #habin-footer {
+    left: 0;
+    width: 100%;
   }
 }
 
@@ -450,6 +453,7 @@ body {
   z-index: 9999;
   font-family: 'HCR Batang','Batang',serif;
 }
+
 .footer-inner {
   line-height: 1.8;
 }
@@ -485,5 +489,6 @@ body {
   margin-left: 6px;
   opacity: 0.9;
 }
+
 
 
