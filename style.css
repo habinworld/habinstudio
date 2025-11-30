@@ -349,7 +349,6 @@ body {
   overflow-y: auto;
   position: relative;
   z-index: 100;
-  min-height: 100vh; 
 }
 /* --------------------------------------------------
    🔷 Ha-Bin Studio — 히어로 대표 이미지 (옛날 안정판)
