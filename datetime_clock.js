@@ -10,7 +10,7 @@
 
 /* 날짜 + 시간 표시 */
 function updateDateTime() {
-  const el = document.getElementById("datetime");
+  const el = document.getElementById("current-datetime");
   if (!el) return;
 
   // 날짜 글자색 적용 (주황)
