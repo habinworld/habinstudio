@@ -352,6 +352,7 @@ body {
   overflow-y: auto;
   position: relative;
   z-index: 100;
+  min-height: 100vh; 
 }
 
 /* -------- 탑메뉴 -------- */
