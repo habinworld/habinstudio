@@ -487,7 +487,7 @@ body {
   align-items: center;  /* ↑ 이 두 줄 매우 중요 */
   justify-content: center;
 
-  margin: 18px 0 30px;
+  margin: 25px 0 30px;
   box-shadow: 0 4px 14px rgba(53,88,168,0.15);
 }
 
@@ -495,8 +495,8 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-   object-position: center 25%; /* 상단 25% 중심으로 잡기 + 여백 없이 분재 스타일 */
-  display: block;
+   object-position: center -20%; 
+   display: block;
 }
 
 
