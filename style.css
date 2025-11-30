@@ -356,8 +356,7 @@ body {
 -------------------------------------------------- */
 .hero {
   width: 100%;
-   max-height: 36vh;
-   border-radius: 14px;
+ border-radius: 14px;
   overflow: hidden;
   background: #E6F2FF;
  box-shadow: 0 4px 14px rgba(53,88,168,0.15);
