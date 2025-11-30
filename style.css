@@ -356,11 +356,11 @@ body {
   gap: 8px;
   margin-bottom: 30px;
   width: 100%;
-  padding: 0 10px;  /* ⭐ 좌우 여백 추가 */ 
+  padding: 0 15px;  /* ⭐ 좌우 여백 추가 */ 
 }
 
 .top-menu a {
-  flex: 0 0 11%;            /* 🔥 버튼폭 완전 동일화 */
+  flex: 0 0 10%;            /* 🔥 버튼폭 완전 동일화 */
   min-width: 0;
 
   padding: 10px 0;
