@@ -495,7 +495,7 @@ body {
   object-fit: cover;
 
   /* 🔥 옛날 감성 핵심 — ‘상단 25~30% 컷’ */
-  object-position: center 28%;
+  object-position: center 24%;
 
   display: block;
 }
