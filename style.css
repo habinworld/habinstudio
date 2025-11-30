@@ -170,10 +170,14 @@ body {
 #datetime-box {
   margin: 15px 0;
   font-size: 13px;
-  font-weight: 700;
   text-align: center;
   padding: 8px 0;
   border-bottom: 1px solid #e5e7eb;
+}
+
+/* 실제 텍스트 */
+#datetime {
+  font-weight: 600;  /* 여기만 굵기 */
 }
 
 /* -------- 아날로그 시계 -------- */
