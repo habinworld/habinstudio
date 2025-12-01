@@ -193,7 +193,17 @@ body {
   border-radius: 50%;
   position: relative;
 }
-
+#clock::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  border-radius: 50%;
+  border: 2px solid #8FA8E6;  /* 안쪽 원 */
+  box-sizing: border-box;
+}
 .hand {
   width: 2px;
   height: 35%;
