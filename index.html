@@ -63,6 +63,13 @@
       <a href="#etc">✳ 기타</a>
     </div>
   </nav>
+<!-- 🔥 🔥 🔥 여기가 비밀의 문 삽입 위치 🔥 🔥 🔥 -->
+  <div style="margin-top:25px;">
+    <span id="secretDoor" style="cursor:pointer; color:#5C8EDB; font-weight:bold;">
+      ✦ 비밀의 문 ✦
+    </span>
+  </div>
+  <!-- 🔥 🔥 🔥 여기까지 🔥 🔥 🔥 -->
 
   <!-- 날짜/시간 -->
   <div id="datetime-box">
@@ -191,9 +198,28 @@ document.addEventListener('DOMContentLoaded', () => {
   logo.classList.add(isNight ? 'logo-moon' : 'logo-off');
 });
 </script>
+<script>
+// 로그인 여부 체크
+let loggedIn = localStorage.getItem('habin_logged_in') === 'true';
 
+// 로그인 상태면 비밀문 제거
+if (loggedIn) {
+    document.getElementById('secretDoor')?.remove();
+}
+
+// 비밀문 클릭 → 비밀번호 체크 → secret.html로 이동
+document.getElementById('secretDoor')?.addEventListener('click', function () {
+    const key = prompt("비밀 코드를 입력하세요:");
+    if (key === "!!!habin2025!!!") {
+        window.location.href = "secret.html?auth=star";
+    } else {
+        alert("잘못된 코드입니다.");
+    }
+});
+</script>
 </body>
 </html>
+
 
 
 
