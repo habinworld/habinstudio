@@ -19,16 +19,17 @@ body {
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-/* 제목 입력 */
+/* 제목 입력 (버튼과 한 줄 배치용) */
 #post-title {
-  width: 100%;
+  flex: 1;
+  max-width: 55%;       /* 제목칸 너비 제한 */
   padding: 14px 16px;
-  margin-bottom: 20px;
   font-size: 20px;
   border: 2px solid #E5E7EB;
   border-radius: 8px;
   outline: none;
   transition: 0.2s;
+  margin-bottom: 0;      /* 기존 20px 제거 */
 }
 
 #post-title:focus {
