@@ -119,6 +119,14 @@
 <!-- 🔔 공지 블록 -->
 <div id="notice-section" style="margin-top:25px; display:none;">
   <h3 style="margin-bottom: 10px; font-size: 18px; color:#3558A8;">📢 공지사항</h3>
+  <!-- 🔥 공지 제목 아래 가로줄 -->
+  <div style="
+      width:100%;
+      height:1px;
+      background:#CCD9FF;
+      margin: 8px 0 12px;
+  "></div>
+
   <div id="notice-list"></div>
 </div>
 
@@ -196,7 +204,12 @@ document.addEventListener('DOMContentLoaded', () => {
   logo.classList.add(isNight ? 'logo-moon' : 'logo-off');
 });
 </script>
-  
+<script>
+// 날짜에서 "YYYY-MM-DD"만 추출
+function formatDate(dateString) {
+  return dateString.split(" ")[0];
+}
+</script>  
 <!-- 🔔 공지글 5개만 메인에 표시 (촘촘 버전) -->
 <script>
 let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
@@ -234,9 +247,9 @@ noticeList.innerHTML = notices.map((n, i) => `
       ${n.title}
     </span>
 
-    <span style="width:130px; text-align:center; color:#777;">
-      ${n.date}
-    </span>
+    <span style="width:100px; text-align:center; color:#777;">
+  ${formatDate(n.date)}
+</span>
 
   </div>
 `).join("");
@@ -244,6 +257,7 @@ noticeList.innerHTML = notices.map((n, i) => `
 
 </body>
 </html>
+
 
 
 
