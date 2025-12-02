@@ -559,6 +559,21 @@ body {
   background:#F5D686;  /* 골드 파스텔 */
   border-color:rgba(250,240,230,0.7);
 }
+/* --------------------------------------------------
+   📚 Ha-Bin Studio — 게시판 테이블 안정화 (list.html)
+--------------------------------------------------- */
+
+.post-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.post-table th,
+.post-table td {
+  padding: 10px 12px;
+  white-space: nowrap;
+}
 
 
 
