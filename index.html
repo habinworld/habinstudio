@@ -116,16 +116,12 @@
     <a href="#notice">📢 공지사항</a>
     <a href="#etc">✳ 기타</a>
   </div>
-<!-- 🔔 공지 블록 -->
-<div id="notice-section" style="margin-top:25px; display:none;">
-  <h3 style="margin-bottom: 10px; font-size: 18px; color:#3558A8;">📢 공지사항</h3>
-  <!-- 🔥 공지 제목 아래 가로줄 -->
-  <div style="
-      width:100%;
-      height:1px;
-      background:#CCD9FF;
-      margin: 8px 0 12px;
-  "></div>
+<div id="notice-wrapper">
+  <div id="notice-section" style="margin-top:25px; display:none;">
+    <h3 style="margin-bottom: 10px; font-size: 18px; color:#3558A8;">📢 공지사항</h3>
+    <div id="notice-list"></div>
+  </div>
+</div>
 
   <div id="notice-list"></div>
 </div>
@@ -253,6 +249,7 @@ noticeList.innerHTML = notices.map((n, i) => `
 
 </body>
 </html>
+
 
 
 
