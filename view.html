@@ -3,116 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>하빈 스튜디오 · 글 보기</title>
+<title>글 보기 · Ha-Bin Studio</title>
 <link rel="stylesheet" href="style.css">
+
+<style>
+/* ------- 페이지 폭 ------- */
+.view-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px 120px;
+}
+
+/* ------- 제목 스타일 (뉴스 스타일) ------- */
+.view-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #222;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+/* 공지 배지 */
+.notice-badge {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 4px 8px;
+  background: #FFF1A8;
+  border: 1px solid #E2C55A;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #8A6B00;
+}
+
+/* ------- 작성자/날짜 ------- */
+.view-info {
+  color: #777;
+  font-size: 14px;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+/* ------- 본문 영역 ------- */
+.view-content {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #2b2b2b;
+  margin-bottom: 40px;
+  word-break: break-all;
+}
+
+/* 에디터에서 넣은 이미지 자동 중앙 */
+.view-content img {
+  max-width: 100%;
+  display: block;
+  margin: 14px auto;
+  border-radius: 8px;
+}
+
+/* ------- 버튼 ------- */
+.view-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.view-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.btn-edit { background: #3558A8; color: white; }
+.btn-edit:hover { background: #5C8EDB; }
+
+.btn-delete { background: #D9534F; color: white; }
+.btn-delete:hover { background: #C3413B; }
+
+.btn-list { background: #CCC; color: black; }
+.btn-list:hover { background: #bbb; }
+</style>
+
 </head>
 
 <body>
 
-<!-- 🔐 비밀의 문 -->
 <script src="secret-gate.js"></script>
 
-<div class="page-container">
+<div class="view-container">
 
-  <a href="list.html" class="back-btn">← 목록으로</a>
+  <h1 class="view-title" id="view-title"></h1>
+  <div class="view-info" id="view-info"></div>
 
-  <h1 id="post-title" class="view-title"></h1>
+  <div class="view-content" id="view-content"></div>
 
-  <div class="view-meta">
-    <span id="post-writer"></span> · 
-    <span id="post-date"></span>
-  </div>
-
-  <hr class="divider">
-
-  <div id="post-content" class="view-content">
-    <!-- 본문 HTML이 여기에 들어감 -->
-  </div>
-
-  <hr class="divider">
-
-  <div class="view-actions">
-    <button id="editBtn" class="view-btn">✏ 수정</button>
-    <button id="deleteBtn" class="view-btn delete">🗑 삭제</button>
-  </div>
-
-  <div class="nav-box">
-    <div id="prev-post" class="nav-link"></div>
-    <div id="next-post" class="nav-link"></div>
+  <div class="view-buttons">
+    <button class="view-btn btn-edit" id="editBtn">수정</button>
+    <button class="view-btn btn-delete" id="deleteBtn">삭제</button>
+    <button class="view-btn btn-list" onclick="location.href='list.html'">목록</button>
   </div>
 
 </div>
 
 <script>
-/* -------------------------------------------------------
-   📌 URL에서 id 받기
-------------------------------------------------------- */
-const params = new URLSearchParams(location.search);
-const id = parseInt(params.get("id"));
+/* ---------------------------------------------------
+   📌 URL에서 id 가져오기
+--------------------------------------------------- */
+const params = new URLSearchParams(window.location.search);
+const postId = params.get("id");
 
-/* -------------------------------------------------------
-   📌 저장된 글 목록 가져오기
-------------------------------------------------------- */
 let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-posts.sort((a,b)=>a.id - b.id);  // id 낮은게 먼저 → 배열 기준 고정
+const post = posts.find(p => p.id == postId);
 
-const post = posts.find(p => p.id === id);
+/* ---------------------------------------------------
+   📌 글 데이터 표시
+--------------------------------------------------- */
+if (post) {
+  const titleEl = document.getElementById("view-title");
+  const infoEl = document.getElementById("view-info");
+  const contentEl = document.getElementById("view-content");
 
-if (!post) {
-  document.body.innerHTML = "<h2>글을 찾을 수 없습니다.</h2>";
+  /* 공지 배지 붙이기 */
+  let badge = post.isNotice ? `<span class="notice-badge">📌 공지</span>` : "";
+
+  titleEl.innerHTML = badge + post.title;
+  infoEl.innerHTML = `작성자: ${post.writer} · ${post.date}`;
+  contentEl.innerHTML = post.content;
 }
 
-/* -------------------------------------------------------
-   📌 본문 출력
-------------------------------------------------------- */
-document.getElementById("post-title").innerText = post.title;
-document.getElementById("post-writer").innerText = post.writer;
-document.getElementById("post-date").innerText = post.date;
-document.getElementById("post-content").innerHTML = post.content;
-
-
-/* -------------------------------------------------------
-   📌 수정 버튼 → editor.html?id=ID 이동
-------------------------------------------------------- */
+/* ---------------------------------------------------
+   📌 버튼 기능
+--------------------------------------------------- */
 document.getElementById("editBtn").onclick = () => {
-  location.href = `editor.html?id=${id}`;
+  location.href = `editor.html?id=${postId}`;
 };
 
-
-/* -------------------------------------------------------
-   📌 삭제 버튼 → localStorage에서 제거
-------------------------------------------------------- */
 document.getElementById("deleteBtn").onclick = () => {
   if (!confirm("정말 삭제하시겠습니까?")) return;
 
-  const filtered = posts.filter(p => p.id !== id);
-  localStorage.setItem("habin_posts", JSON.stringify(filtered));
-
-  alert("삭제되었습니다.");
+  posts = posts.filter(p => p.id != postId);
+  localStorage.setItem("habin_posts", JSON.stringify(posts));
   location.href = "list.html";
 };
-
-
-/* -------------------------------------------------------
-   📌 이전글 / 다음글 자동 탐색
-------------------------------------------------------- */
-const idx = posts.findIndex(p => p.id === id);
-const prev = posts[idx - 1];
-const next = posts[idx + 1];
-
-const prevBox = document.getElementById('prev-post');
-const nextBox = document.getElementById('next-post');
-
-if (prev) {
-  prevBox.innerHTML = `⬅ 이전글: <a href="view.html?id=${prev.id}">${prev.title}</a>`;
-}
-
-if (next) {
-  nextBox.innerHTML = `➡ 다음글: <a href="view.html?id=${next.id}">${next.title}</a>`;
-}
-
 </script>
 
 </body>
 </html>
+
 
