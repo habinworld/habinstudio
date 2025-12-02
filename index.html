@@ -116,6 +116,11 @@
     <a href="#notice">📢 공지사항</a>
     <a href="#etc">✳ 기타</a>
   </div>
+<!-- 🔔 공지 블록 -->
+<div id="notice-section" style="margin-top:25px; display:none;">
+  <h3 style="margin-bottom: 10px; font-size: 18px; color:#3558A8;">📢 공지사항</h3>
+  <div id="notice-list"></div>
+</div>
 
   <!-- 본문 -->
   <div class="main-inner">
@@ -190,10 +195,55 @@ document.addEventListener('DOMContentLoaded', () => {
   logo.classList.remove('logo-off','logo-moon','logo-gold');
   logo.classList.add(isNight ? 'logo-moon' : 'logo-off');
 });
+
+<script>
+// ----------------------------------------
+// 🔔 공지글 5개만 메인에 표시
+// ----------------------------------------
+let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+
+// 공지글만 필터
+let notices = posts.filter(p => p.isNotice);
+
+// 최신순 정렬
+notices.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+// 5개까지만
+notices = notices.slice(0, 5);
+
+// 요소
+const noticeSection = document.getElementById("notice-section");
+const noticeList = document.getElementById("notice-list");
+
+// 공지가 1개라도 있으면 보여주기
+if (notices.length > 0) {
+  noticeSection.style.display = "block";
+}
+
+// 공지 카드 생성
+noticeList.innerHTML = notices.map(n => `
+  <div style="
+      padding: 12px 14px;
+      margin-bottom: 8px;
+      background: #F0F4FF;
+      border: 1px solid #CCD9FF;
+      border-radius: 8px;
+      cursor:pointer;
+    "
+    onclick="location.href='view.html?id=${n.id}'">
+    <strong style="font-size:15px; color:#3558A8;">${n.title}</strong>
+    <div style="font-size:13px; color:#666; margin-top:4px;">
+      ${n.date}
+    </div>
+  </div>
+`).join("");
+</script>
+  
 </script>
 
 </body>
 </html>
+
 
 
 
