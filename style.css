@@ -574,6 +574,10 @@ body {
   padding: 10px 12px;
   white-space: nowrap;
 }
-
+#notice-wrapper {
+  width: 50%;
+  margin: 0 auto;
+  padding: 0 10px;
+}
 
 
