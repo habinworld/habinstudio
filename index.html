@@ -197,28 +197,22 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 <script>
   
+<!-- 🔔 공지글 5개만 메인에 표시 (촘촘 버전) -->
 <script>
-// ----------------------------------------
-// 🔔 공지글 5개만 메인에 표시 (촘촘 버전)
-// ----------------------------------------
 let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
-// 공지글만 필터 + 최신순 + 5개
 let notices = posts
   .filter(p => p.isNotice)
   .sort((a, b) => new Date(b.date) - new Date(a.date))
   .slice(0, 5);
 
-// 요소
 const noticeSection = document.getElementById("notice-section");
 const noticeList = document.getElementById("notice-list");
 
-// 공지가 있으면 보이기
 if (notices.length > 0) {
   noticeSection.style.display = "block";
 }
 
-// 촘촘한 리스트 출력
 noticeList.innerHTML = notices.map((n, i) => `
   <div style="
     padding: 4px 0;
@@ -228,22 +222,18 @@ noticeList.innerHTML = notices.map((n, i) => `
     cursor:pointer;
   " onclick="location.href='view.html?id=${n.id}'">
 
-    <!-- 번호 -->
     <span style="width:45px; text-align:center; color:#444;">
       ${notices.length - i}
     </span>
 
-    <!-- 작성자 -->
     <span style="width:90px; text-align:center; color:#666;">
       ${n.writer}
     </span>
 
-    <!-- 제목 -->
     <span style="flex:1; font-weight:600; color:#333;">
       ${n.title}
     </span>
 
-    <!-- 날짜 -->
     <span style="width:130px; text-align:center; color:#777;">
       ${n.date}
     </span>
@@ -254,6 +244,7 @@ noticeList.innerHTML = notices.map((n, i) => `
 
 </body>
 </html>
+
 
 
 
