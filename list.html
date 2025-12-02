@@ -5,54 +5,69 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>하빈 스튜디오 · 게시판 목록</title>
 <link rel="stylesheet" href="style.css">
-<style>
-/* 리스트 화면 가로폭 정리용 */
 
+<style>
+/* ------- 리스트 전체 폭 -------- */
 .page-container {
-  max-width: 900px;      /* 전체 폭 제한 → 너무 넓어지는 문제 해결 */
-  margin: 0 auto;        /* 가운데 정렬 */
+  max-width: 900px;
+  margin: 0 auto;
   padding: 0 20px;
 }
 
-/* 테이블 기본 폭 */
+/* ------- 뉴스 사이트 스타일 테이블 ------- */
 .post-table {
   width: 100%;
   border-collapse: collapse;
+  border-top: 2px solid #333;
 }
 
-/* 헤더 + 본문 공통 정렬 */
-.post-table th,
-.post-table td {
+.post-table th {
   text-align: center;
-  padding: 10px 12px;
-}
-
-/* 제목 정렬만 왼쪽 정렬 (읽기 편하게) */
-.post-table td.title-cell {
-  text-align: left;
-  padding-left: 8px;
-}
-
-/* 테이블 상단 여백 */
-.page-title {
-  margin-bottom: 20px;
-}
-
-/* "작성된 글이 없습니다" 스타일 */
-.empty {
-  text-align: center;
-  padding: 30px 0;
+  padding: 14px 0;
+  border-bottom: 2px solid #ddd;
   font-size: 15px;
-  color: #666;
+  color: #333;
+  background: #fafafa;
+}
+
+.post-table td {
+  padding: 16px 10px;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
+  color: #444;
+}
+
+/* 제목만 왼쪽 정렬 */
+.title-link {
+  display: block;
+  text-align: left;
+  font-weight: 600;
+  color: #2b2b2b;
+  transition: 0.2s;
+}
+
+.title-link:hover {
+  color: #3558A8;
+  text-decoration: underline;
+}
+
+/* 작성자·날짜 흐릿하게 */
+.post-table td:nth-child(2),
+.post-table td:nth-child(4) {
+  color: #777;
+  font-size: 14px;
+}
+
+/* 공지 줄 강조 */
+.notice-row {
+  background: #FFF8D1 !important;
 }
 </style>
 
-  
 </head>
 
 <body>
 
-<!-- 🔐 비밀의 문 -->
 <script src="secret-gate.js"></script>
 
 <div class="page-container">
@@ -68,28 +83,26 @@
       <tr>
         <th style="width:60px;">번호</th>
         <th style="width:120px;">작성자</th>
-        <th style="width:60%;">제목</th>
+        <th>제목</th>
         <th style="width:150px;">날짜</th>
       </tr>
     </thead>
     <tbody id="post-list">
-      <!-- JS가 자동 출력 -->
     </tbody>
   </table>
 
-  <!-- 페이지네이션 -->
   <div id="pagination" class="pagination"></div>
 
 </div>
 
 <script>
 /* ---------------------------------------------------
-   📌 localStorage에서 글 목록 불러오기
+   🗂 localStorage에서 글 목록 로드
 --------------------------------------------------- */
 let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
 /* ---------------------------------------------------
-   🔔 공지 + 일반글 분리 후 정렬 (최신순)
+   🔔 공지 + 일반글 분리 후 정렬
 --------------------------------------------------- */
 const noticePosts = posts
   .filter(p => p.isNotice)
@@ -99,20 +112,18 @@ const normalPosts = posts
   .filter(p => !p.isNotice)
   .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-/* 공지 먼저 + 일반글 뒤 */
 posts = [...noticePosts, ...normalPosts];
 
 const itemsPerPage = 10;
-const urlParams = new URLSearchParams(window.location.search);
-let currentPage = parseInt(urlParams.get("page")) || 1;
+let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
+currentPage = parseInt(currentPage);
 
 /* ---------------------------------------------------
-   📌 목록 출력 함수
+   📌 목록 출력
 --------------------------------------------------- */
 function renderList() {
   const start = (currentPage - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  const pagePosts = posts.slice(start, end);
+  const pagePosts = posts.slice(start, start + itemsPerPage);
 
   const tbody = document.getElementById("post-list");
   tbody.innerHTML = "";
@@ -123,30 +134,23 @@ function renderList() {
   }
 
   pagePosts.forEach((p, idx) => {
-    const isNotice = p.isNotice ? "📌 " : "";
     const tr = document.createElement("tr");
 
-  tr.innerHTML = `
-  <td>${posts.length - (start + idx)}</td>
-  <td>${p.writer}</td>
-  <td class="title-cell">
-    <a href="view.html?id=${p.id}" class="title-link">${isNotice}${p.title}</a>
-  </td>
-  <td>${p.date}</td>
-`;
+    tr.innerHTML = `
+      <td>${posts.length - (start + idx)}</td>
+      <td>${p.writer}</td>
+      <td><a href="view.html?id=${p.id}" class="title-link">${p.isNotice ? "📌 " : ""}${p.title}</a></td>
+      <td>${p.date}</td>
+    `;
 
-
-    /* 🔔 공지글 강조 */
-    if (p.isNotice) {
-      tr.style.background = "#FFF6D9"; /* 연노랑 배경 */
-    }
+    if (p.isNotice) tr.classList.add("notice-row");
 
     tbody.appendChild(tr);
   });
 }
 
 /* ---------------------------------------------------
-   📌 페이지네이션 출력
+   📌 페이지네이션
 --------------------------------------------------- */
 function renderPagination() {
   const totalPages = Math.ceil(posts.length / itemsPerPage);
@@ -155,17 +159,15 @@ function renderPagination() {
 
   if (totalPages <= 1) return;
 
-  if (currentPage > 1) {
+  if (currentPage > 1)
     pag.innerHTML += `<a href="?page=${currentPage - 1}" class="page-btn">이전</a>`;
-  }
 
   for (let i = 1; i <= totalPages; i++) {
     pag.innerHTML += `<a href="?page=${i}" class="page-btn ${i === currentPage ? "active" : ""}">${i}</a>`;
   }
 
-  if (currentPage < totalPages) {
+  if (currentPage < totalPages)
     pag.innerHTML += `<a href="?page=${currentPage + 1}" class="page-btn">다음</a>`;
-  }
 }
 
 renderList();
@@ -174,4 +176,5 @@ renderPagination();
 
 </body>
 </html>
+
 
