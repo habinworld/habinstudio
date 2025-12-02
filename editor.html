@@ -4,41 +4,153 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>글쓰기 · Ha-Bin Studio</title>
-<link rel="stylesheet" href="editor.css">
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* ---------------------- 전체 래퍼 ---------------------- */
+.editor-container {
+  max-width: 900px;
+  margin: 30px auto 120px;
+  padding: 0 20px;
+}
+
+/* ---------------------- 제목 입력 ----------------------- */
+#post-title {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 22px;
+  font-weight: 700;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+#post-title:focus {
+  border-color: #3558A8;
+  box-shadow: 0 0 0 3px rgba(92,142,219,0.25);
+}
+
+/* ---------------------- 공지 체크 ----------------------- */
+.notice-area {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+  gap: 8px;
+}
+
+.notice-area label {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* ---------------------- 툴바 --------------------------- */
+#toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+  padding: 10px;
+  border: 1px solid #E5E7EB;
+  background: #F3F4F6;
+  border-radius: 8px;
+}
+
+.toolbar-btn {
+  background: white;
+  border: 1px solid #D1D5DB;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.toolbar-btn:hover {
+  background: #EEF4FF;
+  border-color: #3558A8;
+  color: #3558A8;
+}
+
+/* ---------------------- 본문 --------------------------- */
+#editor {
+  width: 100%;
+  min-height: 460px;
+  padding: 18px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: white;
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+#editor:focus {
+  border-color: #3558A8;
+  box-shadow: 0 0 0 3px rgba(92,142,219,0.25);
+}
+
+/* 에디터 이미지 중앙 */
+#editor img {
+  max-width: 100%;
+  display: block;
+  margin: 14px auto;
+}
+
+/* ---------------------- 버튼 --------------------------- */
+.editor-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.editor-btn {
+  padding: 9px 16px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-save { background: #3558A8; color: white; }
+.btn-save:hover { background: #5C8EDB; }
+
+.btn-delete { background: #D9534F; color: white; }
+.btn-delete:hover { background: #C3413B; }
+
+.btn-cancel { background: #CCC; color: black; }
+.btn-cancel:hover { background: #bbb; }
+</style>
+
 </head>
 
 <body>
 
 <script src="secret-gate.js"></script>
 
-<div id="editor-wrapper">
+<div class="editor-container">
 
-  <!-- 🔵 제목 1줄 -->
+  <!-- 제목 입력 -->
   <input type="text" id="post-title" placeholder="제목을 입력하세요">
 
-  <!-- 🔵 공지 + 버튼 4개 (2줄) -->
-  <div id="top-sub-row">
-
-    <!-- 공지 체크박스 -->
-    <label id="notice-block">
-      <input type="checkbox" id="noticeCheck">
-      공지글로 등록하기
-    </label>
-
-    <!-- 버튼 4개 항상 표시 -->
-    <div id="editor-buttons">
-      <button id="saveBtn" class="btn-save">등록</button>
-      <button id="updateBtn" class="btn-save">수정</button>
-      <button id="deleteBtn" class="btn-delete">삭제</button>
-      <button id="cancelBtn" class="btn-cancel">취소</button>
-    </div>
+  <!-- 공지 체크 -->
+  <div class="notice-area">
+    <input type="checkbox" id="notice-check">
+    <label for="notice-check">📌 공지글로 등록하기</label>
   </div>
 
-  <!-- 🔵 툴바 -->
+  <!-- 툴바 -->
   <div id="toolbar"></div>
 
-  <!-- 🔵 본문 -->
+  <!-- 본문 -->
   <div id="editor" contenteditable="true"></div>
+
+  <!-- 버튼 -->
+  <div class="editor-buttons">
+    <button class="editor-btn btn-save" id="saveBtn">등록</button>
+    <button class="editor-btn btn-save" id="updateBtn">수정</button>
+    <button class="editor-btn btn-delete" id="deleteBtn">삭제</button>
+    <button class="editor-btn btn-cancel" id="cancelBtn">취소</button>
+  </div>
 
 </div>
 
@@ -46,96 +158,79 @@
 
 <script>
 /* -----------------------------------------------------
-   📌 로컬스토리지 불러오기
+   📌 수정 모드인지 확인 (editor.html?id=123 형식)
 ----------------------------------------------------- */
-let habin_posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
 const params = new URLSearchParams(window.location.search);
 const editId = params.get("id");
 
-/* -----------------------------------------------------
-   📌 editId 있으면 기존 글 로딩
------------------------------------------------------ */
 if (editId) {
-  const post = habin_posts.find(p => p.id == editId);
+  const post = posts.find(p => p.id == editId);
   if (post) {
     document.getElementById("post-title").value = post.title;
     document.getElementById("editor").innerHTML = post.content;
-    if (post.isNotice) document.getElementById("noticeCheck").checked = true;
+
+    /* 공지 체크 불러오기 */
+    document.getElementById("notice-check").checked = !!post.isNotice;
   }
 }
 
 /* -----------------------------------------------------
-   📌 날짜
+   📌 저장 / 수정 / 삭제 / 취소
 ----------------------------------------------------- */
-function getNow() {
-  const now = new Date();
-  return `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
-}
 
-/* -----------------------------------------------------
-   📌 등록(새 글)
------------------------------------------------------ */
-document.getElementById("saveBtn").addEventListener("click", () => {
+// 저장 또는 수정
+document.getElementById("saveBtn").onclick =
+document.getElementById("updateBtn").onclick = () => {
+
   const title = document.getElementById("post-title").value.trim();
   const content = document.getElementById("editor").innerHTML.trim();
-  const isNotice = document.getElementById("noticeCheck").checked;
+  const isNotice = document.getElementById("notice-check").checked;
 
-  if (!title) return alert("제목을 입력하세요.");
+  if (!title) { alert("제목을 입력하세요."); return; }
 
-  const newPost = {
-    id: Date.now(),
-    title,
-    content,
-    date: getNow(),
-    writer: "하빈",
-    isNotice
-  };
+  const now = new Date();
+  const date = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
 
-  habin_posts.push(newPost);
-  localStorage.setItem("habin_posts", JSON.stringify(habin_posts));
+  if (editId) {
+    let post = posts.find(p => p.id == editId);
+    post.title = title;
+    post.content = content;
+    post.date = date;
+    post.isNotice = isNotice;
 
-  window.location.href = "list.html";
-});
-
-/* -----------------------------------------------------
-   📌 수정
------------------------------------------------------ */
-document.getElementById("updateBtn").addEventListener("click", () => {
-  if (!editId) return alert("수정할 글이 없습니다.");
-
-  const post = habin_posts.find(p => p.id == editId);
-  post.title = document.getElementById("post-title").value.trim();
-  post.content = document.getElementById("editor").innerHTML.trim();
-  post.date = getNow();
-  post.isNotice = document.getElementById("noticeCheck").checked;
-
-  localStorage.setItem("habin_posts", JSON.stringify(habin_posts));
-  window.location.href = "list.html";
-});
-
-/* -----------------------------------------------------
-   📌 삭제
------------------------------------------------------ */
-document.getElementById("deleteBtn").addEventListener("click", () => {
-  if (!editId) return alert("삭제할 글이 없습니다.");
-
-  if (confirm("정말 삭제하시겠습니까?")) {
-    habin_posts = habin_posts.filter(p => p.id != editId);
-    localStorage.setItem("habin_posts", JSON.stringify(habin_posts));
-    window.location.href = "list.html";
+  } else {
+    posts.push({
+      id: Date.now(),
+      title,
+      content,
+      writer: "하빈",
+      date,
+      isNotice
+    });
   }
-});
 
-/* -----------------------------------------------------
-   📌 취소
------------------------------------------------------ */
-document.getElementById("cancelBtn").addEventListener("click", () => {
-  window.location.href = "list.html";
-});
+  localStorage.setItem("habin_posts", JSON.stringify(posts));
+  location.href = "list.html";
+};
+
+// 삭제
+document.getElementById("deleteBtn").onclick = () => {
+  if (!editId) return;
+  if (!confirm("정말 삭제하시겠습니까?")) return;
+
+  posts = posts.filter(p => p.id != editId);
+  localStorage.setItem("habin_posts", JSON.stringify(posts));
+  location.href = "list.html";
+};
+
+// 취소
+document.getElementById("cancelBtn").onclick = () => history.back();
 </script>
 
 </body>
 </html>
+
 
 
