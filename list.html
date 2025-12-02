@@ -84,11 +84,11 @@ function renderList() {
     const tr = document.createElement("tr");
 
     tr.innerHTML = `
-      <td>${posts.length - (start + idx)}</td>
-      <td><a href="view.html?id=${p.id}" class="title-link">${isNotice}${p.title}</a></td>
-      <td>${p.writer}</td>
-      <td>${p.date}</td>
-    `;
+  <td>${posts.length - (start + idx)}</td>
+  <td>${p.writer}</td>
+  <td><a href="view.html?id=${p.id}" class="title-link">${isNotice}${p.title}</a></td>
+  <td>${p.date}</td>
+`;
 
     /* 🔔 공지글 강조 */
     if (p.isNotice) {
