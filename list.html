@@ -43,15 +43,29 @@
 /* ---------------------------------------------------
    📌 localStorage에서 글 목록 불러오기
 --------------------------------------------------- */
-const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
-/* 최신 글이 위로 */
-posts.sort((a, b) => b.id - a.id);
+/* ---------------------------------------------------
+   🔔 공지 + 일반글 분리 후 정렬 (최신순)
+--------------------------------------------------- */
+const noticePosts = posts
+  .filter(p => p.isNotice)
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+const normalPosts = posts
+  .filter(p => !p.isNotice)
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
+
+/* 공지 먼저 + 일반글 뒤 */
+posts = [...noticePosts, ...normalPosts];
 
 const itemsPerPage = 10;
 const urlParams = new URLSearchParams(window.location.search);
 let currentPage = parseInt(urlParams.get("page")) || 1;
 
+/* ---------------------------------------------------
+   📌 목록 출력 함수
+--------------------------------------------------- */
 function renderList() {
   const start = (currentPage - 1) * itemsPerPage;
   const end = start + itemsPerPage;
@@ -66,13 +80,21 @@ function renderList() {
   }
 
   pagePosts.forEach((p, idx) => {
+    const isNotice = p.isNotice ? "📌 " : "";
     const tr = document.createElement("tr");
+
     tr.innerHTML = `
       <td>${posts.length - (start + idx)}</td>
-      <td><a href="view.html?id=${p.id}" class="title-link">${p.title}</a></td>
+      <td><a href="view.html?id=${p.id}" class="title-link">${isNotice}${p.title}</a></td>
       <td>${p.writer}</td>
       <td>${p.date}</td>
     `;
+
+    /* 🔔 공지글 강조 */
+    if (p.isNotice) {
+      tr.style.background = "#FFF6D9"; /* 연노랑 배경 */
+    }
+
     tbody.appendChild(tr);
   });
 }
@@ -102,7 +124,6 @@ function renderPagination() {
 
 renderList();
 renderPagination();
-
 </script>
 
 </body>
