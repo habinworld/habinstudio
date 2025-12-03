@@ -7,37 +7,74 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
-/* ------- 리스트 전체 폭 -------- */
+/* 전체 레이아웃 */
 .page-container {
   max-width: 900px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* ------- 뉴스 사이트 스타일 테이블 ------- */
+/* --------------------- 상단 버튼 3개 --------------------- */
+.top-buttons {
+  text-align: right;
+  margin: 12px 0 12px 0;
+}
+
+.top-buttons .btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #3558A8;   /* 은남색 */
+  color: #FFFFFF;        /* 흰 글자 */
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 6px;
+}
+
+.top-buttons .btn:hover {
+  opacity: 0.92;
+}
+
+/* --------------------- 테이블 --------------------- */
 .post-table {
   width: 100%;
   border-collapse: collapse;
   border-top: 2px solid #333;
+  margin-top: 10px;
 }
 
 .post-table th {
   text-align: center;
-  padding: 14px 0;
+  padding: 12px 0;
   border-bottom: 2px solid #ddd;
   font-size: 15px;
   color: #333;
   background: #fafafa;
 }
 
+/* 하빈 요구: 행간 절반, 밑줄 제거 */
 .post-table td {
-  padding: 16px 10px;
-  border-bottom: 1px solid #eee;
-  font-size: 15px;
+  padding: 6px 10px;
+  border-bottom: none;
+  font-size: 14px;
   color: #444;
 }
 
-/* 제목만 왼쪽 정렬 */
+/* 번호 + 작성자 중앙 정렬 */
+.post-table td:nth-child(1),
+.post-table td:nth-child(2) {
+  text-align: center;
+}
+
+/* 날짜 오른쪽 정렬 */
+.post-table td:nth-child(4) {
+  text-align: right;
+  color: #777;
+  font-size: 14px;
+}
+
+/* 제목 스타일 */
 .title-link {
   display: block;
   text-align: left;
@@ -48,19 +85,16 @@
 
 .title-link:hover {
   color: #3558A8;
-  text-decoration: underline;
 }
 
-/* 작성자·날짜 흐릿하게 */
-.post-table td:nth-child(2),
-.post-table td:nth-child(4) {
-  color: #777;
-  font-size: 14px;
-}
-
-/* 공지 줄 강조 */
+/* 공지 강조 */
 .notice-row {
   background: #FFF8D1 !important;
+}
+
+/* 마우스 hover */
+.post-table tbody tr:hover {
+  background: #f2f6ff;
 }
 </style>
 
@@ -74,8 +108,11 @@
 
   <h1 class="page-title">📚 한글 게시판</h1>
 
-  <div class="top-actions">
-    <a href="editor.html" class="write-btn">✏ 글쓰기</a>
+  <!-- ⭐ 상단 버튼 3개 -->
+  <div class="top-buttons">
+    <a href="editor.html" class="btn">글쓰기</a>
+    <a href="list.html" class="btn">목록</a>
+    <a href="index.html" class="btn">메인</a>
   </div>
 
   <table class="post-table">
@@ -87,8 +124,7 @@
         <th style="width:150px;">날짜</th>
       </tr>
     </thead>
-    <tbody id="post-list">
-    </tbody>
+    <tbody id="post-list"></tbody>
   </table>
 
   <div id="pagination" class="pagination"></div>
@@ -96,21 +132,15 @@
 </div>
 
 <script>
-/* ---------------------------------------------------
-   🗂 localStorage에서 글 목록 로드
---------------------------------------------------- */
+/* 🗂 localStorage에서 글 목록 로드 */
 let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
-/* ---------------------------------------------------
-   🔔 공지 + 일반글 분리 후 정렬
---------------------------------------------------- */
-const noticePosts = posts
-  .filter(p => p.isNotice)
-  .sort((a, b) => new Date(b.date) - new Date(a.date));
+/* 🔔 공지 + 일반글 분리 */
+const noticePosts = posts.filter(p => p.isNotice)
+  .sort((a,b)=> new Date(b.date)-new Date(a.date));
 
-const normalPosts = posts
-  .filter(p => !p.isNotice)
-  .sort((a, b) => new Date(b.date) - new Date(a.date));
+const normalPosts = posts.filter(p => !p.isNotice)
+  .sort((a,b)=> new Date(b.date)-new Date(a.date));
 
 posts = [...noticePosts, ...normalPosts];
 
@@ -118,9 +148,7 @@ const itemsPerPage = 10;
 let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
 currentPage = parseInt(currentPage);
 
-/* ---------------------------------------------------
-   📌 목록 출력
---------------------------------------------------- */
+/* 📌 목록 출력 */
 function renderList() {
   const start = (currentPage - 1) * itemsPerPage;
   const pagePosts = posts.slice(start, start + itemsPerPage);
@@ -149,9 +177,7 @@ function renderList() {
   });
 }
 
-/* ---------------------------------------------------
-   📌 페이지네이션
---------------------------------------------------- */
+/* 📌 페이지네이션 */
 function renderPagination() {
   const totalPages = Math.ceil(posts.length / itemsPerPage);
   const pag = document.getElementById("pagination");
@@ -176,5 +202,7 @@ renderPagination();
 
 </body>
 </html>
+
+
 
 
