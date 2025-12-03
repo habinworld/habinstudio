@@ -7,20 +7,55 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
-/* ------- 페이지 폭 ------- */
+/* =============== 전체 컨테이너 =============== */
 .view-container {
   max-width: 900px;
   margin: 0 auto;
   padding: 0 20px 120px;
 }
 
-/* ------- 제목 스타일 (뉴스 스타일) ------- */
-.view-title {
-  font-size: 28px;
+/* =============== 상단 공지 + 버튼 영역 =============== */
+.view-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.notice-area {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.notice-area label {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.top-btns a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  background: #3558A8;
+  color: white;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-left: 6px;
+}
+.top-btns a:hover { opacity: 0.9; }
+
+/* =============== 제목 영역 =============== */
+#view-title {
+  width: 100%;
+  font-size: 26px;
   font-weight: 800;
-  color: #222;
   margin-bottom: 8px;
   line-height: 1.4;
+  color: #222;
 }
 
 /* 공지 배지 */
@@ -36,8 +71,8 @@
   color: #8A6B00;
 }
 
-/* ------- 작성자/날짜 ------- */
-.view-info {
+/* 작성자/날짜 */
+#view-info {
   color: #777;
   font-size: 14px;
   border-bottom: 1px solid #e5e5e5;
@@ -45,32 +80,32 @@
   margin-bottom: 20px;
 }
 
-/* ------- 본문 영역 ------- */
-.view-content {
+/* 본문 */
+#view-content {
   font-size: 17px;
   line-height: 1.8;
   color: #2b2b2b;
   margin-bottom: 40px;
-  word-break: break-all;
 }
 
-/* 에디터에서 넣은 이미지 자동 중앙 */
-.view-content img {
+/* 본문 이미지 중앙 */
+#view-content img {
   max-width: 100%;
   display: block;
   margin: 14px auto;
   border-radius: 8px;
 }
 
-/* ------- 버튼 ------- */
+/* 하단 버튼 */
 .view-buttons {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  margin-top: 20px;
 }
 
 .view-btn {
-  padding: 8px 16px;
+  padding: 9px 16px;
   border-radius: 8px;
   border: none;
   cursor: pointer;
@@ -78,16 +113,19 @@
   font-weight: 600;
 }
 
-.btn-edit { background: #3558A8; color: white; }
-.btn-edit:hover { background: #5C8EDB; }
+/* 버튼색 editor.html과 통일 */
+.btn-edit { background:#3558A8; color:white; }
+.btn-edit:hover { background:#5C8EDB; }
 
-.btn-delete { background: #D9534F; color: white; }
-.btn-delete:hover { background: #C3413B; }
+.btn-delete { background:#D9534F; color:white; }
+.btn-delete:hover { background:#C3413B; }
 
-.btn-list { background: #CCC; color: black; }
-.btn-list:hover { background: #bbb; }
+.btn-list { background:#3558A8; color:white; }
+.btn-list:hover { background:#5C8EDB; }
+
+.btn-main { background:#3558A8; color:white; }
+.btn-main:hover { background:#5C8EDB; }
 </style>
-
 </head>
 
 <body>
@@ -96,48 +134,76 @@
 
 <div class="view-container">
 
-  <h1 class="view-title" id="view-title"></h1>
-  <div class="view-info" id="view-info"></div>
+  <!-- 🔥 상단: 공지 + 버튼  -->
+  <div class="view-top-bar">
+    <div class="notice-area">
+      <input type="checkbox" id="notice-check">
+      <label for="notice-check">📌 공지글로 등록하기</label>
+    </div>
 
-  <div class="view-content" id="view-content"></div>
+    <div class="top-btns">
+      <a href="list.html">목록</a>
+      <a href="index.html">메인</a>
+    </div>
+  </div>
 
+  <!-- 🔥 제목 / 정보 / 본문 -->
+  <h1 id="view-title"></h1>
+  <div id="view-info"></div>
+  <div id="view-content"></div>
+
+  <!-- 🔥 하단 버튼 -->
   <div class="view-buttons">
     <button class="view-btn btn-edit" id="editBtn">수정</button>
     <button class="view-btn btn-delete" id="deleteBtn">삭제</button>
     <button class="view-btn btn-list" onclick="location.href='list.html'">목록</button>
+    <button class="view-btn btn-main" onclick="location.href='index.html'">메인</button>
   </div>
 
 </div>
 
 <script>
-/* ---------------------------------------------------
+/* ======================================================
    📌 URL에서 id 가져오기
---------------------------------------------------- */
+====================================================== */
 const params = new URLSearchParams(window.location.search);
 const postId = params.get("id");
 
 let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 const post = posts.find(p => p.id == postId);
 
-/* ---------------------------------------------------
+/* ======================================================
    📌 글 데이터 표시
---------------------------------------------------- */
+====================================================== */
 if (post) {
-  const titleEl = document.getElementById("view-title");
-  const infoEl = document.getElementById("view-info");
-  const contentEl = document.getElementById("view-content");
+  document.getElementById("view-title").innerHTML =
+    (post.isNotice ? `<span class="notice-badge">📌 공지</span>` : "") + post.title;
 
-  /* 공지 배지 붙이기 */
-  let badge = post.isNotice ? `<span class="notice-badge">📌 공지</span>` : "";
+  document.getElementById("view-info").innerHTML =
+    `작성자: ${post.writer} · ${post.date}`;
 
-  titleEl.innerHTML = badge + post.title;
-  infoEl.innerHTML = `작성자: ${post.writer} · ${post.date}`;
-  contentEl.innerHTML = post.content;
+  document.getElementById("view-content").innerHTML = post.content;
+
+  /* 🔥 공지 체크 상태 반영 */
+  document.getElementById("notice-check").checked = !!post.isNotice;
 }
 
-/* ---------------------------------------------------
-   📌 버튼 기능
---------------------------------------------------- */
+/* ======================================================
+   🔥 공지 체크 변경 → 즉시 localStorage 반영
+====================================================== */
+document.getElementById("notice-check").addEventListener("change", function () {
+  const isChecked = this.checked;
+  const idx = posts.findIndex(p => p.id == postId);
+
+  posts[idx].isNotice = isChecked;
+  localStorage.setItem("habin_posts", JSON.stringify(posts));
+
+  alert("공지 상태가 변경되었습니다.");
+});
+
+/* ======================================================
+   📌 수정 / 삭제
+====================================================== */
 document.getElementById("editBtn").onclick = () => {
   location.href = `editor.html?id=${postId}`;
 };
