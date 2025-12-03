@@ -7,21 +7,22 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
-/* =============== 전체 컨테이너 =============== */
+/* ---------------------- 전체 래퍼 ---------------------- */
 .view-container {
   max-width: 900px;
-  margin: 0 auto;
-  padding: 0 20px 120px;
+  margin: 30px auto 120px;
+  padding: 0 20px;
 }
 
-/* =============== 상단 공지 + 버튼 영역 =============== */
-.view-top-bar {
+/* ---------------------- 공지 + 오른쪽 버튼 ---------------------- */
+.notice-line {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 14px;
 }
 
+/* 공지 영역 */
 .notice-area {
   display: flex;
   align-items: center;
@@ -33,99 +34,96 @@
   font-weight: 600;
 }
 
-.top-btns a {
+.notice-area input[type="checkbox"] {
+  transform: scale(1.2);
+}
+
+/* 상단 버튼 */
+.notice-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-top {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 6px 12px;
   background: #3558A8;
-  color: white;
+  color: #FFFFFF;
   border-radius: 6px;
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
-  margin-left: 6px;
+  height: 35px;
+  line-height: 1;
 }
-.top-btns a:hover { opacity: 0.9; }
+.btn-top:hover { opacity: 0.92; }
 
-/* =============== 제목 영역 =============== */
+/* ---------------------- 제목 ---------------------- */
 #view-title {
   width: 100%;
-  font-size: 26px;
-  font-weight: 800;
-  margin-bottom: 8px;
-  line-height: 1.4;
-  color: #222;
-}
-
-/* 공지 배지 */
-.notice-badge {
-  display: inline-block;
-  margin-right: 6px;
-  padding: 4px 8px;
-  background: #FFF1A8;
-  border: 1px solid #E2C55A;
-  border-radius: 6px;
-  font-size: 14px;
+  padding: 14px 16px;
+  font-size: 22px;
   font-weight: 700;
-  color: #8A6B00;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  background: #fff;
 }
 
-/* 작성자/날짜 */
-#view-info {
-  color: #777;
-  font-size: 14px;
-  border-bottom: 1px solid #e5e5e5;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-}
-
-/* 본문 */
+/* ---------------------- 본문 ---------------------- */
 #view-content {
+  width: 100%;
+  min-height: 460px;
+  padding: 18px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: white;
   font-size: 17px;
-  line-height: 1.8;
-  color: #2b2b2b;
-  margin-bottom: 40px;
+  line-height: 1.75;
+  word-break: break-all;
 }
 
-/* 본문 이미지 중앙 */
+/* 이미지 자동 중앙 */
 #view-content img {
   max-width: 100%;
   display: block;
   margin: 14px auto;
-  border-radius: 8px;
 }
 
-/* 하단 버튼 */
+/* ---------------------- 하단 버튼 --------------------------- */
 .view-buttons {
+  margin-top: 20px;
   display: flex;
   justify-content: flex-end;
   gap: 10px;
-  margin-top: 20px;
 }
 
 .view-btn {
-  padding: 9px 16px;
-  border-radius: 8px;
+  padding: 6px 12px;
   border: none;
-  cursor: pointer;
-  font-size: 14px;
+  border-radius: 6px;
+  font-size: 15px;
   font-weight: 600;
+  cursor: pointer;
+  height: 35px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* 버튼색 editor.html과 통일 */
-.btn-edit { background:#3558A8; color:white; }
-.btn-edit:hover { background:#5C8EDB; }
+.btn-edit { background: #3558A8; color: white; }
+.btn-edit:hover { background: #5C8EDB; }
 
-.btn-delete { background:#D9534F; color:white; }
-.btn-delete:hover { background:#C3413B; }
+.btn-delete { background: #D9534F; color: white; }
+.btn-delete:hover { background: #C3413B; }
 
-.btn-list { background:#3558A8; color:white; }
-.btn-list:hover { background:#5C8EDB; }
-
-.btn-main { background:#3558A8; color:white; }
-.btn-main:hover { background:#5C8EDB; }
+.btn-cancel { background: #CCC; color: black; }
+.btn-cancel:hover { background: #bbb; }
 </style>
+
 </head>
 
 <body>
@@ -134,85 +132,70 @@
 
 <div class="view-container">
 
-  <!-- 🔥 상단: 공지 + 버튼  -->
-  <div class="view-top-bar">
+  <!-- 공지 + 상단버튼 라인 -->
+  <div class="notice-line">
     <div class="notice-area">
-      <input type="checkbox" id="notice-check">
-      <label for="notice-check">📌 공지글로 등록하기</label>
+      <input type="checkbox" id="notice-check" disabled>
+      <label for="notice-check">📌 공지글</label>
     </div>
 
-    <div class="top-btns">
-      <a href="list.html">목록</a>
-      <a href="index.html">메인</a>
+    <div class="notice-buttons">
+      <a href="list.html" class="btn-top">목록</a>
+      <a href="index.html" class="btn-top">메인</a>
     </div>
   </div>
 
-  <!-- 🔥 제목 / 정보 / 본문 -->
-  <h1 id="view-title"></h1>
-  <div id="view-info"></div>
+  <!-- 제목 -->
+  <div id="view-title"></div>
+
+  <!-- 본문 -->
   <div id="view-content"></div>
 
-  <!-- 🔥 하단 버튼 -->
+  <!-- 하단 버튼 -->
   <div class="view-buttons">
     <button class="view-btn btn-edit" id="editBtn">수정</button>
     <button class="view-btn btn-delete" id="deleteBtn">삭제</button>
-    <button class="view-btn btn-list" onclick="location.href='list.html'">목록</button>
-    <button class="view-btn btn-main" onclick="location.href='index.html'">메인</button>
+    <button class="view-btn btn-cancel" onclick="history.back()">취소</button>
   </div>
 
 </div>
 
 <script>
-/* ======================================================
+/* ---------------------------------------------------
    📌 URL에서 id 가져오기
-====================================================== */
+--------------------------------------------------- */
 const params = new URLSearchParams(window.location.search);
 const postId = params.get("id");
 
 let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 const post = posts.find(p => p.id == postId);
 
-/* ======================================================
-   📌 글 데이터 표시
-====================================================== */
+/* ---------------------------------------------------
+   📌 데이터 삽입
+--------------------------------------------------- */
 if (post) {
-  document.getElementById("view-title").innerHTML =
-    (post.isNotice ? `<span class="notice-badge">📌 공지</span>` : "") + post.title;
-
-  document.getElementById("view-info").innerHTML =
-    `작성자: ${post.writer} · ${post.date}`;
-
+  document.getElementById("view-title").innerHTML = post.title;
   document.getElementById("view-content").innerHTML = post.content;
 
-  /* 🔥 공지 체크 상태 반영 */
+  // 공지 체크 반영
   document.getElementById("notice-check").checked = !!post.isNotice;
 }
 
-/* ======================================================
-   🔥 공지 체크 변경 → 즉시 localStorage 반영
-====================================================== */
-document.getElementById("notice-check").addEventListener("change", function () {
-  const isChecked = this.checked;
-  const idx = posts.findIndex(p => p.id == postId);
-
-  posts[idx].isNotice = isChecked;
-  localStorage.setItem("habin_posts", JSON.stringify(posts));
-
-  alert("공지 상태가 변경되었습니다.");
-});
-
-/* ======================================================
-   📌 수정 / 삭제
-====================================================== */
+/* ---------------------------------------------------
+   📌 수정 버튼 → editor.html?id=123
+--------------------------------------------------- */
 document.getElementById("editBtn").onclick = () => {
   location.href = `editor.html?id=${postId}`;
 };
 
+/* ---------------------------------------------------
+   📌 삭제
+--------------------------------------------------- */
 document.getElementById("deleteBtn").onclick = () => {
   if (!confirm("정말 삭제하시겠습니까?")) return;
 
-  posts = posts.filter(p => p.id != postId);
-  localStorage.setItem("habin_posts", JSON.stringify(posts));
+  const newPosts = posts.filter(p => p.id != postId);
+  localStorage.setItem("habin_posts", JSON.stringify(newPosts));
   location.href = "list.html";
 };
 </script>
