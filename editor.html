@@ -14,6 +14,33 @@
   padding: 0 20px;
 }
 
+/* ---------------------- 상단 이동 버튼 ---------------------- */
+.editor-top-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.btn-top {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  background: #3558A8;
+  color: #FFFFFF;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  height: 35px;
+  line-height: 1;
+}
+
+.btn-top:hover {
+  opacity: 0.92;
+}
+
 /* ---------------------- 제목 입력 ----------------------- */
 #post-title {
   width: 100%;
@@ -94,7 +121,7 @@
   margin: 14px auto;
 }
 
-/* ---------------------- 버튼 --------------------------- */
+/* ---------------------- 하단 버튼 --------------------------- */
 .editor-buttons {
   margin-top: 20px;
   display: flex;
@@ -103,12 +130,17 @@
 }
 
 .editor-btn {
-  padding: 9px 16px;
+  padding: 6px 12px;
   border: none;
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: 6px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
+  height: 35px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-save { background: #3558A8; color: white; }
@@ -128,6 +160,12 @@
 <script src="secret-gate.js"></script>
 
 <div class="editor-container">
+
+  <!-- 상단 이동 버튼 -->
+  <div class="editor-top-buttons">
+    <a href="list.html" class="btn-top">목록</a>
+    <a href="index.html" class="btn-top">메인</a>
+  </div>
 
   <!-- 제목 입력 -->
   <input type="text" id="post-title" placeholder="제목을 입력하세요">
@@ -158,7 +196,7 @@
 
 <script>
 /* -----------------------------------------------------
-   📌 수정 모드인지 확인 (editor.html?id=123 형식)
+   📌 수정 모드인지 확인 (editor.html?id=123)
 ----------------------------------------------------- */
 let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
@@ -171,16 +209,14 @@ if (editId) {
     document.getElementById("post-title").value = post.title;
     document.getElementById("editor").innerHTML = post.content;
 
-    /* 공지 체크 불러오기 */
+    /* 공지 체크 */
     document.getElementById("notice-check").checked = !!post.isNotice;
   }
 }
 
 /* -----------------------------------------------------
-   📌 저장 / 수정 / 삭제 / 취소
+   📌 저장 / 수정
 ----------------------------------------------------- */
-
-// 저장 또는 수정
 document.getElementById("saveBtn").onclick =
 document.getElementById("updateBtn").onclick = () => {
 
@@ -199,7 +235,6 @@ document.getElementById("updateBtn").onclick = () => {
     post.content = content;
     post.date = date;
     post.isNotice = isNotice;
-
   } else {
     posts.push({
       id: Date.now(),
@@ -215,7 +250,9 @@ document.getElementById("updateBtn").onclick = () => {
   location.href = "list.html";
 };
 
-// 삭제
+/* -----------------------------------------------------
+   📌 삭제
+----------------------------------------------------- */
 document.getElementById("deleteBtn").onclick = () => {
   if (!editId) return;
   if (!confirm("정말 삭제하시겠습니까?")) return;
@@ -225,7 +262,9 @@ document.getElementById("deleteBtn").onclick = () => {
   location.href = "list.html";
 };
 
-// 취소
+/* -----------------------------------------------------
+   📌 취소
+----------------------------------------------------- */
 document.getElementById("cancelBtn").onclick = () => history.back();
 </script>
 
