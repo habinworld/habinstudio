@@ -579,5 +579,12 @@ body {
   margin: 0 auto;
   padding: 0 10px;
 }
+.action-btn {
+  display: inline-flex;
+  align-items: center;      /* 세로 중앙 */
+  justify-content: center;  /* 가로 중앙 */
+  line-height: 1;           /* 텍스트 baseline 제거 */
+  vertical-align: middle;   /* baseline 문제 해결 */
+}
 
 
