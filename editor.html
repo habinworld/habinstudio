@@ -14,14 +14,33 @@
   padding: 0 20px;
 }
 
-/* ---------------------- 상단 이동 버튼 ---------------------- */
-.editor-top-buttons {
+/* ---------------------- 공지 + 오른쪽 버튼 한 줄 ---------------------- */
+.notice-line {
   display: flex;
-  justify-content: flex-end;
-  gap: 8px;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 14px;
 }
 
+/* 공지 칸 */
+.notice-area {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.notice-area label {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* 오른쪽 버튼 그룹 */
+.notice-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+/* 목록/메인 버튼 */
 .btn-top {
   display: inline-flex;
   align-items: center;
@@ -36,7 +55,6 @@
   height: 35px;
   line-height: 1;
 }
-
 .btn-top:hover {
   opacity: 0.92;
 }
@@ -51,23 +69,9 @@
   border-radius: 8px;
   margin-bottom: 12px;
 }
-
 #post-title:focus {
   border-color: #3558A8;
   box-shadow: 0 0 0 3px rgba(92,142,219,0.25);
-}
-
-/* ---------------------- 공지 체크 ----------------------- */
-.notice-area {
-  display: flex;
-  align-items: center;
-  margin-bottom: 14px;
-  gap: 8px;
-}
-
-.notice-area label {
-  font-size: 15px;
-  font-weight: 600;
 }
 
 /* ---------------------- 툴바 --------------------------- */
@@ -114,7 +118,6 @@
   box-shadow: 0 0 0 3px rgba(92,142,219,0.25);
 }
 
-/* 에디터 이미지 중앙 */
 #editor img {
   max-width: 100%;
   display: block;
@@ -161,19 +164,20 @@
 
 <div class="editor-container">
 
-  <!-- 상단 이동 버튼 -->
-  <div class="editor-top-buttons">
-    <a href="list.html" class="btn-top">목록</a>
-    <a href="index.html" class="btn-top">메인</a>
-  </div>
-
   <!-- 제목 입력 -->
   <input type="text" id="post-title" placeholder="제목을 입력하세요">
 
-  <!-- 공지 체크 -->
-  <div class="notice-area">
-    <input type="checkbox" id="notice-check">
-    <label for="notice-check">📌 공지글로 등록하기</label>
+  <!-- 공지 + 오른쪽 버튼 -->
+  <div class="notice-line">
+    <div class="notice-area">
+      <input type="checkbox" id="notice-check">
+      <label for="notice-check">📌 공지글로 등록하기</label>
+    </div>
+
+    <div class="notice-buttons">
+      <a href="list.html" class="btn-top">목록</a>
+      <a href="index.html" class="btn-top">메인</a>
+    </div>
   </div>
 
   <!-- 툴바 -->
@@ -208,8 +212,6 @@ if (editId) {
   if (post) {
     document.getElementById("post-title").value = post.title;
     document.getElementById("editor").innerHTML = post.content;
-
-    /* 공지 체크 */
     document.getElementById("notice-check").checked = !!post.isNotice;
   }
 }
@@ -270,6 +272,5 @@ document.getElementById("cancelBtn").onclick = () => history.back();
 
 </body>
 </html>
-
 
 
