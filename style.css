@@ -210,12 +210,8 @@ body {
   background: #1B1E45;
   position: absolute;
   top: 50%;
-  left: 49.5%;
-  transform-origin: bottom center;
-   /* ★ 중심 고정: bottom-center */
-  transform-origin: 50% 100%;
-  transform: rotate(0deg); /* 기본값 */ 
-}
+  left: 50%;
+  transform-origin: bottom 
 /* 시침 길이 줄임 */
 .hand.hour {
   height: 25%;
