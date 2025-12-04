@@ -212,6 +212,9 @@ body {
   top: 50%;
   left: 49.5%;
   transform-origin: bottom;
+   /* ★ 중심 고정: bottom-center */
+  transform-origin: 50% 100%;
+  transform: rotate(0deg); /* 기본값 */ 
 }
 /* 시침 길이 줄임 */
 .hand.hour {
