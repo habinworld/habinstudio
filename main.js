@@ -50,7 +50,7 @@ function updateDateTime() {
   if (hour > 12) hour -= 12;
 
   const dateStr = `${year}년 ${month}월 ${date}일`;
-  const timeStr = `${ampm} ${hour}시 ${minute분}`;
+  const timeStr = `${ampm} ${hour}시 ${minute}분`;
 
   const box = document.getElementById('datetime');
   if (box) box.innerHTML = `${dateStr} · ${timeStr}`;
