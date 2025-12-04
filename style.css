@@ -210,7 +210,7 @@ body {
   background: #1B1E45;
   position: absolute;
   top: 50%;
-  left: 49.5%;
+  left: 42px;
   transform-origin: bottom;
 }
 /* 시침 길이 줄임 */
