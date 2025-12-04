@@ -211,7 +211,8 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform-origin: bottom 
+  transform-origin: bottom;
+  } 
 /* 시침 길이 줄임 */
 .hand.hour {
   height: 25%;
