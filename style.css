@@ -587,4 +587,130 @@ body {
   height: 35px !important;
   line-height: 1 !important;
 }
+/* ----------------------------------------------------
+   🌙 Ha-Bin Studio — Night Mode (class="night")
+   body.night가 붙었을 때 전체 Moonlight 테마 적용
+---------------------------------------------------- */
+
+/* 전체 배경 */
+body.night {
+  background: linear-gradient(180deg, #020617 0%, #0A0F24 100%) !important;
+  color: #E5E7EB !important;
+}
+
+/* 사이드바 */
+body.night #sidebar {
+  background: rgba(15, 23, 42, 0.96) !important;
+  border-right-color: #1E3A8A !important;
+  color: #E5E7EB !important;
+}
+
+/* 사이드바 내부 텍스트 */
+body.night #sidebar * {
+  color: #E5E7EB !important;
+}
+
+/* 본문 */
+body.night #content {
+  background: rgba(3, 10, 25, 0.85) !important;
+  color: #E5E7EB !important;
+  box-shadow: inset 0 0 40px rgba(0,0,0,0.45) !important;
+}
+
+/* top-banner */
+body.night .top-banner {
+  background: #1E1A3A !important;
+  color: #E5E7EB !important;
+}
+
+/* 탑메뉴 */
+body.night .top-menu a {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #E2E8F0 !important;
+}
+body.night .top-menu a:hover {
+  background: #334155 !important;
+  color: #BFDBFE !important;
+  border-color: #60A5FA !important;
+}
+
+/* 날짜/시간 */
+body.night #current-datetime {
+  color: #93C5FD !important;
+}
+
+/* 아날로그 시계 */
+body.night #clock {
+  border-color: #1E3A8A !important;
+}
+body.night .hand {
+  background: #CBD5E1 !important;
+}
+body.night .hand.second {
+  background: #60A5FA !important;
+}
+
+/* 모바일 드로어 */
+body.night #drawer {
+  background: #0F172A !important;
+  color: #E5E7EB !important;
+}
+body.night #drawer a {
+  border-color: #1E293B !important;
+  color: #E2E8F0 !important;
+}
+
+/* 접이식 메뉴 */
+body.night #sidebar-menu a {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #E2E8F0 !important;
+}
+body.night #sidebar-menu a:hover {
+  background: #334155 !important;
+  color: #BFDBFE !important;
+  border-color: #60A5FA !important;
+}
+
+/* 푸터 */
+body.night #habin-footer {
+  background: #0F172A !important;
+  color: #E2E8F0 !important;
+}
+body.night #habin-footer .ft-sub {
+  color: #E2E8F0 !important;
+}
+body.night #habin-footer .ft-hidden {
+  color: #94A3B8 !important;
+}
+
+/* 프로필 블록 */
+body.night .poetic-block {
+  background: rgba(30, 41, 59, 0.6) !important;
+  border-color: rgba(255,255,255,0.10) !important;
+}
+
+/* 문패 */
+body.night .badge {
+  background: rgba(30, 41, 59, 0.4) !important;
+  border-color: #3A67C9 !important;
+  color: #E5E7EB !important;
+}
+
+/* 날씨 영역 */
+body.night #weather-area,
+body.night #weather-location,
+body.night #weather-box {
+  color: #E5E7EB !important;
+}
+
+/* 비밀문 */
+body.night .secret-box {
+  background: #0F172A !important;
+  border-color: #334155 !important;
+}
+body.night .secret-toggle {
+  color: #9CA3AF !important;
+}
 
