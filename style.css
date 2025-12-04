@@ -204,28 +204,26 @@ body {
   border: 1px solid #8FA8E6;  /* 안쪽 원 */
   box-sizing: border-box;
 }
+/* ⭐ 핵심 수정 — 흔들림 완전 제거 버전 */
 .hand {
   width: 2px;
   height: 35%;
   background: #1B1E45;
   position: absolute;
   top: 50%;
-  left: 49.5%;
-  transform-origin: bottom;
+  left: 50%;                     /* ← 중심 정확히 */
+  transform: translateX(-50%);   /* ← 중심축 고정 */
+  transform-origin: bottom center; /* ← 회전 중심 안정 */
 }
-/* ⭐ 시침만 길이 줄이는 override 코드 (여기에 넣기!!) */
+
+/* 시침 길이 줄임 */
 .hand.hour {
   height: 25%;
 }
+
+/* 초침 색 + 폭 */
 .hand.second {
   width: 1px;
-}
-/* 날짜/시간 — 전체 글자색 주황 */
-#current-datetime {
-  color: #FF8C00 !important;
-}
-/* 아날로그 시계 — 초침만 주황색 */
-.hand.second {
   background: #FF0000 !important;
 }
 /* ----- 날씨 영역 ----- */
