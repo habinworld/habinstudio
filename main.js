@@ -73,8 +73,8 @@ function runClock() {
   const hrHand = document.querySelector('.hand.hour');
   const minHand = document.querySelector('.hand.minute');
 
-  if (hrHand) hrHand.style.transform = `translateX(-50%) rotate(${hrDeg}deg)`;
-  if (minHand) minHand.style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
+  if (hrHand) hrHand.style.transform = `rotate(${hrDeg}deg)`;
+  if (minHand) minHand.style.transform = `rotate(${minDeg}deg)`;
 }
 
 setInterval(runClock, 1000);
