@@ -20,7 +20,11 @@ body {
   min-height: 100vh;
   overflow-x: hidden;    /* 가로만 막음 */
 }
-
+/* -------- 겨울 낮 배경 (밝은 남보라 버전) -------- */
+body.winter-dark {
+  --bgmain: #2F345E;   /* ← 여기 색만 바꾸면 된다 */
+  background: var(--bgmain);
+}
 /* -------- 계절 입자 캔버스 -------- */
 #season-canvas {
   position: fixed;
