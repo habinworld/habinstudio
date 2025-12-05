@@ -586,6 +586,25 @@ body.winter-dark {
   height: 35px !important;
   line-height: 1 !important;
 }
+/* --------------------------------------------------
+   📌 본문 스크롤바 — 연보라 버전
+-------------------------------------------------- */
+#content::-webkit-scrollbar {
+  width: 10px;
+}
+#content::-webkit-scrollbar-track {
+  background: rgba(200, 180, 255, 0.25);
+  border-radius: 10px;
+}
+#content::-webkit-scrollbar-thumb {
+  background: rgba(150, 120, 230, 0.85);
+  border-radius: 10px;
+  border: 2px solid rgba(230, 220, 255, 0.6);
+}
+#content::-webkit-scrollbar-thumb:hover {
+  background: rgba(140, 110, 220, 1);
+}
+
 /* ----------------------------------------------------
    🌙 Ha-Bin Studio — Night Mode (class="night")
    body.night가 붙었을 때 전체 Moonlight 테마 적용
