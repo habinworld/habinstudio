@@ -360,7 +360,7 @@ body.winter-dark {
   overflow-y: auto;
   position: relative;
   z-index: 100;
-  min-height: 100vh;
+  min-height: 0 !important;
 }
 
 /* -------- 탑메뉴 (PC 절대 1줄 + 버튼폭 균등화) -------- */
