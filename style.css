@@ -610,7 +610,12 @@ body.night #sidebar * {
 
 /* 본문 */
 body.night #content {
-  background: rgba(3, 10, 25, 0.85) !important;
+  background: linear-gradient(
+    to bottom,
+    #1A1F3B,
+    #27315C,
+    #3B4A7C
+  ) !important;
   color: #E5E7EB !important;
   box-shadow: inset 0 0 40px rgba(0,0,0,0.45) !important;
 }
