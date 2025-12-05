@@ -360,6 +360,7 @@ body.winter-dark {
   overflow-y: auto;
   position: relative;
   z-index: 100;
+  height: calc(100vh - 0px);   /* ← 새로 추가 (중요) */ 
   min-height: 0 !important;
 }
 
