@@ -63,19 +63,17 @@ function updateClock() {
   const minDeg  = minutes * 6 + seconds * 0.1;         // 분침: 분 + 초 반영
   const hourDeg = (hours % 12) * 30 + minutes * 0.5;   // 시침: 시 + 분 반영
 
-  if (secondHand) {
-    // 초침: 회전만 적용
-    secondHand.style.transform = `rotate(${secDeg}deg)`;
-     }
-
-  if (minuteHand) {
-    minuteHand.style.transform = `rotate(${minDeg}deg)`;
-  }
-
-  if (hourHand) {
-    hourHand.style.transform = `rotate(${hourDeg}deg)`;
-  }
+ if (secondHand) {
+  secondHand.style.transform = `translate(-50%, -100%) rotate(${secDeg}deg)`;
 }
 
+if (minuteHand) {
+  minuteHand.style.transform = `translate(-50%, -100%) rotate(${minDeg}deg)`;
+}
+
+if (hourHand) {
+  hourHand.style.transform   = `translate(-50%, -100%) rotate(${hourDeg}deg)`;
+}
+}
 updateClock();
 setInterval(updateClock, 1000);
