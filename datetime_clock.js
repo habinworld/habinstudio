@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* -----------------------------------------------------
-   🕒 2) 아날로그 시계 (시침·분침·초침) — 흔들림 완전 제거판
+   🕒 2) 아날로그 시계 (시침·분침·초침) — 최종 확정본
 ----------------------------------------------------- */
 
 const hourHand = document.querySelector(".hand.hour");
@@ -59,20 +59,23 @@ function updateClock() {
   const minutes = now.getMinutes();
   const hours = now.getHours();
 
-  const secDeg = seconds * 6;
-  const minDeg = minutes * 6 + seconds * 0.1;
-  const hourDeg = (hours % 12) * 30 + minutes * 0.5;
+  const secDeg  = seconds * 6;                         // 초침: 60초 → 360도
+  const minDeg  = minutes * 6 + seconds * 0.1;         // 분침: 분 + 초 반영
+  const hourDeg = (hours % 12) * 30 + minutes * 0.5;   // 시침: 시 + 분 반영
 
-  if (secondHand)
-    secondHand.style.transform = `translate(-50%, -100%) rotate(${secDeg}deg)`;
+  if (secondHand) {
+    // 초침: 회전만 적용
+    secondHand.style.transform = `rotate(${secDeg}deg)`;
+  }
 
-  if (minuteHand)
+  if (minuteHand) {
     minuteHand.style.transform = `rotate(${minDeg}deg)`;
+  }
 
-  if (hourHand)
+  if (hourHand) {
     hourHand.style.transform = `rotate(${hourDeg}deg)`;
+  }
 }
 
 updateClock();
 setInterval(updateClock, 1000);
-
