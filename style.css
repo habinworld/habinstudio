@@ -329,7 +329,7 @@ body.winter-day {
 .menu-row {
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
+  margin: 12px 0;
 }
 
 .menu-row a {
