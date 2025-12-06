@@ -201,20 +201,6 @@
 <script src="secret-toggle.js"></script>
 <script src="drawer.js"></script>
 
-<!-- 날짜/시간 + 아날로그 시계 -->
-<script src="datetime_clock.js"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  if (typeof startWeather === "function") startWeather();
-});
-</script>
-
-<script>
-function formatDate(dateString) {
-  return dateString.split(" ")[0];
-}
-</script>
 <script>
 // 날짜에서 "YYYY-MM-DD"만 추출
 function formatDate(dateString) {
@@ -261,9 +247,23 @@ noticeList.innerHTML = notices.map((n, i) => `
   </div>
 `).join("");
 </script>
+<!-- 날짜/시간 + 아날로그 시계 -->
+<script src="datetime_clock.js"></script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof startWeather === "function") startWeather();
+});
+</script>
+
+<script>
+function formatDate(dateString) {
+  return dateString.split(" ")[0];
+}
+</script>
 </body>
 </html>
+
 
 
 
