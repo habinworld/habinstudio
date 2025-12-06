@@ -817,4 +817,6 @@ body.night .secret-toggle {
     font-size: 16px;
   }
 }
-
+.hand, body.night .hand {
+  transform-origin: bottom center !important;
+}
