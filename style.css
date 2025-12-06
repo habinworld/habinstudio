@@ -310,6 +310,12 @@ body.winter-day {
   border-color: #5C8EDB;
   box-shadow: 0 0 4px rgba(92,142,219,0.4);
 }
+/* 🔧 비밀문 커서+글자색 패치 (정답 위치) */
+.secret-box input {
+  color: #1B1E45 !important;          /* 글자색 */
+  caret-color: #3558A8 !important;    /* 커서색 */
+  background: #FFFFFF !important;     /* 배경 유지 */
+}
 
 .secret-box button {
   width: 100%;
