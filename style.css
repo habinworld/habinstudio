@@ -817,9 +817,14 @@ body.night .secret-toggle {
     font-size: 16px;
   }
 }
-.hand.second {
-  transform-origin: 50% 100% !important;
+#clock {
+  position: relative !important;
+}
+
+.hand {
+  position: absolute !important;
   bottom: 50% !important;
   left: 50% !important;
-  transform: translate(-50%, 0) rotate(0deg) !important;
+  transform-origin: bottom center !important;
 }
+
