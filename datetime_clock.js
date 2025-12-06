@@ -74,6 +74,5 @@ if (minuteHand) {
 if (hourHand) {
   hourHand.style.transform   = `translate(-50%, -100%) rotate(${hourDeg}deg)`;
 }
-}
-updateClock();
+   updateClock();
 setInterval(updateClock, 1000);
