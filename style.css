@@ -593,16 +593,16 @@ body.winter-dark {
   width: 10px;
 }
 #content::-webkit-scrollbar-track {
-  background: rgba(200, 180, 255, 0.25);
+  background: rgba(238, 225, 255, 0.45);
   border-radius: 10px;
 }
 #content::-webkit-scrollbar-thumb {
-  background: rgba(150, 120, 230, 0.85);
+  background: rgba(205, 180, 255, 0.85);
   border-radius: 10px;
-  border: 2px solid rgba(230, 220, 255, 0.6);
+  border: 2px solid rgba(245, 235, 255, 0.8);
 }
 #content::-webkit-scrollbar-thumb:hover {
-  background: rgba(140, 110, 220, 1);
+  background: rgba(195, 165, 250, 0.95);
 }
 
 /* ----------------------------------------------------
