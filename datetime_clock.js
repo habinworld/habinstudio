@@ -66,8 +66,7 @@ function updateClock() {
   if (secondHand) {
     // 초침: 회전만 적용
     secondHand.style.transform = `rotate(${secDeg}deg)`;
-    secondHand.style.transform = `rotate(${secDeg * 20}deg)`; 
-  }
+     }
 
   if (minuteHand) {
     minuteHand.style.transform = `rotate(${minDeg}deg)`;
