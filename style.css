@@ -223,7 +223,7 @@ body.winter-day {
   top: 50%;
   left: 50%;
   transform-origin: bottom center;
-  transform: translateX(-50%);
+  transform: translateX(-50%)rotate(0deg);
 }
 
 /* 시침 */
