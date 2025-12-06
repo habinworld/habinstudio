@@ -217,15 +217,14 @@ body.winter-day {
 /* 공통 침 */
 .hand {
   width: 2px;
-  height: 45%;          /* 기본 분침 길이 */
+  height: 45%;          /* 기본 분침 길이 그대로 사용 */
   background: #1B1E45;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -1px; 
-  transform-origin: bottom center;
-  transform: rotate(0deg); 
-  }
+  bottom: 50%;          /* 시계 높이의 절반 지점 = 중심선 */
+  left: 50%;            /* 가로도 중심선 */
+ transform-origin: bottom center;
+ transform: rotate(0deg);
+}
 
 /* 시침 */
 .hand.hour {
