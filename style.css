@@ -194,8 +194,8 @@ body.winter-day {
 }
 
 #clock {
-  width: 110px;      /* ← 핵심! 흔들림 없는 정수값 */
-  height: 110px;
+  width: 140px;      /* ← 핵심! 흔들림 없는 정수값 */
+  height: 140px;
   border: 2px solid #3A67C9;
   border-radius: 50%;
   position: relative;
@@ -205,10 +205,10 @@ body.winter-day {
 #clock::after {
   content: "";
   position: absolute;
-  top: 4px;
-  left: 4px;
-  width: calc(100% - 8px);
-  height: calc(100% - 8px);
+  top: 6px;
+  left: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
   border-radius: 50%;
   border: 1px solid #8FA8E6;
   box-sizing: border-box;
