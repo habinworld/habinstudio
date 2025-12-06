@@ -44,38 +44,37 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(updateDateTime, 1000);
 
 
+/* -----------------------------------------------------
+   🕒 2) 아날로그 시계 (시침·분침·초침) — 흔들림 완전 제거판
+----------------------------------------------------- */
 
-  /* -----------------------------------------------------
-     🕒 2) 아날로그 시계 (시침·분침·초침)
-  ----------------------------------------------------- */
+const hourHand = document.querySelector(".hand.hour");
+const minuteHand = document.querySelector(".hand.minute");
+const secondHand = document.querySelector(".hand.second");
 
-  const hourHand = document.querySelector(".hand.hour");
-  const minuteHand = document.querySelector(".hand.minute");
-  const secondHand = document.querySelector(".hand.second");
+function updateClock() {
+  const now = new Date();
 
-  function updateClock() {
-    const now = new Date();
+  const seconds = now.getSeconds();
+  const minutes = now.getMinutes();
+  const hours = now.getHours();
 
-    const seconds = now.getSeconds();
-    const minutes = now.getMinutes();
-    const hours = now.getHours();
+  const secDeg = seconds * 6;
+  const minDeg = minutes * 6 + seconds * 0.1;
+  const hourDeg = (hours % 12) * 30 + minutes * 0.5;
 
-    const secDeg = seconds * 6;                   // 초침
-    const minDeg = minutes * 6 + seconds * 0.1;  // 분침
-    const hourDeg = (hours % 12) * 30 + minutes * 0.5; // 시침
+  if (secondHand)
+    secondHand.style.transform = `rotate(${secDeg}deg)`;
 
-    if (secondHand)
-      secondHand.style.transform = `translate(-50%, -100%) rotate(${secDeg}deg)`;
+  if (minuteHand)
+    minuteHand.style.transform = `rotate(${minDeg}deg)`;
 
-    if (minuteHand)
-      minuteHand.style.transform = `translate(-50%, -100%) rotate(${minDeg}deg)`;
+  if (hourHand)
+    hourHand.style.transform = `rotate(${hourDeg}deg)`;
+}
 
-    if (hourHand)
-      hourHand.style.transform = `translate(-50%, -100%) rotate(${hourDeg}deg)`;
-  }
-
-  updateClock();
-  setInterval(updateClock, 1000);
+updateClock();
+setInterval(updateClock, 1000);
 
 });
 
