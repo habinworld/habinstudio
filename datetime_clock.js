@@ -57,10 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (hourHand)
       hourHand.style.transform   = `rotate(${hourDeg}deg)`;
   }
-
-  updateClock();
-  setInterval(updateClock, 1000);
-
+   setInterval(updateClock, 1000);
 });
 
 
