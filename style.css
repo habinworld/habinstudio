@@ -88,7 +88,7 @@ body.winter-day {
 
 .logo-block {
   text-align: center;
-  margin: 0 auto 30px;
+  margin: 0 auto 35px;
 }
 
 #main-logo {
@@ -124,7 +124,7 @@ body.winter-day {
 /* -------- 프로필 블록 -------- */
 .poetic-block {
   width: calc(100% - 16px);
-  margin: 0 auto 30px; 
+  margin: 0 auto 35px; 
   background: #A9DCFF;
   border: 1.5px solid rgba(53,88,168,0.25);
   padding: 10px 6px 10px;
@@ -149,7 +149,7 @@ body.winter-day {
 .badge {
   font-family: 'HCR Batang', serif;
   text-align: center;
-  margin: 0 auto 30px;
+  margin: 0 auto 40px;
   padding: 10px 16px;
   width: fit-content;
   background: #FFEBA0;
