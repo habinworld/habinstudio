@@ -228,17 +228,17 @@ body.winter-day {
 
 /* 시침 */
 .hand.hour {
-  height: 30%;
+  height: 32px;
 }
 
 /* 분침 */
 .hand.minute {
-  height: 38%;
+  height: 48px;
 }
 
 /* 초침 */
 .hand.second {
-  height: 40%;
+  height: 52px;
   width: 1px;
   background: #FF0000 !important;
 }
