@@ -206,7 +206,15 @@
 <script src="datetime_clock.js"></script>
 
 <script>
-  startWeather();
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof startWeather === "function") startWeather();
+});
+</script>
+
+<script>
+function formatDate(dateString) {
+  return dateString.split(" ")[0];
+}
 </script>
 <script>
 // 날짜에서 "YYYY-MM-DD"만 추출
@@ -257,6 +265,7 @@ noticeList.innerHTML = notices.map((n, i) => `
 
 </body>
 </html>
+
 
 
 
