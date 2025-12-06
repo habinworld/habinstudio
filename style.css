@@ -176,7 +176,7 @@ body.winter-day {
 /* -------- 날짜/시간 -------- */
 #datetime-box {
   margin: 15px 0;
-  font-size: 13px;
+  font-size: 15px;
   text-align: center;
   padding: 8px 0;
 }
@@ -245,7 +245,7 @@ body.winter-day {
 
 /* ----- 날씨 영역 ----- */
 #weather-area {
-  font-size: 13px;
+  font-size: 15px;
   text-align: center;
   margin-top: 2px;
   margin-bottom: 40px; 
