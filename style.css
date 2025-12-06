@@ -132,8 +132,16 @@ body.winter-day {
   text-align: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   margin-bottom: 35px;
+  transition: 0.25s ease;   /* ← hover 반응 속도 */ 
 }
 
+/* ⭐ 프로필 hover 효과 — 여기 삽입 ⭐ */
+.poetic-block:hover {
+  background: #BFE7FF;                         /* 밝기 +10% */
+  border-color: rgba(53,88,168,0.45);           /* 테두리 강조 */
+  transform: translateY(-2px);                  /* 살짝 떠오름 */
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);       /* hover 그림자 */
+}
 .poetic-block h2 {
   margin-bottom: 10px;
   font-size: 16px;
