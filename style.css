@@ -88,7 +88,7 @@ body.winter-day {
 
 .logo-block {
   text-align: center;
-  margin: 0 auto 20px;
+  margin: 0 auto 25px;
 }
 
 #main-logo {
@@ -124,14 +124,14 @@ body.winter-day {
 /* -------- 프로필 블록 -------- */
 .poetic-block {
   width: calc(100% - 16px);
-  margin: 0 auto 16px; 
+  margin: 0 auto 20px; 
   background: #A9DCFF;
   border: 1.5px solid rgba(53,88,168,0.25);
   padding: 10px 6px 10px;
   border-radius: 14px;
   text-align: center;
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 .poetic-block h2 {
