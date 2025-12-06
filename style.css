@@ -124,7 +124,7 @@ body.winter-day {
 /* -------- 프로필 블록 -------- */
 .poetic-block {
   width: calc(100% - 16px);
-  margin: 0 auto 8px; 
+  margin: 0 auto 16px; 
   background: #A9DCFF;
   border: 1.5px solid rgba(53,88,168,0.25);
   padding: 10px 6px 10px;
