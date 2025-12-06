@@ -208,22 +208,6 @@
 <script>
   startWeather();
 </script>
-
-<!-- 로고 자동 모드 -->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const logo = document.getElementById('main-logo');
-  if (!logo) return;
-
-  const hour = new Date().getHours();
-  const isNight = hour >= 20 || hour < 6;
-
-  if (logo.classList.contains('logo-gold')) return;
-
-  logo.classList.remove('logo-off','logo-moon','logo-gold');
-  logo.classList.add(isNight ? 'logo-moon' : 'logo-off');
-});
-</script>
 <script>
 // 날짜에서 "YYYY-MM-DD"만 추출
 function formatDate(dateString) {
@@ -273,6 +257,7 @@ noticeList.innerHTML = notices.map((n, i) => `
 
 </body>
 </html>
+
 
 
 
