@@ -183,6 +183,7 @@ body.winter-day {
 
 #current-datetime {
   font-weight: 600;
+  color: #FF8C00 !important; 
 }
 
 /* -------- 아날로그 시계 -------- */
