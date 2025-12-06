@@ -59,26 +59,6 @@ function updateDateTime() {
 setInterval(updateDateTime, 1000);
 updateDateTime();
 
-/* --------------------------------------------
-  📌 4) 아날로그 시계
---------------------------------------------- */
-function runClock() {
-  const now = new Date();
-  const hr = now.getHours() % 12;
-  const min = now.getMinutes();
-
-  const hrDeg = (hr * 30) + (min * 0.5);
-  const minDeg = min * 6;
-
-  const hrHand = document.querySelector('.hand.hour');
-  const minHand = document.querySelector('.hand.minute');
-
-  if (hrHand) hrHand.style.transform = `translateX(-50%) rotate(${hrDeg}deg)`;
-  if (minHand) minHand.style.transform = `translateX(-50%) rotate(${minDeg}deg)`;
-}
-
-setInterval(runClock, 1000);
-runClock();
 
 /* --------------------------------------------
   📌 5) 낮/밤 자동 테마 + 로고 3단 모드
