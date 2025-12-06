@@ -126,21 +126,15 @@ body.winter-day {
   width: calc(100% - 16px);
   margin: 0 auto 40px; 
   background: #A9DCFF;
-  border: 1.5px solid rgba(53,88,168,0.25);
+  border: 1.5px solid rgba(53,88,168,0.55);
   padding: 10px 6px 10px;
   border-radius: 14px;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  box-shadow: 
+     0 0 6px rgba(53,88,168,0.35),   /* ✔ 은청빛 외곽 반짝임 */
+     0 0 12px rgba(53,88,168,0.20);  /* ✔ 미세한 2중 glow */
   margin-bottom: 35px;
-  transition: 0.25s ease;   /* ← hover 반응 속도 */ 
-}
-
-/* ⭐ 프로필 hover 효과 — 여기 삽입 ⭐ */
-.poetic-block:hover {
-  background: #BFE7FF;                         /* 밝기 +10% */
-  border-color: rgba(53,88,168,0.45);           /* 테두리 강조 */
-  transform: translateY(-2px);                  /* 살짝 떠오름 */
-  box-shadow: 0 3px 8px rgba(0,0,0,0.08);       /* hover 그림자 */
+  transition: 0.25s ease;
 }
 .poetic-block h2 {
   margin-bottom: 10px;
