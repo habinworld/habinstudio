@@ -221,7 +221,7 @@ body.winter-day {
   position: absolute;
   bottom: 50%;          /* 시계 높이의 절반 지점 = 중심선 */
   left: 50%;            /* 가로도 중심선 */
-transform-origin: 50% 100%;
+transform-origin: bottom center;
 }
 
 /* 시침 */
