@@ -121,6 +121,13 @@ function getSeason(m) {
 
 const season = getSeason(new Date().getMonth() + 1);
 
+// 🔥 여기에 붙인다!
+if (season === 'winter') {
+  document.body.classList.add('winter-day');
+} else {
+  document.body.classList.add(season);
+}
+
 if (typeof startParticles === 'function') {
   startParticles(season);
 }
