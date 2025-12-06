@@ -272,7 +272,8 @@ body.winter-day {
   color: #C0C0C0;
   font-style: italic;
   text-align: center;
-  cursor: pointer;
+  cursor: default !important;
+  text-decoration: none;
   margin-top: 25px;
   margin-bottom: 6px;
   transition: 0.25s ease;
