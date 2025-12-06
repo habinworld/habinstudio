@@ -64,7 +64,7 @@ function updateClock() {
   const hourDeg = (hours % 12) * 30 + minutes * 0.5;
 
   if (secondHand)
-    secondHand.style.transform = `rotate(${secDeg}deg)`;
+    secondHand.style.transform = `translate(-50%, -100%) rotate(${secDeg}deg)`;
 
   if (minuteHand)
     minuteHand.style.transform = `rotate(${minDeg}deg)`;
