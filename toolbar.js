@@ -233,6 +233,7 @@ unction applyLineHeight(value) {
   range.deleteContents();
   range.insertNode(fragment);
 }
+}
 /* -----------------------------------------------------
    5) 드롭다운 엔진
 ----------------------------------------------------- */
