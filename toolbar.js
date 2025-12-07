@@ -201,18 +201,38 @@ function normalizeParagraphs() {
 /* -----------------------------------------------------
    줄간격 적용 엔진 (line-height %)
 ----------------------------------------------------- */
-function applyLineHeight(value) {
-  normalizeParagraphs(); // 문단 정규화 먼저 수행
+unction applyLineHeight(value) {
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
 
-  const editor = document.getElementById("editor");
-  if (!editor) return;
+  const range = sel.getRangeAt(0);
 
-  const paragraphs = editor.querySelectorAll("p");
-  paragraphs.forEach(p => {
-    p.style.lineHeight = value;
+  // 선택 영역의 HTML 복사
+  const fragment = range.cloneContents();
+
+  // 선택한 문단만 찾기
+  const blocks = fragment.querySelectorAll("p, div, li");
+
+  if (blocks.length === 0) {
+    // 선택이 텍스트만 있고 block이 없으면 새 <p>로 감싸기
+    const wrapper = document.createElement("p");
+    wrapper.style.lineHeight = value;
+
+    const extracted = range.extractContents();
+    wrapper.appendChild(extracted);
+    range.insertNode(wrapper);
+    return;
+  }
+
+  // 선택된 문단들만 줄간격 변경
+  blocks.forEach(block => {
+    block.style.lineHeight = value;
   });
-}
 
+  // 기존 내용 삭제 후 변경된 fragment 삽입
+  range.deleteContents();
+  range.insertNode(fragment);
+}
 /* -----------------------------------------------------
    5) 드롭다운 엔진
 ----------------------------------------------------- */
