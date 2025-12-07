@@ -170,6 +170,35 @@ function applyInlineStyle(property, value) {
 }
 
 /* -----------------------------------------------------
+   줄간격 전용 함수 — 여기에 추가!!!  ← 새로 추가
+----------------------------------------------------- */
+function applyLineHeight(value) {
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
+
+  const range = sel.getRangeAt(0);
+  const fragment = range.cloneContents();
+
+  const blocks = fragment.querySelectorAll("p, div, li");
+
+  if (blocks.length === 0) {
+    const wrapper = document.createElement("div");
+    wrapper.style.lineHeight = value;
+
+    const extracted = range.extractContents();
+    wrapper.appendChild(extracted);
+    range.insertNode(wrapper);
+    return;
+  }
+
+  blocks.forEach(block => {
+    block.style.lineHeight = value;
+  });
+
+  document.execCommand("insertHTML", false, fragment.innerHTML);
+}
+
+/* -----------------------------------------------------
    5) 드롭다운 엔진
 ----------------------------------------------------- */
 function initFontDropdown() {
