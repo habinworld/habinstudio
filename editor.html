@@ -172,8 +172,6 @@
   }
 
 /* ---------------------- 하단 버튼 --------------------------- */
-
-
 .editor-btn {
   padding: 6px 12px;
   border-radius: 6px;
@@ -225,6 +223,20 @@
 
   <!-- ===================== 툴바 (toolbar.js가 자동으로 생성) ===================== -->
   <div id="toolbar"></div>
+<!-- 드롭다운 3종 (글자체/크기/줄간격) -->
+<div class="hb-dropdown-wrap" style="display:flex; gap:10px; margin:10px 0 14px;">
+  <select id="fontFamilySelect" class="hb-select">
+    <option value="">글자체</option>
+  </select>
+
+  <select id="fontSizeSelect" class="hb-select">
+    <option value="">크기</option>
+  </select>
+
+  <select id="lineHeightSelect" class="hb-select">
+    <option value="">줄간격</option>
+  </select>
+</div>
 
   <!-- 본문 -->
   <div id="editor" contenteditable="true"></div>
