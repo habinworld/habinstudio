@@ -226,17 +226,17 @@ transform-origin: bottom center;
 
 /* 시침 */
 .hand.hour {
-  height: 32px;
+  height: 35px;
 }
 
 /* 분침 */
 .hand.minute {
-  height: 47px;
+  height: 49px;
 }
 
 /* 초침 */
 .hand.second {
-  height: 52px;
+  height: 54px;
   width: 1px;
   background: #FF0000 !important;
 }
