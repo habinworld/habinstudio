@@ -34,10 +34,12 @@
   font-weight: 600;
 }
 
-/* 오른쪽 상단 버튼 */
+/* 오른쪽 하단 버튼 */
 .notice-buttons {
   display: flex;
-  gap: 8px;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px; 
 }
 
 .btn-top {
@@ -103,16 +105,16 @@
   font-size: 17px;
   line-height: 1.75;
 }
-#editor:focus { outline: none !important; }
-
-/* ---------------------- 하단 버튼 --------------------------- */
-.editor-buttons {
+  .editor-buttons {
   margin-top: 20px;
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  flex-wrap: wrap;  
+  gap: 12px;
 }
+#editor:focus { outline: none !important; }
 
+/* ---------------------- 하단 버튼 --------------------------- */
 .editor-btn {
   padding: 6px 12px;
   border: none;
@@ -139,23 +141,23 @@
 <body>
 
 <script src="secret-gate.js"></script>
-
 <div class="editor-container">
 
   <!-- 제목 -->
   <input type="text" id="post-title" disabled />
 
-  <!-- 공지 + 목록/메인 -->
+  <!-- 공지 + 취소,수정/삭제 -->
   <div class="notice-line">
     <div class="notice-area">
       <input type="checkbox" id="notice-check" disabled>
       <label for="notice-check">📌 공지글</label>
     </div>
-
-    <div class="notice-buttons">
-      <a href="list.html" class="btn-top">목록</a>
-      <a href="index.html" class="btn-top">메인</a>
+   <div class="editor-buttons">
+     <button class="editor-btn btn-cancel" onclick="history.back()">취소</button>
+    <button class="editor-btn btn-save" id="editBtn">수정</button>
+    <button class="editor-btn btn-delete" id="deleteBtn">삭제</button>
     </div>
+   
   </div>
 
   <!-- 툴바 (비활성) -->
@@ -165,12 +167,10 @@
   <div id="editor" contenteditable="false"></div>
 
   <!-- 하단 버튼 -->
-  <div class="editor-buttons">
-    <button class="editor-btn btn-save" id="editBtn">수정</button>
-    <button class="editor-btn btn-delete" id="deleteBtn">삭제</button>
-    <button class="editor-btn btn-cancel" onclick="history.back()">취소</button>
-  </div>
-
+   <div class="notice-buttons">
+      <a href="list.html" class="btn-top">목록</a>
+      <a href="index.html" class="btn-top">메인</a>
+    </div>
 </div>
 
 <script src="toolbar.js"></script>
