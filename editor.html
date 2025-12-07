@@ -155,7 +155,13 @@
   font-size: 17px;
   line-height: 1.75;
 }
-
+.editor-buttons {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
 #editor:focus {
   border-color: #3558A8;
   box-shadow: 0 0 0 3px rgba(92,142,219,0.25);
@@ -168,12 +174,7 @@
 }
 
 /* ---------------------- 하단 버튼 --------------------------- */
-.editor-buttons {
-  margin-top: 20px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
+
 
 .editor-btn {
   padding: 6px 12px;
@@ -214,11 +215,14 @@
       <input type="checkbox" id="notice-check">
       <label for="notice-check">📌 공지글로 등록하기</label>
     </div>
-
-    <div class="notice-buttons">
-      <a href="list.html" class="btn-top">목록</a>
-      <a href="index.html" class="btn-top">메인</a>
+     <!-- 버튼 -->
+  <div class="editor-buttons">
+    <button class="editor-btn btn-cancel" id="cancelBtn">취소</button>
+    <button class="editor-btn btn-save" id="saveBtn">등록</button>
+    <button class="editor-btn btn-save" id="updateBtn">수정</button>
+    <button class="editor-btn btn-delete" id="deleteBtn">삭제</button>
     </div>
+   
   </div>
 
   <!-- ===================== 툴바 (toolbar.js가 자동으로 생성) ===================== -->
@@ -226,15 +230,10 @@
 
   <!-- 본문 -->
   <div id="editor" contenteditable="true"></div>
-
-  <!-- 버튼 -->
-  <div class="editor-buttons">
-    <button class="editor-btn btn-cancel" id="cancelBtn">취소</button>
-    <button class="editor-btn btn-save" id="saveBtn">등록</button>
-    <button class="editor-btn btn-save" id="updateBtn">수정</button>
-    <button class="editor-btn btn-delete" id="deleteBtn">삭제</button>
+ <div class="notice-buttons">
+      <a href="list.html" class="btn-top">목록</a>
+      <a href="index.html" class="btn-top">메인</a>
     </div>
-
 </div>
 
 <!-- 심장 3대 엔진 -->
