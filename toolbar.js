@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 글자색 / 배경색
     { type: "color", id: "textColorBtn", icon: "🖌️A", title: "글자색" },
-    { type: "bgcolor", id: "bgColorBtn", icon: "🌈⚒", title: "배경 채우기" },
+    { type: "bgcolor", id: "bgColorBtn", icon: "🎨", title: "배경 채우기" },
 
     // 기본 서식
     { cmd: "bold", icon: "B", title: "굵게" },
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { type: "hr", icon: "━", title: "구분선" },
 
     // 이미지
-    { type: "image", icon: "🖼", title: "이미지 삽입" },
+    { type: "image", icon: "🌈⚒", title: "이미지 삽입" },
 
     // 실행 취소 / 다시 실행
     { cmd: "undo", icon: "↺", title: "실행 취소" },
