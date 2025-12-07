@@ -201,7 +201,7 @@ function normalizeParagraphs() {
 /* -----------------------------------------------------
    줄간격 적용 엔진 (line-height %)
 ----------------------------------------------------- */
-unction applyLineHeight(value) {
+function applyLineHeight(value) {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
 
@@ -233,7 +233,7 @@ unction applyLineHeight(value) {
   range.deleteContents();
   range.insertNode(fragment);
 }
-}
+
 /* -----------------------------------------------------
    5) 드롭다운 엔진
 ----------------------------------------------------- */
