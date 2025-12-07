@@ -176,11 +176,28 @@ function initFontDropdown() {
   const select = document.getElementById("fontFamilySelect");
   if (!select) return;
 
+  /* 📌 글자체 옵션 목록 자동 생성 */
+  const fonts = [
+    { name: "기본체", value: "" },
+    { name: "고딕체", value: "sans-serif" },
+    { name: "명조체", value: "serif" },
+    { name: "고운돋움", value: "'Gowun Dodum', sans-serif" },
+    { name: "나눔명조", value: "'Nanum Myeongjo', serif" },
+    { name: "Noto Serif KR", value: "'Noto Serif KR', serif" }
+  ];
+
+  fonts.forEach(f => {
+    const op = document.createElement("option");
+    op.value = f.value;
+    op.textContent = f.name;
+    select.appendChild(op);
+  });
+
+  /* 글자체 적용 */
   select.addEventListener("change", () => {
     if (select.value) applyInlineStyle("fontFamily", select.value);
   });
 }
-
 function initFontSizeDropdown() {
   const select = document.getElementById("fontSizeSelect");
   if (!select) return;
