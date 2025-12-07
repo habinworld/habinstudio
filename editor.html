@@ -37,7 +37,9 @@
 /* 오른쪽 버튼 그룹 */
 .notice-buttons {
   display: flex;
+  justify-content: flex-end;
   gap: 8px;
+  margin-top: 25px;
 }
 
 /* 목록/메인 버튼 */
@@ -82,33 +84,26 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
-
   margin-bottom: 14px;
   padding: 10px;
-
   background: #F9FAFB;
   border: 1px solid #E5E7EB;
   border-radius: 8px;
 }
-
 .toolbar-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-
   height: 30px;
   min-width: 30px;
-
   padding: 0 8px;
   background: #FFF;
   border: 1px solid #CCC;
   border-radius: 6px;
-
   font-size: 15px;
   cursor: pointer;
   transition: 0.15s;
 }
-
 .toolbar-btn:hover {
   border-color: #3558A8;
   box-shadow: 0 0 3px rgba(53, 88, 168, 0.25);
