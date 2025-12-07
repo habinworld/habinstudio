@@ -170,32 +170,13 @@ function applyInlineStyle(property, value) {
 }
 
 /* -----------------------------------------------------
-   줄간격 전용 함수 — 여기에 추가!!!  ← 새로 추가
+   줄간격 전용 함수 — 에디터 전체 line-height (%)
 ----------------------------------------------------- */
 function applyLineHeight(value) {
-  const sel = window.getSelection();
-  if (!sel.rangeCount) return;
+  const editor = document.getElementById("editor");
+  if (!editor) return;
 
-  const range = sel.getRangeAt(0);
-  const fragment = range.cloneContents();
-
-  const blocks = fragment.querySelectorAll("p, div, li");
-
-  if (blocks.length === 0) {
-    const wrapper = document.createElement("div");
-    wrapper.style.lineHeight = value;
-
-    const extracted = range.extractContents();
-    wrapper.appendChild(extracted);
-    range.insertNode(wrapper);
-    return;
-  }
-
-  blocks.forEach(block => {
-    block.style.lineHeight = value;
-  });
-
-  document.execCommand("insertHTML", false, fragment.innerHTML);
+  editor.style.lineHeight = value;  // 예: "150%"
 }
 
 /* -----------------------------------------------------
@@ -257,7 +238,5 @@ function initLineHeightDropdown() {
   });
 
   select.addEventListener("change", () => {
-    if (select.value) applyInlineStyle("lineHeight", select.value);
-  });
-}
-
+    if (select.value) applyLineHeight(select.value);
+});
