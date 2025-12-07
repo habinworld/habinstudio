@@ -168,15 +168,49 @@ function applyInlineStyle(property, value) {
     range.insertNode(span);
   }
 }
-
 /* -----------------------------------------------------
-   줄간격 전용 함수 — 에디터 전체 line-height (%)
+   문단 정규화 엔진 — 줄(line)을 문단(p)으로 교체
 ----------------------------------------------------- */
-function applyLineHeight(value) {
+function normalizeParagraphs() {
   const editor = document.getElementById("editor");
   if (!editor) return;
 
-  editor.style.lineHeight = value;  // 예: "150%"
+  let html = editor.innerHTML;
+
+  // <br>이 여러 개 이어진 것을 하나의 문단으로 변환
+  html = html
+    .replace(/<br>\s*<br>/g, "</p><p>")
+    .replace(/^<br>/, "");
+
+  // <div>로 생긴 문단도 <p>로 통일
+  html = html
+    .replace(/<div>/g, "<p>")
+    .replace(/<\/div>/g, "</p>");
+
+  // 시작이 비어 있으면 <p>로 감싸기
+  if (!html.startsWith("<p>")) {
+    html = "<p>" + html;
+  }
+  if (!html.endsWith("</p>")) {
+    html += "</p>";
+  }
+
+  editor.innerHTML = html;
+}
+
+/* -----------------------------------------------------
+   줄간격 적용 엔진 (line-height %)
+----------------------------------------------------- */
+function applyLineHeight(value) {
+  normalizeParagraphs(); // 문단 정규화 먼저 수행
+
+  const editor = document.getElementById("editor");
+  if (!editor) return;
+
+  const paragraphs = editor.querySelectorAll("p");
+  paragraphs.forEach(p => {
+    p.style.lineHeight = value;
+  });
 }
 
 /* -----------------------------------------------------
