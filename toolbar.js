@@ -240,3 +240,4 @@ function initLineHeightDropdown() {
   select.addEventListener("change", () => {
     if (select.value) applyLineHeight(select.value);
 });
+}
