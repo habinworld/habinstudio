@@ -5,17 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>글쓰기 · Ha-Bin Studio</title>
 
-  <!-- 메인 스타일 -->
+  <!-- 사이트 공통 스타일 -->
   <link rel="stylesheet" href="style.css">
 
   <!-- 에디터 전용 스타일 -->
   <link rel="stylesheet" href="editor.css">
 
-  <!-- 이미지 리사이즈 핸들용 CSS -->
+  <!-- 이미지 핸들 스타일 -->
   <link rel="stylesheet" href="image.css">
 
-  <!-- 글꼴 -->
+  <!-- 폰트 -->
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    @font-face {
+      font-family: 'HCR Batang';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2101@1.1/HanBatang.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+  </style>
 </head>
 
 <body>
@@ -42,28 +51,76 @@
     </div>
   </div>
 
-  <!-- Ribbon Toolbar (2줄 구조) -->
+  <!-- 리본 툴바 -->
   <div id="toolbar">
-    <!-- 1줄 : 드롭다운 (옵션은 toolbar.js가 채움) -->
-    <select id="fontFamilySelect" class="hb-select" title="글꼴 선택">
+
+    <!-- 글자체 -->
+    <select id="fontFamilySelect" title="글꼴 선택" onchange="hbSetFontFamily(this.value)">
       <option value="">글자체</option>
+      <option value="Noto Sans KR">Noto Sans KR</option>
+      <option value="HCR Batang">함초롱바탕</option>
+      <option value="Nanum Myeongjo">나눔명조</option>
+      <option value="Gowun Dodum">고운돋움</option>
     </select>
 
-    <select id="fontSizeSelect" class="hb-select" title="글자 크기">
+    <!-- 글자 크기 -->
+    <select id="fontSizeSelect" title="글자 크기" onchange="hbSetFontSize(this.value)">
       <option value="">크기</option>
+      <option value="13">13px</option>
+      <option value="15">15px</option>
+      <option value="16">16px</option>
+      <option value="17">17px</option>
+      <option value="18">18px</option>
+      <option value="20">20px</option>
+      <option value="22">22px</option>
+      <option value="24">24px</option>
+      <option value="28">28px</option>
+      <option value="32">32px</option>
     </select>
 
-    <select id="lineHeightSelect" class="hb-select" title="줄간격">
+    <!-- 줄 간격 -->
+    <select id="lineHeightSelect" title="줄간격" onchange="hbSetLineHeight(this.value)">
       <option value="">줄간격</option>
+      <option value="1.4">1.4</option>
+      <option value="1.6">1.6</option>
+      <option value="1.8">1.8</option>
+      <option value="2.0">2.0</option>
+      <option value="2.2">2.2</option>
     </select>
 
-    <!-- 2줄 : 버튼들(동적 생성) -->
+    <!-- 굵게/기울임/밑줄 -->
+    <button class="toolbar-btn" onclick="hbExec('bold')">B</button>
+    <button class="toolbar-btn" onclick="hbExec('italic')"><i>I</i></button>
+    <button class="toolbar-btn" onclick="hbExec('underline')"><u>U</u></button>
+
+    <!-- 색상 -->
+    <button class="toolbar-btn" id="textColorBtn" onclick="hbOpenColorPopup('color')">글자색</button>
+    <button class="toolbar-btn" id="bgColorBtn"   onclick="hbOpenColorPopup('background')">배경색</button>
+
+    <!-- 정렬 -->
+    <button class="toolbar-btn" onclick="hbExec('justifyLeft')">좌</button>
+    <button class="toolbar-btn" onclick="hbExec('justifyCenter')">중</button>
+    <button class="toolbar-btn" onclick="hbExec('justifyRight')">우</button>
+
+    <!-- 리스트 -->
+    <button class="toolbar-btn" onclick="hbExec('insertUnorderedList')">• 목록</button>
+    <button class="toolbar-btn" onclick="hbExec('insertOrderedList')">1. 목록</button>
+
+    <!-- 이미지/링크/구분선 -->
+    <button class="toolbar-btn" onclick="hbInsertImage()">🖼</button>
+    <button class="toolbar-btn" onclick="hbInsertLink()">🔗</button>
+    <button class="toolbar-btn" onclick="hbInsertHR()">━</button>
+
+    <!-- 되돌리기 -->
+    <button class="toolbar-btn" onclick="hbExec('undo')">↺</button>
+    <button class="toolbar-btn" onclick="hbExec('redo')">↻</button>
+
   </div>
 
   <!-- 본문 -->
   <div id="editor" contenteditable="true"></div>
 
-  <!-- 하단 목록/메인 버튼 -->
+  <!-- 하단 목록/메인 -->
   <div class="notice-buttons">
     <a href="list.html"  class="btn-top">목록</a>
     <a href="index.html" class="btn-top">메인</a>
@@ -71,21 +128,20 @@
 
 </div>
 
-<!-- 3대 핵심 엔진 (순서 상관없음: 모두 DOMContentLoaded 사용) -->
+<!-- 엔진 4대 모듈 -->
 <script src="color.js"></script>
 <script src="toolbar.js"></script>
 <script src="image.js"></script>
 
 <script>
-/* -----------------------------------------------------
+/* ---------------------------------------------
    📌 localStorage 기반 글 저장/수정/삭제
------------------------------------------------------ */
+---------------------------------------------- */
 let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-
 const params = new URLSearchParams(window.location.search);
 const editId = params.get("id");
 
-/* 수정 모드일 경우 기존 데이터 채우기 */
+/* 수정 모드일 때 기존 글 불러오기 */
 if (editId) {
   const post = posts.find(p => String(p.id) === String(editId));
   if (post) {
@@ -95,27 +151,27 @@ if (editId) {
   }
 }
 
-/* -----------------------------------------------------
-   📌 등록 / 수정 (같은 함수로 처리)
------------------------------------------------------ */
+/* 등록/수정 */
 function saveOrUpdate() {
   const title   = document.getElementById("post-title").value.trim();
   const content = document.getElementById("editor").innerHTML.trim();
   const isNotice = document.getElementById("notice-check").checked;
 
-  if (!title) return alert("제목을 입력하세요.");
+  if (!title) {
+    alert("제목을 입력하세요.");
+    return;
+  }
 
   const now = new Date();
-  const date =
-    `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ` +
-    `${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const d = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ` +
+            `${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
 
   if (editId) {
     const post = posts.find(p => String(p.id) === String(editId));
     if (post) {
       post.title   = title;
       post.content = content;
-      post.date    = date;
+      post.date    = d;
       post.isNotice = isNotice;
     }
   } else {
@@ -124,7 +180,7 @@ function saveOrUpdate() {
       title,
       content,
       writer: "하빈",
-      date,
+      date: d,
       isNotice
     });
   }
@@ -136,37 +192,22 @@ function saveOrUpdate() {
 document.getElementById("saveBtn").onclick   = saveOrUpdate;
 document.getElementById("updateBtn").onclick = saveOrUpdate;
 
-/* -----------------------------------------------------
-   📌 삭제
------------------------------------------------------ */
+/* 삭제 */
 document.getElementById("deleteBtn").onclick = () => {
   if (!editId) return;
-  if (!confirm("정말 삭제하시겠습니까?")) return;
+  if (!confirm("삭제하시겠습니까?")) return;
 
   posts = posts.filter(p => String(p.id) !== String(editId));
   localStorage.setItem("habin_posts", JSON.stringify(posts));
   location.href = "list.html";
 };
 
-/* -----------------------------------------------------
-   📌 취소
------------------------------------------------------ */
+/* 취소 */
 document.getElementById("cancelBtn").onclick = () => history.back();
-
-/* -----------------------------------------------------
-   📌 auto expand 엔진 (v4.0 즉시반응형)
------------------------------------------------------ */
-const editorEl = document.getElementById("editor");
-
-function autoExpand() {
-  editorEl.style.height = "auto";
-  editorEl.style.height = editorEl.scrollHeight + "px";
-}
-
-editorEl.addEventListener("input", autoExpand);
-window.addEventListener("load", autoExpand);
 </script>
 
 </body>
 </html>
+
+
 
