@@ -5,132 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>글쓰기 · Ha-Bin Studio</title>
 
-  <!-- 메인 사이트 스타일 (있으면 유지) -->
+  <!-- 메인 스타일 -->
   <link rel="stylesheet" href="style.css">
+
   <!-- 에디터 전용 스타일 -->
   <link rel="stylesheet" href="editor.css">
-  <!-- 이미지 리사이즈 전용 스타일  -->
-<link rel="stylesheet" href="image.css">
-  <!-- 폰트 로딩 -->
+
+  <!-- 이미지 리사이즈 핸들용 CSS -->
+  <link rel="stylesheet" href="image.css">
+
+  <!-- 글꼴 -->
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
-
-  <style>
-    /* ---------------------- 전체 래퍼 ---------------------- */
-    .editor-container {
-      max-width: 900px;
-      margin: 30px auto 120px;
-      padding: 0 20px;
-    }
-
-    /* ---------------------- 제목 입력 ----------------------- */
-    #post-title {
-      width: 100%;
-      padding: 14px 16px;
-      font-size: 22px;
-      font-weight: 700;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      box-sizing: border-box;
-    }
-    #post-title:focus {
-      border-color: #3558A8;
-      box-shadow: 0 0 0 3px rgba(92,142,219,0.25);
-      outline: none;
-    }
-
-    /* ---------------------- 공지 + 상단 버튼 줄 ---------------------- */
-    .notice-line {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-      flex-wrap: wrap;
-    }
-
-    .notice-area {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 15px;
-    }
-
-    .notice-area label {
-      font-weight: 600;
-    }
-
-    /* 상단 오른쪽 버튼 (취소/등록/수정/삭제) */
-    .editor-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: flex-end;
-    }
-
-    .editor-btn {
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      height: 35px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-    }
-
-    .btn-cancel { background: #CCCCCC; color: #000; }
-    .btn-cancel:hover { background: #BBBBBB; }
-
-    .btn-save { background: #3558A8; color: #FFFFFF; }
-    .btn-save:hover { background: #5C8EDB; }
-
-    .btn-delete { background: #D9534F; color: #FFFFFF; }
-    .btn-delete:hover { background: #C3413B; }
-
-    /* 하단 목록/메인 버튼 */
-    .notice-buttons {
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      margin-top: 18px;
-      flex-wrap: wrap;
-    }
-
-    .btn-top {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px 12px;
-      background: #3558A8;
-      color: #FFFFFF;
-      border-radius: 6px;
-      font-size: 15px;
-      font-weight: 600;
-      text-decoration: none;
-      height: 35px;
-      line-height: 1;
-    }
-    .btn-top:hover {
-      opacity: 0.92;
-    }
-
-    @media (max-width: 600px) {
-      .notice-line {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .editor-buttons {
-        width: 100%;
-        justify-content: flex-start;
-      }
-      .notice-buttons {
-        justify-content: center;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -157,25 +42,26 @@
     </div>
   </div>
 
-  <!-- Ribbon Toolbar (드롭다운 + 버튼 자동 생성) -->
+  <!-- Ribbon Toolbar (2줄 구조) -->
   <div id="toolbar">
-    <!-- 드롭다운 3종: 옵션은 toolbar.js에서 채움 -->
-    <select id="fontFamilySelect" title="글꼴 선택">
+    <!-- 1줄 : 드롭다운 (옵션은 toolbar.js가 채움) -->
+    <select id="fontFamilySelect" class="hb-select" title="글꼴 선택">
       <option value="">글자체</option>
     </select>
 
-    <select id="fontSizeSelect" title="글자 크기">
+    <select id="fontSizeSelect" class="hb-select" title="글자 크기">
       <option value="">크기</option>
     </select>
 
-    <select id="lineHeightSelect" title="줄간격">
+    <select id="lineHeightSelect" class="hb-select" title="줄간격">
       <option value="">줄간격</option>
     </select>
-    <!-- 나머지 버튼들(굵게/기울임/색상/이미지 등)은 toolbar.js에서 동적으로 추가 -->
+
+    <!-- 2줄 : 버튼들(동적 생성) -->
   </div>
 
-  <!-- 본문 에디터 -->
-  <div id="editor" contenteditable="true"><p><br></p></div>
+  <!-- 본문 -->
+  <div id="editor" contenteditable="true"></div>
 
   <!-- 하단 목록/메인 버튼 -->
   <div class="notice-buttons">
@@ -185,7 +71,7 @@
 
 </div>
 
-<!-- 심장 3대 엔진: 순서 중요X (모두 DOMContentLoaded 사용) -->
+<!-- 3대 핵심 엔진 (순서 상관없음: 모두 DOMContentLoaded 사용) -->
 <script src="color.js"></script>
 <script src="toolbar.js"></script>
 <script src="image.js"></script>
@@ -210,27 +96,21 @@ if (editId) {
 }
 
 /* -----------------------------------------------------
-   📌 등록 / 수정 (같은 로직 사용)
+   📌 등록 / 수정 (같은 함수로 처리)
 ----------------------------------------------------- */
-const saveBtn   = document.getElementById("saveBtn");
-const updateBtn = document.getElementById("updateBtn");
-
 function saveOrUpdate() {
   const title   = document.getElementById("post-title").value.trim();
   const content = document.getElementById("editor").innerHTML.trim();
   const isNotice = document.getElementById("notice-check").checked;
 
-  if (!title) {
-    alert("제목을 입력하세요.");
-    return;
-  }
+  if (!title) return alert("제목을 입력하세요.");
 
   const now = new Date();
-  const date = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ` +
-               `${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const date =
+    `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ` +
+    `${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
 
   if (editId) {
-    // 수정 모드
     const post = posts.find(p => String(p.id) === String(editId));
     if (post) {
       post.title   = title;
@@ -239,7 +119,6 @@ function saveOrUpdate() {
       post.isNotice = isNotice;
     }
   } else {
-    // 새 글
     posts.push({
       id: Date.now(),
       title,
@@ -254,8 +133,8 @@ function saveOrUpdate() {
   location.href = "list.html";
 }
 
-saveBtn.onclick   = saveOrUpdate;
-updateBtn.onclick = saveOrUpdate;
+document.getElementById("saveBtn").onclick   = saveOrUpdate;
+document.getElementById("updateBtn").onclick = saveOrUpdate;
 
 /* -----------------------------------------------------
    📌 삭제
@@ -272,9 +151,20 @@ document.getElementById("deleteBtn").onclick = () => {
 /* -----------------------------------------------------
    📌 취소
 ----------------------------------------------------- */
-document.getElementById("cancelBtn").onclick = () => {
-  history.back();
-};
+document.getElementById("cancelBtn").onclick = () => history.back();
+
+/* -----------------------------------------------------
+   📌 auto expand 엔진 (v4.0 즉시반응형)
+----------------------------------------------------- */
+const editorEl = document.getElementById("editor");
+
+function autoExpand() {
+  editorEl.style.height = "auto";
+  editorEl.style.height = editorEl.scrollHeight + "px";
+}
+
+editorEl.addEventListener("input", autoExpand);
+window.addEventListener("load", autoExpand);
 </script>
 
 </body>
