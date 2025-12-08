@@ -1,29 +1,27 @@
 /* -----------------------------------------------------
-   ✒️ Ha-Bin Studio — editor.css v3.4 (최신 안정판)
-   Excel Ribbon Model + Color Engine + Image Resize
-   color.js / toolbar.js / image.js와 100% 완전 호환
+   ✒️ Ha-Bin Studio — editor.css v4.0
+   Excel Ribbon + Word Inline Engine + AutoExpand 
+   전체 통합 최신 스타일
 ----------------------------------------------------- */
 
-/* 전체 기본값 */
+/* 글로벌 기본 */
 body {
+  background: #F9FAFB;
   margin: 0;
   padding: 0;
-  background: #F9FAFB;
   font-family: 'Noto Sans KR', sans-serif;
 }
 
-/* -----------------------------
-   에디터 컨테이너
------------------------------ */
+/* 전체 editor layout */
 .editor-container {
   max-width: 900px;
-  margin: 34px auto 120px;
+  margin: 30px auto 120px;
   padding: 0 20px;
 }
 
-/* -----------------------------
-   제목 입력
------------------------------ */
+/* -----------------------------------------
+   제목
+----------------------------------------- */
 #post-title {
   width: 100%;
   padding: 14px 16px;
@@ -32,24 +30,26 @@ body {
   border: 2px solid #ddd;
   border-radius: 8px;
   margin-bottom: 12px;
+  transition: 0.2s;
   box-sizing: border-box;
 }
+
 #post-title:focus {
   border-color: #3558A8;
   box-shadow: 0 0 0 3px rgba(92,142,219,0.25);
   outline: none;
 }
 
-/* -----------------------------
-   상단 공지 + 버튼 줄
------------------------------ */
+/* -----------------------------------------
+   공지 + 버튼줄
+----------------------------------------- */
 .notice-line {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 14px;
   margin-bottom: 14px;
+  flex-wrap: wrap;
 }
 
 .notice-area {
@@ -60,179 +60,216 @@ body {
   font-weight: 600;
 }
 
+/* 상단 버튼 */
 .editor-buttons {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
-/* 버튼 규칙 — 하빈 저장된 규칙 적용 */
 .editor-btn {
   padding: 6px 12px;
+  border-radius: 6px;
   font-size: 15px;
   font-weight: 600;
-  border: none;
-  border-radius: 6px;
   cursor: pointer;
   height: 35px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  border: none;
 }
 
 .btn-cancel { background: #CCCCCC; color: #000; }
 .btn-cancel:hover { background: #BBBBBB; }
 
-.btn-save { background: #3558A8; color: white; }
+.btn-save { background: #3558A8; color: #FFFFFF; }
 .btn-save:hover { background: #5C8EDB; }
 
-.btn-delete { background: #D9534F; color: white; }
+.btn-delete { background: #D9534F; color: #FFFFFF; }
 .btn-delete:hover { background: #C3413B; }
 
-/* -----------------------------
-   Ribbon 툴바 (Excel 스타일)
------------------------------ */
+/* -----------------------------------------
+   Ribbon Toolbar (2줄 구조)
+----------------------------------------- */
 #toolbar {
+  background: #F3F4F6;
+  border: 1px solid #E5E7EB;
+  padding: 10px;
+  border-radius: 8px;
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #E5E7EB;
-  background: #F3F4F6;
   margin-bottom: 14px;
 }
 
-/* 드롭다운 (폰트/크기/줄간격) */
-#toolbar select {
-  padding: 6px 10px;
+/* Ribbon dropdowns */
+.hb-select {
+  height: 32px;
+  padding: 0 6px;
   font-size: 14px;
-  border: 1px solid #D1D5DB;
   border-radius: 6px;
-  background: white;
-}
-#toolbar select:focus {
-  outline: none;
-  border-color: #3558A8;
-}
-
-/* 툴바 버튼 */
-.hb-btn {
-  background: white;
-  border: 1px solid #D1D5DB;
-  border-radius: 6px;
-  padding: 6px 10px;
+  border: 1px solid #CCC;
+  background: #FFF;
   cursor: pointer;
-  font-size: 14px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
   transition: 0.15s;
 }
-.hb-btn:hover {
-  background: #EEF4FF;
+
+.hb-select:hover {
   border-color: #3558A8;
+  box-shadow: 0 0 3px rgba(53,88,168,0.25);
+}
+
+.hb-select:focus {
+  outline: none;
+  border-color: #3558A8;
+  box-shadow: 0 0 4px rgba(53,88,168,0.35);
+}
+
+/* Ribbon buttons */
+.toolbar-btn {
+  background: #FFFFFF;
+  border: 1px solid #D1D5DB;
+  padding: 0 10px;
+  min-width: 32px;
+  height: 32px;
+
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: 0.15s;
+}
+
+.toolbar-btn:hover {
+  background: #EEF4FF;
+  border-color: #5C8EDB;
   color: #3558A8;
 }
-.hb-btn.active {
+
+.toolbar-btn.active {
   background: #3558A8;
-  color: white;
+  color: #FFF;
 }
 
-/* -----------------------------
-   본문 에디터
------------------------------ */
+/* -----------------------------------------
+   본문 Editor (autoExpand)
+----------------------------------------- */
 #editor {
   width: 100%;
-  min-height: 430px;
+  min-height: 460px;   /* 기본 높이 */
   padding: 18px;
+  border: 2px solid #ddd;
   border-radius: 8px;
-  border: 2px solid #E5E7EB;
-  background: white;
-  font-size: 16px;
+  background: #FFFFFF;
+
+  font-size: 17px;     /* 하빈 기본값 */
   line-height: 1.7;
   outline: none;
-}
-#editor:focus {
-  border-color: #3558A8;
-  box-shadow: 0 0 0 3px rgba(92,142,219,0.25);
+
+  resize: none;        /* 수동 리사이즈 금지 — autoExpand 전용 */
+  overflow-y: hidden;  /* 내부 스크롤 제거 — 자연 확장 */
 }
 
-/* -----------------------------
-   이미지 리사이즈 핸들
------------------------------ */
+#editor:focus {
+  border-color: #3558A8;
+  box-shadow: 0 0 0 3px rgba(92,142,219,0.3);
+}
+
+/* 이미지 기본 스타일 */
+#editor img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 14px auto;
+  cursor: pointer;
+}
+
+/* -----------------------------------------
+   이미지 핸들 (image.js)
+----------------------------------------- */
 .hb-img-handle {
   width: 14px;
   height: 14px;
-  background: white;
-  border: 2px solid #3558A8;
+  background: #3558A8;
   border-radius: 50%;
   position: absolute;
   cursor: nwse-resize;
+  border: 2px solid #FFF;
   z-index: 9999;
-  box-shadow: 0 0 4px rgba(0,0,0,0.25);
 }
 
-/* -----------------------------
-   색상 팝업 (hb-color-popup)
------------------------------ */
+/* -----------------------------------------
+   색상 팝업 — color.js
+----------------------------------------- */
 #hb-color-popup {
   position: absolute;
-  background: white;
-  width: 230px;
+  background: #FFFFFF;
+  border: 1px solid #DDD;
   padding: 10px;
-  border: 1px solid #D1D5DB;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
-  display: none;
-  z-index: 99999;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.18);
+  z-index: 999999;
+
+  width: 230px;
 }
 
 .hb-section-title {
   font-size: 13px;
-  font-weight: 700;
   margin: 6px 0 4px;
+  font-weight: 600;
   color: #555;
 }
 
-.hb-color-row,
-.hb-color-grid {
+.hb-color-row {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  gap: 4px;
   margin-bottom: 6px;
 }
 
-/* 개별 색상 박스 */
-.hb-color-box {
-  width: 22px;
-  height: 22px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  cursor: pointer;
+.hb-color-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+  margin-bottom: 6px;
 }
+
+.hb-color-box {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: 1px solid #CCC;
+  cursor: pointer;
+  transition: 0.1s;
+}
+
 .hb-color-box:hover {
-  transform: scale(1.15);
+  transform: scale(1.12);
 }
 
 .hb-more-btn {
-  margin-top: 6px;
   width: 100%;
-  padding: 6px 10px;
-  border-radius: 6px;
-  background: #F3F4F6;
-  border: 1px solid #D1D5DB;
+  padding: 6px 0;
+  background: #EEE;
+  border: 1px solid #CCC;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
-}
-.hb-more-btn:hover {
-  background: #EEF4FF;
-  border-color: #3558A8;
+  font-size: 13px;
 }
 
-/* -----------------------------
+.hb-more-btn:hover {
+  background: #DDD;
+}
+
+/* -----------------------------------------
    하단 목록/메인 버튼
------------------------------ */
+----------------------------------------- */
 .notice-buttons {
   display: flex;
   justify-content: flex-end;
@@ -242,23 +279,41 @@ body {
 
 .btn-top {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 6px 12px;
   background: #3558A8;
-  color: white;
+  color: #FFFFFF;
   border-radius: 6px;
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
   height: 35px;
-  align-items: center;
 }
-.btn-top:hover { opacity: 0.92; }
 
-/* -----------------------------
+.btn-top:hover {
+  opacity: 0.92;
+}
+
+/* -----------------------------------------
    모바일 대응
------------------------------ */
+----------------------------------------- */
 @media (max-width: 600px) {
-  .notice-line { flex-direction: column; align-items: flex-start; }
-  .editor-buttons { width: 100%; justify-content: flex-start; }
-  .notice-buttons { justify-content: center; }
+  #editor {
+    min-height: 340px;
+  }
+
+  .notice-line {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .editor-buttons {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .notice-buttons {
+    justify-content: center;
+  }
 }
