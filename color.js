@@ -1,14 +1,13 @@
 /* -----------------------------------------------------
-   🌈⚒ Ha-Bin Studio — color.js
-   Excel Palette + Theme Colors + Photoshop Picker
-   글자색/배경색 통합 엔진
+   🌈⚒ Ha-Bin Studio — color.js Stable v3.0
+   Excel Palette + Theme Colors + Inline Clean Engine
 ----------------------------------------------------- */
 
 let currentColorType = "color";  
-// "color" = 글자색  /  "background" = 배경색
+// "color" = 글자색,  "background" = 배경색
 
 /* -----------------------------------------------------
-   🔥 1) 팝업 UI 생성
+   1) 팝업 UI 생성
 ----------------------------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   const popup = document.createElement("div");
@@ -38,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* -----------------------------------------------------
-   🔥 2) 색상 목록 생성 (엑셀과 동일 구조)
+   2) 테마/표준 색상 리스트 생성
 ----------------------------------------------------- */
 function generateThemeColors() {
   const themeColors = [
@@ -76,12 +75,11 @@ function generateStandardColors() {
 }
 
 /* -----------------------------------------------------
-   🔥 3) 팝업 이벤트 연결
+   3) 팝업 내 이벤트
 ----------------------------------------------------- */
 function activateColorEvents() {
   const popup = document.getElementById("hb-color-popup");
 
-  // 색상 클릭 → 스타일 적용
   popup.addEventListener("click", (e) => {
     if (e.target.classList.contains("hb-color-box")) {
       const color = e.target.dataset.color;
@@ -90,7 +88,6 @@ function activateColorEvents() {
     }
   });
 
-  // 다른 색(M)… → HTML color input 사용
   document.getElementById("hb-more-color").addEventListener("click", () => {
     const input = document.createElement("input");
     input.type = "color";
@@ -106,35 +103,42 @@ function activateColorEvents() {
 }
 
 /* -----------------------------------------------------
-   🔥 4) 실제 스타일 적용
+   4) 색 적용 (중복 span 방지)
 ----------------------------------------------------- */
 function applyColor(color) {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
 
   const range = sel.getRangeAt(0);
-  const wrapper = document.createElement("span");
+  const container = range.commonAncestorContainer.parentElement;
 
-  if (currentColorType === "color") {
-    wrapper.style.color = color;
-  } else {
-    wrapper.style.backgroundColor = color;
+  // 이미 span이면 거기에 색만 덮어쓰기
+  if (container && container.tagName === "SPAN") {
+    if (currentColorType === "color") container.style.color = color;
+    else container.style.backgroundColor = color;
+    return;
   }
+
+  // 새 span 래핑
+  const wrapper = document.createElement("span");
+  if (currentColorType === "color") wrapper.style.color = color;
+  else wrapper.style.backgroundColor = color;
 
   try {
     range.surroundContents(wrapper);
   } catch {
-    let c = range.extractContents();
-    wrapper.appendChild(c);
+    const extracted = range.extractContents();
+    wrapper.appendChild(extracted);
     range.insertNode(wrapper);
   }
 }
 
 /* -----------------------------------------------------
-   🔥 5) 팝업 열기 함수 (툴바에서 호출)
+   5) 팝업 열기 (툴바에서 호출)
 ----------------------------------------------------- */
 function openColorPopup(type) {
-  currentColorType = type;   // color / background
+  currentColorType = type;
+
   const popup = document.getElementById("hb-color-popup");
   const btn = (type === "color")
     ? document.querySelector("#textColorBtn")
@@ -142,23 +146,30 @@ function openColorPopup(type) {
 
   const rect = btn.getBoundingClientRect();
 
-  popup.style.left = rect.left + "px";
-  popup.style.top = (rect.bottom + 6) + "px";
+  let left = rect.left + window.scrollX;
+  let top = rect.bottom + window.scrollY + 8;
+
+  const popupWidth = 240;
+  if (left + popupWidth > window.innerWidth - 10) {
+    left = window.innerWidth - popupWidth - 10;
+  }
+
+  popup.style.left = left + "px";
+  popup.style.top = top + "px";
   popup.style.display = "block";
 }
 
 /* -----------------------------------------------------
-   🔥 6) 클릭하면 팝업 닫기 (바깥 영역)
+   6) 바깥 클릭 시 닫기 (버튼/팝업 제외)
 ----------------------------------------------------- */
 document.addEventListener("click", (e) => {
   const popup = document.getElementById("hb-color-popup");
-  if (!popup) return;
+  if (!popup || popup.style.display === "none") return;
 
-  if (
-    !popup.contains(e.target) &&
-    !e.target.closest("#textColorBtn") &&
-    !e.target.closest("#bgColorBtn")
-  ) {
+  const isBtn = e.target.closest("#textColorBtn") || 
+                e.target.closest("#bgColorBtn");
+
+  if (!popup.contains(e.target) && !isBtn) {
     popup.style.display = "none";
   }
 });
