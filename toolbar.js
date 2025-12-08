@@ -1,157 +1,259 @@
 /* -----------------------------------------------------
-   ✒️ Ha-Bin Studio — toolbar.js v4.0
-   Instant Apply Ribbon Engine + AutoExpand + ColorPopup
+   ✒️ Ha-Bin Studio — toolbar.js v4.1 (초반응 엔진)
+   색상·폰트·정렬·줄간격 즉시 반영 / execCommand 최소화
 ----------------------------------------------------- */
 
 document.addEventListener("DOMContentLoaded", () => {
-  const editor = document.getElementById("editor");
-  if (!editor) return;
+  const toolbar = document.getElementById("toolbar");
+  const editor  = document.getElementById("editor");
+  if (!toolbar || !editor) return;
 
-  /* -------------------------------------------------
-     🔥 1) 기본 즉시 실행 명령
-  ------------------------------------------------- */
-  window.hbExec = function (cmd, value = null) {
-    document.execCommand(cmd, false, value);
-    editor.focus();
-    hbAutoExpand();
-  };
+  /* =====================================================
+     1) 버튼 설정 (execCommand 느린 부분 제거)
+  ===================================================== */
+  const buttons = [
+    { id:"textColorBtn", type:"color", icon:"🖌A", title:"글자색" },
+    { id:"bgColorBtn",   type:"bgcolor", icon:"🎨", title:"배경색" },
 
-  /* -------------------------------------------------
-     🔥 2) 글자색 / 배경색 (color.js에서 호출)
-  ------------------------------------------------- */
-  window.applyColor = function (color) {
-    if (!color) return;
+    { cmd:"bold",      icon:"B"  , title:"굵게" },
+    { cmd:"italic",    icon:"I"  , title:"기울임" },
+    { cmd:"underline", icon:"U"  , title:"밑줄" },
 
-    const type = window.currentColorType; // "color" or "background"
+    { type:"align", value:"left",   icon:"좌", title:"왼쪽 정렬" },
+    { type:"align", value:"center", icon:"중", title:"가운데" },
+    { type:"align", value:"right",  icon:"우", title:"오른쪽" },
+    { type:"align", value:"justify",icon:"양", title:"양쪽" },
 
-    const span = document.createElement("span");
-    if (type === "color") span.style.color = color;
-    else span.style.backgroundColor = color;
+    { type:"ul", icon:"•",  title:"불릿" },
+    { type:"ol", icon:"1.", title:"번호" },
 
-    const selection = window.getSelection();
-    if (!selection.rangeCount) return;
+    { type:"quote", icon:"❝",  title:"인용" },
+    { type:"code",  icon:"</>", title:"코드 블록" },
+    { type:"hr",    icon:"━",   title:"구분선" },
 
-    const range = selection.getRangeAt(0);
-    range.surroundContents(span);
+    { type:"image", icon:"🌈⚒", title:"사진" },
 
-    editor.focus();
-    hbAutoExpand();
-  };
+    { type:"undo", icon:"↺", title:"되돌리기" },
+    { type:"redo", icon:"↻", title:"다시실행" },
 
-  /* -------------------------------------------------
-     🔥 3) 폰트 사이즈 즉시 적용
-  ------------------------------------------------- */
-  window.hbSetFontSize = function (size) {
-    if (!size) return;
-    document.execCommand("fontSize", false, "7"); 
-    const fontTags = editor.querySelectorAll("font[size='7']");
-    fontTags.forEach(f => {
-      f.removeAttribute("size");
-      f.style.fontSize = size + "px";
+    { type:"clear", icon:"지우기", title:"전체 지우기" }
+  ];
+
+  /* =====================================================
+     2) 버튼 생성
+  ===================================================== */
+  buttons.forEach(btn => {
+    const b = document.createElement("button");
+    b.className = "toolbar-btn";
+    b.innerHTML = btn.icon;
+    b.title = btn.title;
+    if (btn.id) b.id = btn.id;
+
+    /* ---- 기본 execCommand (굵게/기울임/밑줄) ---- */
+    if (btn.cmd) {
+      b.onclick = () => document.execCommand(btn.cmd, false, null);
+    }
+
+    /* ---- 색상 ---- */
+    if (btn.type === "color")
+      b.onclick = () => hbOpenColorPopup("color");
+    if (btn.type === "bgcolor")
+      b.onclick = () => hbOpenColorPopup("background");
+
+    /* ---- 문단 정렬 (즉시 적용) ---- */
+    if (btn.type === "align") {
+      b.onclick = () => applyParagraphAlign(btn.value);
+    }
+
+    /* ---- 불릿/번호 ---- */
+    if (btn.type === "ul") b.onclick = () => document.execCommand("insertUnorderedList");
+    if (btn.type === "ol") b.onclick = () => document.execCommand("insertOrderedList");
+
+    /* ---- 인용 ---- */
+    if (btn.type === "quote") b.onclick = () => wrapBlock("blockquote", {
+      padding:"8px 14px",
+      borderLeft:"4px solid #AAA",
+      background:"#FAFAFA"
     });
-    editor.focus();
-    hbAutoExpand();
-  };
 
-  /* -------------------------------------------------
-     🔥 4) 폰트명 즉시 적용
-  ------------------------------------------------- */
-  window.hbSetFontFamily = function (family) {
-    if (!family) return;
+    /* ---- 코드 블록 ---- */
+    if (btn.type === "code") b.onclick = () => wrapBlock("pre", {
+      background:"#F5F5F5",
+      padding:"12px",
+      borderRadius:"6px",
+      fontFamily:"monospace"
+    });
 
-    document.execCommand("fontName", false, family);
-    editor.focus();
-    hbAutoExpand();
-  };
+    /* ---- 구분선 ---- */
+    if (btn.type === "hr") b.onclick = () => document.execCommand("insertHorizontalRule");
 
-  /* -------------------------------------------------
-     🔥 5) 줄간격 (line-height)
-  ------------------------------------------------- */
-  window.hbSetLineHeight = function (lh) {
-    if (!lh) return;
+    /* ---- 이미지 ---- */
+    if (btn.type === "image") {
+      b.onclick = () => {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = "image/*";
 
-    const sel = window.getSelection();
-    if (!sel.rangeCount) return;
-
-    const range = sel.getRangeAt(0);
-    const parent = range.commonAncestorContainer.parentElement;
-
-    let block = parent.closest("p, div") || parent;
-    block.style.lineHeight = lh;
-
-    editor.focus();
-    hbAutoExpand();
-  };
-
-  /* -------------------------------------------------
-     🔥 6) 이미지 삽입
-  ------------------------------------------------- */
-  window.hbInsertImage = function () {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-
-    input.addEventListener("change", () => {
-      const file = input.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = document.createElement("img");
-        img.src = e.target.result;
-
-        // 커서 위치에 삽입
-        const sel = window.getSelection();
-        if (sel.rangeCount) {
-          const range = sel.getRangeAt(0);
-          range.insertNode(img);
-        } else {
-          editor.appendChild(img);
-        }
-
-        // image.js 핸들 활성화
-        if (typeof activateResizeHandle === "function") {
-          activateResizeHandle(img);
-        }
-
-        editor.focus();
-        hbAutoExpand();
+        input.onchange = () => {
+          const r = new FileReader();
+          r.onload = () => document.execCommand("insertImage", false, r.result);
+          r.readAsDataURL(input.files[0]);
+        };
+        input.click();
       };
+    }
 
-      reader.readAsDataURL(file);
-    });
+    /* ---- undo/redo ---- */
+    if (btn.type === "undo") b.onclick = () => document.execCommand("undo");
+    if (btn.type === "redo") b.onclick = () => document.execCommand("redo");
 
-    input.click();
-  };
+    /* ---- 전체 지우기 ---- */
+    if (btn.type === "clear") {
+      b.onclick = () => {
+        if (confirm("전체 지울까요?")) editor.innerHTML = "";
+      };
+    }
 
-  /* -------------------------------------------------
-     🔥 7) HR 삽입
-  ------------------------------------------------- */
-  window.hbInsertHR = function () {
-    document.execCommand("insertHorizontalRule");
-    editor.focus();
-    hbAutoExpand();
-  };
+    toolbar.appendChild(b);
+  });
 
-  /* -------------------------------------------------
-     🔥 8) 링크 삽입
-  ------------------------------------------------- */
-  window.hbInsertLink = function () {
-    const url = prompt("URL 입력:");
-    if (!url) return;
-    document.execCommand("createLink", false, url);
-  };
-
-  /* -------------------------------------------------
-     🔥 9) 자동 확장 엔진
-  ------------------------------------------------- */
-  function hbAutoExpand() {
-    editor.style.height = "auto";
-    editor.style.height = editor.scrollHeight + "px";
-  }
-
-  editor.addEventListener("input", hbAutoExpand);
-  hbAutoExpand();
+  /* =====================================================
+     3) 드롭다운: 폰트 / 크기 / 줄간격 즉시 적용
+  ===================================================== */
+  initFontDropdown();
+  initFontSizeDropdown();
+  initLineHeightDropdown();
 });
 
- 
+/* =========================================================
+   🟦 문단 정렬 (즉시 스타일 적용)
+========================================================= */
+function applyParagraphAlign(type) {
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
+
+  let block = sel.anchorNode;
+  while (block && !["DIV","P","LI"].includes(block.nodeName)) {
+    block = block.parentNode;
+  }
+
+  if (!block) return;
+
+  block.style.textAlign =
+    type === "left" ? "left" :
+    type === "center" ? "center" :
+    type === "right" ? "right" :
+    "justify";
+}
+
+/* =========================================================
+   🟦 인용/코드 블록
+========================================================= */
+function wrapBlock(tag, styles) {
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
+
+  const r = sel.getRangeAt(0);
+  const newBlock = document.createElement(tag);
+
+  Object.entries(styles).forEach(([k,v]) => newBlock.style[k] = v);
+
+  const frag = r.extractContents();
+  newBlock.appendChild(frag);
+
+  r.insertNode(newBlock);
+}
+
+/* =========================================================
+   🟦 폰트
+========================================================= */
+function initFontDropdown() {
+  const sel = document.getElementById("fontFamilySelect");
+  if (!sel) return;
+
+  const list = [
+    { name:"기본체", value:"" },
+    { name:"함초롱바탕", value:"'HCR Batang', serif" },
+    { name:"Noto Sans KR", value:"'Noto Sans KR', sans-serif" },
+    { name:"고운돋움", value:"'Gowun Dodum', sans-serif" },
+    { name:"나눔명조", value:"'Nanum Myeongjo', serif" }
+  ];
+
+  list.forEach(f => {
+    const op = document.createElement("option");
+    op.value = f.value;
+    op.textContent = f.name;
+    sel.appendChild(op);
+  });
+
+  sel.onchange = () => applyInline("fontFamily", sel.value);
+}
+
+/* =========================================================
+   🟦 글자 크기
+========================================================= */
+function initFontSizeDropdown() {
+  const sel = document.getElementById("fontSizeSelect");
+  if (!sel) return;
+
+  for (let i = 10; i <= 32; i++) {
+    const op = document.createElement("option");
+    op.value = i + "px";
+    op.textContent = i + "px";
+    sel.appendChild(op);
+  }
+
+  sel.onchange = () => applyInline("fontSize", sel.value);
+}
+
+/* =========================================================
+   🟦 줄간격
+========================================================= */
+function initLineHeightDropdown() {
+  const sel = document.getElementById("lineHeightSelect");
+  if (!sel) return;
+
+  ["100%","130%","150%","180%","200%","250%","300%"]
+    .forEach(v => {
+      const op = document.createElement("option");
+      op.value = v;
+      op.textContent = v;
+      sel.appendChild(op);
+    });
+
+  sel.onchange = () => applyLineHeight(sel.value);
+}
+
+/* =========================================================
+   🟦 Inline 적용 (빠른 즉시 반영)
+========================================================= */
+function applyInline(prop, value) {
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
+  const r = sel.getRangeAt(0);
+
+  const span = document.createElement("span");
+  span.style[prop] = value;
+
+  const frag = r.extractContents();
+  span.appendChild(frag);
+  r.insertNode(span);
+}
+
+/* =========================================================
+   🟦 줄간격: 선택 블록 전체 즉시반응
+========================================================= */
+function applyLineHeight(value) {
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
+
+  let block = sel.anchorNode;
+  while (block && !["DIV","P","LI"].includes(block.nodeName)) {
+    block = block.parentNode;
+  }
+
+  if (!block) return;
+
+  block.style.lineHeight = value;
+}
+
