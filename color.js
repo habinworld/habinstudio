@@ -1,6 +1,7 @@
 /* -----------------------------------------------------
-   🌈⚒ Ha-Bin Studio — color.js Stable v3.0
+   🌈⚒ Ha-Bin Studio — color.js Stable v3.1
    Excel Palette + Theme Colors + Inline Clean Engine
+   (openColorPopup → hbOpenColorPopup 로 충돌 제거)
 ----------------------------------------------------- */
 
 let currentColorType = "color";  
@@ -112,14 +113,12 @@ function applyColor(color) {
   const range = sel.getRangeAt(0);
   const container = range.commonAncestorContainer.parentElement;
 
-  // 이미 span이면 거기에 색만 덮어쓰기
   if (container && container.tagName === "SPAN") {
     if (currentColorType === "color") container.style.color = color;
     else container.style.backgroundColor = color;
     return;
   }
 
-  // 새 span 래핑
   const wrapper = document.createElement("span");
   if (currentColorType === "color") wrapper.style.color = color;
   else wrapper.style.backgroundColor = color;
@@ -134,9 +133,9 @@ function applyColor(color) {
 }
 
 /* -----------------------------------------------------
-   5) 팝업 열기 (툴바에서 호출)
+   5) 팝업 열기 — 이름 변경 (openColorPopup → hbOpenColorPopup)
 ----------------------------------------------------- */
-function hbopenColorPopup(type) {
+function hbOpenColorPopup(type) {
   currentColorType = type;
 
   const popup = document.getElementById("hb-color-popup");
@@ -160,7 +159,7 @@ function hbopenColorPopup(type) {
 }
 
 /* -----------------------------------------------------
-   6) 바깥 클릭 시 닫기 (버튼/팝업 제외)
+   6) 바깥 클릭 시 닫기
 ----------------------------------------------------- */
 document.addEventListener("click", (e) => {
   const popup = document.getElementById("hb-color-popup");
