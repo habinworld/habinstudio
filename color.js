@@ -136,7 +136,7 @@ function applyColor(color) {
 /* -----------------------------------------------------
    5) 팝업 열기 (툴바에서 호출)
 ----------------------------------------------------- */
-function openColorPopup(type) {
+function hbopenColorPopup(type) {
   currentColorType = type;
 
   const popup = document.getElementById("hb-color-popup");
