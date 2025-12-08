@@ -1,15 +1,10 @@
 /* -----------------------------------------------------
-   🌈⚒ Ha-Bin Studio — color.js Stable v3.5
-   Excel Palette + Theme Colors + Inline Color Engine
-   (toolbar.js와 완전 호환 + 색상 적용 100% 성공)
+   🌈⚒ Ha-Bin Studio — color.js v4.0
+   초즉시반응형 색상 엔진 + Toolbar v4.0 완전호환
 ----------------------------------------------------- */
 
-let currentColorType = "color";  
-// "color" = 글자색, "background" = 배경색
+let hbColorMode = "color"; // "color" = 글자색, "background" = 배경색
 
-/* -----------------------------------------------------
-   1) 팝업 UI 생성
------------------------------------------------------ */
 document.addEventListener("DOMContentLoaded", () => {
   const popup = document.createElement("div");
   popup.id = "hb-color-popup";
@@ -18,30 +13,30 @@ document.addEventListener("DOMContentLoaded", () => {
   document.body.appendChild(popup);
 
   popup.innerHTML = `
-      <div class="hb-section-title">자동</div>
-      <div class="hb-color-row">
-        <div class="hb-color-box" data-color="#000000"></div>
-      </div>
+    <div class="hb-section-title">자동</div>
+    <div class="hb-color-row">
+      <div class="hb-color-box" data-color="#000000" style="background:#000000"></div>
+    </div>
 
-      <div class="hb-section-title">테마 색</div>
-      <div class="hb-color-grid hb-theme-colors"></div>
+    <div class="hb-section-title">테마 색</div>
+    <div class="hb-color-grid hb-theme"></div>
 
-      <div class="hb-section-title">표준 색</div>
-      <div class="hb-color-row hb-standard-colors"></div>
+    <div class="hb-section-title">표준 색</div>
+    <div class="hb-color-row hb-standard"></div>
 
-      <button id="hb-more-color" class="hb-more-btn">다른 색(M)…</button>
+    <button id="hb-more-color" class="hb-more-btn">다른 색(M)…</button>
   `;
 
-  generateThemeColors();
-  generateStandardColors();
-  activateColorEvents();
+  hbGenerateTheme();
+  hbGenerateStandard();
+  hbBindColorEvents();
 });
 
 /* -----------------------------------------------------
-   2) 테마/표준 색상 생성
+   🎨 테마 색
 ----------------------------------------------------- */
-function generateThemeColors() {
-  const themeColors = [
+function hbGenerateTheme() {
+  const colors = [
     "#000000","#44546A","#5B9BD5","#ED7D31","#A5A5A5","#FFC000",
     "#FFFFFF","#E7E6E6","#D2DEEF","#FBE5D6","#EDEDED","#FFF2CC",
     "#F2F2F2","#D9D9D9","#B4C6E7","#F8CBAD","#DBDBDB","#FFE699",
@@ -49,54 +44,55 @@ function generateThemeColors() {
     "#A6A6A6","#7F7F7F","#2F5597","#C55A11","#7B7B7B","#BF9000"
   ];
 
-  const grid = document.querySelector(".hb-theme-colors");
-  themeColors.forEach(c => {
-    const d = document.createElement("div");
-    d.className = "hb-color-box";
-    d.dataset.color = c;
-    d.style.background = c;
-    grid.appendChild(d);
+  const grid = document.querySelector(".hb-theme");
+  colors.forEach(c => {
+    const box = document.createElement("div");
+    box.className = "hb-color-box";
+    box.dataset.color = c;
+    box.style.background = c;
+    grid.appendChild(box);
   });
 }
 
-function generateStandardColors() {
+/* -----------------------------------------------------
+   🎨 표준 색
+----------------------------------------------------- */
+function hbGenerateStandard() {
   const colors = [
     "#FF0000","#FF9900","#FFFF00","#00B050","#00B0F0",
     "#0070C0","#7030A0","#FF66CC","#999999","#333333"
   ];
 
-  const row = document.querySelector(".hb-standard-colors");
+  const row = document.querySelector(".hb-standard");
   colors.forEach(c => {
-    const d = document.createElement("div");
-    d.className = "hb-color-box";
-    d.dataset.color = c;
-    d.style.background = c;
-    row.appendChild(d);
+    const box = document.createElement("div");
+    box.className = "hb-color-box";
+    box.dataset.color = c;
+    box.style.background = c;
+    row.appendChild(box);
   });
 }
 
 /* -----------------------------------------------------
-   3) 팝업 이벤트
+   🎨 팝업 이벤트
 ----------------------------------------------------- */
-function activateColorEvents() {
+function hbBindColorEvents() {
   const popup = document.getElementById("hb-color-popup");
 
-  // 색 클릭
   popup.addEventListener("click", (e) => {
     if (e.target.classList.contains("hb-color-box")) {
-      applyColor(e.target.dataset.color);
+      hbApplyColor(e.target.dataset.color);
       popup.style.display = "none";
     }
   });
 
-  // 색상 선택기
   document.getElementById("hb-more-color").addEventListener("click", () => {
     const picker = document.createElement("input");
     picker.type = "color";
     picker.style.visibility = "hidden";
 
     picker.addEventListener("input", () => {
-      applyColor(picker.value);
+      hbApplyColor(picker.value);
     });
 
     document.body.appendChild(picker);
@@ -105,38 +101,39 @@ function activateColorEvents() {
 }
 
 /* -----------------------------------------------------
-   4) 최신 색상 적용 엔진 v3.5
-      (선택영역 정확히 색 적용 + 중첩 문제 해결)
+   🎨 색 적용 엔진 (v4.0 즉시반응)
 ----------------------------------------------------- */
-function applyColor(color) {
+function hbApplyColor(color) {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
 
   const range = sel.getRangeAt(0);
 
-  // span 생성
-  const span = document.createElement("span");
-  if (currentColorType === "color") span.style.color = color;
-  else span.style.backgroundColor = color;
+  // 선택 영역 없음 → 향후 typing 스타일 유지
+  if (range.collapsed) {
+    document.execCommand(
+      hbColorMode === "color" ? "foreColor" : "hiliteColor",
+      false,
+      color
+    );
+    return;
+  }
 
-  // surroundContents는 위험 → extractContents() 방식으로 통일
-  const extracted = range.extractContents();
-  span.appendChild(extracted);
-  range.insertNode(span);
+  // 선택 영역 있음 → 완전 래핑
+  document.execCommand("styleWithCSS", false, true);
 
-  // 커서를 span 뒤에 이동 (UX 개선)
-  sel.removeAllRanges();
-  const newRange = document.createRange();
-  newRange.setStartAfter(span);
-  newRange.collapse(true);
-  sel.addRange(newRange);
+  if (hbColorMode === "color") {
+    document.execCommand("foreColor", false, color);
+  } else {
+    document.execCommand("hiliteColor", false, color);
+  }
 }
 
 /* -----------------------------------------------------
-   5) 팝업 열기 (toolbar.js 호출)
+   🎨 팝업 열기 (toolbar.js → 여기 호출)
 ----------------------------------------------------- */
 function hbOpenColorPopup(type) {
-  currentColorType = type;
+  hbColorMode = type;
 
   const popup = document.getElementById("hb-color-popup");
   const btn = type === "color"
@@ -144,31 +141,25 @@ function hbOpenColorPopup(type) {
     : document.querySelector("#bgColorBtn");
 
   const rect = btn.getBoundingClientRect();
-  let left = rect.left + window.scrollX;
-  let top = rect.bottom + window.scrollY + 8;
 
-  const width = 230;
-  if (left + width > window.innerWidth - 10)
-    left = window.innerWidth - width - 10;
-
-  popup.style.left = left + "px";
-  popup.style.top = top + "px";
+  popup.style.left = rect.left + window.scrollX + "px";
+  popup.style.top = rect.bottom + window.scrollY + 8 + "px";
   popup.style.display = "block";
 }
 
 /* -----------------------------------------------------
-   6) 팝업 외부 클릭 시 닫기
+   🎨 바깥 클릭 → 팝업 닫기
 ----------------------------------------------------- */
 document.addEventListener("click", (e) => {
   const popup = document.getElementById("hb-color-popup");
   if (!popup || popup.style.display === "none") return;
 
-  const inside =
+  const keep =
     popup.contains(e.target) ||
     e.target.closest("#textColorBtn") ||
     e.target.closest("#bgColorBtn");
 
-  if (!inside) popup.style.display = "none";
+  if (!keep) popup.style.display = "none";
 });
 
 
