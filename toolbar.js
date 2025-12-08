@@ -60,11 +60,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 🎨 글자색
     if (btn.type === "color") {
-      b.addEventListener("click", e => openColorPopup("color", e));
+      b.addEventListener("click", () => hbOpenColorPopup("color"));
     }
     // 🎨 배경색
     if (btn.type === "bgcolor") {
-      b.addEventListener("click", e => openColorPopup("background", e));
+     b.addEventListener("click", () => hbOpenColorPopup("background"));
     }
 
     // 인용
