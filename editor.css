@@ -1,8 +1,10 @@
 /* -----------------------------------------------------
-   ✒️ Ha-Bin Studio — editor.css
-   글쓰기 페이지 전용 스타일 (에디터 심장)
+   ✒️ Ha-Bin Studio — editor.css v3.4 (최신 안정판)
+   Excel Ribbon Model + Color Engine + Image Resize
+   color.js / toolbar.js / image.js와 100% 완전 호환
 ----------------------------------------------------- */
 
+/* 전체 기본값 */
 body {
   margin: 0;
   padding: 0;
@@ -10,171 +12,253 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
 }
 
-#editor-wrapper {
-  max-width: 880px;
-  margin: 50px auto;
-  background: #FFFFFF;
-  padding: 30px 28px 40px;
-  border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+/* -----------------------------
+   에디터 컨테이너
+----------------------------- */
+.editor-container {
+  max-width: 900px;
+  margin: 34px auto 120px;
+  padding: 0 20px;
 }
 
-/* 제목 입력 (버튼과 한 줄 배치용) */
+/* -----------------------------
+   제목 입력
+----------------------------- */
 #post-title {
-  flex: 1;
-  max-width: 55%;       /* 제목칸 너비 제한 */
+  width: 100%;
   padding: 14px 16px;
-  font-size: 20px;
-  border: 2px solid #E5E7EB;
+  font-size: 22px;
+  font-weight: 700;
+  border: 2px solid #ddd;
   border-radius: 8px;
-  outline: none;
-  transition: 0.2s;
-  margin-bottom: 0;      /* 기존 20px 제거 */
+  margin-bottom: 12px;
+  box-sizing: border-box;
 }
-
 #post-title:focus {
-  border-color: #5C8EDB;
+  border-color: #3558A8;
   box-shadow: 0 0 0 3px rgba(92,142,219,0.25);
+  outline: none;
 }
 
-/* toolbar 영역 */
+/* -----------------------------
+   상단 공지 + 버튼 줄
+----------------------------- */
+.notice-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.notice-area {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.editor-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* 버튼 규칙 — 하빈 저장된 규칙 적용 */
+.editor-btn {
+  padding: 6px 12px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  height: 35px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-cancel { background: #CCCCCC; color: #000; }
+.btn-cancel:hover { background: #BBBBBB; }
+
+.btn-save { background: #3558A8; color: white; }
+.btn-save:hover { background: #5C8EDB; }
+
+.btn-delete { background: #D9534F; color: white; }
+.btn-delete:hover { background: #C3413B; }
+
+/* -----------------------------
+   Ribbon 툴바 (Excel 스타일)
+----------------------------- */
 #toolbar {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 14px;
   padding: 10px;
+  border-radius: 10px;
   border: 1px solid #E5E7EB;
   background: #F3F4F6;
-  border-radius: 8px;
+  margin-bottom: 14px;
 }
 
-/* toolbar 버튼 */
-.toolbar-btn {
-  background: #FFFFFF;
-  border: 1px solid #D1D5DB;
+/* 드롭다운 (폰트/크기/줄간격) */
+#toolbar select {
   padding: 6px 10px;
-  border-radius: 6px;
   font-size: 14px;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  background: white;
+}
+#toolbar select:focus {
+  outline: none;
+  border-color: #3558A8;
+}
+
+/* 툴바 버튼 */
+.hb-btn {
+  background: white;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  padding: 6px 10px;
   cursor: pointer;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   transition: 0.15s;
 }
-
-.toolbar-btn:hover {
+.hb-btn:hover {
   background: #EEF4FF;
-  border-color: #5C8EDB;
+  border-color: #3558A8;
   color: #3558A8;
 }
-
-.toolbar-btn.active {
+.hb-btn.active {
   background: #3558A8;
-  color: #fff;
+  color: white;
 }
 
-/* 본문 editor */
+/* -----------------------------
+   본문 에디터
+----------------------------- */
 #editor {
   width: 100%;
-  min-height: 420px;
+  min-height: 430px;
   padding: 18px;
   border-radius: 8px;
   border: 2px solid #E5E7EB;
+  background: white;
   font-size: 16px;
   line-height: 1.7;
   outline: none;
-  background: #FFFFFF;
 }
-
 #editor:focus {
-  border-color: #5C8EDB;
+  border-color: #3558A8;
   box-shadow: 0 0 0 3px rgba(92,142,219,0.25);
 }
 
-/* 🔥 버튼 영역 재설계 */
-#editor-buttons {
-  margin-top: 18px;
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-}
-
-/* 등록·수정 공통 */
-.btn-save {
-  background: #3558A8;
-  color: white;
-  padding: 9px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.btn-save:hover { background: #5C8EDB; }
-
-/* 취소 */
-.btn-cancel {
-  background: #CCCCCC;
-  color: #000;
-  padding: 9px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.btn-cancel:hover { background: #B5B5B5; }
-
-/* 삭제 (빨간·흰 글자) */
-.btn-delete {
-  background: #D9534F;
-  color: white;
-  padding: 9px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.btn-delete:hover { background: #C3413B; }
-
-
-/* 모바일 대응 */
-@media (max-width: 600px) {
-  #editor-wrapper {
-    margin: 20px;
-    padding: 20px;
-  }
-
-  #post-title {
-    font-size: 18px;
-  }
-
-  #editor {
-    min-height: 320px;
-  }
-}
-.hb-resize-handle {
-  box-sizing: border-box;
-  border-radius: 2px;
-}
-/* -------------------------------------------
-   🎨 색상 팝업 (툴바 바로 아래 고정)
-------------------------------------------- */
-.color-popup {
+/* -----------------------------
+   이미지 리사이즈 핸들
+----------------------------- */
+.hb-img-handle {
+  width: 14px;
+  height: 14px;
+  background: white;
+  border: 2px solid #3558A8;
+  border-radius: 50%;
   position: absolute;
-  background: #ffffff;
-  border: 1px solid #ddd;
-  padding: 8px;
-  border-radius: 6px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  width: 170px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+  cursor: nwse-resize;
+  z-index: 9999;
+  box-shadow: 0 0 4px rgba(0,0,0,0.25);
+}
+
+/* -----------------------------
+   색상 팝업 (hb-color-popup)
+----------------------------- */
+#hb-color-popup {
+  position: absolute;
+  background: white;
+  width: 230px;
+  padding: 10px;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  display: none;
   z-index: 99999;
 }
 
-.color-popup .color-box {
+.hb-section-title {
+  font-size: 13px;
+  font-weight: 700;
+  margin: 6px 0 4px;
+  color: #555;
+}
+
+.hb-color-row,
+.hb-color-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+/* 개별 색상 박스 */
+.hb-color-box {
   width: 22px;
   height: 22px;
   border: 1px solid #ccc;
-  cursor: pointer;
   border-radius: 4px;
+  cursor: pointer;
+}
+.hb-color-box:hover {
+  transform: scale(1.15);
 }
 
-.color-popup .color-box:hover {
-  transform: scale(1.1);
+.hb-more-btn {
+  margin-top: 6px;
+  width: 100%;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #F3F4F6;
+  border: 1px solid #D1D5DB;
+  cursor: pointer;
+  font-size: 14px;
+}
+.hb-more-btn:hover {
+  background: #EEF4FF;
+  border-color: #3558A8;
+}
+
+/* -----------------------------
+   하단 목록/메인 버튼
+----------------------------- */
+.notice-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn-top {
+  display: inline-flex;
+  padding: 6px 12px;
+  background: #3558A8;
+  color: white;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  height: 35px;
+  align-items: center;
+}
+.btn-top:hover { opacity: 0.92; }
+
+/* -----------------------------
+   모바일 대응
+----------------------------- */
+@media (max-width: 600px) {
+  .notice-line { flex-direction: column; align-items: flex-start; }
+  .editor-buttons { width: 100%; justify-content: flex-start; }
+  .notice-buttons { justify-content: center; }
 }
