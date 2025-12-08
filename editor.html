@@ -1,199 +1,135 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>글쓰기 · Ha-Bin Studio</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>글쓰기 · Ha-Bin Studio</title>
 
-<style>
-/* ---------------------- 전체 래퍼 ---------------------- */
-.editor-container {
-  max-width: 900px;
-  margin: 30px auto 120px;
-  padding: 0 20px;
-}
+  <!-- 메인 사이트 스타일 (있으면 유지) -->
+  <link rel="stylesheet" href="style.css">
+  <!-- 에디터 전용 스타일 -->
+  <link rel="stylesheet" href="editor.css">
 
-/* ---------------------- 공지 + 오른쪽 버튼 한 줄 ---------------------- */
-.notice-line {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-}
+  <!-- 폰트 로딩 -->
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
 
-/* 공지 칸 */
-.notice-area {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+  <style>
+    /* ---------------------- 전체 래퍼 ---------------------- */
+    .editor-container {
+      max-width: 900px;
+      margin: 30px auto 120px;
+      padding: 0 20px;
+    }
 
-.notice-area label {
-  font-size: 15px;
-  font-weight: 600;
-}
+    /* ---------------------- 제목 입력 ----------------------- */
+    #post-title {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 22px;
+      font-weight: 700;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      box-sizing: border-box;
+    }
+    #post-title:focus {
+      border-color: #3558A8;
+      box-shadow: 0 0 0 3px rgba(92,142,219,0.25);
+      outline: none;
+    }
 
-/* 하단 목록,메인 버튼 그룹 */
-.notice-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 20px;
-}
+    /* ---------------------- 공지 + 상단 버튼 줄 ---------------------- */
+    .notice-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
 
-/* 목록/메인 버튼 */
-.btn-top {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 12px;
-  background: #3558A8;
-  color: #FFFFFF;
-  border-radius: 6px;
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: none;
-  height: 35px;
-  line-height: 1;
-}
-.btn-top:hover {
-  opacity: 0.92;
-}
+    .notice-area {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 15px;
+    }
 
-/* ---------------------- 제목 입력 ----------------------- */
-#post-title {
-  width: 100%;
-  padding: 14px 16px;
-  font-size: 22px;
-  font-weight: 700;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 12px;
-}
-#post-title:focus {
-  border-color: #3558A8;
-  box-shadow: 0 0 0 3px rgba(92,142,219,0.25);
-}
+    .notice-area label {
+      font-weight: 600;
+    }
 
-/* ---------------------------------------------------------
-   🛠 최신 툴바 스타일 (Ribbon-like UI)
---------------------------------------------------------- */
-#toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 14px;
-  padding: 10px;
-  background: #F9FAFB;
-  border: 1px solid #E5E7EB;
-  border-radius: 8px;
-}
-.toolbar-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 30px;
-  min-width: 30px;
-  padding: 0 8px;
-  background: #FFF;
-  border: 1px solid #CCC;
-  border-radius: 6px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: 0.15s;
-}
-.toolbar-btn:hover {
-  border-color: #3558A8;
-  box-shadow: 0 0 3px rgba(53, 88, 168, 0.25);
-  color: #3558A8;
-}
+    /* 상단 오른쪽 버튼 (취소/등록/수정/삭제) */
+    .editor-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
 
-.toolbar-btn:active {
-  box-shadow: inset 0 0 3px rgba(0,0,0,0.25);
-}
+    .editor-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      height: 35px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+    }
 
-/* 드롭다운 3종 */
-.hb-select {
-  height: 30px;
-  padding: 0 6px;
+    .btn-cancel { background: #CCCCCC; color: #000; }
+    .btn-cancel:hover { background: #BBBBBB; }
 
-  font-size: 14px;
-  border-radius: 6px;
-  border: 1px solid #CCC;
-  background: #FFF;
+    .btn-save { background: #3558A8; color: #FFFFFF; }
+    .btn-save:hover { background: #5C8EDB; }
 
-  cursor: pointer;
-  transition: 0.15s;
-}
+    .btn-delete { background: #D9534F; color: #FFFFFF; }
+    .btn-delete:hover { background: #C3413B; }
 
-.hb-select:hover {
-  border-color: #3558A8;
-  box-shadow: 0 0 3px rgba(53,88,168,0.25);
-}
+    /* 하단 목록/메인 버튼 */
+    .notice-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
 
-.hb-select:focus {
-  outline: none;
-  border-color: #3558A8;
-  box-shadow: 0 0 4px rgba(53,88,168,0.4);
-}
+    .btn-top {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      background: #3558A8;
+      color: #FFFFFF;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      height: 35px;
+      line-height: 1;
+    }
+    .btn-top:hover {
+      opacity: 0.92;
+    }
 
-/* ---------------------- 본문 --------------------------- */
-#editor {
-  width: 100%;
-  min-height: 460px;
-  padding: 18px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  background: white;
-  font-size: 17px;
-  line-height: normal;
-}
-.editor-buttons {
-  margin-top: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 12px;
-}
-#editor:focus {
-  border-color: #3558A8;
-  box-shadow: 0 0 0 3px rgba(92,142,219,0.25);
-}
-
-#editor img {
-    max-width: 100%;
-    height: auto;
-    display: inline-block;
-    margin: 14px 0;
-    vertical-align: middle;
-    cursor: pointer;
-  }
-
-/* ---------------------- 하단 버튼 --------------------------- */
-.editor-btn {
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-
-  height: 35px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-save { background: #3558A8; color: #FFF; }
-.btn-save:hover { background: #5C8EDB; }
-
-.btn-delete { background: #D9534F; color: #FFF; }
-.btn-delete:hover { background: #C3413B; }
-
-.btn-cancel { background: #CCC; color: #000; }
-.btn-cancel:hover { background: #BBB; }
-</style>
+    @media (max-width: 600px) {
+      .notice-line {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .editor-buttons {
+        width: 100%;
+        justify-content: flex-start;
+      }
+      .notice-buttons {
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -202,94 +138,107 @@
 
 <div class="editor-container">
 
-  <!-- 제목 입력 -->
+  <!-- 제목 -->
   <input type="text" id="post-title" placeholder="제목을 입력하세요">
 
-  <!-- 공지 + 오른쪽 버튼 -->
+  <!-- 공지 + 상단 버튼 -->
   <div class="notice-line">
     <div class="notice-area">
       <input type="checkbox" id="notice-check">
       <label for="notice-check">📌 공지글로 등록하기</label>
     </div>
-     <!-- 버튼 -->
-  <div class="editor-buttons">
-    <button class="editor-btn btn-cancel" id="cancelBtn">취소</button>
-    <button class="editor-btn btn-save" id="saveBtn">등록</button>
-    <button class="editor-btn btn-save" id="updateBtn">수정</button>
-    <button class="editor-btn btn-delete" id="deleteBtn">삭제</button>
+
+    <div class="editor-buttons">
+      <button class="editor-btn btn-cancel" id="cancelBtn">취소</button>
+      <button class="editor-btn btn-save"   id="saveBtn">등록</button>
+      <button class="editor-btn btn-save"   id="updateBtn">수정</button>
+      <button class="editor-btn btn-delete" id="deleteBtn">삭제</button>
     </div>
-   
   </div>
 
-  <!-- ===================== 툴바 (toolbar.js가 자동으로 생성) ===================== -->
-  <div id="toolbar"></div>
-<!-- 드롭다운 3종 (글자체/크기/줄간격) -->
-<div class="hb-dropdown-wrap" style="display:flex; gap:10px; margin:10px 0 14px;">
-  <select id="fontFamilySelect" class="hb-select">
-    <option value="">글자체</option>
-  </select>
+  <!-- Ribbon Toolbar (드롭다운 + 버튼 자동 생성) -->
+  <div id="toolbar">
+    <!-- 드롭다운 3종: 옵션은 toolbar.js에서 채움 -->
+    <select id="fontFamilySelect" title="글꼴 선택">
+      <option value="">글자체</option>
+    </select>
 
-  <select id="fontSizeSelect" class="hb-select">
-    <option value="">크기</option>
-  </select>
+    <select id="fontSizeSelect" title="글자 크기">
+      <option value="">크기</option>
+    </select>
 
-  <select id="lineHeightSelect" class="hb-select">
-    <option value="">줄간격</option>
-  </select>
-</div>
+    <select id="lineHeightSelect" title="줄간격">
+      <option value="">줄간격</option>
+    </select>
+    <!-- 나머지 버튼들(굵게/기울임/색상/이미지 등)은 toolbar.js에서 동적으로 추가 -->
+  </div>
 
-  <!-- 본문 -->
+  <!-- 본문 에디터 -->
   <div id="editor" contenteditable="true"></div>
- <div class="notice-buttons">
-      <a href="list.html" class="btn-top">목록</a>
-      <a href="index.html" class="btn-top">메인</a>
-    </div>
+
+  <!-- 하단 목록/메인 버튼 -->
+  <div class="notice-buttons">
+    <a href="list.html"  class="btn-top">목록</a>
+    <a href="index.html" class="btn-top">메인</a>
+  </div>
+
 </div>
 
-<!-- 심장 3대 엔진 -->
+<!-- 심장 3대 엔진: 순서 중요X (모두 DOMContentLoaded 사용) -->
 <script src="color.js"></script>
-<script src="image.js"></script>
 <script src="toolbar.js"></script>
+<script src="image.js"></script>
+
 <script>
 /* -----------------------------------------------------
-   📌 수정 모드인지 확인 (editor.html?id=123)
+   📌 localStorage 기반 글 저장/수정/삭제
 ----------------------------------------------------- */
 let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
 const params = new URLSearchParams(window.location.search);
 const editId = params.get("id");
 
+/* 수정 모드일 경우 기존 데이터 채우기 */
 if (editId) {
-  const post = posts.find(p => p.id == editId);
+  const post = posts.find(p => String(p.id) === String(editId));
   if (post) {
-    document.getElementById("post-title").value = post.title;
-    document.getElementById("editor").innerHTML = post.content;
+    document.getElementById("post-title").value = post.title || "";
+    document.getElementById("editor").innerHTML = post.content || "";
     document.getElementById("notice-check").checked = !!post.isNotice;
   }
 }
 
 /* -----------------------------------------------------
-   📌 저장 / 수정
+   📌 등록 / 수정 (같은 로직 사용)
 ----------------------------------------------------- */
-document.getElementById("saveBtn").onclick =
-document.getElementById("updateBtn").onclick = () => {
+const saveBtn   = document.getElementById("saveBtn");
+const updateBtn = document.getElementById("updateBtn");
 
-  const title = document.getElementById("post-title").value.trim();
+function saveOrUpdate() {
+  const title   = document.getElementById("post-title").value.trim();
   const content = document.getElementById("editor").innerHTML.trim();
   const isNotice = document.getElementById("notice-check").checked;
 
-  if (!title) { alert("제목을 입력하세요."); return; }
+  if (!title) {
+    alert("제목을 입력하세요.");
+    return;
+  }
 
   const now = new Date();
-  const date = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
+  const date = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ` +
+               `${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
 
   if (editId) {
-    let post = posts.find(p => p.id == editId);
-    post.title = title;
-    post.content = content;
-    post.date = date;
-    post.isNotice = isNotice;
+    // 수정 모드
+    const post = posts.find(p => String(p.id) === String(editId));
+    if (post) {
+      post.title   = title;
+      post.content = content;
+      post.date    = date;
+      post.isNotice = isNotice;
+    }
   } else {
+    // 새 글
     posts.push({
       id: Date.now(),
       title,
@@ -302,7 +251,10 @@ document.getElementById("updateBtn").onclick = () => {
 
   localStorage.setItem("habin_posts", JSON.stringify(posts));
   location.href = "list.html";
-};
+}
+
+saveBtn.onclick   = saveOrUpdate;
+updateBtn.onclick = saveOrUpdate;
 
 /* -----------------------------------------------------
    📌 삭제
@@ -311,7 +263,7 @@ document.getElementById("deleteBtn").onclick = () => {
   if (!editId) return;
   if (!confirm("정말 삭제하시겠습니까?")) return;
 
-  posts = posts.filter(p => p.id != editId);
+  posts = posts.filter(p => String(p.id) !== String(editId));
   localStorage.setItem("habin_posts", JSON.stringify(posts));
   location.href = "list.html";
 };
@@ -319,7 +271,9 @@ document.getElementById("deleteBtn").onclick = () => {
 /* -----------------------------------------------------
    📌 취소
 ----------------------------------------------------- */
-document.getElementById("cancelBtn").onclick = () => history.back();
+document.getElementById("cancelBtn").onclick = () => {
+  history.back();
+};
 </script>
 
 </body>
