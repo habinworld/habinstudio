@@ -1,6 +1,6 @@
 /* -----------------------------------------------------
-   ✒️ Ha-Bin Studio — toolbar.js v2.0
-   최신 모듈 구조 / color.js & image.js 완전 연동
+   ✒️ Ha-Bin Studio — toolbar.js Stable v2.7
+   색상팝업 고정 + 드롭다운 + 이미지 + 줄간격 안정판
 ----------------------------------------------------- */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -10,44 +10,36 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!toolbar || !editor) return;
 
   /* -----------------------------------------------------
-     1) 버튼 목록 (모델 구조)
+     1) 버튼 모델 구조
   ----------------------------------------------------- */
   const buttons = [
-
-    // 글자색 / 배경색
     { type: "color", id: "textColorBtn", icon: "🖌️A", title: "글자색" },
-    { type: "bgcolor", id: "bgColorBtn", icon: "🎨", title: "배경 채우기" },
+    { type: "bgcolor", id: "bgColorBtn", icon: "🎨", title: "배경색" },
 
-    // 기본 서식
     { cmd: "bold", icon: "B", title: "굵게" },
     { cmd: "italic", icon: "I", title: "기울임" },
     { cmd: "underline", icon: "U", title: "밑줄" },
 
-    // 정렬
     { cmd: "justifyLeft", icon: "좌", title: "왼쪽 정렬" },
-    { cmd: "justifyCenter", icon: "중", title: "가운데 정렬" },
-    { cmd: "justifyRight", icon: "우", title: "오른쪽 정렬" },
+    { cmd: "justifyCenter", icon: "중", title: "가운데" },
+    { cmd: "justifyRight", icon: "우", title: "오른쪽" },
     { cmd: "justifyFull", icon: "양", title: "양쪽 정렬" },
 
-    // 목록
-    { cmd: "insertUnorderedList", icon: "•", title: "글머리 기호" },
-    { cmd: "insertOrderedList", icon: "1.", title: "번호 매기기" },
+    { cmd: "insertUnorderedList", icon: "•", title: "글머리" },
+    { cmd: "insertOrderedList", icon: "1.", title: "번호" },
 
-    // 인용 / 코드 / 구분선
     { type: "quote", icon: "❝", title: "인용" },
-    { type: "code", icon: "</>", title: "코드 블록" },
+    { type: "code", icon: "</>", title: "코드" },
     { type: "hr", icon: "━", title: "구분선" },
 
-    // 이미지
-    { type: "image", icon: "🌈⚒", title: "이미지 삽입" },
+    { type: "image", icon: "🌈⚒", title: "이미지" },
 
-    // 실행 취소 / 다시 실행
     { cmd: "undo", icon: "↺", title: "실행 취소" },
     { cmd: "redo", icon: "↻", title: "다시 실행" },
 
-    // 전체 지우기
     { type: "clear", icon: "지우기", title: "전체 지우기" }
   ];
+
 
   /* -----------------------------------------------------
      2) 버튼 UI 생성
@@ -57,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
     b.className = "toolbar-btn";
     b.innerHTML = btn.icon;
     b.title = btn.title;
-    if (btn.id) b.id = btn.id;
 
     // execCommand 계열
     if (btn.cmd) {
@@ -67,22 +58,23 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // 색상
+    // 🎨 글자색
     if (btn.type === "color") {
-      b.addEventListener("click", () => openColorPopup("color"));
+      b.addEventListener("click", e => openColorPopup("color", e));
     }
+    // 🎨 배경색
     if (btn.type === "bgcolor") {
-      b.addEventListener("click", () => openColorPopup("background"));
+      b.addEventListener("click", e => openColorPopup("background", e));
     }
 
     // 인용
     if (btn.type === "quote") {
-      b.addEventListener("click", () => {
-        document.execCommand("formatBlock", false, "blockquote");
-      });
+      b.addEventListener("click", () =>
+        document.execCommand("formatBlock", false, "blockquote")
+      );
     }
 
-    // 코드
+    // 코드 블록
     if (btn.type === "code") {
       b.addEventListener("click", () => {
         const sel = document.getSelection();
@@ -98,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // 이미지 (image.js 연동)
+    // 이미지 삽입
     if (btn.type === "image") {
       b.addEventListener("click", () => {
         const file = document.createElement("input");
@@ -108,20 +100,8 @@ document.addEventListener("DOMContentLoaded", () => {
         file.onchange = () => {
           const reader = new FileReader();
           reader.onload = () => {
-
-            // 1) 삽입
             document.execCommand("insertImage", false, reader.result);
-
-            // 2) 자동 보정
             setTimeout(() => normalizeInsertedImages(), 30);
-
-            // 3) 마지막 이미지 선택 + 핸들 표시
-            setTimeout(() => {
-              const imgs = document.querySelectorAll("#editor img");
-              if (imgs.length > 0) {
-                selectImage(imgs[imgs.length - 1]);
-              }
-            }, 80);
           };
           reader.readAsDataURL(file.files[0]);
         };
@@ -132,16 +112,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 전체 지우기
     if (btn.type === "clear") {
-      b.addEventListener("click", () => {
-        editor.innerHTML = "";
-      });
+      b.addEventListener("click", () => editor.innerHTML = "");
     }
 
     toolbar.appendChild(b);
   });
 
+
   /* -----------------------------------------------------
-     3) 드롭다운 3종 (글자체 / 크기 / 줄간격)
+     3) 드롭다운 3종
   ----------------------------------------------------- */
   initFontDropdown();
   initFontSizeDropdown();
@@ -150,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 /* -----------------------------------------------------
-   4) 공통 inline-style 적용 함수
+   4) 공통 inline-style
 ----------------------------------------------------- */
 function applyInlineStyle(property, value) {
   const sel = window.getSelection();
@@ -168,53 +147,81 @@ function applyInlineStyle(property, value) {
     range.insertNode(span);
   }
 }
+
+
 /* -----------------------------------------------------
-   문단 정규화 엔진 — 줄(line)을 문단(p)으로 교체
+   5) 🎨 색상 팝업 엔진 (툴바 아래 고정)
 ----------------------------------------------------- */
-function normalizeParagraphs() {
-  const editor = document.getElementById("editor");
-  if (!editor) return;
+function openColorPopup(type, event) {
+  const old = document.querySelector(".color-popup");
+  if (old) old.remove();
 
-  let html = editor.innerHTML;
+  const popup = document.createElement("div");
+  popup.className = "color-popup";
 
-  // <br>이 여러 개 이어진 것을 하나의 문단으로 변환
-  html = html
-    .replace(/<br>\s*<br>/g, "</p><p>")
-    .replace(/^<br>/, "");
+  const colors = [
+    "#000000", "#444444", "#666666", "#999999",
+    "#FF0000", "#FF7700", "#FFD400", "#00AA00",
+    "#00A2FF", "#0055FF", "#8000FF", "#FF00C8",
+    "#FFC0CB", "#FA8072", "#A52A2A", "#8B4513"
+  ];
 
-  // <div>로 생긴 문단도 <p>로 통일
-  html = html
-    .replace(/<div>/g, "<p>")
-    .replace(/<\/div>/g, "</p>");
+  colors.forEach(c => {
+    const box = document.createElement("div");
+    box.className = "color-box";
+    box.style.background = c;
 
-  // 시작이 비어 있으면 <p>로 감싸기
-  if (!html.startsWith("<p>")) {
-    html = "<p>" + html;
-  }
-  if (!html.endsWith("</p>")) {
-    html += "</p>";
-  }
+    box.addEventListener("click", () => {
+      const prop = type === "color" ? "color" : "backgroundColor";
+      applyInlineStyle(prop, c);
+      popup.remove();
+    });
 
-  editor.innerHTML = html;
+    popup.appendChild(box);
+  });
+
+  // 📌 버튼 위치 기준 정밀 좌표
+  const rect = event.target.getBoundingClientRect();
+  popup.style.top = rect.bottom + window.scrollY + 8 + "px";
+  popup.style.left = rect.left + window.scrollX + "px";
+
+  document.body.appendChild(popup);
 }
 
+
 /* -----------------------------------------------------
-   줄간격 적용 엔진 (line-height %)
+   6) 줄간격 — 문단 기반 안정판
 ----------------------------------------------------- */
+function initLineHeightDropdown() {
+  const select = document.getElementById("lineHeightSelect");
+  if (!select) return;
+
+  ["100%", "115%", "150%", "200%", "250%", "300%"].forEach(v => {
+    const op = document.createElement("option");
+    op.value = v;
+    op.textContent = v;
+    select.appendChild(op);
+  });
+
+  select.addEventListener("change", () => {
+    applyLineHeight(select.value);
+  });
+}
+
 function applyLineHeight(value) {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
 
   const range = sel.getRangeAt(0);
+  const container = range.commonAncestorContainer;
 
-  // 선택 영역의 HTML 복사
-  const fragment = range.cloneContents();
+  let blocks = [];
 
-  // 선택한 문단만 찾기
-  const blocks = fragment.querySelectorAll("p, div, li");
+  if (container.nodeType === 1) {
+    blocks = container.querySelectorAll("p, div, li");
+  }
 
   if (blocks.length === 0) {
-    // 선택이 텍스트만 있고 block이 없으면 새 <p>로 감싸기
     const wrapper = document.createElement("p");
     wrapper.style.lineHeight = value;
 
@@ -224,24 +231,17 @@ function applyLineHeight(value) {
     return;
   }
 
-  // 선택된 문단들만 줄간격 변경
-  blocks.forEach(block => {
-    block.style.lineHeight = value;
-  });
-
-  // 기존 내용 삭제 후 변경된 fragment 삽입
-  range.deleteContents();
-  range.insertNode(fragment);
+  blocks.forEach(b => b.style.lineHeight = value);
 }
 
+
 /* -----------------------------------------------------
-   5) 드롭다운 엔진
+   7) 글자체
 ----------------------------------------------------- */
 function initFontDropdown() {
   const select = document.getElementById("fontFamilySelect");
   if (!select) return;
 
-  /* 📌 글자체 옵션 목록 자동 생성 */
   const fonts = [
     { name: "기본체", value: "" },
     { name: "고딕체", value: "sans-serif" },
@@ -258,11 +258,15 @@ function initFontDropdown() {
     select.appendChild(op);
   });
 
-  /* 글자체 적용 */
-  select.addEventListener("change", () => {
-    if (select.value) applyInlineStyle("fontFamily", select.value);
-  });
+  select.addEventListener("change", () =>
+    applyInlineStyle("fontFamily", select.value)
+  );
 }
+
+
+/* -----------------------------------------------------
+   8) 글자 크기
+----------------------------------------------------- */
 function initFontSizeDropdown() {
   const select = document.getElementById("fontSizeSelect");
   if (!select) return;
@@ -274,25 +278,7 @@ function initFontSizeDropdown() {
     select.appendChild(op);
   }
 
-  select.addEventListener("change", () => {
-    if (select.value) applyInlineStyle("fontSize", select.value + "px");
-  });
-}
-
-function initLineHeightDropdown() {
-  const select = document.getElementById("lineHeightSelect");
-  if (!select) return;
-
-  const values = ["100%", "115%", "150%", "200%", "250%", "300%"];
-
-  values.forEach(v => {
-    const op = document.createElement("option");
-    op.value = v;
-    op.textContent = v;
-    select.appendChild(op);
-  });
-
-  select.addEventListener("change", () => {
-    if (select.value) applyLineHeight(select.value);
-});
+  select.addEventListener("change", () =>
+    applyInlineStyle("fontSize", select.value + "px")
+  );
 }
