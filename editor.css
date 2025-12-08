@@ -150,4 +150,31 @@ body {
   box-sizing: border-box;
   border-radius: 2px;
 }
+/* -------------------------------------------
+   🎨 색상 팝업 (툴바 바로 아래 고정)
+------------------------------------------- */
+.color-popup {
+  position: absolute;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  padding: 8px;
+  border-radius: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 170px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.18);
+  z-index: 99999;
+}
 
+.color-popup .color-box {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.color-popup .color-box:hover {
+  transform: scale(1.1);
+}
