@@ -1,1 +1,23 @@
+/* 이미지 선택 표시 */
+.hb-img-selected {
+  outline: 2px solid #5C8EDB;
+}
+
+/* 핸들 공통 */
+.hb-img-handle {
+  width: 12px;
+  height: 12px;
+  background: white;
+  border: 2px solid #3558A8;
+  border-radius: 50%;
+  position: absolute;
+  z-index: 9999;
+  cursor: pointer;
+}
+
+/* 모서리별 커서 */
+.hb-img-handle-nw { cursor: nw-resize; }
+.hb-img-handle-ne { cursor: ne-resize; }
+.hb-img-handle-sw { cursor: sw-resize; }
+.hb-img-handle-se { cursor: se-resize; }
 
