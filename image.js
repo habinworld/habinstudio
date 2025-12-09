@@ -1,115 +1,210 @@
 /* -----------------------------------------------------
-   🌇 Ha-Bin Studio — image.js v3.5 (Stable)
-   이미지 기본 스타일 + 드래그 리사이즈 + 안전 로직
+   🖼️ Ha-Bin Studio — image.js v5.2 (Universal Align 최적화판)
+   - 이미지 선택 박스(selectBox)
+   - 8방향 리사이즈 핸들
+   - 드래그 이동
+   - 정렬(left/center/right)과 충돌 없음
+   - Universal Align(hbUniversalAlign)과 완전 연동
 ----------------------------------------------------- */
 
-document.addEventListener("DOMContentLoaded", () => {
-  const editor = document.getElementById("editor");
-  if (!editor) return;
+let selectedImg = null;
+let selectBox = null;
+let dragOffsetX = 0;
+let dragOffsetY = 0;
+let resizing = false;
+let currentHandle = null;
 
-  editor.addEventListener("click", (e) => {
-    if (e.target.tagName === "IMG") {
-      activateResizeHandles(e.target);
-    } else {
-      removeHandles();
-    }
-  });
+/* ================================
+   1) 이미지 클릭 → selectBox 생성
+================================ */
+document.addEventListener("click", e => {
+  const img = e.target.closest("img");
+
+  if (img) {
+    e.preventDefault();
+    selectImage(img);
+  } else {
+    removeSelectBox();
+  }
 });
 
-/* -----------------------------------------------------
-   리사이즈 핸들 생성
------------------------------------------------------ */
-function activateResizeHandles(img) {
-  removeHandles();
+/* ================================
+   이미지 선택
+================================ */
+function selectImage(img) {
+  selectedImg = img;
+  createSelectBox();
+  updateSelectBox();
+}
 
-  img.classList.add("hb-img-selected");
+/* ================================
+   선택 박스 제거
+================================ */
+function removeSelectBox() {
+  if (selectBox) selectBox.remove();
+  selectBox = null;
+  selectedImg = null;
+}
 
-  const handles = ["nw", "ne", "sw", "se"];
-  handles.forEach(pos => {
+/* ================================
+   선택 박스 생성
+================================ */
+function createSelectBox() {
+  removeSelectBox();
+
+  selectBox = document.createElement("div");
+  selectBox.className = "hb-img-select";
+
+  // 8방향 리사이즈 핸들
+  const dirs = ["nw","n","ne","e","se","s","sw","w"];
+
+  dirs.forEach(d => {
     const h = document.createElement("div");
-    h.className = `hb-img-handle hb-img-handle-${pos}`;
-    h.dataset.position = pos;
-    document.body.appendChild(h);
-
-    positionHandle(h, img);
-
-    h.addEventListener("mousedown", initResize(img, pos));
+    h.className = "hb-handle hb-" + d;
+    h.dataset.dir = d;
+    selectBox.appendChild(h);
   });
+
+  // 드래그 이동
+  selectBox.addEventListener("mousedown", startDrag);
+
+  document.body.appendChild(selectBox);
 }
 
-/* -----------------------------------------------------
-   핸들 위치 계산
------------------------------------------------------ */
-function positionHandle(handle, img) {
-  const rect = img.getBoundingClientRect();
-  const s = 10;
+/* ================================
+   선택 박스 UI 위치 업데이트
+================================ */
+function updateSelectBox() {
+  if (!selectedImg || !selectBox) return;
 
-  const map = {
-    "nw": [rect.left - s, rect.top - s],
-    "ne": [rect.right - s, rect.top - s],
-    "sw": [rect.left - s, rect.bottom - s],
-    "se": [rect.right - s, rect.bottom - s],
-  };
+  const r = selectedImg.getBoundingClientRect();
 
-  const [x, y] = map[handle.dataset.position];
-  handle.style.left = x + "px";
-  handle.style.top  = y + "px";
+  selectBox.style.left = r.left + window.scrollX + "px";
+  selectBox.style.top  = r.top  + window.scrollY + "px";
+  selectBox.style.width  = r.width  + "px";
+  selectBox.style.height = r.height + "px";
 }
 
-/* -----------------------------------------------------
-   리사이즈 시작
------------------------------------------------------ */
-function initResize(img, corner) {
-  return function (e) {
+/* ================================
+   스크롤/창 크기 변경 → selectBox 보정
+================================ */
+window.addEventListener("scroll", updateSelectBox);
+window.addEventListener("resize", updateSelectBox);
+
+
+
+/* =========================================================
+   2) 리사이즈 (8핸들)
+========================================================= */
+
+document.addEventListener("mousedown", e => {
+  if (e.target.classList.contains("hb-handle")) {
+    resizing = true;
+    currentHandle = e.target.dataset.dir;
     e.preventDefault();
-    e.stopPropagation();
+  }
+});
 
-    const startX = e.clientX;
-    const startY = e.clientY;
+document.addEventListener("mousemove", e => {
+  if (!resizing || !selectedImg) return;
 
-    const startWidth = img.offsetWidth;
-    const startHeight = img.offsetHeight;
+  const imgRect = selectedImg.getBoundingClientRect();
 
-    function resize(ev) {
-      let w = startWidth + (ev.clientX - startX);
-      let h = startHeight + (ev.clientY - startY);
+  let w = imgRect.width;
+  let h = imgRect.height;
 
-      if (w < 40) w = 40;
-      if (h < 40) h = 40;
+  const dx = e.movementX;
+  const dy = e.movementY;
 
-      img.style.width = w + "px";
-      img.style.height = "auto";
+  // 방향별 크기 조정
+  if (currentHandle.includes("e")) w += dx;
+  if (currentHandle.includes("w")) w -= dx;
+  if (currentHandle.includes("s")) h += dy;
+  if (currentHandle.includes("n")) h -= dy;
 
-      updateAllHandles(img);
-    }
+  if (w < 30) w = 30;
+  if (h < 30) h = 30;
 
-    function stop() {
-      document.removeEventListener("mousemove", resize);
-      document.removeEventListener("mouseup", stop);
-    }
+  // 적용
+  selectedImg.style.width = w + "px";
+  selectedImg.style.height = "auto";
 
-    document.addEventListener("mousemove", resize);
-    document.addEventListener("mouseup", stop);
+  updateSelectBox();
+});
+
+document.addEventListener("mouseup", () => {
+  resizing = false;
+  currentHandle = null;
+});
+
+
+
+/* =========================================================
+   3) 이미지 드래그 이동
+========================================================= */
+
+function startDrag(e) {
+  if (e.target.classList.contains("hb-handle")) return;
+
+  if (!selectedImg) return;
+
+  dragOffsetX = e.clientX - selectedImg.getBoundingClientRect().left;
+  dragOffsetY = e.clientY - selectedImg.getBoundingClientRect().top;
+
+  document.addEventListener("mousemove", dragMove);
+  document.addEventListener("mouseup", stopDrag);
+}
+
+function dragMove(e) {
+  if (!selectedImg) return;
+
+  selectedImg.style.position = "absolute";
+  selectedImg.style.left = (e.clientX - dragOffsetX) + "px";
+  selectedImg.style.top  = (e.clientY - dragOffsetY) + "px";
+
+  updateSelectBox();
+}
+
+function stopDrag() {
+  document.removeEventListener("mousemove", dragMove);
+  document.removeEventListener("mouseup", stopDrag);
+}
+
+
+
+/* =========================================================
+   4) Universal Align에서 호출되는 박스 보정
+========================================================= */
+function refreshSelectBox() {
+  setTimeout(updateSelectBox, 20);
+}
+
+
+/* =========================================================
+   5) 이미지 삽입 (toolbar.js에서 호출)
+========================================================= */
+function hbInsertImage() {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "image/*";
+
+  input.onchange = () => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      document.execCommand("insertImage", false, reader.result);
+
+      // 최신 IMG 자동 선택
+      setTimeout(() => {
+        const imgs = document.querySelectorAll("#editor img");
+        const last = imgs[imgs.length - 1];
+        selectImage(last);
+      }, 10);
+    };
+    reader.readAsDataURL(input.files[0]);
   };
+
+  input.click();
 }
 
-/* -----------------------------------------------------
-   핸들 4개 다시 배치
------------------------------------------------------ */
-function updateAllHandles(img) {
-  document.querySelectorAll(".hb-img-handle").forEach(h => {
-    positionHandle(h, img);
-  });
-}
-
-/* -----------------------------------------------------
-   핸들 제거
------------------------------------------------------ */
-function removeHandles() {
-  document.querySelectorAll(".hb-img-handle").forEach(h => h.remove());
-  document.querySelectorAll(".hb-img-selected").forEach(i => {
-    i.classList.remove("hb-img-selected");
-  });
-}
 
 
