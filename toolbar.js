@@ -12,10 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
      1) 버튼 테이블 (UI 자동 생성)
   ======================================================= */
   const btnList = [
-    { type:"font-family", icon:"글꼴" },
-    { type:"font-size",   icon:"크기" },
-    { type:"line-height", icon:"줄간격" },
-
     /* 스타일 */
     { cmd:"bold",      icon:"B",   t:"굵게" },
     { cmd:"italic",    icon:"I",   t:"기울임" },
