@@ -836,3 +836,24 @@ body.night .secret-toggle {
 #toolbar .hb-select {
   color: #2b2b2b !important;
 }
+/* ===========================================================
+   🔥 툴바 버튼 글자색 완전 복구 패치 (v3 · Final)
+   body 전역 color 덮어쓰기 문제 100% 해결판
+=========================================================== */
+
+#toolbar, 
+#toolbar * {
+  color: #ffffff !important;
+  fill: #ffffff !important;
+}
+
+/* select는 흰색이면 안 보이므로 따로 예외 처리 */
+#toolbar .hb-select {
+  color: #2b2b2b !important;
+}
+
+/* 버튼 아이콘 대비 강화 */
+#toolbar .hb-btn {
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
