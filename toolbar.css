@@ -166,8 +166,8 @@
     width: 180px;
   }
 }
-#toolbar .hb-btn { color:#fff !important; }
-.hb-btn {
+#toolbar .hb-btn {
   position: relative !important;
-  z-index: 5 !important;
+  z-index: 999999 !important;
+  color: #fff !important;
 }
