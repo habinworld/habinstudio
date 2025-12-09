@@ -1,165 +1,103 @@
 /* -----------------------------------------------------
-   🌈⚒ Ha-Bin Studio — color.js v4.0
-   초즉시반응형 색상 엔진 + Toolbar v4.0 완전호환
+   🎨 Ha-Bin Studio — color.js v5.0
+   - 빠른 8색 / 즉시반응 글자색·배경색
+   - advanced-color.js와 완전 분리
+   - 팝업 없는 초간단 즉시컬러 선택기
 ----------------------------------------------------- */
 
-let hbColorMode = "color"; // "color" = 글자색, "background" = 배경색
+const QUICK_COLORS = [
+  "#000000", // 검정
+  "#7F7F7F", // 진회색
+  "#C3C3C3", // 밝은회색
+  "#FFFFFF", // 흰색
+  "#C00000", // 빨강
+  "#1F4E79", // 파랑
+  "#548235", // 초록
+  "#ED7D31"  // 주황
+];
 
-document.addEventListener("DOMContentLoaded", () => {
-  const popup = document.createElement("div");
-  popup.id = "hb-color-popup";
-  popup.className = "hb-color-popup";
-  popup.style.display = "none";
-  document.body.appendChild(popup);
+/* ------------------------------------------
+   1) 퀵컬러 호출 — toolbar.js에서 버튼 클릭 시 실행
+------------------------------------------ */
+function hbQuickColor(type) {
+  hbColorMode = type; /* type = "color" or "background" */
 
-  popup.innerHTML = `
-    <div class="hb-section-title">자동</div>
-    <div class="hb-color-row">
-      <div class="hb-color-box" data-color="#000000" style="background:#000000"></div>
-    </div>
-
-    <div class="hb-section-title">테마 색</div>
-    <div class="hb-color-grid hb-theme"></div>
-
-    <div class="hb-section-title">표준 색</div>
-    <div class="hb-color-row hb-standard"></div>
-
-    <button id="hb-more-color" class="hb-more-btn">다른 색(M)…</button>
-  `;
-
-  hbGenerateTheme();
-  hbGenerateStandard();
-  hbBindColorEvents();
-});
-
-/* -----------------------------------------------------
-   🎨 테마 색
------------------------------------------------------ */
-function hbGenerateTheme() {
-  const colors = [
-    "#000000","#44546A","#5B9BD5","#ED7D31","#A5A5A5","#FFC000",
-    "#FFFFFF","#E7E6E6","#D2DEEF","#FBE5D6","#EDEDED","#FFF2CC",
-    "#F2F2F2","#D9D9D9","#B4C6E7","#F8CBAD","#DBDBDB","#FFE699",
-    "#D0CECE","#AEAAAA","#8EAADB","#F4B183","#C9C9C9","#FFD966",
-    "#A6A6A6","#7F7F7F","#2F5597","#C55A11","#7B7B7B","#BF9000"
-  ];
-
-  const grid = document.querySelector(".hb-theme");
-  colors.forEach(c => {
-    const box = document.createElement("div");
-    box.className = "hb-color-box";
-    box.dataset.color = c;
-    box.style.background = c;
-    grid.appendChild(box);
-  });
+  // 팝업 없이 바로 적용 → 최근 사용색 1개로 기록
+  openQuickPalette();
 }
 
-/* -----------------------------------------------------
-   🎨 표준 색
------------------------------------------------------ */
-function hbGenerateStandard() {
-  const colors = [
-    "#FF0000","#FF9900","#FFFF00","#00B050","#00B0F0",
-    "#0070C0","#7030A0","#FF66CC","#999999","#333333"
-  ];
+/* ------------------------------------------
+   2) 퀵팔레트 생성 (툴바 아래 자동 위치)
+------------------------------------------ */
+function openQuickPalette() {
+  // 기존 팝업 제거
+  const old = document.getElementById("hb-quick-color");
+  if (old) old.remove();
 
-  const row = document.querySelector(".hb-standard");
-  colors.forEach(c => {
-    const box = document.createElement("div");
-    box.className = "hb-color-box";
-    box.dataset.color = c;
-    box.style.background = c;
-    row.appendChild(box);
+  const wrap = document.createElement("div");
+  wrap.id = "hb-quick-color";
+  wrap.style.position = "absolute";
+  wrap.style.top = (lastClickedButton.getBoundingClientRect().bottom + window.scrollY + 6) + "px";
+  wrap.style.left = (lastClickedButton.getBoundingClientRect().left + window.scrollX) + "px";
+  wrap.style.background = "#FFF";
+  wrap.style.padding = "8px";
+  wrap.style.border = "1px solid #CCC";
+  wrap.style.borderRadius = "6px";
+  wrap.style.boxShadow = "0 2px 6px rgba(0,0,0,0.15)";
+  wrap.style.display = "flex";
+  wrap.style.gap = "6px";
+  wrap.style.zIndex = "9999";
+  wrap.style.animation = "hbSlide 0.12s ease-out";
+
+  QUICK_COLORS.forEach(c => {
+    const chip = document.createElement("div");
+    chip.style.width = "22px";
+    chip.style.height = "22px";
+    chip.style.background = c;
+    chip.style.border = "1px solid #444";
+    chip.style.borderRadius = "4px";
+    chip.style.cursor = "pointer";
+
+    chip.onclick = () => {
+      applyQuickColor(c);
+      wrap.remove();
+    };
+
+    wrap.appendChild(chip);
   });
+
+  document.body.appendChild(wrap);
 }
 
-/* -----------------------------------------------------
-   🎨 팝업 이벤트
------------------------------------------------------ */
-function hbBindColorEvents() {
-  const popup = document.getElementById("hb-color-popup");
-
-  popup.addEventListener("click", (e) => {
-    if (e.target.classList.contains("hb-color-box")) {
-      hbApplyColor(e.target.dataset.color);
-      popup.style.display = "none";
-    }
-  });
-
-  document.getElementById("hb-more-color").addEventListener("click", () => {
-    const picker = document.createElement("input");
-    picker.type = "color";
-    picker.style.visibility = "hidden";
-
-    picker.addEventListener("input", () => {
-      hbApplyColor(picker.value);
-    });
-
-    document.body.appendChild(picker);
-    picker.click();
-  });
-}
-
-/* -----------------------------------------------------
-   🎨 색 적용 엔진 (v4.0 즉시반응)
------------------------------------------------------ */
-function hbApplyColor(color) {
+/* ------------------------------------------
+   3) 빠른색 즉시 적용
+------------------------------------------ */
+function applyQuickColor(color) {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
 
-  const range = sel.getRangeAt(0);
+  const r = sel.getRangeAt(0);
 
-  // 선택 영역 없음 → 향후 typing 스타일 유지
-  if (range.collapsed) {
-    document.execCommand(
-      hbColorMode === "color" ? "foreColor" : "hiliteColor",
-      false,
-      color
-    );
-    return;
-  }
+  const span = document.createElement("span");
 
-  // 선택 영역 있음 → 완전 래핑
-  document.execCommand("styleWithCSS", false, true);
+  if (hbColorMode === "color") span.style.color = color;
+  else span.style.backgroundColor = color;
 
-  if (hbColorMode === "color") {
-    document.execCommand("foreColor", false, color);
-  } else {
-    document.execCommand("hiliteColor", false, color);
-  }
+  const frag = r.extractContents();
+  span.appendChild(frag);
+  r.insertNode(span);
 }
 
-/* -----------------------------------------------------
-   🎨 팝업 열기 (toolbar.js → 여기 호출)
------------------------------------------------------ */
-function hbOpenColorPopup(type) {
-  hbColorMode = type;
+/* ------------------------------------------
+   4) 외부 클릭 시 닫기
+------------------------------------------ */
+document.addEventListener("click", e => {
+  const quick = document.getElementById("hb-quick-color");
+  if (!quick) return;
 
-  const popup = document.getElementById("hb-color-popup");
-  const btn = type === "color"
-    ? document.querySelector("#textColorBtn")
-    : document.querySelector("#bgColorBtn");
+  if (e.target.closest("#hb-quick-color")) return;
+  if (e.target.id === "quickTextColor" || e.target.id === "quickBgColor") return;
 
-  const rect = btn.getBoundingClientRect();
-
-  popup.style.left = rect.left + window.scrollX + "px";
-  popup.style.top = rect.bottom + window.scrollY + 8 + "px";
-  popup.style.display = "block";
-}
-
-/* -----------------------------------------------------
-   🎨 바깥 클릭 → 팝업 닫기
------------------------------------------------------ */
-document.addEventListener("click", (e) => {
-  const popup = document.getElementById("hb-color-popup");
-  if (!popup || popup.style.display === "none") return;
-
-  const keep =
-    popup.contains(e.target) ||
-    e.target.closest("#textColorBtn") ||
-    e.target.closest("#bgColorBtn");
-
-  if (!keep) popup.style.display = "none";
+  quick.remove();
 });
-
 
