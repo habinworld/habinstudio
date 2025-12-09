@@ -1,6 +1,9 @@
 /* -----------------------------------------------------
-   ✒️ Ha-Bin Studio — toolbar.js v4.1 (초반응 엔진)
-   색상·폰트·정렬·줄간격 즉시 반영 / execCommand 최소화
+   ✒️ Ha-Bin Studio — toolbar.js v6.0 (Universal Align)
+   글자/이미지 통합 정렬 버튼 (좌·중·우·양쪽)
+   선택된 요소 자동 감지 → 서로 다른 정렬 적용
+   Bold, Italic, Underline, Color, Lists, Quote, Code,
+   HR, Image Insert, Undo/Redo, Clear All 포함
 ----------------------------------------------------- */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -8,168 +11,217 @@ document.addEventListener("DOMContentLoaded", () => {
   const editor  = document.getElementById("editor");
   if (!toolbar || !editor) return;
 
-  /* =====================================================
-     1) 버튼 설정 (execCommand 느린 부분 제거)
-  ===================================================== */
-  const buttons = [
-    { id:"textColorBtn", type:"color", icon:"🖌A", title:"글자색" },
-    { id:"bgColorBtn",   type:"bgcolor", icon:"🎨", title:"배경색" },
+  /* =======================================================
+     1) 버튼 테이블 (툴바 생성)
+     ======================================================= */
+  const btnList = [
+    { type:"font-family", icon:"글꼴" },
+    { type:"font-size",   icon:"크기" },
+    { type:"line-height", icon:"줄간격" },
 
-    { cmd:"bold",      icon:"B"  , title:"굵게" },
-    { cmd:"italic",    icon:"I"  , title:"기울임" },
-    { cmd:"underline", icon:"U"  , title:"밑줄" },
+    /* 글자 꾸미기 */
+    { cmd:"bold",      icon:"B",   t:"굵게" },
+    { cmd:"italic",    icon:"I",   t:"기울임" },
+    { cmd:"underline", icon:"U",   t:"밑줄" },
 
-    { type:"align", value:"left",   icon:"좌", title:"왼쪽 정렬" },
-    { type:"align", value:"center", icon:"중", title:"가운데" },
-    { type:"align", value:"right",  icon:"우", title:"오른쪽" },
-    { type:"align", value:"justify",icon:"양", title:"양쪽" },
+    /* 색상 */
+    { type:"color-open", icon:"🖌A", t:"글자색" },
+    { type:"bg-open",    icon:"🎨",  t:"배경색" },
 
-    { type:"ul", icon:"•",  title:"불릿" },
-    { type:"ol", icon:"1.", title:"번호" },
+    /* 🔥 Universal Align (텍스트 + 이미지 통합) */
+    { type:"align-universal", value:"left",   icon:"좌", t:"왼쪽 정렬" },
+    { type:"align-universal", value:"center", icon:"중", t:"가운데 정렬" },
+    { type:"align-universal", value:"right",  icon:"우", t:"오른쪽 정렬" },
+    { type:"align-universal", value:"justify",icon:"양", t:"양쪽 정렬 (텍스트 전용)" },
 
-    { type:"quote", icon:"❝",  title:"인용" },
-    { type:"code",  icon:"</>", title:"코드 블록" },
-    { type:"hr",    icon:"━",   title:"구분선" },
+    /* 리스트 */
+    { type:"ul", icon:"•",  t:"불릿 목록" },
+    { type:"ol", icon:"1.", t:"번호 목록" },
 
-    { type:"image", icon:"🌈⚒", title:"사진" },
+    /* 블록 */
+    { type:"quote", icon:"❝",  t:"인용" },
+    { type:"code",  icon:"</>", t:"코드 블럭" },
+    { type:"hr",    icon:"━",   t:"구분선" },
 
-    { type:"undo", icon:"↺", title:"되돌리기" },
-    { type:"redo", icon:"↻", title:"다시실행" },
+    /* 이미지 */
+    { type:"img", icon:"🌈⚒", t:"이미지 삽입" },
 
-    { type:"clear", icon:"지우기", title:"전체 지우기" }
+    /* 기타 */
+    { type:"undo", icon:"↺", t:"되돌리기" },
+    { type:"redo", icon:"↻", t:"다시실행" },
+    { type:"clear", icon:"지움", t:"전체지우기" }
   ];
 
-  /* =====================================================
+  /* =======================================================
      2) 버튼 생성
-  ===================================================== */
-  buttons.forEach(btn => {
+     ======================================================= */
+  btnList.forEach(item => {
     const b = document.createElement("button");
-    b.className = "toolbar-btn";
-    b.innerHTML = btn.icon;
-    b.title = btn.title;
-    if (btn.id) b.id = btn.id;
+    b.className = "hb-btn";
+    b.innerHTML = item.icon;
+    if (item.t) b.title = item.t;
 
-    /* ---- 기본 execCommand (굵게/기울임/밑줄) ---- */
-    if (btn.cmd) {
-      b.onclick = () => document.execCommand(btn.cmd, false, null);
-    }
+    /* execCommand 계열 */
+    if (item.cmd)
+      b.onclick = () => document.execCommand(item.cmd, false, null);
 
-    /* ---- 색상 ---- */
-    if (btn.type === "color")
+    /* 색상 팝업 */
+    if (item.type === "color-open")
       b.onclick = () => hbOpenColorPopup("color");
-    if (btn.type === "bgcolor")
+
+    if (item.type === "bg-open")
       b.onclick = () => hbOpenColorPopup("background");
 
-    /* ---- 문단 정렬 (즉시 적용) ---- */
-    if (btn.type === "align") {
-      b.onclick = () => applyParagraphAlign(btn.value);
+    /* Universal Align */
+    if (item.type === "align-universal") {
+      b.onclick = () => hbUniversalAlign(item.value);
     }
 
-    /* ---- 불릿/번호 ---- */
-    if (btn.type === "ul") b.onclick = () => document.execCommand("insertUnorderedList");
-    if (btn.type === "ol") b.onclick = () => document.execCommand("insertOrderedList");
+    /* 목록 */
+    if (item.type === "ul") b.onclick = () => document.execCommand("insertUnorderedList");
+    if (item.type === "ol") b.onclick = () => document.execCommand("insertOrderedList");
 
-    /* ---- 인용 ---- */
-    if (btn.type === "quote") b.onclick = () => wrapBlock("blockquote", {
-      padding:"8px 14px",
-      borderLeft:"4px solid #AAA",
-      background:"#FAFAFA"
-    });
+    /* 인용/코드 */
+    if (item.type === "quote") b.onclick = () => insertBlock("blockquote");
+    if (item.type === "code")  b.onclick = () => insertBlock("pre");
 
-    /* ---- 코드 블록 ---- */
-    if (btn.type === "code") b.onclick = () => wrapBlock("pre", {
-      background:"#F5F5F5",
-      padding:"12px",
-      borderRadius:"6px",
-      fontFamily:"monospace"
-    });
+    /* 구분선 */
+    if (item.type === "hr")
+      b.onclick = () => document.execCommand("insertHorizontalRule");
 
-    /* ---- 구분선 ---- */
-    if (btn.type === "hr") b.onclick = () => document.execCommand("insertHorizontalRule");
+    /* 이미지 */
+    if (item.type === "img")
+      b.onclick = () => hbInsertImage();
 
-    /* ---- 이미지 ---- */
-    if (btn.type === "image") {
+    /* undo/redo */
+    if (item.type === "undo") b.onclick = () => document.execCommand("undo");
+    if (item.type === "redo") b.onclick = () => document.execCommand("redo");
+
+    /* 전체 지우기 */
+    if (item.type === "clear") {
       b.onclick = () => {
-        const input = document.createElement("input");
-        input.type = "file";
-        input.accept = "image/*";
-
-        input.onchange = () => {
-          const r = new FileReader();
-          r.onload = () => document.execCommand("insertImage", false, r.result);
-          r.readAsDataURL(input.files[0]);
-        };
-        input.click();
-      };
-    }
-
-    /* ---- undo/redo ---- */
-    if (btn.type === "undo") b.onclick = () => document.execCommand("undo");
-    if (btn.type === "redo") b.onclick = () => document.execCommand("redo");
-
-    /* ---- 전체 지우기 ---- */
-    if (btn.type === "clear") {
-      b.onclick = () => {
-        if (confirm("전체 지울까요?")) editor.innerHTML = "";
+        if (confirm("전체 삭제하시겠습니까?"))
+          editor.innerHTML = "";
       };
     }
 
     toolbar.appendChild(b);
   });
 
-  /* =====================================================
-     3) 드롭다운: 폰트 / 크기 / 줄간격 즉시 적용
-  ===================================================== */
-  initFontDropdown();
-  initFontSizeDropdown();
-  initLineHeightDropdown();
+  /* 드롭다운 */
+  makeFontFamilySelect();
+  makeFontSizeSelect();
+  makeLineHeightSelect();
 });
 
-/* =========================================================
-   🟦 문단 정렬 (즉시 스타일 적용)
-========================================================= */
-function applyParagraphAlign(type) {
+
+
+/* =======================================================
+   3) Universal Align System (텍스트 + 이미지 자동판별)
+   ======================================================= */
+function hbUniversalAlign(type) {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
 
-  let block = sel.anchorNode;
-  while (block && !["DIV","P","LI"].includes(block.nodeName)) {
-    block = block.parentNode;
+  let node = sel.anchorNode;
+  if (!node) return;
+
+  // 텍스트 노드면 부모로 올리기
+  while (node && node.nodeType === 3) node = node.parentNode;
+  if (!node) return;
+
+  /* ----------------------------
+     👉 Case 1: 이미지 정렬
+     ---------------------------- */
+  if (node.tagName === "IMG") {
+    if (type === "left")  hbAlignImageLeft(node);
+    if (type === "center")hbAlignImageCenter(node);
+    if (type === "right") hbAlignImageRight(node);
+    // 이미지에는 양쪽정렬 없음
+    return;
   }
 
+  /* ----------------------------
+     👉 Case 2: 텍스트 정렬
+     ---------------------------- */
+  let block = node;
+  while (block && !["P","DIV","LI"].includes(block.tagName)) {
+    block = block.parentNode;
+  }
   if (!block) return;
 
-  block.style.textAlign =
-    type === "left" ? "left" :
-    type === "center" ? "center" :
-    type === "right" ? "right" :
-    "justify";
+  block.style.textAlign = type;
 }
 
-/* =========================================================
-   🟦 인용/코드 블록
-========================================================= */
-function wrapBlock(tag, styles) {
+
+/* =======================================================
+   이미지 정렬 (이미지.js에서 자동 연동)
+   Universal Align은 이미지.js의 함수 호출
+   ======================================================= */
+
+function hbAlignImageLeft(img) {
+  img.style.position = "relative";
+  img.style.float = "left";
+  img.style.display = "inline";
+  img.style.margin = "6px 12px 6px 0";
+
+  refreshSelectBox();
+}
+
+function hbAlignImageCenter(img) {
+  img.style.float = "none";
+  img.style.display = "block";
+  img.style.margin = "0 auto";
+
+  refreshSelectBox();
+}
+
+function hbAlignImageRight(img) {
+  img.style.position = "relative";
+  img.style.float = "right";
+  img.style.display = "inline";
+  img.style.margin = "6px 0 6px 12px";
+
+  refreshSelectBox();
+}
+
+
+
+/* =======================================================
+   4) 텍스트 관련 기능 (기존 유지)
+   ======================================================= */
+
+/* 블록 삽입 */
+function insertBlock(tag) {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
 
   const r = sel.getRangeAt(0);
-  const newBlock = document.createElement(tag);
+  const block = document.createElement(tag);
 
-  Object.entries(styles).forEach(([k,v]) => newBlock.style[k] = v);
+  if (tag === "blockquote") {
+    block.style.padding = "8px 14px";
+    block.style.borderLeft = "4px solid #AAA";
+    block.style.background = "#FAFAFA";
+  }
+  if (tag === "pre") {
+    block.style.padding = "12px";
+    block.style.background = "#F5F5F5";
+    block.style.borderRadius = "6px";
+    block.style.fontFamily = "monospace";
+  }
 
   const frag = r.extractContents();
-  newBlock.appendChild(frag);
-
-  r.insertNode(newBlock);
+  block.appendChild(frag);
+  r.insertNode(block);
 }
 
-/* =========================================================
-   🟦 폰트
-========================================================= */
-function initFontDropdown() {
-  const sel = document.getElementById("fontFamilySelect");
-  if (!sel) return;
+
+/* 글꼴 */
+function makeFontFamilySelect() {
+  const toolbar = document.getElementById("toolbar");
+  const sel = document.createElement("select");
+  sel.className = "hb-select";
 
   const list = [
     { name:"기본체", value:"" },
@@ -187,51 +239,49 @@ function initFontDropdown() {
   });
 
   sel.onchange = () => applyInline("fontFamily", sel.value);
+  toolbar.insertBefore(sel, toolbar.firstChild);
 }
 
-/* =========================================================
-   🟦 글자 크기
-========================================================= */
-function initFontSizeDropdown() {
-  const sel = document.getElementById("fontSizeSelect");
-  if (!sel) return;
+/* 글자 크기 */
+function makeFontSizeSelect() {
+  const toolbar = document.getElementById("toolbar");
+  const sel = document.createElement("select");
+  sel.className = "hb-select";
 
-  for (let i = 10; i <= 32; i++) {
+  [13,14,15,16,17,18,20,22,24,28,32].forEach(sz => {
     const op = document.createElement("option");
-    op.value = i + "px";
-    op.textContent = i + "px";
+    op.value = sz + "px";
+    op.textContent = sz + "px";
     sel.appendChild(op);
-  }
+  });
 
   sel.onchange = () => applyInline("fontSize", sel.value);
+  toolbar.insertBefore(sel, toolbar.children[1]);
 }
 
-/* =========================================================
-   🟦 줄간격
-========================================================= */
-function initLineHeightDropdown() {
-  const sel = document.getElementById("lineHeightSelect");
-  if (!sel) return;
+/* 줄간격 */
+function makeLineHeightSelect() {
+  const toolbar = document.getElementById("toolbar");
+  const sel = document.createElement("select");
+  sel.className = "hb-select";
 
-  ["100%","130%","150%","180%","200%","250%","300%"]
-    .forEach(v => {
-      const op = document.createElement("option");
-      op.value = v;
-      op.textContent = v;
-      sel.appendChild(op);
-    });
+  ["1.4","1.6","1.8","2.0","2.4","3.0"].forEach(v => {
+    const op = document.createElement("option");
+    op.value = v;
+    op.textContent = v;
+    sel.appendChild(op);
+  });
 
   sel.onchange = () => applyLineHeight(sel.value);
+  toolbar.insertBefore(sel, toolbar.children[2]);
 }
 
-/* =========================================================
-   🟦 Inline 적용 (빠른 즉시 반영)
-========================================================= */
+/* Inline 스타일 적용 */
 function applyInline(prop, value) {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
-  const r = sel.getRangeAt(0);
 
+  const r = sel.getRangeAt(0);
   const span = document.createElement("span");
   span.style[prop] = value;
 
@@ -240,20 +290,18 @@ function applyInline(prop, value) {
   r.insertNode(span);
 }
 
-/* =========================================================
-   🟦 줄간격: 선택 블록 전체 즉시반응
-========================================================= */
-function applyLineHeight(value) {
+/* 줄간격 */
+function applyLineHeight(v) {
   const sel = window.getSelection();
   if (!sel.rangeCount) return;
 
   let block = sel.anchorNode;
-  while (block && !["DIV","P","LI"].includes(block.nodeName)) {
+  while (block && !["DIV","P","LI"].includes(block.tagName)) {
     block = block.parentNode;
   }
-
   if (!block) return;
 
-  block.style.lineHeight = value;
+  block.style.lineHeight = v;
 }
+
 
