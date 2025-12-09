@@ -5,18 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>글쓰기 · Ha-Bin Studio</title>
 
-  <!-- 🔒 공통 스타일 -->
+  <!-- 공통 스타일 -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- ✒️ 에디터 전용 스타일 -->
+  <!-- 에디터 전용 -->
   <link rel="stylesheet" href="editor.css">
-
-  <!-- 🖼 이미지 핸들 -->
+  <link rel="stylesheet" href="toolbar.css">
   <link rel="stylesheet" href="image.css">
+  <link rel="stylesheet" href="color.css">
 
   <!-- 폰트 -->
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
-
   <style>
     @font-face {
       font-family: 'HCR Batang';
@@ -26,6 +25,7 @@
     }
   </style>
 </head>
+
 <body>
 
 <script src="secret-gate.js"></script>
@@ -50,10 +50,84 @@
     </div>
   </div>
 
-  <!-- ✒️ Ha-Bin Studio Ribbon Toolbar v6.0 -->
-  <div id="hb-toolbar" class="hb-toolbar"></div>
+  <!-- 🎨 Ribbon Toolbar v6.0 -->
+  <div id="hb-toolbar" class="hb-toolbar">
 
-  <!-- 🎨 Excel Color Popup -->
+    <!-- 글꼴 그룹 -->
+    <div class="hb-group">
+      <select id="hb-font-family" class="hb-select">
+        <option value="">글꼴</option>
+        <option value="Noto Sans KR">Noto Sans KR</option>
+        <option value="HCR Batang">함초롱바탕</option>
+        <option value="Gowun Dodum">고운돋움</option>
+        <option value="Nanum Myeongjo">나눔명조</option>
+      </select>
+
+      <select id="hb-font-size" class="hb-select">
+        <option value="">크기</option>
+        <option value="13px">13px</option>
+        <option value="15px">15px</option>
+        <option value="16px">16px</option>
+        <option value="17px">17px</option>
+        <option value="18px">18px</option>
+        <option value="20px">20px</option>
+        <option value="22px">22px</option>
+        <option value="24px">24px</option>
+        <option value="28px">28px</option>
+        <option value="32px">32px</option>
+      </select>
+
+      <button class="hb-btn" data-cmd="bold"><b>B</b></button>
+      <button class="hb-btn" data-cmd="italic"><i>I</i></button>
+      <button class="hb-btn" data-cmd="underline"><u>U</u></button>
+    </div>
+
+    <!-- 색상 -->
+    <div class="hb-group">
+      <button id="hb-color-text" class="hb-btn hb-color-btn">🖌A</button>
+      <button id="hb-color-bg" class="hb-btn hb-color-btn">🎨</button>
+    </div>
+
+    <!-- 정렬 -->
+    <div class="hb-group">
+      <button class="hb-btn" data-align="left">좌</button>
+      <button class="hb-btn" data-align="center">중</button>
+      <button class="hb-btn" data-align="right">우</button>
+      <button class="hb-btn" data-align="justify">양</button>
+
+      <select id="hb-line-height" class="hb-select">
+        <option value="">줄간격</option>
+        <option value="1.4">1.4</option>
+        <option value="1.6">1.6</option>
+        <option value="1.8">1.8</option>
+        <option value="2.0">2.0</option>
+        <option value="2.2">2.2</option>
+      </select>
+
+      <button class="hb-btn" id="hb-indent">▶</button>
+      <button class="hb-btn" id="hb-outdent">◀</button>
+    </div>
+
+    <!-- 목록/스타일 -->
+    <div class="hb-group">
+      <button class="hb-btn" data-cmd="insertUnorderedList">• 목록</button>
+      <button class="hb-btn" data-cmd="insertOrderedList">1. 목록</button>
+      <button class="hb-btn" id="hb-quote">❝ 인용</button>
+      <button class="hb-btn" id="hb-code">⌘ 코드</button>
+    </div>
+
+    <!-- 이미지/기타 -->
+    <div class="hb-group">
+      <button class="hb-btn" id="hb-image">🌈⚒</button>
+      <button class="hb-btn" data-cmd="undo">↺</button>
+      <button class="hb-btn" data-cmd="redo">↻</button>
+      <button class="hb-btn" id="hb-clear-style">서식 지우기</button>
+      <button class="hb-btn" id="hb-clear-all">전체 삭제</button>
+    </div>
+
+  </div> <!-- end toolbar -->
+
+  <!-- 색상 팝업 -->
   <div id="hb-color-popup" class="hb-color-popup" style="display:none;">
     <div class="popup-title">테마 색</div>
     <div class="theme-grid"></div>
@@ -66,8 +140,8 @@
     </div>
   </div>
 
-  <!-- 🎨 고급 컬러 선택기 -->
-  <div id="hb-advanced-color" class="hb-advanced-color" style="display:none;">
+  <!-- 고급 색상 팝업 -->
+  <div id="advanced-color" class="advanced-color" style="display:none;">
     <div class="adv-title">고급 색상 선택</div>
 
     <input type="color" id="hb-color-picker">
@@ -79,18 +153,18 @@
     </div>
   </div>
 
-  <!-- ✏️ 실제 글 쓰는 공간 -->
+  <!-- 본문 -->
   <div id="editor" contenteditable="true"></div>
 
-  <!-- 하단 이동 버튼 -->
+  <!-- 하단 버튼 -->
   <div class="notice-buttons">
-    <a href="list.html"  class="btn-top">목록</a>
+    <a href="list.html" class="btn-top">목록</a>
     <a href="index.html" class="btn-top">메인</a>
   </div>
 
-</div>
+</div> <!-- end editor-container -->
 
-<!-- 🔧 엔진 4대 모듈 (순서 중요!) -->
+<!-- 🚀 엔진 4종 -->
 <script src="color.js"></script>
 <script src="advanced-color.js"></script>
 <script src="toolbar.js"></script>
@@ -98,13 +172,12 @@
 
 <script>
 /* ---------------------------------------------
-   📌 localStorage 기반 글 저장/수정/삭제
+   저장/수정/삭제 시스템
 ---------------------------------------------- */
 let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 const params = new URLSearchParams(window.location.search);
 const editId = params.get("id");
 
-/* 수정 모드일 때 기존 글 불러오기 */
 if (editId) {
   const post = posts.find(p => String(p.id) === String(editId));
   if (post) {
@@ -114,16 +187,12 @@ if (editId) {
   }
 }
 
-/* 글 저장/수정 */
 function saveOrUpdate() {
   const title   = document.getElementById("post-title").value.trim();
   const content = document.getElementById("editor").innerHTML.trim();
   const isNotice = document.getElementById("notice-check").checked;
 
-  if (!title) {
-    alert("제목을 입력하세요.");
-    return;
-  }
+  if (!title) return alert("제목을 입력하세요.");
 
   const now = new Date();
   const d = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ` +
@@ -132,9 +201,9 @@ function saveOrUpdate() {
   if (editId) {
     const post = posts.find(p => String(p.id) === String(editId));
     if (post) {
-      post.title   = title;
+      post.title = title;
       post.content = content;
-      post.date    = d;
+      post.date = d;
       post.isNotice = isNotice;
     }
   } else {
@@ -152,10 +221,9 @@ function saveOrUpdate() {
   location.href = "list.html";
 }
 
-document.getElementById("saveBtn").onclick   = saveOrUpdate;
+document.getElementById("saveBtn").onclick = saveOrUpdate;
 document.getElementById("updateBtn").onclick = saveOrUpdate;
 
-/* 삭제 */
 document.getElementById("deleteBtn").onclick = () => {
   if (!editId) return;
   if (!confirm("삭제하시겠습니까?")) return;
@@ -165,12 +233,13 @@ document.getElementById("deleteBtn").onclick = () => {
   location.href = "list.html";
 };
 
-/* 취소 */
 document.getElementById("cancelBtn").onclick = () => history.back();
 </script>
 
 </body>
 </html>
+
+  
 
 
 
