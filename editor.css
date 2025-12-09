@@ -1,22 +1,22 @@
 /* -----------------------------------------------------
-   ✒️ Ha-Bin Studio — editor.css v4.0
-   Excel Ribbon + Word Inline Engine + AutoExpand 
-   전체 통합 최신 스타일
+   ✒️ Ha-Bin Studio — editor.css v6.0
+   Excel Ribbon + Word Inline Engine + AutoExpand 완전 호환
+   (style.css의 레이아웃 파괴 금지 — body 변경 없음)
 ----------------------------------------------------- */
 
-/* 글로벌 기본 */
-body {
-  background: #F9FAFB;
-  margin: 0;
-  padding: 0;
-  font-family: 'Noto Sans KR', sans-serif;
+/* ⚠ 절대 body 스타일 재정의 금지(전체 레이아웃 보호) */
+body * {
+  box-sizing: border-box;
 }
 
-/* 전체 editor layout */
+/* -----------------------------------------
+   editor-container
+----------------------------------------- */
 .editor-container {
-  max-width: 900px;
-  margin: 30px auto 120px;
-  padding: 0 20px;
+  width: 100%;
+  max-width: 950px;
+  margin: 30px auto 140px;
+  padding: 0 22px;
 }
 
 /* -----------------------------------------
@@ -27,16 +27,14 @@ body {
   padding: 14px 16px;
   font-size: 22px;
   font-weight: 700;
-  border: 2px solid #ddd;
+  border: 2px solid #DDD;
   border-radius: 8px;
-  margin-bottom: 12px;
-  transition: 0.2s;
-  box-sizing: border-box;
+  margin-bottom: 14px;
+  transition: 0.15s;
 }
-
 #post-title:focus {
   border-color: #3558A8;
-  box-shadow: 0 0 0 3px rgba(92,142,219,0.25);
+  box-shadow: 0 0 0 3px rgba(53,88,168,0.25);
   outline: none;
 }
 
@@ -47,9 +45,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
   gap: 14px;
   margin-bottom: 14px;
-  flex-wrap: wrap;
 }
 
 .notice-area {
@@ -60,260 +58,192 @@ body {
   font-weight: 600;
 }
 
-/* 상단 버튼 */
 .editor-buttons {
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  gap: 8px;
 }
-
 .editor-btn {
   padding: 6px 12px;
-  border-radius: 6px;
   font-size: 15px;
   font-weight: 600;
+  border-radius: 6px;
   cursor: pointer;
-  height: 35px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   border: none;
+  height: 35px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-.btn-cancel { background: #CCCCCC; color: #000; }
-.btn-cancel:hover { background: #BBBBBB; }
+.btn-cancel  { background:#CCC;       color:#000; }
+.btn-cancel:hover { background:#BEBEBE; }
 
-.btn-save { background: #3558A8; color: #FFFFFF; }
-.btn-save:hover { background: #5C8EDB; }
+.btn-save    { background:#3558A8; color:#FFF; }
+.btn-save:hover { background:#5C8EDB; }
 
-.btn-delete { background: #D9534F; color: #FFFFFF; }
-.btn-delete:hover { background: #C3413B; }
+.btn-delete  { background:#D9534F; color:#FFF; }
+.btn-delete:hover { background:#C3413B; }
 
 /* -----------------------------------------
-   Ribbon Toolbar (2줄 구조)
+   Ribbon Toolbar (v6.0)
 ----------------------------------------- */
 #toolbar {
+  width: 100%;
   background: #F3F4F6;
   border: 1px solid #E5E7EB;
-  padding: 10px;
   border-radius: 8px;
+  padding: 10px;
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
-/* Ribbon dropdowns */
 .hb-select {
   height: 32px;
-  padding: 0 6px;
-  font-size: 14px;
+  padding: 0 8px;
   border-radius: 6px;
   border: 1px solid #CCC;
   background: #FFF;
+  font-size: 14px;
   cursor: pointer;
   transition: 0.15s;
 }
-
 .hb-select:hover {
-  border-color: #3558A8;
+  border-color:#3558A8;
   box-shadow: 0 0 3px rgba(53,88,168,0.25);
 }
-
 .hb-select:focus {
   outline: none;
-  border-color: #3558A8;
+  border-color:#3558A8;
   box-shadow: 0 0 4px rgba(53,88,168,0.35);
 }
 
-/* Ribbon buttons */
-.toolbar-btn {
-  background: #FFFFFF;
-  border: 1px solid #D1D5DB;
-  padding: 0 10px;
-  min-width: 32px;
-  height: 32px;
+.hb-btn {
+  background:#FFF;
+  border:1px solid #D1D5DB;
+  min-width:32px;
+  height:32px;
+  padding:0 10px;
+  border-radius:6px;
+  font-size:14px;
+  cursor:pointer;
 
-  border-radius: 6px;
-  font-size: 14px;
-  cursor: pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  transition: 0.15s;
+  transition:0.15s;
 }
-
-.toolbar-btn:hover {
-  background: #EEF4FF;
-  border-color: #5C8EDB;
-  color: #3558A8;
+.hb-btn:hover {
+  background:#EEF4FF;
+  border-color:#5C8EDB;
+  color:#3558A8;
 }
-
-.toolbar-btn.active {
-  background: #3558A8;
-  color: #FFF;
+.hb-btn.active {
+  background:#3558A8;
+  color:#FFF;
 }
 
 /* -----------------------------------------
-   본문 Editor (autoExpand)
+   본문 Editor (AutoExpand)
 ----------------------------------------- */
 #editor {
   width: 100%;
-  min-height: 460px;   /* 기본 높이 */
-  padding: 18px;
-  border: 2px solid #ddd;
+  min-height: 480px;
+  padding: 20px;
+  background: #FFF;
+  border: 2px solid #DDD;
   border-radius: 8px;
-  background: #FFFFFF;
 
-  font-size: 17px;     /* 하빈 기본값 */
+  font-size: 17px;
   line-height: 1.7;
   outline: none;
 
-  resize: none;        /* 수동 리사이즈 금지 — autoExpand 전용 */
-  overflow-y: hidden;  /* 내부 스크롤 제거 — 자연 확장 */
+  resize: none;       /* 수동 리사이즈 금지 */
+  overflow-y: visible; /* 내부 스크롤 제거 */
 }
-
 #editor:focus {
-  border-color: #3558A8;
-  box-shadow: 0 0 0 3px rgba(92,142,219,0.3);
+  border-color:#3558A8;
+  box-shadow:0 0 0 3px rgba(53,88,168,0.3);
 }
 
-/* 이미지 기본 스타일 */
+/* 이미지 */
 #editor img {
   max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 14px auto;
-  cursor: pointer;
+  height:auto;
+  display:block;
+  margin:14px auto;
+  cursor:pointer;
 }
 
-/* -----------------------------------------
-   이미지 핸들 (image.js)
------------------------------------------ */
+/* 이미지 핸들 */
 .hb-img-handle {
-  width: 14px;
-  height: 14px;
-  background: #3558A8;
-  border-radius: 50%;
-  position: absolute;
-  cursor: nwse-resize;
-  border: 2px solid #FFF;
-  z-index: 9999;
+  width:14px;
+  height:14px;
+  background:#3558A8;
+  border-radius:50%;
+  border:2px solid #FFF;
+  position:absolute;
+  cursor:nwse-resize;
+  z-index:9999;
 }
 
 /* -----------------------------------------
-   색상 팝업 — color.js
+   색상 팝업 — position: absolute 유지
 ----------------------------------------- */
 #hb-color-popup {
-  position: absolute;
-  background: #FFFFFF;
-  border: 1px solid #DDD;
-  padding: 10px;
-  border-radius: 8px;
-
-  box-shadow: 0 4px 10px rgba(0,0,0,0.18);
-  z-index: 999999;
-
-  width: 230px;
-}
-
-.hb-section-title {
-  font-size: 13px;
-  margin: 6px 0 4px;
-  font-weight: 600;
-  color: #555;
-}
-
-.hb-color-row {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 6px;
-}
-
-.hb-color-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 4px;
-  margin-bottom: 6px;
-}
-
-.hb-color-box {
-  width: 24px;
-  height: 24px;
-  border-radius: 4px;
-  border: 1px solid #CCC;
-  cursor: pointer;
-  transition: 0.1s;
-}
-
-.hb-color-box:hover {
-  transform: scale(1.12);
-}
-
-.hb-more-btn {
-  width: 100%;
-  padding: 6px 0;
-  background: #EEE;
-  border: 1px solid #CCC;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 13px;
-}
-
-.hb-more-btn:hover {
-  background: #DDD;
+  position:absolute;
+  background:#FFF;
+  border:1px solid #DDD;
+  padding:10px;
+  border-radius:8px;
+  width:240px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.18);
+  z-index:999999;
 }
 
 /* -----------------------------------------
    하단 목록/메인 버튼
 ----------------------------------------- */
 .notice-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 20px;
+  margin-top:20px;
+  display:flex;
+  justify-content:flex-end;
+  gap:12px;
 }
 
 .btn-top {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 12px;
-  background: #3558A8;
-  color: #FFFFFF;
-  border-radius: 6px;
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: none;
-  height: 35px;
+  padding:6px 12px;
+  background:#3558A8;
+  color:#FFF;
+  border-radius:6px;
+  text-decoration:none;
+  font-size:15px;
+  font-weight:600;
+  height:35px;
+  display:flex;
+  align-items:center;
 }
-
-.btn-top:hover {
-  opacity: 0.92;
-}
+.btn-top:hover { opacity:0.92; }
 
 /* -----------------------------------------
    모바일 대응
 ----------------------------------------- */
-@media (max-width: 600px) {
-  #editor {
-    min-height: 340px;
-  }
+@media (max-width:600px) {
+  #editor { min-height:360px; }
 
   .notice-line {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction:column;
+    align-items:flex-start;
   }
-
   .editor-buttons {
-    width: 100%;
-    justify-content: flex-start;
+    width:100%;
+    justify-content:flex-start;
   }
-
   .notice-buttons {
-    justify-content: center;
+    justify-content:center;
   }
 }
+
