@@ -827,15 +827,7 @@ body.night .secret-toggle {
   left: 50% !important;
   transform-origin: bottom center !important;
 }
-/* 🔥 툴바 버튼 글자색 강제 복원 */
-#toolbar .hb-btn {
-  color: #fff !important;
-}
 
-/* 🔥 드롭다운 텍스트도 강제 복원 */
-#toolbar .hb-select {
-  color: #2b2b2b !important;
-}
 /* ===========================================================
    🔥 툴바 버튼 글자색 완전 복구 패치 (v3 · Final)
    body 전역 color 덮어쓰기 문제 100% 해결판
