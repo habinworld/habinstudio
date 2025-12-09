@@ -1,1 +1,177 @@
+/* -----------------------------------------------------
+   🎨 Ha-Bin Studio — toolbar.css v5.0
+   - 엑셀 리본 + 한옥 감성 + 자동 줄바꿈
+   - 버튼 6×12 + 15px 규칙 적용
+   - 드롭다운, 컬러팝업, 정렬버튼 완전 통일화
+----------------------------------------------------- */
+
+/* ============================
+   1) 툴바 전체 컨테이너
+============================ */
+#toolbar {
+  display: flex;
+  flex-wrap: wrap;            /* 👉 자동 줄바꿈 */
+  gap: 6px;                   /* 버튼 간격 */
+  padding: 10px 12px;
+  background: #F8F3E8;        /* 은은한 한옥 배경 */
+  border: 1px solid #D6C7A1;  /* 한옥 톤 옅은 금빛 */
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 10;
+}
+
+/* ============================
+   2) 버튼 기본 스타일
+============================ */
+.toolbar-btn {
+  padding: 6px 12px;          /* 하빈 규칙 */
+  font-size: 15px;            /* 하빈 규칙 */
+  background: #3558A8;        /* 은남색(공통 버튼 색상) */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  user-select: none;
+  transition: 0.15s ease;
+}
+
+.toolbar-btn:hover {
+  background: #4A6FC9;        /* hover 밝게 */
+}
+
+.toolbar-btn:active {
+  background: #2A457F;        /* 눌림 효과 */
+}
+
+/* 비활성 상태 (예: 이미지 선택 시 "양쪽정렬" 차단) */
+.toolbar-btn.disabled {
+  background: #A9A9A9 !important;
+  cursor: not-allowed;
+}
+
+/* ============================
+   3) 드롭다운(select)
+============================ */
+#fontFamilySelect,
+#fontSizeSelect,
+#lineHeightSelect {
+  padding: 6px 12px;
+  font-size: 15px;
+  border: 1px solid #C9BFA8;
+  border-radius: 5px;
+  background: #FFFFFF;
+  cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  appearance: none;
+}
+
+/* 셀렉트 hover */
+#fontFamilySelect:hover,
+#fontSizeSelect:hover,
+#lineHeightSelect:hover {
+  border-color: #3558A8;
+}
+
+/* ============================
+   4) 컬러 팝업
+============================ */
+.hb-color-popup {
+  position: absolute;
+  top: 52px;             /* 버튼 바로 아래 스르륵 */
+  left: 0;
+  background: #FFF;
+  padding: 10px;
+  border: 1px solid #D7D7D7;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  display: none;         /* JS에서 열기 */
+  flex-wrap: wrap;
+  gap: 4px;
+  width: 210px;
+  z-index: 999;
+  animation: hbSlide 0.12s ease-out; /* 초고속 슬라이드 */
+}
+
+/* 컬러 박스 20종/40종 대응 */
+.hb-color-box {
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid #888;
+  box-shadow: 0 0 2px rgba(0,0,0,0.2);
+}
+
+.hb-color-box:hover {
+  transform: scale(1.18);
+}
+
+/* 스르륵 */
+@keyframes hbSlide {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================
+   5) 이미지 선택 박스 (공통)
+============================ */
+.hb-img-select {
+  position: absolute;
+  border: 2px solid #3A6BCD;
+  box-shadow: 0 0 8px rgba(0,0,0,0.25);
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 99999;
+}
+
+/* 리사이즈 핸들 8개 */
+.hb-handle {
+  width: 10px;
+  height: 10px;
+  background: #FFFFFF;
+  border: 2px solid #3558A8;
+  position: absolute;
+  pointer-events: all;
+  border-radius: 2px;
+}
+
+/* 핸들 위치 */
+.hb-nw { top: -6px; left: -6px; cursor: nwse-resize; }
+.hb-n  { top: -6px; left: 50%; transform: translateX(-50%); cursor: ns-resize; }
+.hb-ne { top: -6px; right: -6px; cursor: nesw-resize; }
+.hb-e  { top: 50%; right: -6px; transform: translateY(-50%); cursor: ew-resize; }
+.hb-se { bottom: -6px; right: -6px; cursor: nwse-resize; }
+.hb-s  { bottom: -6px; left: 50%; transform: translateX(-50%); cursor: ns-resize; }
+.hb-sw { bottom: -6px; left: -6px; cursor: nesw-resize; }
+.hb-w  { top: 50%; left: -6px; transform: translateY(-50%); cursor: ew-resize; }
+
+
+/* ============================
+   6) 모바일 최적화
+============================ */
+@media (max-width: 480px) {
+  #toolbar {
+    gap: 4px;
+    padding: 8px;
+  }
+
+  .toolbar-btn {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+
+  #fontFamilySelect,
+  #fontSizeSelect,
+  #lineHeightSelect {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+
+  .hb-color-popup {
+    width: 180px;
+  }
+}
 
