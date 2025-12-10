@@ -1,198 +1,227 @@
 /* ---------------------------------------------------
-   ⚙️ editor-core.js v7.0 — FULL ENGINE
-   Ha-Bin Studio — (Text / Color / Image / Format)
+   ⚙️ editor-core.js v8.0 — Heart Engine
+   Ha-Bin Studio — Modular Hybrid Editor
 ---------------------------------------------------- */
 
 const EditorCore = (() => {
 
-  const editor = document.getElementById("editor");
-  let lock = false;  // 충돌 방지용
-
-  /* ===============================
-        0) 커서 보존
+  /* ================================
+        0) 기본 DOM
   ================================ */
-  function focusEditor() {
-    editor.focus({ preventScroll: false });
+  const editor = document.getElementById("editor");
+
+  if (!editor) {
+    console.error("[EditorCore] editor 영역(#editor)을 찾을 수 없습니다.");
+    return {};
   }
 
-  /* ===============================
-        1) execCommand 래퍼 (전체 명령)
+  let isLock = false;       // execCommand 충돌 방지
+  let savedRange = null;    // 커서/선택 영역 보존용
+
+
+  /* ================================
+        1) 커서 관리
   ================================ */
-  function command(cmd, val = null) {
-    if (lock) return;
-    lock = true;
+  function saveRange() {
+    const sel = window.getSelection();
+    if (sel.rangeCount > 0) {
+      savedRange = sel.getRangeAt(0);
+    }
+  }
+
+  function restoreRange() {
+    if (!savedRange) return;
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(savedRange);
+  }
+
+  editor.addEventListener("keyup", saveRange);
+  editor.addEventListener("mouseup", saveRange);
+  editor.addEventListener("input", saveRange);
+
+  function focusEditor() {
+    editor.focus({ preventScroll: true });
+    restoreRange();
+  }
+
+
+  /* ================================
+        2) execCommand 안정 래퍼
+  ================================ */
+  function command(cmd, value = null) {
+    if (isLock) return;
+    isLock = true;
 
     focusEditor();
-    document.execCommand(cmd, false, val);
+    document.execCommand(cmd, false, value);
 
-    lock = false;
+    isLock = false;
+    saveRange();
   }
 
-  /* ===============================
-        2) 글씨체
+
+  /* ================================
+        3) 글꼴 / 글자크기 / 줄간격
   ================================ */
   function setFont(font) {
     command("fontName", font);
   }
 
-  /* ===============================
-        3) 글자 크기 (px 기반)
-  ================================ */
-  function setFontSize(size) {
-    command("fontSize", 5);  // execCommand는 1~7 고정
+  // px 기반 글자크기
+  function setFontSize(px) {
+    focusEditor();
 
-    // px 적용
-    let sel = window.getSelection();
+    const sel = window.getSelection();
     if (!sel.rangeCount) return;
 
-    let range = sel.getRangeAt(0);
-    let span = document.createElement("span");
-    span.style.fontSize = size + "px";
+    const range = sel.getRangeAt(0);
+
+    const span = document.createElement("span");
+    span.style.fontSize = px + "px";
+
     span.appendChild(range.extractContents());
     range.insertNode(span);
+
+    saveRange();
   }
 
-  /* ===============================
-        4) 줄간격
-  ================================ */
-  function setLineHeight(h) {
-    let sel = window.getSelection();
+  function setLineHeight(value) {
+    const sel = window.getSelection();
     if (!sel.rangeCount) return;
 
-    const node = sel.anchorNode.parentNode;
-    node.style.lineHeight = h;
+    const block = sel.anchorNode?.parentNode;
+    if (!block) return;
+
+    block.style.lineHeight = value;
+    saveRange();
   }
 
-  /* ===============================
-        5) 색상 (기본)
+
+  /* ================================
+        4) 색상 엔진 연결
   ================================ */
   function setColor(color) {
     command("foreColor", color);
   }
 
-  /* ===============================
-        6) 배경색 (기본)
-  ================================ */
   function setBgColor(color) {
     command("hiliteColor", color);
   }
 
-  /* ===============================
-        7) 고급 색상 연결
-  ================================ */
-  function openAdvanced(textOrBg, button) {
-    AdvancedColor.openPopup(button, textOrBg);
+  // 고급 색상 팝업
+  function openAdvancedColor(type, btn) {
+    AdvancedColor.open(btn, type); // type = "text" | "bg"
   }
 
-  /* ===============================
-        8) Bold / Italic / Underline
+
+  /* ================================
+        5) Bold / Italic / Underline
   ================================ */
   function bold() { command("bold"); }
   function italic() { command("italic"); }
   function underline() { command("underline"); }
 
-  /* ===============================
-        9) 문단 정렬
+
+  /* ================================
+        6) 텍스트 정렬
   ================================ */
   function alignLeft() { command("justifyLeft"); }
   function alignCenter() { command("justifyCenter"); }
   function alignRight() { command("justifyRight"); }
   function alignJustify() { command("justifyFull"); }
 
-  /* ===============================
-        10) 이미지 삽입
-  ================================ */
-  function insertImage(file) {
-    ImageEngine.insertImage(file);
-  }
 
-  /* ===============================
-        11) 이미지 정렬
-  ================================ */
-  function imageAlign(dir) {
-    ImageEngine.align(dir);
-  }
-
-  /* ===============================
-        12) 리스트
+  /* ================================
+        7) 리스트
   ================================ */
   function ul() { command("insertUnorderedList"); }
   function ol() { command("insertOrderedList"); }
 
-  /* ===============================
-        13) 서식 초기화
+
+  /* ================================
+        8) 서식 초기화
   ================================ */
-  function clear() {
+  function clearFormat() {
     command("removeFormat");
 
-    // 추가 초기화
-    let spans = editor.querySelectorAll("span, font");
-    spans.forEach(el => {
-      el.style = "";
+    // span/font에 남아있던 inline-style까지 제거
+    editor.querySelectorAll("span, font").forEach(el => {
+      el.removeAttribute("style");
     });
   }
 
-  /* ===============================
-        14) Undo / Redo
+
+  /* ================================
+        9) Undo / Redo
   ================================ */
   function undo() { command("undo"); }
   function redo() { command("redo"); }
 
-  /* ===============================
-        15) 편집기 포커스 유지
-  ================================ */
-  editor.addEventListener("click", () => focusEditor());
 
-  /* ===============================
-        16) 팝업 자동 닫기
+  /* ================================
+        10) 이미지 엔진 연결
+  ================================ */
+  function insertImage(file) {
+    ImageEngine.insert(file);
+  }
+
+  function imageAlign(dir) {
+    ImageEngine.align(dir); // 좌/중앙/우
+  }
+
+
+  /* ================================
+        11) 외부 클릭 시 팝업 자동 닫기
   ================================ */
   document.addEventListener("click", e => {
     if (!e.target.closest(".hb-color-popup") &&
-        !e.target.closest(".hb-advanced-color") &&
-        !e.target.closest("#hb-color") &&
-        !e.target.closest("#hb-bgcolor")) {
+        !e.target.closest(".hb-advanced-popup") &&
+        !e.target.closest("#hb-color-btn") &&
+        !e.target.closest("#hb-bgcolor-btn")) {
 
-      if (ColorEngine) ColorEngine.closePopup?.();
-      if (AdvancedColor) AdvancedColor.closePopup?.();
+      ColorBasic.close?.();
+      AdvancedColor.close?.();
     }
   });
 
-  /* ===============================
-        17) Mobile long-press 방지
-  ================================ */
-  editor.addEventListener("touchstart", e => {
-    if (e.touches.length > 1) e.preventDefault();
-  }, { passive: false });
 
-  /* ===============================
-        18) 초기 포커스
+  /* ================================
+        12) 편집기 초기 포커스
   ================================ */
+  editor.addEventListener("click", saveRange);
   focusEditor();
 
-  /* ===============================
-        19) 외부 인터페이스
+
+  /* ================================
+        13) 모듈 외부 제공 API
   ================================ */
   return {
-    // 텍스트
+    // 텍스트 속성
     setFont, setFontSize, setLineHeight,
-    setColor, setBgColor, openAdvanced,
 
-    // 글자 효과
+    // 색상
+    setColor, setBgColor, openAdvancedColor,
+
+    // 효과
     bold, italic, underline,
 
     // 정렬
     alignLeft, alignCenter, alignRight, alignJustify,
 
-    // 이미지
-    insertImage, imageAlign,
-
     // 리스트
     ul, ol,
 
     // 서식 초기화
-    clear,
+    clearFormat,
 
+    // Undo/Redo
     undo, redo,
+
+    // 이미지
+    insertImage, imageAlign,
+
+    // 커서
     focusEditor
   };
 
