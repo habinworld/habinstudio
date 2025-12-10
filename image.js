@@ -1,210 +1,163 @@
-/* -----------------------------------------------------
-   🖼️ Ha-Bin Studio — image.js v5.2 (Universal Align 최적화판)
-   - 이미지 선택 박스(selectBox)
-   - 8방향 리사이즈 핸들
-   - 드래그 이동
-   - 정렬(left/center/right)과 충돌 없음
-   - Universal Align(hbUniversalAlign)과 완전 연동
------------------------------------------------------ */
+/* ---------------------------------------------------
+   🖼 image.js v7.0 — Image Engine (Insert / Resize / Align / Move)
+   Ha-Bin Studio Editor
+---------------------------------------------------- */
 
-let selectedImg = null;
-let selectBox = null;
-let dragOffsetX = 0;
-let dragOffsetY = 0;
-let resizing = false;
-let currentHandle = null;
+const ImageEngine = (() => {
+  
+  let currentBox = null;
+  let startX = 0, startY = 0, startW = 0, startH = 0;
 
-/* ================================
-   1) 이미지 클릭 → selectBox 생성
-================================ */
-document.addEventListener("click", e => {
-  const img = e.target.closest("img");
+  /* ===============================
+        1) 이미지 삽입
+  ================================ */
+  function insertImage(file) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = document.createElement("img");
+      img.src = e.target.result;
+      img.className = "hb-img";
 
-  if (img) {
-    e.preventDefault();
-    selectImage(img);
-  } else {
-    removeSelectBox();
+      const box = document.createElement("div");
+      box.className = "hb-img-box align-center"; // 기본 정렬 center
+      box.contentEditable = false;
+
+      box.appendChild(img);
+      createResizeHandles(box);
+
+      const sel = window.getSelection();
+      if (!sel.rangeCount) return;
+
+      const range = sel.getRangeAt(0);
+      range.collapse(false);
+      range.insertNode(box);
+
+      selectBox(box);
+    };
+
+    reader.readAsDataURL(file);
   }
-});
 
-/* ================================
-   이미지 선택
-================================ */
-function selectImage(img) {
-  selectedImg = img;
-  createSelectBox();
-  updateSelectBox();
-}
+  /* ===============================
+        2) 이미지 박스 선택
+  ================================ */
+  function selectBox(box) {
+    if (currentBox) currentBox.classList.remove("hb-img-selected");
 
-/* ================================
-   선택 박스 제거
-================================ */
-function removeSelectBox() {
-  if (selectBox) selectBox.remove();
-  selectBox = null;
-  selectedImg = null;
-}
+    currentBox = box;
+    box.classList.add("hb-img-selected");
+  }
 
-/* ================================
-   선택 박스 생성
-================================ */
-function createSelectBox() {
-  removeSelectBox();
-
-  selectBox = document.createElement("div");
-  selectBox.className = "hb-img-select";
-
-  // 8방향 리사이즈 핸들
-  const dirs = ["nw","n","ne","e","se","s","sw","w"];
-
-  dirs.forEach(d => {
-    const h = document.createElement("div");
-    h.className = "hb-handle hb-" + d;
-    h.dataset.dir = d;
-    selectBox.appendChild(h);
+  document.addEventListener("click", e => {
+    const box = e.target.closest(".hb-img-box");
+    if (box) selectBox(box);
+    else if (currentBox) currentBox.classList.remove("hb-img-selected");
   });
 
-  // 드래그 이동
-  selectBox.addEventListener("mousedown", startDrag);
-
-  document.body.appendChild(selectBox);
-}
-
-/* ================================
-   선택 박스 UI 위치 업데이트
-================================ */
-function updateSelectBox() {
-  if (!selectedImg || !selectBox) return;
-
-  const r = selectedImg.getBoundingClientRect();
-
-  selectBox.style.left = r.left + window.scrollX + "px";
-  selectBox.style.top  = r.top  + window.scrollY + "px";
-  selectBox.style.width  = r.width  + "px";
-  selectBox.style.height = r.height + "px";
-}
-
-/* ================================
-   스크롤/창 크기 변경 → selectBox 보정
-================================ */
-window.addEventListener("scroll", updateSelectBox);
-window.addEventListener("resize", updateSelectBox);
-
-
-
-/* =========================================================
-   2) 리사이즈 (8핸들)
-========================================================= */
-
-document.addEventListener("mousedown", e => {
-  if (e.target.classList.contains("hb-handle")) {
-    resizing = true;
-    currentHandle = e.target.dataset.dir;
-    e.preventDefault();
+  /* ===============================
+        3) 정렬 (left / center / right)
+  ================================ */
+  function align(direction) {
+    if (!currentBox) return;
+    currentBox.classList.remove("align-left", "align-center", "align-right");
+    currentBox.classList.add(`align-${direction}`);
   }
-});
 
-document.addEventListener("mousemove", e => {
-  if (!resizing || !selectedImg) return;
+  /* ===============================
+        4) 리사이즈 핸들 생성
+  ================================ */
+  function createResizeHandles(box) {
+    const positions = ["nw", "ne", "sw", "se"];
 
-  const imgRect = selectedImg.getBoundingClientRect();
+    positions.forEach(pos => {
+      const h = document.createElement("div");
+      h.className = `hb-resize-handle ${pos}`;
+      h.dataset.position = pos;
+      box.appendChild(h);
+    });
+  }
 
-  let w = imgRect.width;
-  let h = imgRect.height;
+  /* ===============================
+        5) 리사이즈 이벤트
+  ================================ */
+  document.addEventListener("mousedown", e => {
+    if (!e.target.classList.contains("hb-resize-handle")) return;
 
-  const dx = e.movementX;
-  const dy = e.movementY;
+    e.preventDefault();
+    const handle = e.target;
+    currentBox = handle.closest(".hb-img-box");
 
-  // 방향별 크기 조정
-  if (currentHandle.includes("e")) w += dx;
-  if (currentHandle.includes("w")) w -= dx;
-  if (currentHandle.includes("s")) h += dy;
-  if (currentHandle.includes("n")) h -= dy;
+    startX = e.clientX;
+    startY = e.clientY;
 
-  if (w < 30) w = 30;
-  if (h < 30) h = 30;
+    const img = currentBox.querySelector("img");
+    startW = img.offsetWidth;
+    startH = img.offsetHeight;
 
-  // 적용
-  selectedImg.style.width = w + "px";
-  selectedImg.style.height = "auto";
+    function move(ev) {
+      const dx = ev.clientX - startX;
+      const dy = ev.clientY - startY;
 
-  updateSelectBox();
-});
+      const img = currentBox.querySelector("img");
 
-document.addEventListener("mouseup", () => {
-  resizing = false;
-  currentHandle = null;
-});
+      let newW = startW;
+      let newH = startH;
 
+      if (handle.dataset.position.includes("e")) newW = startW + dx;
+      if (handle.dataset.position.includes("s")) newH = startH + dy;
+      if (handle.dataset.position.includes("w")) newW = startW - dx;
+      if (handle.dataset.position.includes("n")) newH = startH - dy;
 
+      img.style.width = Math.max(30, newW) + "px";
+      img.style.height = "auto";
+    }
 
-/* =========================================================
-   3) 이미지 드래그 이동
-========================================================= */
+    function up() {
+      document.removeEventListener("mousemove", move);
+      document.removeEventListener("mouseup", up);
+    }
 
-function startDrag(e) {
-  if (e.target.classList.contains("hb-handle")) return;
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", up);
+  });
 
-  if (!selectedImg) return;
+  /* ===============================
+        6) 이미지 박스 드래그 이동
+  ================================ */
+  document.addEventListener("mousedown", e => {
+    const box = e.target.closest(".hb-img-box");
+    if (!box || e.target.classList.contains("hb-resize-handle")) return;
 
-  dragOffsetX = e.clientX - selectedImg.getBoundingClientRect().left;
-  dragOffsetY = e.clientY - selectedImg.getBoundingClientRect().top;
+    selectBox(box);
 
-  document.addEventListener("mousemove", dragMove);
-  document.addEventListener("mouseup", stopDrag);
-}
+    let offsetX = e.offsetX;
+    let offsetY = e.offsetY;
 
-function dragMove(e) {
-  if (!selectedImg) return;
+    function move(ev) {
+      box.style.position = "relative";
+      box.style.left = ev.clientX - offsetX + "px";
+      box.style.top  = ev.clientY - offsetY + "px";
+    }
 
-  selectedImg.style.position = "absolute";
-  selectedImg.style.left = (e.clientX - dragOffsetX) + "px";
-  selectedImg.style.top  = (e.clientY - dragOffsetY) + "px";
+    function up() {
+      document.removeEventListener("mousemove", move);
+      document.removeEventListener("mouseup", up);
+    }
 
-  updateSelectBox();
-}
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", up);
+  });
 
-function stopDrag() {
-  document.removeEventListener("mousemove", dragMove);
-  document.removeEventListener("mouseup", stopDrag);
-}
-
-
-
-/* =========================================================
-   4) Universal Align에서 호출되는 박스 보정
-========================================================= */
-function refreshSelectBox() {
-  setTimeout(updateSelectBox, 20);
-}
-
-
-/* =========================================================
-   5) 이미지 삽입 (toolbar.js에서 호출)
-========================================================= */
-function hbInsertImage() {
-  const input = document.createElement("input");
-  input.type = "file";
-  input.accept = "image/*";
-
-  input.onchange = () => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      document.execCommand("insertImage", false, reader.result);
-
-      // 최신 IMG 자동 선택
-      setTimeout(() => {
-        const imgs = document.querySelectorAll("#editor img");
-        const last = imgs[imgs.length - 1];
-        selectImage(last);
-      }, 10);
-    };
-    reader.readAsDataURL(input.files[0]);
+  /* ===============================
+        외부 인터페이스
+  ================================ */
+  return {
+    insertImage,
+    align
   };
 
-  input.click();
-}
+})();
+
 
 
 
