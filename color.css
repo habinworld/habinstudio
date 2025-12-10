@@ -1,66 +1,107 @@
-/* -----------------------------------------------------
-   🌈⚒ Ha-Bin Studio — Color Popup CSS Stable v3.0
-   Excel Palette + Smooth Hover + Layout 안정판
------------------------------------------------------ */
+/* ---------------------------------------------------
+   🎨 color.css v7.0
+   Ha-Bin Studio — Basic Color Picker
+---------------------------------------------------- */
 
+/* 팝업 본체 */
 .hb-color-popup {
   position: absolute;
-  background: #fff;
-  border: 1px solid #d0d0d0;
-  width: 225px;
-  padding: 10px;
-  border-radius: 6px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  z-index: 99999;
-  user-select: none;
+  display: none;
+  width: 180px;
+
+  background: #FFFFFF;
+  border: 1px solid #D5D5D5;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+
+  z-index: 1001; /* toolbar 위 */
+  animation: hbColorFade 0.18s ease-out;
+
+  font-family: 'Gowun Dodum', sans-serif;
 }
 
-.hb-section-title {
-  font-size: 12px;
-  margin: 6px 0 4px;
-  color: #666;
-  font-weight: 500;
+@keyframes hbColorFade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.hb-color-row {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 8px;
+/* 제목줄 */
+.hb-color-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3558A8;
+  margin-bottom: 10px;
 }
 
+/* 색상 그리드 */
 .hb-color-grid {
   display: grid;
-  grid-template-columns: repeat(6, 20px);
-  gap: 4px;
-  margin-bottom: 8px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
 }
 
-.hb-color-box {
-  width: 20px;
-  height: 20px;
-  border: 1px solid #bbb;
-  border-radius: 3px;
+/* 개별 색상 사각형 */
+.hb-color-item {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  border: 1px solid #CCCCCC;
+  transition: transform 0.15s ease;
 }
 
-.hb-color-box:hover {
-  transform: scale(1.12);
-  box-shadow: 0 0 0 2px #444 inset;
+.hb-color-item:hover {
+  transform: scale(1.15);
 }
 
-.hb-more-btn {
+/* 종료선/구분선 */
+.hb-color-divider {
+  margin: 12px 0;
+  border-top: 1px solid #E4E4E4;
+}
+
+/* 고급 색상 버튼 */
+.hb-adv-btn {
   width: 100%;
-  background: #f2f2f2;
-  border: 1px solid #b5b5b5;
-  padding: 4px 6px;
-  margin-top: 3px;
-  font-size: 12px;
+  padding: 6px 10px;
+  background: #F3F3F3;
+  border: 1px solid #D0D0D0;
+  border-radius: 6px;
+  text-align: center;
   cursor: pointer;
-  border-radius: 4px;
+  font-size: 13px;
+  color: #444444;
 }
 
-.hb-more-btn:hover {
-  background: #e0e0e0;
+.hb-adv-btn:hover {
+  background: #e7e7e7;
+}
+
+/* -----------------------------
+        모바일 최적화
+----------------------------- */
+@media (max-width: 600px) {
+
+  .hb-color-popup {
+    width: 85%;
+    left: 7% !important;
+    padding: 10px;
+  }
+
+  .hb-color-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 7px;
+  }
+
+  .hb-color-item {
+    width: 22px;
+    height: 22px;
+  }
+
+  .hb-adv-btn {
+    font-size: 12.5px;
+    padding: 6px 8px;
+  }
 }
 
