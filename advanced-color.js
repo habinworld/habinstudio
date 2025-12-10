@@ -1,127 +1,169 @@
-/* -----------------------------------------------------
-   🎨 Ha-Bin Studio — advanced-color.js v5.0
-   - 엑셀 기본 40색 + 확장 팔레트
-   - 텍스트/배경 선택 지원
-   - 팝업 위치 자동 보정
-   - 애니메이션 슬라이드
------------------------------------------------------ */
+/* ---------------------------------------------------
+   🌈 advanced-color.js v7.0 — Pro Spectrum Engine
+   Ha-Bin Studio Editor
+---------------------------------------------------- */
 
-let hbColorPopup = null;
-let hbColorMode = "color";  // color or background
-let lastClickedButton = null;
+const AdvancedColor = (() => {
 
-/* -----------------------------------------------------
-   Excel 표준 40색
------------------------------------------------------ */
-const EXCEL_COLORS = [
-  // Row 1 — 테마 10색
-  "#000000", "#7F7F7F", "#C3C3C3", "#FFFFFF",
-  "#1F497D", "#4F81BD", "#C0504D", "#9BBB59", "#8064A2", "#4BACC6",
+  let popup = null;
+  let mode = null; // "text" or "bg"
 
-  // Row 2 — 진한 10색
-  "#F2F2F2", "#D8D8D8", "#BFBFBF", "#A5A5A5",
-  "#7F7F7F", "#595959", "#3F3F3F", "#262626", "#0D0D0D", "#333F50",
+  /* ============================
+        팝업 DOM 자동 생성
+  ============================= */
+  function createPopup() {
+    if (popup) return popup;
 
-  // Row 3 — 밝은 10색
-  "#F2F5FB", "#DCE6F2", "#BDD7EE", "#9BC2E6",
-  "#2E75B6", "#1F4E79", "#FFC7CE", "#F4B084", "#DFA67B", "#FFE699",
+    popup = document.createElement("div");
+    popup.id = "hb-advanced-color";
+    popup.className = "hb-advanced-color";
 
-  // Row 4 — 추가 10색
-  "#EBF1DE", "#C6E0B4", "#A9D18E", "#548235",
-  "#D9D2E9", "#B4A7D6", "#8E7CC3", "#5B9BD5", "#ED7D31", "#70AD47"
-];
+    popup.innerHTML = `
+      <div class="adv-title">고급 색상 선택</div>
 
-/* 총 40색 완성 */
+      <div class="adv-preview-box">
+        <div class="adv-preview"></div>
+        <input type="text" class="adv-hex" maxlength="7" value="#ffffff" />
+      </div>
 
+      <div class="adv-slider-block">
+        <label>R</label>
+        <input type="range" min="0" max="255" value="255" class="adv-r" />
+      </div>
 
-/* -----------------------------------------------------
-   팝업 생성 (중복 방지)
------------------------------------------------------ */
-function hbOpenColorPopup(mode) {
-  hbColorMode = mode;
+      <div class="adv-slider-block">
+        <label>G</label>
+        <input type="range" min="0" max="255" value="255" class="adv-g" />
+      </div>
 
-  // 기존 팝업 제거
-  if (hbColorPopup) hbColorPopup.remove();
-  hbColorPopup = document.createElement("div");
-  hbColorPopup.className = "hb-color-popup";
+      <div class="adv-slider-block">
+        <label>B</label>
+        <input type="range" min="0" max="255" value="255" class="adv-b" />
+      </div>
 
-  // 40색 생성
-  EXCEL_COLORS.forEach(c => {
-    const box = document.createElement("div");
-    box.className = "hb-color-box";
-    box.style.background = c;
+      <div class="adv-slider-block">
+        <label>A</label>
+        <input type="range" min="0" max="1" step="0.01" value="1" class="adv-a" />
+      </div>
 
-    box.onclick = () => {
-      applyColor(c);
-      hbColorPopup.style.display = "none";
-    };
+      <div class="adv-btn-row">
+        <button class="adv-apply">적용</button>
+        <button class="adv-close">닫기</button>
+      </div>
+    `;
 
-    hbColorPopup.appendChild(box);
+    document.body.appendChild(popup);
+
+    /* 이벤트 연결 */
+    popup.querySelector(".adv-apply").onclick = applyColor;
+    popup.querySelector(".adv-close").onclick = closePopup;
+
+    ["adv-r", "adv-g", "adv-b", "adv-a"].forEach(cls => {
+      popup.querySelector("." + cls).oninput = updatePreview;
+    });
+
+    popup.querySelector(".adv-hex").oninput = hexInputChanged;
+
+    return popup;
+  }
+
+  /* ============================
+        팝업 열기
+  ============================= */
+  function openPopup(button, _mode) {
+    mode = _mode;
+    const p = createPopup();
+
+    const rect = button.getBoundingClientRect();
+    p.style.display = "block";
+    p.style.left = `${rect.left}px`;
+    p.style.top = `${rect.bottom + 8}px`;
+  }
+
+  /* ============================
+        팝업 닫기
+  ============================= */
+  function closePopup() {
+    if (popup) popup.style.display = "none";
+  }
+
+  /* ============================
+        미리보기 업데이트
+  ============================= */
+  function updatePreview() {
+    const r = popup.querySelector(".adv-r").value;
+    const g = popup.querySelector(".adv-g").value;
+    const b = popup.querySelector(".adv-b").value;
+    const a = popup.querySelector(".adv-a").value;
+
+    const color = `rgba(${r},${g},${b},${a})`;
+
+    popup.querySelector(".adv-preview").style.background = color;
+
+    // HEX도 자동 업데이트 (A는 제외)
+    const hex = "#" +
+      Number(r).toString(16).padStart(2, "0") +
+      Number(g).toString(16).padStart(2, "0") +
+      Number(b).toString(16).padStart(2, "0");
+
+    popup.querySelector(".adv-hex").value = hex;
+  }
+
+  /* ============================
+        HEX 직접 입력
+  ============================= */
+  function hexInputChanged() {
+    let hex = popup.querySelector(".adv-hex").value;
+
+    if (!/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.test(hex)) return;
+
+    hex = hex.replace("#", "");
+
+    if (hex.length === 3) {
+      hex = hex.split("").map(c => c + c).join("");
+    }
+
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+
+    popup.querySelector(".adv-r").value = r;
+    popup.querySelector(".adv-g").value = g;
+    popup.querySelector(".adv-b").value = b;
+
+    updatePreview();
+  }
+
+  /* ============================
+        색상 적용
+  ============================= */
+  function applyColor() {
+    const r = popup.querySelector(".adv-r").value;
+    const g = popup.querySelector(".adv-g").value;
+    const b = popup.querySelector(".adv-b").value;
+    const a = popup.querySelector(".adv-a").value;
+
+    const color = `rgba(${r},${g},${b},${a})`;
+
+    const cmd = mode === "text" ? "foreColor" : "hiliteColor";
+    document.execCommand(cmd, false, color);
+
+    closePopup();
+  }
+
+  /* ============================
+        클릭 외부 시 닫기
+  ============================= */
+  document.addEventListener("click", e => {
+    if (!popup) return;
+    if (popup.contains(e.target)) return;
+    if (e.target.closest("#hb-advcolor") ||
+        e.target.closest("#hb-advanced")) return;
+
+    closePopup();
   });
 
-  document.body.appendChild(hbColorPopup);
+  return { openPopup };
 
-  // 팝업 위치는 마지막 클릭된 버튼 아래
-  if (lastClickedButton) {
-    const r = lastClickedButton.getBoundingClientRect();
-    hbColorPopup.style.left = (r.left + window.scrollX) + "px";
-    hbColorPopup.style.top  = (r.bottom + window.scrollY + 4) + "px";
-  }
-
-  hbColorPopup.style.display = "flex";
-  hbColorPopup.style.animation = "hbSlide 0.12s ease-out";
-}
-
-
-/* -----------------------------------------------------
-   버튼에서 호출되는 Wrapper
------------------------------------------------------ */
-document.addEventListener("click", e => {
-  if (e.target.id === "textColorBtn") {
-    lastClickedButton = e.target;
-    hbOpenColorPopup("color");
-  }
-
-  if (e.target.id === "bgColorBtn") {
-    lastClickedButton = e.target;
-    hbOpenColorPopup("background");
-  }
-});
-
-
-/* -----------------------------------------------------
-   색상 적용
------------------------------------------------------ */
-function applyColor(color) {
-  const sel = window.getSelection();
-  if (!sel.rangeCount) return;
-
-  const range = sel.getRangeAt(0);
-
-  // 선택 영역 span으로 감싸기
-  const span = document.createElement("span");
-
-  if (hbColorMode === "color") {
-    span.style.color = color;
-  } else {
-    span.style.backgroundColor = color;
-  }
-
-  const frag = range.extractContents();
-  span.appendChild(frag);
-  range.insertNode(span);
-}
-
-
-/* -----------------------------------------------------
-   팝업 외부 클릭 → 닫기
------------------------------------------------------ */
-document.addEventListener("click", e => {
-  if (!hbColorPopup) return;
-
-  if (e.target.closest(".hb-color-popup")) return;
-  if (e.target.id === "textColorBtn" || e.target.id === "bgColorBtn") return;
-
-  hbColorPopup.style.display = "none";
-});
+})();
 
