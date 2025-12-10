@@ -1,82 +1,79 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>글쓰기 · Ha-Bin Studio</title>
 
-  <!-- ✧ 에디터 전용 CSS (모듈) -->
-  <link rel="stylesheet" href="editor.css">
-  <link rel="stylesheet" href="toolbar.css">
-  <link rel="stylesheet" href="color-basic.css">
-  <link rel="stylesheet" href="color-advanced.css">
-  <link rel="stylesheet" href="image.css">
+  <!-- =============================
+       CSS (모듈식 v8 안정판)
+  ============================== -->
+  <link rel="stylesheet" href="editor.css" />
+  <link rel="stylesheet" href="toolbar.css" />
+  <link rel="stylesheet" href="color-basic.css" />
+  <link rel="stylesheet" href="color-advanced.css" />
+  <link rel="stylesheet" href="image.css" />
 
-  <!-- ✧ 폰트 -->
-  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo&display=swap" rel="stylesheet">
+  <!-- 폰트 -->
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo&display=swap" rel="stylesheet" />
+
 </head>
-
-
 <body>
 
 <div class="hb-editor-container">
 
-  <!-- ====================================================
-       1) 상단 라인 : 공지 체크 + 상단 버튼 4개
-  ===================================================== -->
+  <!-- ==================================================
+       1) 상단 라인 : 공지 체크 + 버튼 4개
+  =================================================== -->
   <div class="hb-top-line">
 
-    <!-- 공지 체크 -->
+    <!-- 공지 -->
     <div class="hb-notice-area">
-      <input type="checkbox" id="hb-notice">
+      <input type="checkbox" id="hb-notice" />
       <label for="hb-notice">📌 공지글</label>
     </div>
 
-    <!-- 우측 버튼 4개 -->
+    <!-- 상단 버튼 4개 -->
     <div class="hb-top-buttons">
-      <button id="hb-cancel" class="hb-btn-top">취소</button>
-      <button id="hb-save" class="hb-btn-top">등록</button>
-      <button id="hb-update" class="hb-btn-top" style="display:none;">수정</button>
-      <button id="hb-delete" class="hb-btn-top" style="display:none;">삭제</button>
+      <button id="hb-cancel" class="hb-btn-cancel">취소</button>
+      <button id="hb-save" class="hb-btn-save">등록</button>
+      <button id="hb-update" class="hb-btn-update" style="display:none;">수정</button>
+      <button id="hb-delete" class="hb-btn-delete" style="display:none;">삭제</button>
     </div>
+
   </div>
 
 
-
-  <!-- ====================================================
+  <!-- ==================================================
        2) 제목 입력
-  ===================================================== -->
-  <input id="hb-title" type="text" placeholder="제목을 입력하세요" class="hb-title-input">
+  =================================================== -->
+  <input id="hb-title" class="hb-title-input" type="text" placeholder="제목을 입력하세요" />
 
 
-
-  <!-- ====================================================
-       3) Toolbar (자동 렌더링될 영역)
-  ===================================================== -->
-  <div id="hb-toolbar" class="hb-toolbar"></div>
-
+  <!-- ==================================================
+       3) Toolbar 렌더링 영역
+  =================================================== -->
+  <div id="hb-toolbar"></div>
 
 
-  <!-- ====================================================
-       4) 본문 에디터
-  ===================================================== -->
+  <!-- ==================================================
+       4) 에디터 본문
+  =================================================== -->
   <div id="hb-editor" class="hb-editor" contenteditable="true"></div>
 
 
-
-  <!-- ====================================================
+  <!-- ==================================================
        5) 하단 버튼 (목록 / 메인)
-  ===================================================== -->
+  =================================================== -->
   <div class="hb-bottom-buttons">
-    <a href="list.html" class="hb-bottom-btn">목록</a>
-    <a href="index.html" class="hb-bottom-btn">메인</a>
+    <a href="list.html" class="hb-btn-bottom">목록</a>
+    <a href="index.html" class="hb-btn-bottom">메인</a>
   </div>
 
 
-
-  <!-- ====================================================
-       6) 팝업 모듈 (비어 있음 → JS가 채움)
-  ===================================================== -->
+  <!-- ==================================================
+       6) 팝업 모듈 (JS가 내용 생성함)
+  =================================================== -->
   <div id="hb-popup-color-basic"></div>
   <div id="hb-popup-color-advanced"></div>
   <div id="hb-popup-image"></div>
@@ -84,23 +81,37 @@
 </div>
 
 
+<!-- ====================================================
+     7) JavaScript — 로딩 순서 v8 절대 규칙
+==================================================== -->
 
-<!-- ======================================================
-     7) 스크립트 로드 (모듈형)
-======================================================= -->
+<!-- 1) 텍스트 포맷팅 논리 -->
+<script src="text.js"></script>
+
+<!-- 2) 저장소 엔진 -->
+<script src="storage.js"></script>
+
+<!-- 3) 에디터 메인 엔진 -->
 <script src="editor-core.js"></script>
 
-<script src="toolbar.js"></script>
+<!-- 4) 이미지 엔진 -->
+<script src="image.js"></script>
 
+<!-- 5) 색상 엔진 -->
 <script src="color-basic.js"></script>
 <script src="color-advanced.js"></script>
 
-<script src="image.js"></script>
+<!-- 6) 툴바 생성 엔진 -->
+<script src="toolbar.js"></script>
 
-<script src="save.js"></script>  <!-- (저장/불러오기 모듈) -->
+<!-- 7) 저장/불러오기 기능 -->
+<script src="editor-save.js"></script>
+<script src="editor-load.js"></script>
+
 
 </body>
 </html>
+
 
 
 
