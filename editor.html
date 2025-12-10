@@ -5,14 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>글쓰기 · Ha-Bin Studio</title>
 
-  <!-- 공통 스타일 -->
-  <link rel="stylesheet" href="style.css">
-
-  <!-- 에디터 전용 -->
+  <!-- Editor 전용 CSS -->
+  <link rel="stylesheet" href="editor.css">
   <link rel="stylesheet" href="toolbar.css">
-<link rel="stylesheet" href="color.css">
-<link rel="stylesheet" href="image.css">
-<link rel="stylesheet" href="editor.css">
+  <link rel="stylesheet" href="color.css">
+  <link rel="stylesheet" href="image.css">
 
   <!-- 폰트 -->
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
@@ -20,128 +17,69 @@
     @font-face {
       font-family: 'HCR Batang';
       src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2101@1.1/HanBatang.woff') format('woff');
-      font-weight: normal;
-      font-style: normal;
     }
   </style>
 </head>
 
 <body>
-  
-<style>
- body { display:block !important; }
-</style>
-  
-<script src="secret-gate.js"></script>
 
-<div class="editor-container">
+<div class="hb-editor-container">
+
+  <!-- 🔹 공지 + 상단 버튼 4개 (같은 한 줄) -->
+  <div class="hb-top-line">
+
+    <!-- 공지 체크 영역 -->
+    <div class="hb-notice-line">
+      <input type="checkbox" id="hb-notice">
+      <label for="hb-notice">📌 공지글</label>
+    </div>
+
+    <!-- 오른쪽 끝 4개 버튼 -->
+    <div class="hb-top-buttons">
+      <button id="hb-cancel" class="hb-btn-cancel">취소</button>
+      <button id="hb-save" class="hb-btn-save">저장</button>
+      <button id="hb-update" class="hb-btn-update" style="display:none;">수정</button>
+      <button id="hb-delete" class="hb-btn-delete" style="display:none;">삭제</button>
+    </div>
+
+  </div> <!-- end hb-top-line -->
+
 
   <!-- 제목 -->
-  <input type="text" id="post-title" placeholder="제목을 입력하세요">
+  <input id="hb-title" type="text" placeholder="제목을 입력하세요">
 
-  <!-- 공지 + 상단 버튼 -->
-  <div class="notice-line">
-    <div class="notice-area">
-      <input type="checkbox" id="notice-check">
-      <label for="notice-check">📌 공지글로 등록하기</label>
-    </div>
+  <!-- Toolbar -->
+  <div id="hb-toolbar"></div>
 
-    <div class="editor-buttons">
-      <button class="editor-btn btn-cancel" id="cancelBtn">취소</button>
-      <button class="editor-btn btn-save"   id="saveBtn">등록</button>
-      <button class="editor-btn btn-save"   id="updateBtn">수정</button>
-      <button class="editor-btn btn-delete" id="deleteBtn">삭제</button>
-    </div>
-  </div>
-
-  <!-- 🎨 Ribbon Toolbar v6.0 -->
-  <div id="toolbar"></div>
-  
   <!-- 본문 -->
-  <div id="editor" contenteditable="true"></div>
+  <div id="hb-editor" contenteditable="true"></div>
 
-  <!-- 하단 버튼 -->
-  <div class="notice-buttons">
-    <a href="list.html" class="btn-top">목록</a>
-    <a href="index.html" class="btn-top">메인</a>
+  <!-- 🔹 하단 버튼 2개 (오른쪽 정렬) -->
+  <div class="hb-bottom-buttons">
+    <a href="list.html" class="hb-btn-bottom">목록</a>
+    <a href="index.html" class="hb-btn-bottom">메인</a>
   </div>
 
-</div> <!-- end editor-container -->
+  <!-- 팝업 UI -->
+  <div id="hb-popup-color"></div>
+  <div id="hb-popup-advcolor"></div>
+  <div id="hb-popup-image"></div>
 
-<!-- 🚀 엔진 4종 -->
+</div>
+
+<!-- Script -->
+<script src="toolbar.js"></script>
 <script src="color.js"></script>
 <script src="advanced-color.js"></script>
- <script src="image.js"></script> 
-<script src="toolbar.js"></script>
-
-<script>
-/* ---------------------------------------------
-   저장/수정/삭제 시스템
----------------------------------------------- */
-let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-const params = new URLSearchParams(window.location.search);
-const editId = params.get("id");
-
-if (editId) {
-  const post = posts.find(p => String(p.id) === String(editId));
-  if (post) {
-    document.getElementById("post-title").value = post.title || "";
-    document.getElementById("editor").innerHTML = post.content || "";
-    document.getElementById("notice-check").checked = !!post.isNotice;
-  }
-}
-
-function saveOrUpdate() {
-  const title   = document.getElementById("post-title").value.trim();
-  const content = document.getElementById("editor").innerHTML.trim();
-  const isNotice = document.getElementById("notice-check").checked;
-
-  if (!title) return alert("제목을 입력하세요.");
-
-  const now = new Date();
-  const d = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ` +
-            `${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
-
-  if (editId) {
-    const post = posts.find(p => String(p.id) === String(editId));
-    if (post) {
-      post.title = title;
-      post.content = content;
-      post.date = d;
-      post.isNotice = isNotice;
-    }
-  } else {
-    posts.push({
-      id: Date.now(),
-      title,
-      content,
-      writer: "하빈",
-      date: d,
-      isNotice
-    });
-  }
-
-  localStorage.setItem("habin_posts", JSON.stringify(posts));
-  location.href = "list.html";
-}
-
-document.getElementById("saveBtn").onclick = saveOrUpdate;
-document.getElementById("updateBtn").onclick = saveOrUpdate;
-
-document.getElementById("deleteBtn").onclick = () => {
-  if (!editId) return;
-  if (!confirm("삭제하시겠습니까?")) return;
-
-  posts = posts.filter(p => String(p.id) !== String(editId));
-  localStorage.setItem("habin_posts", JSON.stringify(posts));
-  location.href = "list.html";
-};
-
-document.getElementById("cancelBtn").onclick = () => history.back();
-</script>
+<script src="image.js"></script>
+<script src="editor-core.js"></script>
 
 </body>
 </html>
+
+
+ 
+ 
 
   
 
