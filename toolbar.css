@@ -1,32 +1,47 @@
 /* ---------------------------------------------------
-   🎛 toolbar.css v7.0
-   Ha-Bin Studio — Ribbon Toolbar Buttons
+   🎛 toolbar.css v8.0 — Optimized Ribbon Style
+   Ha-Bin Studio — Stable, Clean, Fast
 ---------------------------------------------------- */
 
-/* 기본 툴바 박스는 editor.css에서 설정됨
-   (flex + wrap + background + border)
-*/
+/* ---------------------------
+   Toolbar Container
+---------------------------- */
+#hb-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 
-/* -------------------------------------------
-      공통 버튼 스타일 (hb-btn)
-------------------------------------------- */
+  padding: 10px 12px;
+  margin-bottom: 12px;
+
+  background: #FFFFFF;
+  border: 1px solid #E0E0E0;
+  border-radius: 10px;
+
+  position: relative;
+  z-index: 100; /* popups는 1000대 */
+}
+
+/* ---------------------------
+   Common Button Style
+---------------------------- */
 .hb-btn {
   width: 36px;
   height: 36px;
-  font-size: 20px;
-  font-family: inherit;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   background: #FFFFFF;
-  border: 1px solid #D8D8D8;
-  color: #2b2b2b;
+  border: 1px solid #D5D5D5;
+
   border-radius: 6px;
+  font-size: 20px;
+  color: #2b2b2b;
 
   cursor: pointer;
   transition: all 0.15s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   user-select: none;
 }
 
@@ -39,9 +54,9 @@
 
 /* Active */
 .hb-btn:active {
-  background: #D4E2FF;
+  background: #D5E4FF;
   border-color: #3558A8;
-  transform: scale(0.95);
+  transform: scale(0.93);
 }
 
 /* Focus */
@@ -49,70 +64,70 @@
   outline: 2px solid rgba(53,88,168,0.35);
 }
 
-/* -------------------------------------------
-      고급 색상, 팝업 버튼 등
-      z-index 보호 (팝업 위에 떠야함)
-------------------------------------------- */
-#hb-color,
-#hb-bgcolor,
-#hb-advcolor,
-#hb-advbg {
+/* ---------------------------
+   Text Color Buttons
+---------------------------- */
+#hb-btn-color,
+#hb-btn-bgcolor,
+#hb-btn-advcolor,
+#hb-btn-advbg {
   position: relative;
-  z-index: 1002; /* popups(1000~1001)보다 더 위 */
+  z-index: 1002;  /* ensures popup is above toolbar */
 }
 
-/* -------------------------------------------
-      이미지 버튼 강조 (optional)
-------------------------------------------- */
-#hb-image {
-  border-color: #A9C8FF;
+/* ---------------------------
+   Image Buttons
+---------------------------- */
+#hb-btn-image {
+  border-color: #BDD4FF;
 }
 
-#hb-image:hover {
-  background: #F0F6FF;
+#hb-btn-image:hover {
+  background: #EEF4FF;
   border-color: #3558A8;
 }
 
-/* -------------------------------------------
-      사진 정렬 버튼 (↤ ↔ ↦)
-------------------------------------------- */
-#hb-img-left,
-#hb-img-center,
-#hb-img-right {
+/* Image Align Buttons */
+#hb-btn-img-left,
+#hb-btn-img-center,
+#hb-btn-img-right {
   font-size: 18px;
 }
 
-#hb-img-center:hover {
-  background: #E7F1FF;
-}
-
-/* -------------------------------------------
-      Undo / Redo 버튼
-------------------------------------------- */
-#hb-undo, #hb-redo {
-  font-size: 18px;
-}
-
-#hb-undo:hover,
-#hb-redo:hover {
-  background: #EAF2FF;
-  border-color: #3558A8;
-}
-
-/* -------------------------------------------
-      리스트 버튼
-------------------------------------------- */
-#hb-ul, #hb-ol {
+/* ---------------------------
+   List Buttons
+---------------------------- */
+#hb-btn-ul,
+#hb-btn-ol {
   font-size: 16px;
 }
 
-/* -------------------------------------------
-      모바일 크기 최적화
-------------------------------------------- */
+/* ---------------------------
+   Undo / Redo
+---------------------------- */
+#hb-btn-undo,
+#hb-btn-redo {
+  font-size: 18px;
+}
+
+/* ---------------------------
+   Mobile Optimization
+---------------------------- */
 @media (max-width: 600px) {
+
+  #hb-toolbar {
+    gap: 5px;
+    padding: 8px;
+  }
+
   .hb-btn {
     width: 32px;
     height: 32px;
     font-size: 18px;
+  }
+
+  #hb-btn-ul,
+  #hb-btn-ol {
+    font-size: 15px;
   }
 }
