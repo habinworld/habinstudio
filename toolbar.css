@@ -1,173 +1,118 @@
-/* -----------------------------------------------------
-   🎨 Ha-Bin Studio — toolbar.css v6.0
-   - toolbar.js v6.0 자동생성 구조 100% 호환
-   - 버튼 hb-btn / 셀렉트 hb-select 규칙 적용
-   - 엑셀 리본 + 한옥 톤 + 15px 규칙
-   - 중복 출력 / 모바일 축소 / 충돌 완전 해결
------------------------------------------------------- */
+/* ---------------------------------------------------
+   🎛 toolbar.css v7.0
+   Ha-Bin Studio — Ribbon Toolbar Buttons
+---------------------------------------------------- */
 
-/* ============================
-   1) 툴바 전체 영역
-============================ */
-#toolbar {
-  display: flex;
-  flex-wrap: wrap;        /* 자동 줄바꿈 */
-  gap: 6px;
-  padding: 12px;
-  background: #F8F3E8;    /* 한옥 톤 */
-  border: 1px solid #D6C7A1;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
-  margin-bottom: 12px;
-  position: relative;
-  z-index: 5;
-}
+/* 기본 툴바 박스는 editor.css에서 설정됨
+   (flex + wrap + background + border)
+*/
 
-/* ============================
-   2) 기본 버튼 (hb-btn)
-============================ */
+/* -------------------------------------------
+      공통 버튼 스타일 (hb-btn)
+------------------------------------------- */
 .hb-btn {
-  padding: 6px 12px;              /* 하빈 규칙 */
-  font-size: 15px;                /* 하빈 규칙 */
-  background: #3558A8;            /* 은남색 */
-  color: #fff;
-  border: none;
-  border-radius: 5px;
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
+  font-family: inherit;
+
+  background: #FFFFFF;
+  border: 1px solid #D8D8D8;
+  color: #2b2b2b;
+  border-radius: 6px;
+
   cursor: pointer;
-  font-family: 'Noto Sans KR', sans-serif;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   user-select: none;
-  transition: 0.15s ease;
 }
 
+/* Hover */
 .hb-btn:hover {
-  background: #4A6FC9;
+  background: #EAF2FF;
+  border-color: #3558A8;
+  color: #3558A8;
 }
 
+/* Active */
 .hb-btn:active {
-  background: #2A457F;
+  background: #D4E2FF;
+  border-color: #3558A8;
+  transform: scale(0.95);
 }
 
-/* 이미지 선택 불가(비활성) */
-.hb-btn.disabled {
-  background: #999 !important;
-  cursor: not-allowed;
+/* Focus */
+.hb-btn:focus {
+  outline: 2px solid rgba(53,88,168,0.35);
 }
 
-/* ============================
-   3) 드롭다운 셀렉트 (hb-select)
-============================ */
-.hb-select {
-  padding: 6px 12px;            /* 하빈 규칙 */
-  font-size: 15px;              /* 하빈 규칙 */
-  border: 1px solid #C9BFA8;
-  border-radius: 5px;
-  background: #FFF;
-  cursor: pointer;
-  font-family: 'Noto Sans KR', sans-serif;
-  appearance: none;
+/* -------------------------------------------
+      고급 색상, 팝업 버튼 등
+      z-index 보호 (팝업 위에 떠야함)
+------------------------------------------- */
+#hb-color,
+#hb-bgcolor,
+#hb-advcolor,
+#hb-advbg {
+  position: relative;
+  z-index: 1002; /* popups(1000~1001)보다 더 위 */
 }
 
-.hb-select:hover {
+/* -------------------------------------------
+      이미지 버튼 강조 (optional)
+------------------------------------------- */
+#hb-image {
+  border-color: #A9C8FF;
+}
+
+#hb-image:hover {
+  background: #F0F6FF;
   border-color: #3558A8;
 }
 
-/* ============================
-   4) 컬러 팝업
-============================ */
-.hb-color-popup {
-  position: absolute;
-  top: 56px;     /* 버튼 바로 아래 */
-  left: 0;
-  padding: 10px;
-  background: #FFF;
-  border: 1px solid #D7D7D7;
-  border-radius: 8px;
-  display: none;             /* JS에서 열기 */
-  flex-wrap: wrap;
-  gap: 4px;
-  width: 220px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
-  z-index: 999;
-  animation: hbSlide 0.12s ease-out;
+/* -------------------------------------------
+      사진 정렬 버튼 (↤ ↔ ↦)
+------------------------------------------- */
+#hb-img-left,
+#hb-img-center,
+#hb-img-right {
+  font-size: 18px;
 }
 
-/* 컬러 박스 */
-.hb-color-box {
-  width: 22px;
-  height: 22px;
-  border-radius: 3px;
-  cursor: pointer;
-  border: 1px solid #777;
-  box-shadow: 0 0 2px rgba(0,0,0,0.25);
+#hb-img-center:hover {
+  background: #E7F1FF;
 }
 
-.hb-color-box:hover {
-  transform: scale(1.18);
+/* -------------------------------------------
+      Undo / Redo 버튼
+------------------------------------------- */
+#hb-undo, #hb-redo {
+  font-size: 18px;
 }
 
-/* 슬라이드 애니메이션 */
-@keyframes hbSlide {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0); }
+#hb-undo:hover,
+#hb-redo:hover {
+  background: #EAF2FF;
+  border-color: #3558A8;
 }
 
-/* ============================
-   5) 이미지 리사이즈(공통)
-============================ */
-.hb-img-select {
-  position: absolute;
-  border: 2px solid #3A6BCD;
-  box-shadow: 0 0 8px rgba(0,0,0,0.25);
-  border-radius: 4px;
-  pointer-events: none;
-  z-index: 9999;
+/* -------------------------------------------
+      리스트 버튼
+------------------------------------------- */
+#hb-ul, #hb-ol {
+  font-size: 16px;
 }
 
-/* 8개 리사이즈 핸들 */
-.hb-handle {
-  width: 10px;
-  height: 10px;
-  background: #FFF;
-  border: 2px solid #3558A8;
-  position: absolute;
-  pointer-events: all;
-  border-radius: 2px;
-}
-
-.hb-nw { top: -6px; left: -6px; cursor: nwse-resize; }
-.hb-n  { top: -6px; left: 50%; transform: translateX(-50%); cursor: ns-resize; }
-.hb-ne { top: -6px; right: -6px; cursor: nesw-resize; }
-.hb-e  { top: 50%; right: -6px; transform: translateY(-50%); cursor: ew-resize; }
-.hb-se { bottom: -6px; right: -6px; cursor: nwse-resize; }
-.hb-s  { bottom: -6px; left: 50%; transform: translateX(-50%); cursor: ns-resize; }
-.hb-sw { bottom: -6px; left: -6px; cursor: nesw-resize; }
-.hb-w  { top: 50%; left: -6px; transform: translateY(-50%); cursor: ew-resize; }
-
-/* ============================
-   6) 모바일 최적화
-============================ */
-@media (max-width: 480px) {
-  #toolbar {
-    gap: 4px;
-    padding: 8px;
-  }
-
+/* -------------------------------------------
+      모바일 크기 최적화
+------------------------------------------- */
+@media (max-width: 600px) {
   .hb-btn {
-    padding: 5px 10px;
-    font-size: 14px;
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
   }
-
-  .hb-select {
-    padding: 5px 10px;
-    font-size: 14px;
-  }
-
-  .hb-color-popup {
-    width: 180px;
-  }
-}
-#toolbar .hb-btn {
-  position: relative !important;
-  z-index: 999999 !important;
-  color: #fff !important;
 }
