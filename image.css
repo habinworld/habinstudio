@@ -1,96 +1,92 @@
-/* ---------------------------------------------------
-   🖼 image.css v7.0
-   Ha-Bin Studio — Image Box / Resize Handles / Align
----------------------------------------------------- */
+/* ------------------------------------------------------
+   🖼 image.css v8.0 — 안정판 스타일
+   Ha-Bin Studio — Image Box / Handles / Align
+------------------------------------------------------- */
 
-/* 이미지 박스 공통 */
+/* 기본 이미지 박스 */
 .hb-img-box {
-  display: inline-block;
+  display: block;
   position: relative;
-  padding: 4px;
-  margin: 12px auto;
+  padding: 6px;
+  margin: 14px auto;
   max-width: 100%;
   user-select: none;
   border-radius: 6px;
 
-  /* 기본 중앙 정렬 */
-  text-align: center;
+  /* flex 기반 정렬 안정 시스템 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* 이미지 자체 */
+/* 이미지 */
 .hb-img-box .hb-img {
   max-width: 100%;
   height: auto;
   border-radius: 4px;
-  display: inline-block;
+  display: block;
 }
 
 /* 선택된 이미지 박스 강조 */
-.hb-img-selected {
-  outline: 2px solid #5BB6C8;      /* 하빈 청록빛 강조 */
-  background: rgba(91,182,200,0.08);
+.hb-img-box.hb-img-selected {
+  outline: 2px solid #5BB6C8; /* 하빈 청록 */
+  background: rgba(91,182,200,0.07);
   border-radius: 6px;
 }
 
-/* ------------------------------
-      정렬 클래스 (CSS 기반)
-------------------------------- */
 
+/* ------------------------------------------------------
+    정렬 클래스 (flex 기반 절대 구조)
+------------------------------------------------------- */
 .hb-img-box.align-left {
-  text-align: left;
-  margin-left: 0;
+  justify-content: flex-start;
 }
 
 .hb-img-box.align-center {
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+  justify-content: center;
 }
 
 .hb-img-box.align-right {
-  text-align: right;
-  margin-right: 0;
+  justify-content: flex-end;
 }
 
-/* ------------------------------
-      리사이즈 핸들
-------------------------------- */
+
+/* ------------------------------------------------------
+    리사이즈 핸들
+------------------------------------------------------- */
 
 .hb-resize-handle {
   width: 12px;
   height: 12px;
   background: #FFFFFF;
-  border: 2px solid #3558A8;    /* 은남색 */
+  border: 2px solid #3558A8;  /* 은남색 */
   border-radius: 50%;
   position: absolute;
   z-index: 10;
   cursor: pointer;
-  box-shadow: 0 0 4px rgba(0,0,0,0.15);
+  box-shadow: 0 0 5px rgba(0,0,0,0.15);
 }
 
-/* 핸들 위치 */
-.hb-resize-handle.nw { top: -6px; left: -6px; cursor: nw-resize; }
-.hb-resize-handle.ne { top: -6px; right: -6px; cursor: ne-resize; }
-.hb-resize-handle.sw { bottom: -6px; left: -6px; cursor: sw-resize; }
-.hb-resize-handle.se { bottom: -6px; right: -6px; cursor: se-resize; }
+/* 위치 */
+.hb-resize-handle.nw { top: -8px; left: -8px; cursor: nw-resize; }
+.hb-resize-handle.ne { top: -8px; right: -8px; cursor: ne-resize; }
+.hb-resize-handle.sw { bottom: -8px; left: -8px; cursor: sw-resize; }
+.hb-resize-handle.se { bottom: -8px; right: -8px; cursor: se-resize; }
 
-/* 선택 안된 상태에서는 핸들 숨기기 */
+/* 선택되지 않은 이미지 박스에서는 핸들 숨김 */
 .hb-img-box:not(.hb-img-selected) .hb-resize-handle {
   display: none;
 }
 
-/* 선택된 박스일 때 핸들 활성화 */
+/* 선택 시 활성화 */
 .hb-img-box.hb-img-selected .hb-resize-handle {
   display: block;
 }
 
-/* 드래그 이동 시 부드러운 효과 */
-.hb-img-box.moving {
-  opacity: 0.7;
-  cursor: move;
-}
 
-/* 모바일 터치 개선 */
+/* ------------------------------------------------------
+    모바일 대응 (터치에서도 안정)
+------------------------------------------------------- */
 @media (max-width: 600px) {
   .hb-resize-handle {
     width: 14px;
