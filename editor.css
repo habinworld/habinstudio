@@ -1,144 +1,232 @@
 /* -----------------------------------------------------
-   📘 editor.css v8.0 — Layout Skeleton (Excel Model)
-   Ha-Bin Studio
------------------------------------------------------ */
+   ✒️ editor.css v8.0
+   Ha-Bin Studio — Excel-Model Hybrid Editor Layout
+   (Layout / Grid / Buttons / Title / Editor Field)
+------------------------------------------------------ */
 
 /* 전체 컨테이너 */
 .hb-editor-container {
   width: 100%;
   max-width: 900px;
   margin: 40px auto;
-  padding: 0 20px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-
-  font-family: 'Gowun Dodum', sans-serif;
+  padding: 0 20px 60px;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
-
-/* =====================================================
-   1) 상단 라인 (공지 + 버튼 4개)
-===================================================== */
+/* -----------------------------------------------------
+      1) 상단 공지 + 버튼 라인
+------------------------------------------------------ */
 .hb-top-line {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  padding: 6px 4px;
+  margin-bottom: 16px;
+  padding: 10px 6px;
+
+  background: #F7FAFF; /* 아주 연한 은청 배경 */
+  border: 1px solid #E2E8F5;
+  border-radius: 8px;
 }
 
 /* 공지 체크 */
-.hb-notice-area {
+.hb-notice-line {
   display: flex;
   align-items: center;
-  gap: 4px;
-
+  gap: 6px;
   font-size: 15px;
+  color: #3558A8;
 }
 
-/* 우측 상단 버튼 */
+.hb-notice-line input {
+  width: 16px;
+  height: 16px;
+}
+
+/* 상단 버튼 */
 .hb-top-buttons {
   display: flex;
   gap: 8px;
 }
 
-.hb-btn-top {
+.hb-btn-save,
+.hb-btn-update,
+.hb-btn-delete,
+.hb-btn-cancel {
   padding: 6px 12px;
   font-size: 15px;
-
-  background: #3558A8;
-  color: #FFFFFF;
-  border: none;
   border-radius: 6px;
-
   cursor: pointer;
-  user-select: none;
+  border: 1px solid #3558A8;
+  background: #3558A8;
+  color: #fff;
+  transition: 0.15s ease;
 }
 
+.hb-btn-cancel {
+  background: #777;
+  border-color: #666;
+}
 
-/* =====================================================
-   2) 제목 입력
-===================================================== */
-.hb-title-input {
+.hb-btn-delete {
+  background: #e24a4a;
+  border-color: #d43737;
+}
+
+.hb-btn-save:hover,
+.hb-btn-update:hover {
+  background: #4C6ED4;
+}
+
+.hb-btn-delete:hover {
+  background: #c53131;
+}
+
+/* -----------------------------------------------------
+      2) 제목 입력
+------------------------------------------------------ */
+#hb-title {
   width: 100%;
-  padding: 12px 14px;
-
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 600;
+  padding: 14px 16px;
 
-  border: 1px solid #DCDCDC;
-  border-radius: 6px;
+  margin-bottom: 14px;
+
+  border: 1px solid #DDD;
+  border-radius: 8px;
+  background: #FFFFFF;
+
+  font-family: 'Noto Serif KR', serif;
 }
 
+#hb-title:focus {
+  outline: none;
+  border-color: #3558A8;
+  box-shadow: 0 0 0 2px rgba(53,88,168,0.2);
+}
 
-/* =====================================================
-   3) Toolbar 영역
-===================================================== */
-.hb-toolbar {
+/* -----------------------------------------------------
+      3) 툴바 (리본)
+------------------------------------------------------ */
+#hb-toolbar {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 
-  padding: 10px;
-  border: 1px solid #DCDCDC;
-  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
 
-  background: #F8F9FB;
+  border: 1px solid #D9D9D9;
+  border-radius: 8px;
+  background: #FFFFFF;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+
+  position: relative;
+  z-index: 999; /* 팝업 충돌 방지 */
 }
 
+/* 툴바 버튼은 toolbar.css에서 스타일됨 */
 
-/* =====================================================
-   4) 본문 에디터
-===================================================== */
-.hb-editor {
-  min-height: 400px;
-  padding: 18px 16px;
+/* -----------------------------------------------------
+      4) 본문 편집기
+------------------------------------------------------ */
+#hb-editor {
+  min-height: 300px;
+  width: 100%;
 
+  padding: 18px 20px;
   font-size: 17px;
-  line-height: 1.65;
-
-  border: 1px solid #DCDCDC;
-  border-radius: 6px;
+  line-height: 1.7;
 
   background: #FFFFFF;
-  overflow-y: auto;
+  border: 1px solid #DDD;
+  border-radius: 10px;
+
+  outline: none;
+  overflow-x: hidden;
+
+  font-family: 'Gowun Dodum', sans-serif;
 }
 
+/* 포커스 */
+#hb-editor:focus {
+  border-color: #3558A8;
+  box-shadow: 0 0 0 2px rgba(53,88,168,0.18);
+}
 
-/* =====================================================
-   5) 하단 버튼
-===================================================== */
+/* 본문 기본 텍스트 스타일 */
+#hb-editor p,
+#hb-editor div {
+  margin-bottom: 12px;
+}
+
+/* -----------------------------------------------------
+      5) 하단 버튼 (목록/메인)
+------------------------------------------------------ */
 .hb-bottom-buttons {
+  margin-top: 18px;
   display: flex;
+  gap: 8px;
   justify-content: flex-end;
-  gap: 10px;
-
-  padding-top: 10px;
 }
 
-.hb-bottom-btn {
+.hb-btn-bottom {
   padding: 6px 12px;
   font-size: 15px;
+  border-radius: 6px;
 
   background: #3558A8;
   color: #FFFFFF;
-  border-radius: 6px;
+  border: 1px solid #3558A8;
   text-decoration: none;
-
-  user-select: none;
 }
 
+.hb-btn-bottom:hover {
+  background: #4C6ED4;
+}
 
-/* =====================================================
-   6) 팝업 자리(비어 있음)
-===================================================== */
-#hb-popup-color-basic,
-#hb-popup-color-advanced,
+/* -----------------------------------------------------
+      6) 팝업 기본 위치 & 전역 설정
+------------------------------------------------------ */
+#hb-popup-color,
+#hb-popup-advcolor,
 #hb-popup-image {
   position: absolute;
   z-index: 2000;
+  display: none; /* 각 모듈에서 ON */
+}
+
+/* -----------------------------------------------------
+      7) 모바일 최적화
+------------------------------------------------------ */
+@media (max-width: 600px) {
+
+  .hb-editor-container {
+    padding: 0 12px 60px;
+  }
+
+  #hb-title {
+    font-size: 19px;
+    padding: 12px 14px;
+  }
+
+  #hb-toolbar {
+    gap: 6px;
+    padding: 8px;
+  }
+
+  #hb-editor {
+    font-size: 16px;
+    padding: 14px 16px;
+  }
+
+  .hb-top-buttons button {
+    padding: 4px 10px;
+    font-size: 14px;
+  }
+
 }
 
 
