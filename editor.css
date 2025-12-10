@@ -1,166 +1,185 @@
-/* -------------------------------------------------------
-   Editor v7.0 — editor.css (Detail Version)
-   레고식 구성 / 엑셀식 정밀 좌표 / 무한확장 안정판
--------------------------------------------------------- */
+/* ---------------------------------------------------
+   📄 editor.css v7.0
+   Ha-Bin Studio — Editor Layout & Writing UX
+---------------------------------------------------- */
 
 /* 전체 컨테이너 */
-.hb-editor-container {
+.editor-container {
   width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 16px;
-  box-sizing: border-box;
-
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+  max-width: 1020px;        /* A4 가로 기반 + 여백 */
+  margin: 40px auto;
+  padding: 0 20px;
 }
 
+/* 제목 입력 */
+#post-title {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 22px;
+  border: 1px solid #CFCFCF;
+  border-radius: 6px;
+  margin-bottom: 14px;
+  font-family: 'Noto Serif KR', serif;
+  outline: none;
+}
 
-/* ------------------------- 상단 라인 ------------------------- */
+#post-title:focus {
+  border-color: #3558A8;
+  box-shadow: 0 0 0 2px rgba(53,88,168,0.15);
+}
 
-/* 공지 + 버튼4개 한 줄 */
-.hb-top-line {
+/* 공지 + 버튼줄 */
+.notice-line {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  margin-bottom: 14px;
 }
 
-/* 공지 체크 */
-.hb-notice-line {
+.notice-area {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 14px;
-  color: #333;
+  font-size: 15px;
 }
 
-/* 상단 4 버튼 묶음 */
-.hb-top-buttons {
+/* 상단 버튼들 */
+.editor-buttons {
   display: flex;
-  align-items: center;
   gap: 8px;
 }
 
-/* ---------------------------- 제목 ----------------------------- */
-#hb-title {
-  width: 100%;
-  padding: 12px;
-  font-size: 18px;
-  font-family: 'HCR Batang', serif;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-sizing: border-box;
-  background: #ffffff;
-}
-
-
-/* -------------------------- 본문 ----------------------------- */
-
-#hb-editor {
-  width: 100%;
-  max-width: 100%;
-
-  min-height: 500px;   /* 기본 제공 높이 */
-  height: auto;        /* 무한 확장 */
-
-  padding: 18px;
-  background: #fff;
-
-  border: 1px solid #ccc;
-  border-radius: 6px;
-
-  box-sizing: border-box;
-
-  font-size: 16px;
-  line-height: 1.7;
-  font-family: 'Noto Serif KR', serif;
-
-  white-space: normal;
-  overflow-wrap: break-word;
-
-  overflow-y: visible;
-  overflow-x: visible;
-}
-
-
-/* ------------------------ 하단 버튼 2개 ------------------------ */
-
-.hb-bottom-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-/* a 버튼 공통 */
-.hb-btn-bottom {
-  padding: 8px 14px;
-  font-size: 15px;
-  border-radius: 6px;
-  text-decoration: none;
-  color: #fff;
-  background: #3558A8;
-  border: 1px solid #3558A8;
-  transition: 0.15s;
-}
-
-.hb-btn-bottom:hover {
-  filter: brightness(1.08);
-}
-
-
-/* --------------------------- 공용 버튼 ---------------------------- */
-
-.hb-top-buttons button {
-  padding: 7px 14px;
+/* 버튼 공통 스타일 */
+.editor-btn {
+  padding: 6px 12px;
   font-size: 15px;
   border-radius: 6px;
   cursor: pointer;
-  border: 1px solid #ccc;
+  border: none;
+}
+
+/* 버튼 컬러 규칙 (하빈 공식) */
+.btn-save {
+  background: #3558A8;
+  color: #FFF;
+}
+
+.btn-cancel {
+  background: #BABABA;
+  color: #FFF;
+}
+
+.btn-delete {
+  background: #FF4B4B;
+  color: #FFF;
+}
+
+/* 🛠 Ribbon Toolbar */
+#toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  background: #F7F8FA;
+  border: 1px solid #DCDCDC;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 16px;
+}
+
+/* 툴바 버튼 */
+#toolbar .hb-btn {
+  width: 36px;
+  height: 36px;
+  font-size: 20px;
+  border-radius: 6px;
+  background: #FFFFFF;
+  border: 1px solid #DDDDDD;
+  cursor: pointer;
   transition: 0.15s;
 }
 
-/* 취소 = 회색 */
-.hb-btn-cancel {
-  background: #e5e5e5;
-  color: #333;
-  border-color: #d0d0d0;
-}
-
-/* 저장 / 수정 = 은남색 */
-.hb-btn-save,
-.hb-btn-update {
-  background: #3558A8;
-  color: #fff;
+#toolbar .hb-btn:hover {
+  background: #E9F0FF;
   border-color: #3558A8;
 }
 
-/* 삭제 = 강한 빨강 */
-.hb-btn-delete {
-  background: #d9534f;
-  color: #fff;
-  border-color: #c9302c;
+#toolbar .hb-btn:active {
+  background: #D4E2FF;
 }
 
-/* 호버 */
-.hb-top-buttons button:hover {
-  filter: brightness(1.07);
+/* 📝 본문 에디터 */
+#editor {
+  min-height: 600px;                /* A4 1.2페이지 높이 */
+  padding: 26px 22px;
+  background: #FFFFFF;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+
+  /* 글 작성환경 */
+  font-family: 'Gowun Dodum', sans-serif;
+  font-size: 17px;
+  line-height: 1.75;
+
+  /* 확장 구조 */
+  overflow: visible;
+  word-break: break-word;
+
+  /* 텍스트 선택 안정 */
+  outline: none;
 }
 
-
-/* --------------------------- 팝업 위치 --------------------------- */
-
-#hb-popup-color,
-#hb-popup-advcolor,
-#hb-popup-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 99999;
-  display: none;
-  box-sizing: border-box;
+/* 글 작성 시 자연스러운 spacing */
+#editor p {
+  margin: 10px 0;
 }
+
+/* 하단 버튼 */
+.notice-buttons {
+  margin-top: 25px;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.btn-top {
+  padding: 6px 12px;
+  font-size: 15px;
+  background: #3558A8;
+  color: #FFF;
+  border-radius: 6px;
+}
+
+/* ---------------------------------------
+      모바일 최적화
+---------------------------------------- */
+@media (max-width: 600px) {
+
+  .editor-container {
+    padding: 0 10px;
+    margin-top: 20px;
+  }
+
+  #toolbar {
+    gap: 4px;
+    padding: 8px;
+  }
+
+  #toolbar .hb-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+  }
+
+  #editor {
+    padding: 18px 14px;
+    min-height: 500px;
+  }
+
+  #post-title {
+    font-size: 20px;
+  }
+}
+
 
 
