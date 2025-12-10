@@ -1,110 +1,138 @@
-/* ------------------------------------------------------
-   ✒ text.js v8.0 — Ha-Bin Studio Text Formatting Engine
-   (Bold / Italic / Underline / Font / Size / Align / List)
-------------------------------------------------------- */
+/* ---------------------------------------------------
+   📝 text.js v8.1 — Pure Text Formatting Engine
+   Ha-Bin Studio — Formatting Only (No DOM / No execCommand)
+---------------------------------------------------- */
 
-const TextEngine = (() => {
+export const TextEngine = (() => {
 
-  /* -----------------------------------------
-        0) 공통 exec 래퍼
-  ------------------------------------------ */
-  function exec(cmd, val = null) {
-    const editor = document.getElementById("hb-editor");
-    editor.focus({ preventScroll: true });
-    document.execCommand(cmd, false, val);
+  /* ===============================
+        기본 포맷팅 (논리만 정의)
+     — editor-core.js에서 실제 execCommand 실행
+  =============================== */
+
+  function bold() {
+    return { cmd: "bold" };
   }
 
-  /* -----------------------------------------
-        1) 글씨체 변경
-  ------------------------------------------ */
-  function setFont(fontName) {
-    exec("fontName", fontName);
+  function italic() {
+    return { cmd: "italic" };
   }
 
-  /* -----------------------------------------
-        2) 글자 크기 (px 기반)
-        execCommand는 크기를 1~7로 강제하므로
-        span 래퍼로 진짜 px 적용
-  ------------------------------------------ */
-  function setFontSize(px) {
-    exec("fontSize", 5); // 임시 span 생성
-
-    let sel = window.getSelection();
-    if (!sel.rangeCount) return;
-
-    let range = sel.getRangeAt(0);
-    let span = document.createElement("span");
-    span.style.fontSize = px + "px";
-
-    span.appendChild(range.extractContents());
-    range.insertNode(span);
+  function underline() {
+    return { cmd: "underline" };
   }
 
-  /* -----------------------------------------
-        3) 줄간격
-  ------------------------------------------ */
-  function setLineHeight(lineHeight) {
-    const sel = window.getSelection();
-    if (!sel.rangeCount) return;
-
-    const node = sel.anchorNode.parentNode;
-    node.style.lineHeight = lineHeight;
+  /* ===============================
+        폰트 변경
+  =============================== */
+  function setFont(fontFamily) {
+    return { cmd: "fontName", value: fontFamily };
   }
 
-  /* -----------------------------------------
-        4) Bold / Italic / Underline
-  ------------------------------------------ */
-  function bold() { exec("bold"); }
-  function italic() { exec("italic"); }
-  function underline() { exec("underline"); }
-
-  /* -----------------------------------------
-        5) 정렬
-  ------------------------------------------ */
-  function alignLeft()   { exec("justifyLeft"); }
-  function alignCenter() { exec("justifyCenter"); }
-  function alignRight()  { exec("justifyRight"); }
-  function alignJustify(){ exec("justifyFull"); }
-
-  /* -----------------------------------------
-        6) 리스트
-  ------------------------------------------ */
-  function ul() { exec("insertUnorderedList"); }
-  function ol() { exec("insertOrderedList"); }
-
-  /* -----------------------------------------
-        7) 서식 초기화
-  ------------------------------------------ */
-  function clearFormat() {
-    exec("removeFormat");
-
-    const editor = document.getElementById("hb-editor");
-    const spans = editor.querySelectorAll("span, font");
-    spans.forEach(s => s.removeAttribute("style"));
+  /* ===============================
+        글자 크기 (px 단위, 엔진은 규칙만 반환)
+  =============================== */
+  function setSize(px) {
+    return { cmd: "fontSizePx", value: px };
   }
 
-  /* -----------------------------------------
-        외부 공개 (툴바 → TextEngine)
-  ------------------------------------------ */
+  /* ===============================
+        줄간격
+  =============================== */
+  function setLineHeight(h) {
+    return { cmd: "lineHeight", value: h };
+  }
+
+  /* ===============================
+        텍스트 색상
+  =============================== */
+  function setColor(color) {
+    return { cmd: "foreColor", value: color };
+  }
+
+  /* ===============================
+        배경색
+  =============================== */
+  function setBgColor(color) {
+    return { cmd: "hiliteColor", value: color };
+  }
+
+  /* ===============================
+        리스트
+  =============================== */
+  function ul() {
+    return { cmd: "insertUnorderedList" };
+  }
+
+  function ol() {
+    return { cmd: "insertOrderedList" };
+  }
+
+  /* ===============================
+        문단 정렬
+  =============================== */
+  function alignLeft() {
+    return { cmd: "justifyLeft" };
+  }
+
+  function alignCenter() {
+    return { cmd: "justifyCenter" };
+  }
+
+  function alignRight() {
+    return { cmd: "justifyRight" };
+  }
+
+  function alignJustify() {
+    return { cmd: "justifyFull" };
+  }
+
+  /* ===============================
+        서식 초기화
+  =============================== */
+  function clear() {
+    return { cmd: "removeFormat" };
+  }
+
+  /* ===============================
+        Undo / Redo
+  =============================== */
+  function undo() {
+    return { cmd: "undo" };
+  }
+
+  function redo() {
+    return { cmd: "redo" };
+  }
+
+  /* ===============================
+        외부 인터페이스
+  =============================== */
   return {
-    setFont,
-    setFontSize,
-    setLineHeight,
-
     bold,
     italic,
     underline,
+
+    setFont,
+    setSize,
+    setLineHeight,
+
+    setColor,
+    setBgColor,
+
+    ul,
+    ol,
 
     alignLeft,
     alignCenter,
     alignRight,
     alignJustify,
 
-    ul,
-    ol,
-
-    clearFormat
+    clear,
+    undo,
+    redo
   };
 
 })();
+
 
