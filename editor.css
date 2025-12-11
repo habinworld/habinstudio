@@ -72,17 +72,12 @@
   background: #D9534F; /* 삭제 빨강 */
 }
 
-#hb-btn-save:hover,
-#hb-btn-update:hover {
-  background: #264789;
+#hb-btn-save
+{background: #264789;
 }
 
-#hb-btn-cancel:hover {
+#hb-btn-update {
   background: #6F6F6F;
-}
-
-#hb-btn-delete:hover {
-  background: #B0413C;
 }
 
 /* ============================
@@ -114,7 +109,10 @@
   padding: 20px;
   background: #FFFFFF;
 
-  border: 1px solid #DCDCDC;
+ /* 🎯 2중 테두리 */
+  border: 2px solid #3558A8;                 /* 바깥 테두리 (하빈 은남색) */
+  box-shadow: 0 0 0 3px rgba(91,182,200,0.3); /* 안쪽 은청빛 링 */
+
   border-radius: 10px;
 
   line-height: 1.75;
