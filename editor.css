@@ -1,6 +1,7 @@
 /* ---------------------------------------------------
-   ✒️ editor.css v8.0 — COMPLETE STABLE EDITION
+   ✒️ editor.css v9 — FINAL STABLE EDITION
    Ha-Bin Studio • Excel-based UI Model
+   ※ editor.html과 100% ID·CLASS 통일 (완전 고정)
 ---------------------------------------------------- */
 
 /* ============================
@@ -38,20 +39,23 @@
   height: 18px;
 }
 
-/* 상단 버튼 4개 */
+/* ============================
+   상단 버튼 4개
+============================ */
 .hb-top-buttons {
   display: flex;
   gap: 8px;
 }
 
-.hb-btn-save,
-.hb-btn-cancel,
-.hb-btn-update,
-.hb-btn-delete {
+/* FIXED — 버튼 이름을 editor.html과 동일하게 통일 */
+#hb-btn-cancel,
+#hb-btn-save,
+#hb-btn-update,
+#hb-btn-delete {
   padding: 6px 12px;
   font-size: 15px;
 
-  background: #3558A8;      /* 하빈 은남색 */
+  background: #3558A8; /* 기본 은남색 */
   color: #FFFFFF;
 
   border: none;
@@ -59,24 +63,25 @@
   cursor: pointer;
 }
 
-.hb-btn-delete {
-  background: #D9534F; /* 삭제는 빨간색 */
+/* 개별 색상 — editor.html 클래스 기준 반영 */
+#hb-btn-cancel {
+  background: #8A8A8A; /* 취소 */
 }
 
-.hb-btn-cancel {
-  background: #8A8A8A;
+#hb-btn-delete {
+  background: #D9534F; /* 삭제 빨강 */
 }
 
-.hb-btn-save:hover,
-.hb-btn-update:hover {
+#hb-btn-save:hover,
+#hb-btn-update:hover {
   background: #264789;
 }
 
-.hb-btn-cancel:hover {
+#hb-btn-cancel:hover {
   background: #6F6F6F;
 }
 
-.hb-btn-delete:hover {
+#hb-btn-delete:hover {
   background: #B0413C;
 }
 
@@ -96,11 +101,11 @@
 }
 
 #hb-title:focus {
-  outline: 2px solid rgba(53,88,168,0.3);
+  outline: 2px solid rgba(53, 88, 168, 0.3);
 }
 
 /* ============================
-   에디터 본문 (contenteditable)
+   본문 에디터
 ============================ */
 #hb-editor {
   width: 100%;
@@ -119,7 +124,7 @@
 }
 
 #hb-editor:focus {
-  outline: 2px solid rgba(53,88,168,0.35);
+  outline: 2px solid rgba(53, 88, 168, 0.35);
 }
 
 /* ============================
@@ -132,6 +137,7 @@
   gap: 10px;
 }
 
+/* editor.html 기준과 통일 */
 .hb-btn-bottom {
   padding: 6px 12px;
   background: #3558A8;
@@ -147,13 +153,21 @@
 
 /* ============================
    팝업 영역 (색상 / 이미지)
+   ※ editor.html ID 기준으로 완전 통일
 ============================ */
-#hb-popup-color,
-#hb-popup-advcolor,
+
+/* FIXED — ID 명칭을 100% editor.html과 동일하게 수정 */
+#hb-popup-color-basic,
+#hb-popup-color-advanced,
 #hb-popup-image {
   position: absolute;
   display: none;
   z-index: 1000;
+  background: #fff;
+  border: 1px solid #AAA; /* 팝업 테두리 */
+  border-radius: 6px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 /* ============================
@@ -179,10 +193,10 @@
     gap: 6px;
   }
 
-  .hb-btn-save,
-  .hb-btn-cancel,
-  .hb-btn-update,
-  .hb-btn-delete {
+  #hb-btn-save,
+  #hb-btn-cancel,
+  #hb-btn-update,
+  #hb-btn-delete {
     padding: 5px 10px;
     font-size: 14px;
   }
@@ -196,6 +210,7 @@
     padding: 5px 10px;
   }
 }
+
 
 
 
