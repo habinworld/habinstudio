@@ -1,14 +1,14 @@
-/* 기본 색상 팝업 스타일 */
-.hb-color-basic-popup {
-  display: none;
-  grid-template-columns: repeat(6, 22px);
-  gap: 6px;
-  padding: 8px;
-  background: #ffffff;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+.hb-color-basic-box {
+  position: absolute;
+  background: #FFF;
+  border: 1px solid #C0C0C0;
+  padding: 6px;
+  display: grid;
+  grid-template-columns: repeat(5, 22px);
+  gap: 4px;
   z-index: 99999;
+  border-radius: 6px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
 }
 
 .hb-color-basic-item {
@@ -16,11 +16,9 @@
   height: 22px;
   border-radius: 4px;
   cursor: pointer;
-  border: 1px solid #ddd;
+  border: 1px solid #DDD;
 }
-
 .hb-color-basic-item:hover {
-  border: 1px solid #555;
+  transform: scale(1.1);
 }
-
 
