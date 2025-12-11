@@ -6,13 +6,13 @@
   <title>글쓰기 · Ha-Bin Studio</title>
 
   <!-- =============================
-       CSS 모듈 (v8 안정판)
+       CSS 모듈 (Final Stable)
   ============================== -->
-  <link rel="stylesheet" href="editor-v8.css" />
-  <link rel="stylesheet" href="toolbar-v8.css" />
-  <link rel="stylesheet" href="color-basic-v8.css" />
-  <link rel="stylesheet" href="color-advanced-v8.css" />
-  <link rel="stylesheet" href="image-v8.css" />
+  <link rel="stylesheet" href="editor.css" />
+  <link rel="stylesheet" href="toolbar.css" />
+  <link rel="stylesheet" href="color-basic.css" />
+  <link rel="stylesheet" href="color-advanced.css" />
+  <link rel="stylesheet" href="image.css" />
 
   <!-- 폰트 -->
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo&display=swap" rel="stylesheet" />
@@ -20,103 +20,125 @@
 
 <body>
 
-<div id="hb-editor-root" class="hb-editor-container">
+<div class="hb-editor-container">
 
-  <!-- 1) 제목 -->
+  <!-- =============================
+       1) 제목
+  ============================== -->
   <input id="hb-title"
-         class="hb-title-input"
          type="text"
          placeholder="제목을 입력하세요" />
 
-  <!-- 2) 공지 + 상단 버튼 4개 -->
+
+  <!-- =============================
+       2) 공지 + 상단 버튼 4개
+  ============================== -->
   <div class="hb-top-line">
 
-    <div class="hb-notice-area">
+    <!-- 공지 -->
+    <div class="hb-notice-line">
       <input type="checkbox" id="hb-notice" />
       <label for="hb-notice">📌 공지글</label>
     </div>
 
+    <!-- 버튼 4개 -->
     <div class="hb-top-buttons">
-      <button id="hb-cancel" class="hb-btn-top">취소</button>
-      <button id="hb-save" class="hb-btn-top hb-show-mode-create">등록</button>
-      <button id="hb-update" class="hb-btn-top hb-show-mode-edit" style="display:none;">수정</button>
-      <button id="hb-delete" class="hb-btn-top hb-show-mode-edit" style="display:none;">삭제</button>
+      <button id="hb-btn-cancel" class="hb-btn">취소</button>
+      <button id="hb-btn-save"   class="hb-btn hb-btn-create">등록</button>
+      <button id="hb-btn-update" class="hb-btn hb-btn-edit" style="display:none;">수정</button>
+      <button id="hb-btn-delete" class="hb-btn hb-btn-edit" style="display:none;">삭제</button>
     </div>
 
   </div>
 
-  <!-- 3) 툴바 자리 (버튼은 JS가 자동으로 채움) -->
+
+  <!-- =============================
+       3) 툴바 (자동 생성)
+  ============================== -->
   <div id="hb-toolbar"></div>
 
-  <!-- 4) 본문 에디터 -->
-  <div id="hb-editor" class="hb-editor" contenteditable="true"></div>
 
-  <!-- 5) 하단 버튼 2개 (목록 / 메인) -->
+  <!-- =============================
+       4) 본문 에디터
+  ============================== -->
+  <div id="hb-editor" contenteditable="true"></div>
+
+
+  <!-- =============================
+       5) 하단 버튼 2개
+  ============================== -->
   <div class="hb-bottom-buttons">
-    <a href="list.html" class="hb-btn-bottom">목록</a>
+    <a href="list.html"  class="hb-btn-bottom">목록</a>
     <a href="index.html" class="hb-btn-bottom">메인</a>
   </div>
 
-  <!-- 6) 팝업 컨테이너 (내용은 JS가 채움) -->
-  <div id="hb-popup-color-basic-v8"></div>
-  <div id="hb-popup-color-advanced-v8"></div>
-  <div id="hb-popup-image-v8"></div>
+
+  <!-- =============================
+       6) 팝업 컨테이너 (내용은 JS가 넣음)
+  ============================== -->
+  <div id="hb-popup-color-basic"></div>
+  <div id="hb-popup-color-advanced"></div>
+  <div id="hb-popup-image"></div>
 
 </div>
 
-<!-- ============================
-     JS 로딩 순서 (고정)
-============================ -->
 
-<!-- (1) 텍스트 포맷팅 엔진 -->
-<script src="text-v8.js"></script>
 
-<!-- (2) 저장소 엔진 -->
-<script src="storage-v8.js"></script>
+<!-- =============================
+     7) JS 로딩 순서 (고정)
+============================== -->
 
-<!-- (3) 에디터 코어 엔진 -->
-<script src="editor-core-v8.js"></script>
+<!-- 텍스트 엔진 -->
+<script src="text-engine.js"></script>
 
-<!-- (4) 이미지 처리 엔진 -->
-<script src="image-v8.js"></script>
+<!-- 저장소 엔진 -->
+<script src="storage-engine.js"></script>
 
-<!-- (5) 기본/고급 색상 엔진 -->
-<script src="color-basic-v8.js"></script>
-<script src="color-advanced-v8.js"></script>
+<!-- 에디터 핵심 엔진 -->
+<script src="editor-core.js"></script>
 
-<!-- (6) 툴바 자동 렌더링 엔진 -->
-<script src="toolbar-v8.js"></script>
+<!-- 이미지 엔진 -->
+<script src="image-engine.js"></script>
 
-<!-- (7) 저장/불러오기 시스템 -->
-<script src="editor-save-v8.js"></script>
-<script src="editor-load-v8.js"></script>
+<!-- 색상 엔진 -->
+<script src="color-basic.js"></script>
+<script src="color-advanced.js"></script>
 
-<!-- (8) 글쓰기 / 수정 모드 자동 전환 -->
+<!-- 툴바 엔진 (자동 렌더링) -->
+<script src="toolbar.js"></script>
+
+<!-- 저장/불러오기 시스템 -->
+<script src="editor-save.js"></script>
+<script src="editor-load.js"></script>
+
+
+<!-- =============================
+     8) 글쓰기 / 수정 모드 자동 전환
+============================== -->
 <script>
-  (function() {
-    const params = new URLSearchParams(location.search);
-    const isEdit = params.get("id");
+(function() {
+  const params = new URLSearchParams(location.search);
+  const isEdit = params.get("id");
 
-    const saveBtn   = document.getElementById("hb-save");
-    const updateBtn = document.getElementById("hb-update");
-    const deleteBtn = document.getElementById("hb-delete");
+  const saveBtn   = document.getElementById("hb-btn-save");
+  const updateBtn = document.getElementById("hb-btn-update");
+  const deleteBtn = document.getElementById("hb-btn-delete");
 
-    if (isEdit) {
-      // 수정 모드
-      saveBtn.style.display   = "none";
-      updateBtn.style.display = "inline-block";
-      deleteBtn.style.display = "inline-block";
-    } else {
-      // 새 글쓰기 모드
-      saveBtn.style.display   = "inline-block";
-      updateBtn.style.display = "none";
-      deleteBtn.style.display = "none";
-    }
-  })();
+  if (isEdit) {
+    saveBtn.style.display   = "none";
+    updateBtn.style.display = "inline-block";
+    deleteBtn.style.display = "inline-block";
+  } else {
+    saveBtn.style.display   = "inline-block";
+    updateBtn.style.display = "none";
+    deleteBtn.style.display = "none";
+  }
+})();
 </script>
 
 </body>
 </html>
+
 
 
 
