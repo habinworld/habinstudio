@@ -1,194 +1,42 @@
-/* -----------------------------------------------------
-   🌈 color-advanced.css v8.0
-   Ha-Bin Studio — Advanced Color Picker Popup
------------------------------------------------------- */
-
-/* 팝업 본체 */
-.hb-advanced-popup {
+/* 고급 색상 팝업 */
+.hb-advcolor-popup {
   position: absolute;
   display: none;
-
-  width: 240px;
-  padding: 14px;
-
-  background: #FFFFFF;
-  border: 1px solid #D4D4D4;
-  border-radius: 12px;
-
-  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-  z-index: 3500;
-
-  animation: hbAdvFade 0.18s ease-out;
-
-  font-family: 'Gowun Dodum', sans-serif;
-}
-
-
-/* --- Fade-in Animation --- */
-@keyframes hbAdvFade {
-  from { opacity: 0; transform: translateY(-6px); }
-  to   { opacity: 1; transform: translateY(0px); }
-}
-
-
-/* -----------------------------------------------------
-   Title
------------------------------------------------------- */
-.adv-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: #3558A8;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-
-/* -----------------------------------------------------
-   Preview Box
------------------------------------------------------- */
-.adv-preview-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  padding: 8px 0;
-
-  border-bottom: 1px solid #E1E1E1;
-  margin-bottom: 10px;
-}
-
-/* 실제 색상 미리보기 */
-.adv-preview {
-  width: 40px;
-  height: 40px;
+  background: #ffffff;
+  border: 1px solid #ccc;
   border-radius: 6px;
-
-  border: 1px solid #CFCFCF;
-  background: #FFFFFF;
+  padding: 10px;
+  width: 190px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 99999;
 }
 
-/* HEX 입력 */
-.adv-hex {
-  flex: 1;
-  padding: 6px 8px;
-
-  border: 1px solid #CCCCCC;
-  border-radius: 6px;
-
-  font-size: 14px;
-  letter-spacing: 1px;
-  font-family: 'Gowun Dodum', sans-serif;
+.hb-advcolor-title {
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 6px;
 }
 
-
-/* -----------------------------------------------------
-   Slider Blocks
------------------------------------------------------- */
-.adv-slider-block {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  margin: 8px 0;
+.hb-advcolor-input {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 13px;
+  margin-bottom: 8px;
 }
 
-/* R/G/B/A Label */
-.adv-slider-block label {
-  width: 18px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #444;
-}
-
-/* 슬라이더 */
-.adv-slider-block input[type="range"] {
-  flex: 1;
-
-  -webkit-appearance: none;
-  height: 6px;
-
-  background: #E5E5E5;
-  border-radius: 6px;
-  outline: none;
-
-  cursor: pointer;
-}
-
-/* 슬라이더 Thumb */
-.adv-slider-block input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 14px;
-  height: 14px;
-
+.hb-advcolor-btn {
+  width: 100%;
+  padding: 6px;
   background: #3558A8;
-  border-radius: 50%;
-
-  cursor: pointer;
-}
-
-.adv-slider-block input[type="range"]::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
-
-  background: #3558A8;
-  border-radius: 50%;
-
-  cursor: pointer;
-}
-
-
-/* -----------------------------------------------------
-   Apply / Close Buttons
------------------------------------------------------- */
-.adv-btn-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-
-  margin-top: 14px;
-}
-
-.adv-btn-row button {
-  flex: 1;
-  padding: 8px 0;
-
-  font-size: 14px;
-  font-weight: 600;
-
+  color: white;
   border: none;
-  border-radius: 6px;
-
+  border-radius: 4px;
   cursor: pointer;
-  user-select: none;
 }
 
-/* 적용 버튼 */
-.adv-apply {
-  background: #3558A8;
-  color: #FFFFFF;
-}
-
-/* 닫기 버튼 */
-.adv-close {
-  background: #E5E5E5;
-  color: #333333;
-}
-
-
-/* -----------------------------------------------------
-   Mobile Optimization
------------------------------------------------------- */
-@media (max-width: 600px) {
-
-  .hb-advanced-popup {
-    width: 92%;
-    left: 4% !important;
-    padding: 12px;
-  }
-
-  .adv-preview {
-    width: 36px;
-    height: 36px;
-  }
+.hb-advcolor-btn:hover {
+  background: #274585;
 }
 
