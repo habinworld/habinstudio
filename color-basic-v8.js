@@ -1,118 +1,87 @@
-/* -----------------------------------------------------
-   🎨 color-basic.js v8.0 — Basic Color Picker Module
-   Ha-Bin Studio Editor
------------------------------------------------------- */
+/* ---------------------------------------------------
+   🎨 color-basic-v8.js — 기본 색상 선택기 (전역 안정판)
+   Ha-Bin Studio — window.ColorBasic 등록 버전
+---------------------------------------------------- */
 
-const ColorBasic = (() => {
+window.ColorBasic = (function () {
 
-  let popup = null;
-  let mode = null;      // "text" | "bg"
-  let openedBy = null;  // 버튼 참조 저장
-
-
-  /* =====================================================
-       1) 기본 색상 목록 (12~18개 확장 가능)
-  ===================================================== */
+  // 기본 색상 팔레트
   const COLORS = [
-    "#000000", "#FF0000", "#FF7F00", "#FFFF00",
-    "#00A000", "#00CED1", "#1E90FF", "#0000FF",
-    "#800080", "#FF69B4", "#808080", "#FFFFFF"
+    "#000000", "#333333", "#666666", "#999999", "#cccccc", "#ffffff",
+    "#ff0000", "#ff6600", "#ffcc00", "#ffff00",
+    "#00ff00", "#009900",
+    "#00ffff", "#0066ff", "#0000ff",
+    "#9900ff", "#ff00ff"
   ];
 
+  // 팝업 DOM ID
+  const POPUP_ID = "hb-popup-color-basic-v8";
 
-  /* =====================================================
-       2) 팝업 DOM 생성
-  ===================================================== */
-  function createPopup() {
-    if (popup) return popup;
-
-    popup = document.createElement("div");
-    popup.id = "hb-color-basic-popup";
-    popup.className = "hb-color-basic-popup";
-
-    const grid = document.createElement("div");
-    grid.className = "hb-color-basic-grid";
-
-    COLORS.forEach(c => {
-      const b = document.createElement("button");
-      b.className = "hb-color-basic-item";
-      b.style.background = c;
-      b.dataset.color = c;
-
-      b.onclick = () => applyColor(c);
-
-      grid.appendChild(b);
-    });
-
-    popup.appendChild(grid);
-    document.body.appendChild(popup);
+  /* ---------------------------------------------------
+        팝업 생성 또는 가져오기
+  ---------------------------------------------------- */
+  function getPopup() {
+    let popup = document.getElementById(POPUP_ID);
+    if (!popup) {
+      popup = document.createElement("div");
+      popup.id = POPUP_ID;
+      popup.className = "hb-color-basic-popup";
+      document.body.appendChild(popup);
+    }
     return popup;
   }
 
+  /* ---------------------------------------------------
+        팝업 열기
+  ---------------------------------------------------- */
+  function open(button, mode, callback) {
+    const popup = getPopup();
+    popup.innerHTML = ""; // 초기화
 
-  /* =====================================================
-       3) 팝업 열기 (버튼 바로 아래 위치)
-  ===================================================== */
-  function open(button, _mode) {
-    mode = _mode;        // text | bg
-    openedBy = button;
+    popup.style.display = "grid";
+    popup.style.position = "absolute";
 
-    const p = createPopup();
-
+    // 버튼 바로 아래에 위치시킴
     const rect = button.getBoundingClientRect();
+    popup.style.left = rect.left + "px";
+    popup.style.top = rect.bottom + 5 + "px";
 
-    p.style.display = "grid";
-    p.style.left = `${rect.left}px`;
-    p.style.top = `${rect.bottom + 6}px`;
+    // 색상 버튼 생성
+    COLORS.forEach(color => {
+      const box = document.createElement("div");
+      box.className = "hb-color-basic-item";
+      box.style.backgroundColor = color;
+
+      box.addEventListener("click", () => {
+        popup.style.display = "none";
+        callback(color);  // EditorCore에게 색상 전달
+      });
+
+      popup.appendChild(box);
+    });
   }
 
-
-  /* =====================================================
-       4) 팝업 닫기
-  ===================================================== */
-  function close() {
-    if (popup) popup.style.display = "none";
-  }
-
-
-  /* =====================================================
-       5) 색상 적용
-  ===================================================== */
-  function applyColor(color) {
-    if (mode === "text") {
-      EditorCore.setColor(color);
-    } else {
-      EditorCore.setBgColor(color);
-    }
-    close();
-  }
-
-
-  /* =====================================================
-       6) 바깥 클릭 시 닫힘
-  ===================================================== */
-  document.addEventListener("click", e => {
+  /* ---------------------------------------------------
+        팝업 닫기 (외부 클릭)
+  ---------------------------------------------------- */
+  document.addEventListener("click", (e) => {
+    const popup = document.getElementById(POPUP_ID);
     if (!popup) return;
 
-    // 팝업 내부 클릭은 무시
-    if (popup.contains(e.target)) return;
-
-    // 자신을 연 버튼 재클릭도 무시
-    if (e.target === openedBy) return;
-
-    close();
+    if (!popup.contains(e.target) && !e.target.closest(".hb-btn")) {
+      popup.style.display = "none";
+    }
   });
 
-
-  /* =====================================================
-       7) 외부 인터페이스
-  ===================================================== */
+  /* ---------------------------------------------------
+        외부 제공 함수
+  ---------------------------------------------------- */
   return {
-    open,
-    close
+    open
   };
 
 })();
 
+  
 
 
