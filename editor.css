@@ -41,44 +41,41 @@
 }
 
 /* ============================
-   상단 버튼 4개
+   상단 버튼 4개 (최종 안정판)
 ============================ */
+
+/* 버튼 묶음 flex */
 .hb-top-buttons {
   display: flex;
   gap: 8px;
 }
 
-/* FIXED — 버튼 이름을 editor.html과 동일하게 통일 */
-#hb-btn-cancel,
-#hb-btn-save,
-#hb-btn-update,
-#hb-btn-delete {
+/* 공통 버튼 스타일 — ★ 이게 반드시 필요함!! */
+.hb-btn {
   padding: 6px 12px;
   font-size: 15px;
-
-  background: #3558A8; /* 기본 은남색 */
+  background: #3558A8;
   color: #FFFFFF;
-
   border: none;
   border-radius: 6px;
   cursor: pointer;
 }
 
-/* 개별 색상 — editor.html 클래스 기준 반영 */
+/* 개별 색상 (ID 기반 오버라이드) */
 #hb-btn-cancel {
-  background: #8A8A8A; /* 취소 */
+  background: #8A8A8A;
 }
 
-#hb-btn-delete {
-  background: #D9534F; /* 삭제 빨강 */
-}
-
-#hb-btn-save
-{background: #264789;
+#hb-btn-save {
+  background: #264789;
 }
 
 #hb-btn-update {
   background: #6F6F6F;
+}
+
+#hb-btn-delete {
+  background: #D9534F;
 }
 
 /* ============================
