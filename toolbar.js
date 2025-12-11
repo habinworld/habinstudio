@@ -1,13 +1,15 @@
 /* ---------------------------------------------------
-   🎛 toolbar.js v8.1 (Auto Render + Bind)
-   Ha-Bin Studio — Toolbar UI + EditorCore 연결
+   🎛 toolbar.js — Final Stable Edition
+   Ha-Bin Studio — Toolbar Auto Renderer
+   전역(window.Toolbar) 등록 버전
 ---------------------------------------------------- */
 
-window.Toolbar = (() => {
+window.Toolbar = (function () {
 
-  /* ====================================================
-        1) 버튼 정의 테이블 (자동 생성용)
-  ==================================================== */
+  /* =====================================================
+        1) 툴바 버튼 정의 (ID는 절대 변경 금지)
+        — editor.html + EditorCore 기준으로 확정
+  ===================================================== */
   const BUTTONS = [
     // 글자 스타일
     { id: "hb-bold", label: "B" },
@@ -19,7 +21,7 @@ window.Toolbar = (() => {
     { id: "hb-font-nanum", label: "Nanum" },
     { id: "hb-font-serif", label: "Serif" },
 
-    // 글씨 크기
+    // 글자 크기(px)
     { id: "hb-size-12", label: "12" },
     { id: "hb-size-14", label: "14" },
     { id: "hb-size-16", label: "16" },
@@ -48,29 +50,30 @@ window.Toolbar = (() => {
     { id: "hb-ul", label: "• 목록" },
     { id: "hb-ol", label: "1. 목록" },
 
-    // 기본 서식
+    // 초기화
     { id: "hb-clear", label: "지우기" },
 
     // Undo / Redo
     { id: "hb-undo", label: "↺" },
     { id: "hb-redo", label: "↻" },
 
-    // 이미지
+    // 이미지 삽입 + 정렬
     { id: "hb-image", label: "📷" },
     { id: "hb-img-left", label: "L" },
     { id: "hb-img-center", label: "C" },
     { id: "hb-img-right", label: "R" }
   ];
 
-  /* ====================================================
-        2) toolbar UI 자동 생성
-  ==================================================== */
+  /* =====================================================
+        2) 실제 toolbar UI 렌더링
+  ===================================================== */
   function render() {
     const bar = document.getElementById("hb-toolbar");
     if (!bar) return;
 
     bar.classList.add("hb-toolbar");
 
+    // 버튼 생성
     BUTTONS.forEach(btn => {
       const el = document.createElement("button");
       el.id = btn.id;
@@ -79,7 +82,7 @@ window.Toolbar = (() => {
       bar.appendChild(el);
     });
 
-    // 이미지 input(hidden) 추가
+    // 이미지 파일 선택용 input(hidden)
     const fileInput = document.createElement("input");
     fileInput.type = "file";
     fileInput.accept = "image/*";
@@ -88,19 +91,21 @@ window.Toolbar = (() => {
     bar.appendChild(fileInput);
   }
 
-  /* ====================================================
-        3) 버튼 → EditorCore 바인딩
-  ==================================================== */
+  /* =====================================================
+        3) 바인딩 헬퍼
+  ===================================================== */
   function bind(id, fn) {
     const el = document.getElementById(id);
     if (el) el.addEventListener("click", fn);
   }
 
+  /* =====================================================
+        4) 전체 이벤트 바인딩
+  ===================================================== */
   function bindEvents() {
-
     // 글자 스타일
-    bind("hb-bold", () => EditorCore.bold());
-    bind("hb-italic", () => EditorCore.italic());
+    bind("hb-bold",      () => EditorCore.bold());
+    bind("hb-italic",    () => EditorCore.italic());
     bind("hb-underline", () => EditorCore.underline());
 
     // 폰트
@@ -121,52 +126,53 @@ window.Toolbar = (() => {
     bind("hb-line-16", () => EditorCore.setLineHeight("1.6"));
     bind("hb-line-18", () => EditorCore.setLineHeight("1.8"));
 
-    // 기본 색상 / 고급색상
-    bind("hb-color", (e) => EditorCore.openBasicColor(e.target, "text"));
-    bind("hb-bgcolor", (e) => EditorCore.openBasicColor(e.target, "bg"));
-    bind("hb-advcolor", (e) => EditorCore.openAdvancedColor(e.target, "text"));
-    bind("hb-advbg", (e) => EditorCore.openAdvancedColor(e.target, "bg"));
+    // 색상
+    bind("hb-color",     e => EditorCore.openBasicColor(e.target, "text"));
+    bind("hb-bgcolor",   e => EditorCore.openBasicColor(e.target, "bg"));
+    bind("hb-advcolor",  e => EditorCore.openAdvancedColor(e.target, "text"));
+    bind("hb-advbg",     e => EditorCore.openAdvancedColor(e.target, "bg"));
 
     // 정렬
-    bind("hb-align-left", () => EditorCore.alignLeft());
-    bind("hb-align-center", () => EditorCore.alignCenter());
-    bind("hb-align-right", () => EditorCore.alignRight());
+    bind("hb-align-left",    () => EditorCore.alignLeft());
+    bind("hb-align-center",  () => EditorCore.alignCenter());
+    bind("hb-align-right",   () => EditorCore.alignRight());
     bind("hb-align-justify", () => EditorCore.alignJustify());
 
     // 리스트
     bind("hb-ul", () => EditorCore.ul());
     bind("hb-ol", () => EditorCore.ol());
 
-    // 서식 초기화
+    // 초기화
     bind("hb-clear", () => EditorCore.clear());
 
     // Undo / Redo
     bind("hb-undo", () => EditorCore.undo());
     bind("hb-redo", () => EditorCore.redo());
 
-    // 이미지
+    // 이미지 삽입
     const input = document.getElementById("hb-image-input");
+
     bind("hb-image", () => input.click());
 
-    if (input) {
-      input.addEventListener("change", e => {
-        const file = e.target.files[0];
-        if (file) EditorCore.insertImage(file);
-        input.value = "";
-      });
-    }
+    input.addEventListener("change", e => {
+      const file = e.target.files[0];
+      if (file) EditorCore.insertImage(file);
+      input.value = ""; // 초기화
+    });
 
-    bind("hb-img-left", () => EditorCore.imageAlign("left"));
+    // 이미지 정렬
+    bind("hb-img-left",   () => EditorCore.imageAlign("left"));
     bind("hb-img-center", () => EditorCore.imageAlign("center"));
-    bind("hb-img-right", () => EditorCore.imageAlign("right"));
+    bind("hb-img-right",  () => EditorCore.imageAlign("right"));
   }
 
-  /* ====================================================
-        최초 실행
-  ==================================================== */
+  /* =====================================================
+        5) 초기 실행
+  ===================================================== */
   function init() {
     render();
-    setTimeout(bindEvents, 0); // 렌더 후 바인딩
+    // DOM에 버튼이 생긴 뒤 이벤트 바인딩해야 함
+    setTimeout(bindEvents, 0);
   }
 
   document.addEventListener("DOMContentLoaded", init);
@@ -174,6 +180,5 @@ window.Toolbar = (() => {
   return { init };
 
 })();
-
 
 
