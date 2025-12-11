@@ -1,190 +1,87 @@
-/* -----------------------------------------------------
-   🌈 color-advanced.js v8.0 — Pro Color Engine
-   Ha-Bin Studio (Modular Architecture)
------------------------------------------------------- */
+/* ---------------------------------------------------
+   🎨 color-advanced-v8.js — 고급 색상 선택기 (RGBA)
+   Ha-Bin Studio · window.AdvancedColor (전역 안정판)
+---------------------------------------------------- */
 
-const ColorAdvanced = (() => {
+window.AdvancedColor = (function () {
 
-  let popup = null;
-  let mode = null;    // "text" | "bg"
-  let opener = null;  // 팝업을 연 버튼 저장
+  const POPUP_ID = "hb-popup-color-advanced-v8";
 
+  /* ---------------------------------------------
+        팝업 DOM 생성 또는 가져오기
+  --------------------------------------------- */
+  function getPopup() {
+    let popup = document.getElementById(POPUP_ID);
 
-  /* =====================================================
-       1) popup DOM 생성
-  ===================================================== */
-  function createPopup() {
-    if (popup) return popup;
+    if (!popup) {
+      popup = document.createElement("div");
+      popup.id = POPUP_ID;
+      popup.className = "hb-advcolor-popup";
+      popup.innerHTML = `
+        <div class="hb-advcolor-title">고급 색상 (RGBA)</div>
 
-    popup = document.createElement("div");
-    popup.id = "hb-advanced-popup";
-    popup.className = "hb-advanced-popup";
+        <input id="hb-advcolor-input" 
+               class="hb-advcolor-input" 
+               placeholder="예: rgba(255,0,0,1)" />
 
-    popup.innerHTML = `
-      <div class="adv-title">고급 색상 선택</div>
-
-      <div class="adv-preview-box">
-        <div class="adv-preview"></div>
-        <input type="text" class="adv-hex" maxlength="7" value="#ffffff">
-      </div>
-
-      <div class="adv-slider-block">
-        <label>R</label>
-        <input type="range" class="adv-r" min="0" max="255" value="255">
-      </div>
-
-      <div class="adv-slider-block">
-        <label>G</label>
-        <input type="range" class="adv-g" min="0" max="255" value="255">
-      </div>
-
-      <div class="adv-slider-block">
-        <label>B</label>
-        <input type="range" class="adv-b" min="0" max="255" value="255">
-      </div>
-
-      <div class="adv-slider-block">
-        <label>A</label>
-        <input type="range" class="adv-a" min="0" max="1" step="0.01" value="1">
-      </div>
-
-      <div class="adv-btn-row">
-        <button class="adv-apply">적용</button>
-        <button class="adv-close">닫기</button>
-      </div>
-    `;
-
-    document.body.appendChild(popup);
-
-    // 이벤트 연결
-    popup.querySelector(".adv-apply").onclick = applyColor;
-    popup.querySelector(".adv-close").onclick = close;
-
-    popup.querySelector(".adv-hex").oninput = onHexChange;
-
-    ["adv-r", "adv-g", "adv-b", "adv-a"].forEach(cls => {
-      popup.querySelector("." + cls).oninput = refreshPreview;
-    });
+        <button id="hb-advcolor-apply" class="hb-advcolor-btn">
+          적용
+        </button>
+      `;
+      document.body.appendChild(popup);
+    }
 
     return popup;
   }
 
+  /* ---------------------------------------------
+        팝업 열기
+  --------------------------------------------- */
+  function open(button, mode, callback) {
+    const popup = getPopup();
 
-  /* =====================================================
-       2) 팝업 열기
-  ===================================================== */
-  function open(button, _mode) {
-    mode = _mode;
-    opener = button;
-
-    const p = createPopup();
+    // 위치 지정 (툴바 버튼 아래)
     const rect = button.getBoundingClientRect();
+    popup.style.display = "block";
+    popup.style.left = rect.left + "px";
+    popup.style.top = rect.bottom + 6 + "px";
 
-    p.style.display = "block";
-    p.style.left = `${rect.left}px`;
-    p.style.top = `${rect.bottom + 6}px`;
+    const input = document.getElementById("hb-advcolor-input");
+    const applyBtn = document.getElementById("hb-advcolor-apply");
 
-    refreshPreview();
+    // 이전 입력값 초기화
+    input.value = "";
+
+    // 적용 버튼 클릭 → 콜백 실행
+    applyBtn.onclick = () => {
+      const value = input.value.trim();
+      if (!value.startsWith("rgb")) return; // 간단 검증
+
+      popup.style.display = "none";
+      callback(value); // EditorCore로 RGBA 전달
+    };
   }
 
-
-  /* =====================================================
-       3) 팝업 닫기
-  ===================================================== */
-  function close() {
-    if (popup) popup.style.display = "none";
-  }
-
-
-  /* =====================================================
-       4) 프리뷰 업데이트
-  ===================================================== */
-  function refreshPreview() {
-    const r = +popup.querySelector(".adv-r").value;
-    const g = +popup.querySelector(".adv-g").value;
-    const b = +popup.querySelector(".adv-b").value;
-    const a = +popup.querySelector(".adv-a").value;
-
-    const rgba = `rgba(${r},${g},${b},${a})`;
-    popup.querySelector(".adv-preview").style.background = rgba;
-
-    // HEX 자동 변환 (A 제외)
-    const hex = "#" +
-      r.toString(16).padStart(2, "0") +
-      g.toString(16).padStart(2, "0") +
-      b.toString(16).padStart(2, "0");
-
-    popup.querySelector(".adv-hex").value = hex;
-  }
-
-
-  /* =====================================================
-       5) HEX 직접 입력 시 RGB에 반영
-  ===================================================== */
-  function onHexChange() {
-    let hex = popup.querySelector(".adv-hex").value;
-
-    if (!/^#([0-9a-fA-F]{6})$/.test(hex)) return;
-
-    hex = hex.replace("#", "");
-
-    const r = parseInt(hex.slice(0, 2), 16);
-    const g = parseInt(hex.slice(2, 4), 16);
-    const b = parseInt(hex.slice(4, 6), 16);
-
-    popup.querySelector(".adv-r").value = r;
-    popup.querySelector(".adv-g").value = g;
-    popup.querySelector(".adv-b").value = b;
-
-    refreshPreview();
-  }
-
-
-  /* =====================================================
-       6) 색상 적용
-  ===================================================== */
-  function applyColor() {
-    const r = +popup.querySelector(".adv-r").value;
-    const g = +popup.querySelector(".adv-g").value;
-    const b = +popup.querySelector(".adv-b").value;
-    const a = +popup.querySelector(".adv-a").value;
-
-    const rgba = `rgba(${r},${g},${b},${a})`;
-
-    if (mode === "text") {
-      EditorCore.setColor(rgba);
-    } else {
-      EditorCore.setBgColor(rgba);
-    }
-
-    close();
-  }
-
-
-  /* =====================================================
-       7) 바깥 클릭 시 자동 닫기
-  ===================================================== */
-  document.addEventListener("click", e => {
+  /* ---------------------------------------------
+        팝업 닫기: 외부 클릭 시
+  --------------------------------------------- */
+  document.addEventListener("click", function (e) {
+    const popup = document.getElementById(POPUP_ID);
     if (!popup) return;
 
-    // 팝업 내부 클릭은 무시
-    if (popup.contains(e.target)) return;
+    const isInside = popup.contains(e.target);
+    const isButton = e.target.closest(".hb-btn");
 
-    // opener(버튼) 재클릭도 무시
-    if (e.target === opener) return;
-
-    close();
+    if (!isInside && !isButton) {
+      popup.style.display = "none";
+    }
   });
 
-
-  /* =====================================================
-       8) 외부 인터페이스
-  ===================================================== */
   return {
-    open,
-    close
+    open
   };
 
 })();
+
 
 
