@@ -6,7 +6,7 @@
   <title>글쓰기 · Ha-Bin Studio</title>
 
   <!-- =============================
-       CSS 모듈 (v8.2 영구 안정판)
+       CSS 모듈 (v8 안정판)
   ============================== -->
   <link rel="stylesheet" href="editor-v8.css" />
   <link rel="stylesheet" href="toolbar-v8.css" />
@@ -14,36 +14,28 @@
   <link rel="stylesheet" href="color-advanced-v8.css" />
   <link rel="stylesheet" href="image-v8.css" />
 
-  <!-- 한글 폰트 -->
+  <!-- 폰트 -->
   <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Nanum+Myeongjo&display=swap" rel="stylesheet" />
 </head>
-
 
 <body>
 
 <div id="hb-editor-root" class="hb-editor-container">
 
-  <!-- ==================================================
-       1) 제목 (최상단 고정 구조)
-  =================================================== -->
-  <input id="hb-title" 
-         class="hb-title-input" 
-         type="text" 
+  <!-- 1) 제목 -->
+  <input id="hb-title"
+         class="hb-title-input"
+         type="text"
          placeholder="제목을 입력하세요" />
 
-
-  <!-- ==================================================
-       2) 공지 + 상단 버튼
-  =================================================== -->
+  <!-- 2) 공지 + 상단 버튼 4개 -->
   <div class="hb-top-line">
 
-    <!-- 공지 체크박스 -->
     <div class="hb-notice-area">
       <input type="checkbox" id="hb-notice" />
       <label for="hb-notice">📌 공지글</label>
     </div>
 
-    <!-- 상단 버튼 4개 (등록/수정 자동 토글 대응) -->
     <div class="hb-top-buttons">
       <button id="hb-cancel" class="hb-btn-top">취소</button>
       <button id="hb-save" class="hb-btn-top hb-show-mode-create">등록</button>
@@ -53,45 +45,28 @@
 
   </div>
 
-
-
-  <!-- ==================================================
-       3) Toolbar (JS 자동 렌더링)
-  =================================================== -->
+  <!-- 3) 툴바 자리 (버튼은 JS가 자동으로 채움) -->
   <div id="hb-toolbar"></div>
 
-
-
-  <!-- ==================================================
-       4) 본문 에디터
-  =================================================== -->
+  <!-- 4) 본문 에디터 -->
   <div id="hb-editor" class="hb-editor" contenteditable="true"></div>
 
-
-
-  <!-- ==================================================
-       5) 하단 버튼 (목록 / 메인)
-  =================================================== -->
+  <!-- 5) 하단 버튼 2개 (목록 / 메인) -->
   <div class="hb-bottom-buttons">
     <a href="list.html" class="hb-btn-bottom">목록</a>
     <a href="index.html" class="hb-btn-bottom">메인</a>
   </div>
 
-
-
-  <!-- ==================================================
-       6) 팝업 모듈 (JS가 생성)
-  =================================================== -->
+  <!-- 6) 팝업 컨테이너 (내용은 JS가 채움) -->
   <div id="hb-popup-color-basic-v8"></div>
   <div id="hb-popup-color-advanced-v8"></div>
   <div id="hb-popup-image-v8"></div>
 
 </div>
 
-
-<!-- ====================================================
-     7) JS 로딩 순서 (영구 변경 금지)
-==================================================== -->
+<!-- ============================
+     JS 로딩 순서 (고정)
+============================ -->
 
 <!-- (1) 텍스트 포맷팅 엔진 -->
 <script src="text-v8.js"></script>
@@ -116,24 +91,24 @@
 <script src="editor-save-v8.js"></script>
 <script src="editor-load-v8.js"></script>
 
-<!-- (8) 글쓰기 모드 자동 감지 (create/edit 자동 전환) -->
+<!-- (8) 글쓰기 / 수정 모드 자동 전환 -->
 <script>
   (function() {
     const params = new URLSearchParams(location.search);
     const isEdit = params.get("id");
 
-    const saveBtn  = document.getElementById("hb-save");
+    const saveBtn   = document.getElementById("hb-save");
     const updateBtn = document.getElementById("hb-update");
     const deleteBtn = document.getElementById("hb-delete");
 
     if (isEdit) {
       // 수정 모드
-      saveBtn.style.display = "none";
+      saveBtn.style.display   = "none";
       updateBtn.style.display = "inline-block";
       deleteBtn.style.display = "inline-block";
     } else {
       // 새 글쓰기 모드
-      saveBtn.style.display = "inline-block";
+      saveBtn.style.display   = "inline-block";
       updateBtn.style.display = "none";
       deleteBtn.style.display = "none";
     }
@@ -142,6 +117,7 @@
 
 </body>
 </html>
+
 
 
 
