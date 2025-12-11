@@ -1,229 +1,189 @@
-/* -------------------------------------------------------
-   ✨ editor-core.js — Final Stable Edition
-   Ha-Bin Studio Editor Core (전역 window.EditorCore)
-   - 이름 통일 규칙 100% 준수
-   - TextEngine / ColorEngine / ImageEngine 모두와 연결
--------------------------------------------------------- */
+/* ---------------------------------------------------
+   ⚙️ editor-core.js — EditorCore vFinal 안정판
+   Ha-Bin Studio · window.EditorCore 등록
+---------------------------------------------------- */
 
 window.EditorCore = (function () {
 
+  // -------------------------------------------------
+  // 연결할 엔진들 (모두 window 전역)
+  // -------------------------------------------------
+  const TextEngine = window.TextEngine;
+  const ImageEngine = window.ImageEngine;
+  const StorageEngine = window.StorageEngine;
+  const ColorBasic = window.ColorBasic;
+  const ColorAdvanced = window.ColorAdvanced;
+
+  // 본문 에디터
   const editor = document.getElementById("hb-editor");
 
-
-  /* =====================================================
-        🔵 헬퍼 1) 현재 Range 가져오기
-  ===================================================== */
-  function getRange() {
-    const sel = window.getSelection();
-    if (!sel.rangeCount) return null;
-    return sel.getRangeAt(0);
-  }
+  // 중복 실행 방지
+  let isLocked = false;
 
 
-  /* =====================================================
-        🔵 헬퍼 2) execCommand 안전 실행
-  ===================================================== */
-  function cmd(command, value = null) {
-    document.execCommand(command, false, value);
+  /* -------------------------------------------------
+        공용 실행 엔진 (execCommand wrapper)
+  -------------------------------------------------- */
+  function execute(cmdObj) {
+    if (!cmdObj || isLocked) return;
+
+    isLocked = true;
+    const { cmd, value } = cmdObj;
+
     editor.focus();
+
+    // 폰트 사이즈(px) 직접 처리
+    if (cmd === "fontSizePx") {
+      applyFontSizePx(value);
+    }
+    // 줄간격 직접 처리
+    else if (cmd === "lineHeight") {
+      applyLineHeight(value);
+    }
+    // 그 외 execCommand
+    else {
+      document.execCommand(cmd, false, value || null);
+    }
+
+    isLocked = false;
   }
 
 
-  /* =====================================================
-        ✏️ 1) 글자 스타일
-  ===================================================== */
-  function bold()      { cmd("bold"); }
-  function italic()    { cmd("italic"); }
-  function underline() { cmd("underline"); }
+  /* -------------------------------------------------
+        px 기반 폰트사이즈 적용
+  -------------------------------------------------- */
+  function applyFontSizePx(px) {
+    const sel = window.getSelection();
+    if (!sel.rangeCount) return;
 
+    const range = sel.getRangeAt(0);
 
-  /* =====================================================
-        🖋 2) 폰트 설정
-  ===================================================== */
-  function setFont(fontName) {
-    cmd("fontName", fontName);
-  }
+    const span = document.createElement("span");
+    span.style.fontSize = px + "px";
 
-  /* =====================================================
-        🔠 3) 글자 크기
-  ===================================================== */
-  function setSize(px) {
-    // execCommand로는 px 직접 안되므로 span 래핑 방식
-    wrapInlineStyle(`font-size:${px}px`);
-  }
+    span.appendChild(range.extractContents());
+    range.insertNode(span);
 
-
-  /* =====================================================
-        📏 4) 줄간격
-  ===================================================== */
-  function setLineHeight(lh) {
-    wrapBlockStyle(`line-height:${lh}`);
+    // 커서 span 끝에 위치시키기
+    range.setStartAfter(span);
+    range.setEndAfter(span);
+    sel.removeAllRanges();
+    sel.addRange(range);
   }
 
 
-  /* =====================================================
-        🎨 5) 기본 색상 / 배경색
-        (ColorBasic 엔진이 호출됨)
-  ===================================================== */
-  function openBasicColor(btn, target) {
-    window.ColorBasic.open(btn, target);
-  }
+  /* -------------------------------------------------
+        줄간격 적용
+  -------------------------------------------------- */
+  function applyLineHeight(h) {
+    const sel = window.getSelection();
+    if (!sel.rangeCount) return;
 
-  /* =====================================================
-        🎨 6) 고급 색상 팝업
-  ===================================================== */
-  function openAdvancedColor(btn, target) {
-    window.ColorAdvanced.open(btn, target);
-  }
-
-
-  /* =====================================================
-        📐 7) 정렬
-  ===================================================== */
-  function alignLeft()    { cmd("justifyLeft"); }
-  function alignCenter()  { cmd("justifyCenter"); }
-  function alignRight()   { cmd("justifyRight"); }
-  function alignJustify() { cmd("justifyFull"); }
-
-
-  /* =====================================================
-        🔢 8) 목록
-  ===================================================== */
-  function ul() { cmd("insertUnorderedList"); }
-  function ol() { cmd("insertOrderedList"); }
-
-
-  /* =====================================================
-        🧹 9) 초기화
-  ===================================================== */
-  function clear() {
-    editor.innerHTML = "";
+    const node = sel.anchorNode.parentNode;
+    if (node && node.style) {
+      node.style.lineHeight = h;
+    }
   }
 
 
-  /* =====================================================
-        ↩️ 10) Undo / Redo
-  ===================================================== */
-  function undo() { cmd("undo"); }
-  function redo() { cmd("redo"); }
+  /* -------------------------------------------------
+        기본 색상 팝업 호출
+  -------------------------------------------------- */
+  function openBasicColor(button, mode) {
+    ColorBasic.open(button, mode, function (color) {
 
+      const cmd = (mode === "text") ? "foreColor" : "hiliteColor";
+      execute({ cmd, value: color });
 
-  /* =====================================================
-        🖼 11) 이미지 삽입
-        (ImageEngine이 파일을 base64로 변환해서 span으로 넣음)
-  ===================================================== */
-  function insertImage(file) {
-    if (!window.ImageEngine) return;
-
-    window.ImageEngine.load(file, function (base64) {
-      const img = document.createElement("img");
-      img.src = base64;
-      img.className = "hb-img";
-      editor.appendChild(img);
-
-      // 포커스 유지
-      editor.focus();
     });
   }
 
 
-  /* =====================================================
-        🖼 12) 이미지 정렬
-        left / center / right
-  ===================================================== */
-  function imageAlign(dir) {
-    const sel = getRange();
-    if (!sel) return;
+  /* -------------------------------------------------
+        고급 색상 팝업 호출
+  -------------------------------------------------- */
+  function openAdvancedColor(button, mode) {
+    ColorAdvanced.open(button, mode, function (color) {
 
-    let node = sel.startContainer;
+      const cmd = (mode === "text") ? "foreColor" : "hiliteColor";
+      execute({ cmd, value: color });
 
-    // 이미지가 아닌 경우 → 가장 가까운 img 탐색
-    while (node && node.tagName !== "IMG") {
-      node = node.parentNode;
-    }
-    if (!node) return;
-
-    node.style.display = "block";
-    node.style.margin = "10px auto";
-
-    if (dir === "left") {
-      node.style.marginLeft = "0";
-      node.style.marginRight = "auto";
-    }
-    if (dir === "center") {
-      node.style.marginLeft = "auto";
-      node.style.marginRight = "auto";
-    }
-    if (dir === "right") {
-      node.style.marginLeft = "auto";
-      node.style.marginRight = "0";
-    }
-
-    editor.focus();
+    });
   }
 
 
-  /* =====================================================
-        🔧 내부 함수 — Inline 스타일 래핑
-  ===================================================== */
-  function wrapInlineStyle(styleText) {
-    const range = getRange();
-    if (!range) return;
-
-    const span = document.createElement("span");
-    span.style = styleText;
-    range.surroundContents(span);
+  /* -------------------------------------------------
+        이미지 삽입 / 정렬
+  -------------------------------------------------- */
+  function insertImage(file) {
+    ImageEngine.insert(file);
   }
 
-  /* =====================================================
-        🔧 내부 함수 — Block 스타일 래핑
-  ===================================================== */
-  function wrapBlockStyle(styleText) {
-    const range = getRange();
-    if (!range) return;
-
-    let target = range.startContainer;
-
-    // 블록 요소(LI, P 등)를 찾을 때까지 올라감
-    while (target && target !== editor && !isBlockElement(target)) {
-      target = target.parentNode;
-    }
-    if (!target || target === editor) return;
-
-    target.style = styleText;
-  }
-
-  function isBlockElement(node) {
-    return ["DIV", "P", "LI", "UL", "OL"].includes(node.tagName);
+  function imageAlign(direction) {
+    ImageEngine.align(direction);
   }
 
 
-  /* =====================================================
-        📌 공개 API
-  ===================================================== */
+  /* -------------------------------------------------
+        저장 / 불러오기
+  -------------------------------------------------- */
+  function save(key) {
+    StorageEngine.save(key, editor.innerHTML);
+  }
+
+  function load(key) {
+    const data = StorageEngine.load(key);
+    if (data) editor.innerHTML = data;
+  }
+
+
+  /* -------------------------------------------------
+        클릭 → 포커스 유지
+  -------------------------------------------------- */
+  editor.addEventListener("click", () => editor.focus());
+
+
+  /* -------------------------------------------------
+        외부에 제공할 API
+  -------------------------------------------------- */
   return {
-    bold,
-    italic,
-    underline,
-    setFont,
-    setSize,
-    setLineHeight,
-    alignLeft,
-    alignCenter,
-    alignRight,
-    alignJustify,
-    ul,
-    ol,
-    clear,
-    undo,
-    redo,
+    execute,
+
+    // 텍스트 엔진 연결
+    bold: () => execute(TextEngine.bold()),
+    italic: () => execute(TextEngine.italic()),
+    underline: () => execute(TextEngine.underline()),
+
+    setFont: (f) => execute(TextEngine.setFont(f)),
+    setSize: (px) => execute(TextEngine.setSize(px)),
+    setLineHeight: (h) => execute(TextEngine.setLineHeight(h)),
+
+    setColor: (c) => execute(TextEngine.setColor(c)),
+    setBgColor: (c) => execute(TextEngine.setBgColor(c)),
+
+    alignLeft: () => execute(TextEngine.alignLeft()),
+    alignCenter: () => execute(TextEngine.alignCenter()),
+    alignRight: () => execute(TextEngine.alignRight()),
+    alignJustify: () => execute(TextEngine.alignJustify()),
+
+    ul: () => execute(TextEngine.ul()),
+    ol: () => execute(TextEngine.ol()),
+
+    clear: () => execute(TextEngine.clear()),
+
+    undo: () => execute(TextEngine.undo()),
+    redo: () => execute(TextEngine.redo()),
+
     openBasicColor,
     openAdvancedColor,
+
     insertImage,
     imageAlign,
+
+    save,
+    load
   };
 
 })();
-
 
 
