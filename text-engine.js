@@ -1,14 +1,11 @@
 /* ---------------------------------------------------
-   ✒️ text-engine.js — FINAL STABLE EDITION
+   ✒️ text-engine.js — 전역 TextEngine 안정판
    Ha-Bin Studio · window.TextEngine 등록
-   (No export / No import / Pure Command Engine)
 ---------------------------------------------------- */
 
 window.TextEngine = (function () {
 
-  /* -----------------------------------------
-        글자 스타일
-  ----------------------------------------- */
+  // 🔹 글자 스타일
   function bold() {
     return { cmd: "bold" };
   }
@@ -21,44 +18,32 @@ window.TextEngine = (function () {
     return { cmd: "underline" };
   }
 
-  /* -----------------------------------------
-        폰트
-  ----------------------------------------- */
-  function setFont(family) {
-    return { cmd: "fontName", value: family };
+  // 🔹 폰트
+  function setFont(fontFamily) {
+    return { cmd: "fontName", value: fontFamily };
   }
 
-  /* -----------------------------------------
-        글씨 크기 (px)
-  ----------------------------------------- */
+  // 🔹 글자 크기 (px)
   function setSize(px) {
     return { cmd: "fontSizePx", value: px };
   }
 
-  /* -----------------------------------------
-        줄간격
-  ----------------------------------------- */
+  // 🔹 줄간격
   function setLineHeight(h) {
     return { cmd: "lineHeight", value: h };
   }
 
-  /* -----------------------------------------
-        텍스트 색상
-  ----------------------------------------- */
+  // 🔹 텍스트 색상
   function setColor(color) {
     return { cmd: "foreColor", value: color };
   }
 
-  /* -----------------------------------------
-        배경 색상
-  ----------------------------------------- */
+  // 🔹 배경색
   function setBgColor(color) {
     return { cmd: "hiliteColor", value: color };
   }
 
-  /* -----------------------------------------
-        리스트
-  ----------------------------------------- */
+  // 🔹 리스트
   function ul() {
     return { cmd: "insertUnorderedList" };
   }
@@ -67,9 +52,7 @@ window.TextEngine = (function () {
     return { cmd: "insertOrderedList" };
   }
 
-  /* -----------------------------------------
-        정렬
-  ----------------------------------------- */
+  // 🔹 정렬
   function alignLeft() {
     return { cmd: "justifyLeft" };
   }
@@ -86,16 +69,12 @@ window.TextEngine = (function () {
     return { cmd: "justifyFull" };
   }
 
-  /* -----------------------------------------
-        서식 초기화
-  ----------------------------------------- */
+  // 🔹 서식 초기화
   function clear() {
     return { cmd: "removeFormat" };
   }
 
-  /* -----------------------------------------
-        되돌리기 / 다시하기
-  ----------------------------------------- */
+  // 🔹 Undo / Redo
   function undo() {
     return { cmd: "undo" };
   }
@@ -104,10 +83,7 @@ window.TextEngine = (function () {
     return { cmd: "redo" };
   }
 
-
-  /* -----------------------------------------
-        외부로 내보내는 API
-  ----------------------------------------- */
+  // 🔹 바깥으로 내보내는 API
   return {
     bold,
     italic,
@@ -134,4 +110,5 @@ window.TextEngine = (function () {
   };
 
 })();
+
 
