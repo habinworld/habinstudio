@@ -1,24 +1,25 @@
 /* ---------------------------------------------------
-   ⚙️ editor-core.js v8.0 (Refactored)
+   ⚙️ editor-core.js v8.1 (Browser-Stable)
    Ha-Bin Studio — Central Execution Engine
-   - text.js v8.1 명령 실행기
-   - color-basic.js / advanced-color.js 연결
-   - image.js v8.0 연결
-   - storage.js v8.0 연결
 ---------------------------------------------------- */
 
-import { TextEngine } from "./text.js";
-import { ImageEngine } from "./image.js";
-import { Storage } from "./storage.js";
+// 전역 객체로부터 가져오기 (import 사용 금지)
+const TextEngine = window.TextEngine;
+const ImageEngine = window.ImageEngine;
+const Storage = window.Storage;
+const ColorBasic = window.ColorBasic;
+const AdvancedColor = window.AdvancedColor;
+
+// HTML 에디터 ID 수정 (hb-editor)
+const editor = document.getElementById("hb-editor");
 
 const EditorCore = (() => {
 
-  const editor = document.getElementById("editor");
   let isLocked = false;
 
-  /* ===============================
-        공용: execCommand 실행기
-  =============================== */
+  /* -----------------------------
+        공용 execCommand 엔진
+  ----------------------------- */
   function execute(cmdObj) {
     if (!cmdObj || isLocked) return;
 
@@ -26,22 +27,24 @@ const EditorCore = (() => {
 
     const { cmd, value } = cmdObj;
 
-    // execCommand 직접 처리
+    editor.focus();
+
     if (cmd === "fontSizePx") {
       applyFontSizePx(value);
-    } else if (cmd === "lineHeight") {
+    } 
+    else if (cmd === "lineHeight") {
       applyLineHeight(value);
-    } else {
-      editor.focus();
+    }
+    else {
       document.execCommand(cmd, false, value || null);
     }
 
     isLocked = false;
   }
 
-  /* ===============================
+  /* -----------------------------
         px 기반 폰트사이즈
-  =============================== */
+  ----------------------------- */
   function applyFontSizePx(px) {
     const sel = window.getSelection();
     if (!sel.rangeCount) return;
@@ -49,14 +52,13 @@ const EditorCore = (() => {
     const range = sel.getRangeAt(0);
     const span = document.createElement("span");
     span.style.fontSize = px + "px";
-
     span.appendChild(range.extractContents());
     range.insertNode(span);
   }
 
-  /* ===============================
-        줄간격 적용
-  =============================== */
+  /* -----------------------------
+        줄간격
+  ----------------------------- */
   function applyLineHeight(h) {
     const sel = window.getSelection();
     if (!sel.rangeCount) return;
@@ -65,43 +67,40 @@ const EditorCore = (() => {
     if (node) node.style.lineHeight = h;
   }
 
-  /* ===============================
-        색상 팝업 — basic color
-  =============================== */
+  /* -----------------------------
+        색상 — 기본
+  ----------------------------- */
   function openBasicColor(button, mode) {
     ColorBasic.open(button, mode, (color) => {
       const cmd = mode === "text" ? "foreColor" : "hiliteColor";
-      execute({ cmd: cmd, value: color });
+      execute({ cmd, value: color });
     });
   }
 
-  /* ===============================
-        색상 팝업 — advanced
-  =============================== */
+  /* -----------------------------
+        색상 — 고급(RGBA)
+  ----------------------------- */
   function openAdvancedColor(button, mode) {
     AdvancedColor.open(button, mode, (rgba) => {
       const cmd = mode === "text" ? "foreColor" : "hiliteColor";
-      execute({ cmd: cmd, value: rgba });
+      execute({ cmd, value: rgba });
     });
   }
 
-  /* ===============================
-        이미지 삽입
-  =============================== */
+  /* -----------------------------
+        이미지 삽입/정렬
+  ----------------------------- */
   function insertImage(file) {
     ImageEngine.insert(file);
   }
 
-  /* ===============================
-        이미지 정렬
-  =============================== */
   function imageAlign(dir) {
     ImageEngine.align(dir);
   }
 
-  /* ===============================
-        저장 / 불러오기
-  =============================== */
+  /* -----------------------------
+        저장/로드
+  ----------------------------- */
   function save(key) {
     Storage.save(key, editor.innerHTML);
   }
@@ -111,18 +110,17 @@ const EditorCore = (() => {
     if (data) editor.innerHTML = data;
   }
 
-  /* ===============================
-        편집기 포커스 유지
-  =============================== */
+  /* -----------------------------
+        포커스 유지
+  ----------------------------- */
   editor.addEventListener("click", () => editor.focus());
 
-  /* ===============================
-        외부 공개 API
-  =============================== */
+  /* -----------------------------
+        외부 API
+  ----------------------------- */
   return {
     execute,
 
-    // 텍스트 형식
     bold: () => execute(TextEngine.bold()),
     italic: () => execute(TextEngine.italic()),
     underline: () => execute(TextEngine.underline()),
@@ -147,19 +145,18 @@ const EditorCore = (() => {
     undo: () => execute(TextEngine.undo()),
     redo: () => execute(TextEngine.redo()),
 
-    // 색상
     openBasicColor,
     openAdvancedColor,
 
-    // 이미지
     insertImage,
     imageAlign,
 
-    // 저장
     save,
     load
   };
 
 })();
 
+// 💡 툴바와 전역 연결
+window.EditorCore = EditorCore;
 
