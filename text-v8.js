@@ -1,13 +1,13 @@
 /* ---------------------------------------------------
-   📝 text.js v8.1 — Pure Text Formatting Engine
-   Ha-Bin Studio — Formatting Only (No DOM / No execCommand)
+   📝 text-v8.js — Pure Text Formatting Engine (Stable)
+   Ha-Bin Studio · 전역(window) 등록 버전
 ---------------------------------------------------- */
 
-export const TextEngine = (() => {
+window.TextEngine = (function () {
 
   /* ===============================
-        기본 포맷팅 (논리만 정의)
-     — editor-core.js에서 실제 execCommand 실행
+        기본 포맷팅 (규칙만 반환)
+        실제 실행은 editor-core.js에서 수행
   =============================== */
 
   function bold() {
@@ -30,7 +30,7 @@ export const TextEngine = (() => {
   }
 
   /* ===============================
-        글자 크기 (px 단위, 엔진은 규칙만 반환)
+        글자 크기 (px 단위)
   =============================== */
   function setSize(px) {
     return { cmd: "fontSizePx", value: px };
@@ -44,15 +44,12 @@ export const TextEngine = (() => {
   }
 
   /* ===============================
-        텍스트 색상
+        텍스트 색상 / 배경색
   =============================== */
   function setColor(color) {
     return { cmd: "foreColor", value: color };
   }
 
-  /* ===============================
-        배경색
-  =============================== */
   function setBgColor(color) {
     return { cmd: "hiliteColor", value: color };
   }
@@ -106,7 +103,7 @@ export const TextEngine = (() => {
   }
 
   /* ===============================
-        외부 인터페이스
+        외부 인터페이스 반환
   =============================== */
   return {
     bold,
@@ -133,6 +130,4 @@ export const TextEngine = (() => {
     redo
   };
 
-})();
-
-
+})(); // ← 즉시실행 + 전역(window) 등록
