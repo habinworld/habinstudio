@@ -1,9 +1,8 @@
+
 /* ---------------------------------------------------
-   🎛 toolbar.js v8.0
+   🎛 toolbar.js v8.0 — 안정판 (No import!)
    Ha-Bin Studio — UI → EditorCore 연결 엔진
 ---------------------------------------------------- */
-
-import { EditorCore } from "./editor-core.js";
 
 const Toolbar = (() => {
 
@@ -13,7 +12,7 @@ const Toolbar = (() => {
   }
 
   /* ===============================
-        기본 텍스트 포맷팅
+        텍스트 스타일
   =============================== */
   bind("hb-bold", () => EditorCore.bold());
   bind("hb-italic", () => EditorCore.italic());
@@ -50,13 +49,13 @@ const Toolbar = (() => {
   bind("hb-bgcolor", (e) => EditorCore.openBasicColor(e.target, "bg"));
 
   /* ===============================
-        색상 — advanced
+        색상 — 고급
   =============================== */
   bind("hb-advcolor", (e) => EditorCore.openAdvancedColor(e.target, "text"));
   bind("hb-advbg", (e) => EditorCore.openAdvancedColor(e.target, "bg"));
 
   /* ===============================
-        문단 정렬
+        정렬
   =============================== */
   bind("hb-align-left", () => EditorCore.alignLeft());
   bind("hb-align-center", () => EditorCore.alignCenter());
@@ -81,7 +80,7 @@ const Toolbar = (() => {
   bind("hb-redo", () => EditorCore.redo());
 
   /* ===============================
-        이미지 삽입
+        이미지 업로드
   =============================== */
   const imgInput = document.getElementById("hb-image-input");
   if (imgInput) {
@@ -98,16 +97,19 @@ const Toolbar = (() => {
   bind("hb-img-right", () => EditorCore.imageAlign("right"));
 
   /* ===============================
-        저장 & 불러오기
+        저장 / 불러오기
   =============================== */
   bind("hb-save", () => EditorCore.save("habin_post"));
   bind("hb-load", () => EditorCore.load("habin_post"));
 
-  /* ===============================
-        외부 API 없음
-  =============================== */
   return {};
 
 })();
 
+/* ===============================
+   초기화 (DOM 생성 후 실행)
+=============================== */
+document.addEventListener("DOMContentLoaded", () => {
+  console.log("Toolbar v8.0 Ready");
+});
 
