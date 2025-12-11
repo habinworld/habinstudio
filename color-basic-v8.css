@@ -1,77 +1,26 @@
-/* -----------------------------------------------------
-   🎨 color-basic.css v8.0
-   Ha-Bin Studio — Basic Color Picker Popup
------------------------------------------------------- */
-
-/* 팝업 본체 */
+/* 기본 색상 팝업 스타일 */
 .hb-color-basic-popup {
-  position: absolute;
   display: none;
-
-  width: 180px;
-  padding: 12px;
-
-  background: #FFFFFF;
-  border: 1px solid #D4D4D4;
-  border-radius: 10px;
-
-  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
-  z-index: 3000;
-
-  animation: hbColorFade 0.16s ease-out;
-}
-
-/* 팝업 열릴 때 부드러운 등장 */
-@keyframes hbColorFade {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* 색상 그리드 */
-.hb-color-basic-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 8px;
-}
-
-/* 각각의 색상칸 */
-.hb-color-basic-item {
-  width: 24px;
-  height: 24px;
-
-  border: 1px solid #CCCCCC;
+  grid-template-columns: repeat(6, 22px);
+  gap: 6px;
+  padding: 8px;
+  background: #ffffff;
+  border: 1px solid #ccc;
   border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  z-index: 99999;
+}
 
+.hb-color-basic-item {
+  width: 22px;
+  height: 22px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-
-  padding: 0;
+  border: 1px solid #ddd;
 }
 
-/* Hover 효과 */
 .hb-color-basic-item:hover {
-  transform: scale(1.18);
-  box-shadow: 0 0 4px rgba(53, 88, 168, 0.45); /* 은남색 하이라이트 */
-  border-color: #3558A8;
-}
-
-/* 모바일 최적화 */
-@media (max-width: 600px) {
-
-  .hb-color-basic-popup {
-    width: 85%;
-    left: 7% !important;
-    padding: 10px;
-  }
-
-  .hb-color-basic-item {
-    width: 22px;
-    height: 22px;
-  }
-
-  .hb-color-basic-grid {
-    gap: 7px;
-  }
+  border: 1px solid #555;
 }
 
 
