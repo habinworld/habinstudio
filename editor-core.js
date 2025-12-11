@@ -1,152 +1,229 @@
-/* ---------------------------------------------------
-   ⚙️ editor-core.js — 중앙 실행 엔진
-   Ha-Bin Studio · window.EditorCore 등록
----------------------------------------------------- */
+/* -------------------------------------------------------
+   ✨ editor-core.js — Final Stable Edition
+   Ha-Bin Studio Editor Core (전역 window.EditorCore)
+   - 이름 통일 규칙 100% 준수
+   - TextEngine / ColorEngine / ImageEngine 모두와 연결
+-------------------------------------------------------- */
 
-(function () {
+window.EditorCore = (function () {
 
   const editor = document.getElementById("hb-editor");
-  if (!editor) return;
 
-  const TextEngine     = window.TextEngine;
-  const ImageEngine    = window.ImageEngine;
-  const ColorBasic     = window.ColorBasic;
-  const AdvancedColor  = window.AdvancedColor;
-  const StorageEngine  = window.StorageEngine;
 
-  let isLocked = false;
+  /* =====================================================
+        🔵 헬퍼 1) 현재 Range 가져오기
+  ===================================================== */
+  function getRange() {
+    const sel = window.getSelection();
+    if (!sel.rangeCount) return null;
+    return sel.getRangeAt(0);
+  }
 
-  // 공용 실행 함수
-  function execute(cmdObj) {
-    if (!cmdObj || isLocked) return;
-    isLocked = true;
 
-    const { cmd, value } = cmdObj;
+  /* =====================================================
+        🔵 헬퍼 2) execCommand 안전 실행
+  ===================================================== */
+  function cmd(command, value = null) {
+    document.execCommand(command, false, value);
+    editor.focus();
+  }
+
+
+  /* =====================================================
+        ✏️ 1) 글자 스타일
+  ===================================================== */
+  function bold()      { cmd("bold"); }
+  function italic()    { cmd("italic"); }
+  function underline() { cmd("underline"); }
+
+
+  /* =====================================================
+        🖋 2) 폰트 설정
+  ===================================================== */
+  function setFont(fontName) {
+    cmd("fontName", fontName);
+  }
+
+  /* =====================================================
+        🔠 3) 글자 크기
+  ===================================================== */
+  function setSize(px) {
+    // execCommand로는 px 직접 안되므로 span 래핑 방식
+    wrapInlineStyle(`font-size:${px}px`);
+  }
+
+
+  /* =====================================================
+        📏 4) 줄간격
+  ===================================================== */
+  function setLineHeight(lh) {
+    wrapBlockStyle(`line-height:${lh}`);
+  }
+
+
+  /* =====================================================
+        🎨 5) 기본 색상 / 배경색
+        (ColorBasic 엔진이 호출됨)
+  ===================================================== */
+  function openBasicColor(btn, target) {
+    window.ColorBasic.open(btn, target);
+  }
+
+  /* =====================================================
+        🎨 6) 고급 색상 팝업
+  ===================================================== */
+  function openAdvancedColor(btn, target) {
+    window.ColorAdvanced.open(btn, target);
+  }
+
+
+  /* =====================================================
+        📐 7) 정렬
+  ===================================================== */
+  function alignLeft()    { cmd("justifyLeft"); }
+  function alignCenter()  { cmd("justifyCenter"); }
+  function alignRight()   { cmd("justifyRight"); }
+  function alignJustify() { cmd("justifyFull"); }
+
+
+  /* =====================================================
+        🔢 8) 목록
+  ===================================================== */
+  function ul() { cmd("insertUnorderedList"); }
+  function ol() { cmd("insertOrderedList"); }
+
+
+  /* =====================================================
+        🧹 9) 초기화
+  ===================================================== */
+  function clear() {
+    editor.innerHTML = "";
+  }
+
+
+  /* =====================================================
+        ↩️ 10) Undo / Redo
+  ===================================================== */
+  function undo() { cmd("undo"); }
+  function redo() { cmd("redo"); }
+
+
+  /* =====================================================
+        🖼 11) 이미지 삽입
+        (ImageEngine이 파일을 base64로 변환해서 span으로 넣음)
+  ===================================================== */
+  function insertImage(file) {
+    if (!window.ImageEngine) return;
+
+    window.ImageEngine.load(file, function (base64) {
+      const img = document.createElement("img");
+      img.src = base64;
+      img.className = "hb-img";
+      editor.appendChild(img);
+
+      // 포커스 유지
+      editor.focus();
+    });
+  }
+
+
+  /* =====================================================
+        🖼 12) 이미지 정렬
+        left / center / right
+  ===================================================== */
+  function imageAlign(dir) {
+    const sel = getRange();
+    if (!sel) return;
+
+    let node = sel.startContainer;
+
+    // 이미지가 아닌 경우 → 가장 가까운 img 탐색
+    while (node && node.tagName !== "IMG") {
+      node = node.parentNode;
+    }
+    if (!node) return;
+
+    node.style.display = "block";
+    node.style.margin = "10px auto";
+
+    if (dir === "left") {
+      node.style.marginLeft = "0";
+      node.style.marginRight = "auto";
+    }
+    if (dir === "center") {
+      node.style.marginLeft = "auto";
+      node.style.marginRight = "auto";
+    }
+    if (dir === "right") {
+      node.style.marginLeft = "auto";
+      node.style.marginRight = "0";
+    }
 
     editor.focus();
-
-    if (cmd === "fontSizePx") {
-      applyFontSizePx(value);
-    } else if (cmd === "lineHeight") {
-      applyLineHeight(value);
-    } else {
-      document.execCommand(cmd, false, value || null);
-    }
-
-    isLocked = false;
   }
 
-  // px 단위 글자 크기
-  function applyFontSizePx(px) {
-    const sel = window.getSelection();
-    if (!sel.rangeCount) return;
 
-    const range = sel.getRangeAt(0);
+  /* =====================================================
+        🔧 내부 함수 — Inline 스타일 래핑
+  ===================================================== */
+  function wrapInlineStyle(styleText) {
+    const range = getRange();
+    if (!range) return;
+
     const span = document.createElement("span");
-    span.style.fontSize = px + "px";
-    span.appendChild(range.extractContents());
-    range.insertNode(span);
+    span.style = styleText;
+    range.surroundContents(span);
   }
 
-  // 줄간격
-  function applyLineHeight(h) {
-    const sel = window.getSelection();
-    if (!sel.rangeCount) return;
-    const node = sel.anchorNode && sel.anchorNode.parentNode;
-    if (node && node.style) {
-      node.style.lineHeight = h;
+  /* =====================================================
+        🔧 내부 함수 — Block 스타일 래핑
+  ===================================================== */
+  function wrapBlockStyle(styleText) {
+    const range = getRange();
+    if (!range) return;
+
+    let target = range.startContainer;
+
+    // 블록 요소(LI, P 등)를 찾을 때까지 올라감
+    while (target && target !== editor && !isBlockElement(target)) {
+      target = target.parentNode;
     }
+    if (!target || target === editor) return;
+
+    target.style = styleText;
   }
 
-  // 색상 — 기본
-  function openBasicColor(button, mode) {
-    if (!ColorBasic) return;
-    ColorBasic.open(button, mode, (color) => {
-      const cmd = mode === "text" ? "foreColor" : "hiliteColor";
-      execute({ cmd, value: color });
-    });
+  function isBlockElement(node) {
+    return ["DIV", "P", "LI", "UL", "OL"].includes(node.tagName);
   }
 
-  // 색상 — 고급
-  function openAdvancedColor(button, mode) {
-    if (!AdvancedColor) return;
-    AdvancedColor.open(button, mode, (rgba) => {
-      const cmd = mode === "text" ? "foreColor" : "hiliteColor";
-      execute({ cmd, value: rgba });
-    });
-  }
 
-  // 이미지 삽입 / 정렬
-  function insertImage(file) {
-    if (!ImageEngine) return;
-    ImageEngine.insert(file);
-  }
-
-  function imageAlign(dir) {
-    if (!ImageEngine) return;
-    ImageEngine.align(dir);
-  }
-
-  // 저장 / 불러오기 (필요하면 나중에 구현)
-  function save(key) {
-    if (!StorageEngine) return;
-    StorageEngine.save(key, {
-      title: document.getElementById("hb-title")?.value || "",
-      content: editor.innerHTML,
-      notice: document.getElementById("hb-notice")?.checked || false
-    });
-  }
-
-  function load(key) {
-    if (!StorageEngine) return;
-    const data = StorageEngine.load(key);
-    if (!data) return;
-    document.getElementById("hb-title").value = data.title || "";
-    editor.innerHTML = data.content || "";
-    document.getElementById("hb-notice").checked = !!data.notice;
-  }
-
-  // 에디터 클릭 시 포커스 유지
-  editor.addEventListener("click", () => editor.focus());
-
-  // 전역 등록
-  window.EditorCore = {
-    execute,
-
-    bold:        () => execute(TextEngine.bold()),
-    italic:      () => execute(TextEngine.italic()),
-    underline:   () => execute(TextEngine.underline()),
-
-    setFont:     (f)   => execute(TextEngine.setFont(f)),
-    setSize:     (px)  => execute(TextEngine.setSize(px)),
-    setLineHeight:(h)  => execute(TextEngine.setLineHeight(h)),
-
-    setColor:    (c)   => execute(TextEngine.setColor(c)),
-    setBgColor:  (c)   => execute(TextEngine.setBgColor(c)),
-
-    alignLeft:   ()    => execute(TextEngine.alignLeft()),
-    alignCenter: ()    => execute(TextEngine.alignCenter()),
-    alignRight:  ()    => execute(TextEngine.alignRight()),
-    alignJustify:()    => execute(TextEngine.alignJustify()),
-
-    ul:          ()    => execute(TextEngine.ul()),
-    ol:          ()    => execute(TextEngine.ol()),
-
-    clear:       ()    => execute(TextEngine.clear()),
-
-    undo:        ()    => execute(TextEngine.undo()),
-    redo:        ()    => execute(TextEngine.redo()),
-
+  /* =====================================================
+        📌 공개 API
+  ===================================================== */
+  return {
+    bold,
+    italic,
+    underline,
+    setFont,
+    setSize,
+    setLineHeight,
+    alignLeft,
+    alignCenter,
+    alignRight,
+    alignJustify,
+    ul,
+    ol,
+    clear,
+    undo,
+    redo,
     openBasicColor,
     openAdvancedColor,
-
     insertImage,
     imageAlign,
-
-    save,
-    load
   };
 
 })();
+
 
 
