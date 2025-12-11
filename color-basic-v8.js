@@ -1,83 +1,69 @@
 /* ---------------------------------------------------
-   🎨 color-basic-v8.js — 기본 색상 선택기 (전역 안정판)
-   Ha-Bin Studio — window.ColorBasic 등록 버전
+   🎨 color-basic-v8.js — 전역 기본 색상 선택기
+   Ha-Bin Studio — window.ColorBasic 등록
 ---------------------------------------------------- */
 
 window.ColorBasic = (function () {
 
-  // 기본 색상 팔레트
+  let currentCallback = null;
+
   const COLORS = [
-    "#000000", "#333333", "#666666", "#999999", "#cccccc", "#ffffff",
-    "#ff0000", "#ff6600", "#ffcc00", "#ffff00",
-    "#00ff00", "#009900",
-    "#00ffff", "#0066ff", "#0000ff",
-    "#9900ff", "#ff00ff"
+    "#000000", "#444444", "#777777", "#AAAAAA", "#FFFFFF",
+    "#FF0000", "#FF7F00", "#FFFF00", "#00FF00", "#00FFFF",
+    "#0000FF", "#8B00FF", "#FF1493", "#5BB6C8", "#AEEFF2"
   ];
 
-  // 팝업 DOM ID
-  const POPUP_ID = "hb-popup-color-basic-v8";
-
-  /* ---------------------------------------------------
-        팝업 생성 또는 가져오기
-  ---------------------------------------------------- */
-  function getPopup() {
-    let popup = document.getElementById(POPUP_ID);
-    if (!popup) {
-      popup = document.createElement("div");
-      popup.id = POPUP_ID;
-      popup.className = "hb-color-basic-popup";
-      document.body.appendChild(popup);
-    }
-    return popup;
-  }
-
-  /* ---------------------------------------------------
-        팝업 열기
-  ---------------------------------------------------- */
+  /* ----------------------------------------------
+       팝업 생성
+  ---------------------------------------------- */
   function open(button, mode, callback) {
-    const popup = getPopup();
-    popup.innerHTML = ""; // 초기화
+    close(); // 기존 팝업 제거
 
-    popup.style.display = "grid";
-    popup.style.position = "absolute";
+    currentCallback = callback;
 
-    // 버튼 바로 아래에 위치시킴
-    const rect = button.getBoundingClientRect();
-    popup.style.left = rect.left + "px";
-    popup.style.top = rect.bottom + 5 + "px";
+    const box = document.createElement("div");
+    box.className = "hb-color-basic-box";
 
-    // 색상 버튼 생성
     COLORS.forEach(color => {
-      const box = document.createElement("div");
-      box.className = "hb-color-basic-item";
-      box.style.backgroundColor = color;
+      const el = document.createElement("div");
+      el.className = "hb-color-basic-item";
+      el.style.background = color;
 
-      box.addEventListener("click", () => {
-        popup.style.display = "none";
-        callback(color);  // EditorCore에게 색상 전달
+      el.addEventListener("click", () => {
+        callback(color);
+        close();
       });
 
-      popup.appendChild(box);
+      box.appendChild(el);
     });
+
+    document.body.appendChild(box);
+
+    // 버튼 기준으로 위치 설정
+    const rect = button.getBoundingClientRect();
+    box.style.top = rect.bottom + 6 + "px";
+    box.style.left = rect.left + "px";
   }
 
-  /* ---------------------------------------------------
-        팝업 닫기 (외부 클릭)
-  ---------------------------------------------------- */
-  document.addEventListener("click", (e) => {
-    const popup = document.getElementById(POPUP_ID);
-    if (!popup) return;
+  /* ----------------------------------------------
+       팝업 제거
+  ---------------------------------------------- */
+  function close() {
+    const old = document.querySelector(".hb-color-basic-box");
+    if (old) old.remove();
+  }
 
-    if (!popup.contains(e.target) && !e.target.closest(".hb-btn")) {
-      popup.style.display = "none";
+  // 다른 곳 클릭 시 닫기
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest(".hb-color-basic-box") &&
+        !e.target.closest(".hb-btn")) {
+      close();
     }
   });
 
-  /* ---------------------------------------------------
-        외부 제공 함수
-  ---------------------------------------------------- */
   return {
-    open
+    open,
+    close
   };
 
 })();
