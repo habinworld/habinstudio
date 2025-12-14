@@ -48,10 +48,14 @@
 .hb-top-buttons {
   display: flex;
   gap: 8px;
+  margin-left: auto;
+  flex-wrap: nowrap; 
 }
 
-/* 공통 버튼 스타일 — ★ 엑셀형 최종 고정 */
-.hb-top-buttons {
+/* ============================
+   탑 버튼 4개 (엑셀형 명령 버튼)
+============================ */
+.hb-top-btn {
   padding: 6px 12px;
   font-size: 15px;
 
@@ -61,11 +65,11 @@
   border-radius: 6px;
   cursor: pointer;
 
-  /* ⭐ 엑셀형 핵심 고정 규칙 */
-  height: 32px;              /* 버튼 높이 고정 */
-  line-height: 32px;         /* 세로 찌그러짐 방지 */
-  white-space: nowrap;       /* 글자 줄바꿈 금지 */
-  flex-shrink: 0;            /* flex 안에서 눌리지 않게 */
+  /* 엑셀형 고정 규격 */
+  height: 32px;
+  line-height: 32px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* 개별 색상 (ID 기반 오버라이드) */
