@@ -28,7 +28,10 @@
   });
   const btnDelete = document.getElementById("hb-btn-delete");
   const btnCancel = document.getElementById("hb-btn-cancel");
-
+btnCancel &&
+  btnCancel.addEventListener("click", () => {
+    location.href = "list.html";
+  });
   const toolbarBasic    = document.getElementById("hb-toolbar-basic");
   const toolbarAdvanced = document.getElementById("hb-toolbar-advanced");
 
