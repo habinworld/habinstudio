@@ -21,6 +21,11 @@
 
   const btnSave   = document.getElementById("hb-btn-save");
   const btnUpdate = document.getElementById("hb-btn-update");
+   btnUpdate &&
+  btnUpdate.addEventListener("click", () => {
+    window.POST_ID &&
+      (location.href = `post.html?mode=edit&id=${window.POST_ID}`);
+  });
   const btnDelete = document.getElementById("hb-btn-delete");
   const btnCancel = document.getElementById("hb-btn-cancel");
 
