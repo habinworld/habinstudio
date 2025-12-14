@@ -182,9 +182,8 @@
   padding: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
-
 /* ============================
-   모바일 최적화
+   모바일 최적화 (엑셀형 · 규격 고정)
 ============================ */
 @media (max-width: 600px) {
 
@@ -202,18 +201,14 @@
     font-size: 16px;
   }
 
+  /* 상단 버튼: 배치만 조정, 규격은 고정 */
   .hb-top-buttons {
+    display: flex;
+    flex-wrap: nowrap;   /* ⭐ 봉인 */
     gap: 6px;
   }
 
-  #hb-btn-save,
-  #hb-btn-cancel,
-  #hb-btn-update,
-  #hb-btn-delete {
-    padding: 5px 10px;
-    font-size: 14px;
-  }
-
+  /* 하단 버튼만 모바일 친화 */
   .hb-bottom-buttons {
     justify-content: center;
   }
@@ -223,5 +218,7 @@
     padding: 5px 10px;
   }
 }
+
+
 
 
