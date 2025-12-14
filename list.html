@@ -119,7 +119,7 @@
 
   <!-- ⭐ 상단 버튼 3개 -->
   <div class="top-buttons">
-    <a href="editor.html" class="btn">글쓰기</a>
+    <a href="post.html?mode=new" class="btn">글쓰기</a>
     <a href="list.html" class="btn">목록</a>
     <a href="index.html" class="btn">메인</a>
   </div>
@@ -176,7 +176,7 @@ function renderList() {
     tr.innerHTML = `
       <td>${posts.length - (start + idx)}</td>
       <td>${p.writer}</td>
-      <td><a href="view.html?id=${p.id}" class="title-link">${p.isNotice ? "📌 " : ""}${p.title}</a></td>
+      <td><a href="post.html?mode=view&id=${p.id}" class="title-link">${p.isNotice ? "📌 " : ""}${p.title}</a></td>
       <td>${p.date}</td>
     `;
 
