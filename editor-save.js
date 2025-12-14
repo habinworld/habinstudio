@@ -1,111 +1,99 @@
 /* ---------------------------------------------------
-   💾 editor-save.js — vFinal 안정판
-   Ha-Bin Studio 저장 엔진
-   - 새 글 등록
-   - 기존 글 수정
-   - 글 삭제
+   editor-save.js
+   Ha-Bin Studio — Save / Update Engine
 ---------------------------------------------------- */
 
-window.EditorSave = (function () {
+(function () {
 
-  const STORAGE_KEY = "habin_posts";
+  const btnSave   = document.getElementById("hb-btn-save");
+  const btnUpdate = document.getElementById("hb-btn-update");
+  const btnDelete = document.getElementById("hb-btn-delete");
 
-  /* -----------------------------
-      🔹 저장소 불러오기
-  ----------------------------- */
-  function loadPosts() {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
-  }
-
-  /* -----------------------------
-      🔹 저장소 저장하기
-  ----------------------------- */
-  function savePosts(posts) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-  }
-
-  /* -----------------------------
-      🔹 글 등록
-  ----------------------------- */
-  function create() {
-    const title   = document.getElementById("hb-title").value.trim();
-    const content = document.getElementById("hb-editor").innerHTML.trim();
-    const notice  = document.getElementById("hb-notice").checked ? 1 : 0;
-
-    if (!title) {
-      alert("제목을 입력하세요.");
-      return;
-    }
-
-    const posts = loadPosts();
-
-    const newPost = {
-      id: Date.now().toString(),
-      title,
-      content,
-      notice,
-      writer: "하빈",
-      date: new Date().toLocaleString("ko-KR")
+  /* ============================
+     데이터 수집 (엑셀: 한 행)
+  ============================ */
+  function collectData() {
+    return {
+      id: Date.now(),
+      title: document.getElementById("hb-title").value.trim(),
+      content: document.getElementById("hb-editor").innerHTML,
+      date: new Date().toISOString()
     };
+  }
 
-    posts.push(newPost);
-    savePosts(posts);
+  /* ============================
+     SAVE — 새 글
+  ============================ */
+  function saveNew() {
+    const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+    const data = collectData();
 
+    posts.push(data);
+    localStorage.setItem("habin_posts", JSON.stringify(posts));
+
+    alert("저장 완료");
     location.href = "list.html";
   }
 
-  /* -----------------------------
-      🔹 글 수정
-  ----------------------------- */
-  function update(id) {
-    const title   = document.getElementById("hb-title").value.trim();
-    const content = document.getElementById("hb-editor").innerHTML.trim();
-    const notice  = document.getElementById("hb-notice").checked ? 1 : 0;
+  /* ============================
+     UPDATE — 기존 글 수정
+  ============================ */
+  function updatePost() {
+    const params = new URLSearchParams(location.search);
+    const id = Number(params.get("id"));
 
-    if (!title) {
-      alert("제목을 입력하세요.");
-      return;
-    }
+    if (!id) return alert("수정할 글 ID가 없습니다.");
 
-    const posts = loadPosts();
-    const idx = posts.findIndex(p => p.id === id);
+    let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
-    if (idx === -1) {
-      alert("글을 찾을 수 없습니다.");
-      return;
-    }
+    posts = posts.map(post =>
+      post.id === id
+        ? { ...post, title: hbTitle.value, content: hbEditor.innerHTML }
+        : post
+    );
 
-    posts[idx].title = title;
-    posts[idx].content = content;
-    posts[idx].notice = notice;
-    posts[idx].date = new Date().toLocaleString("ko-KR");
+    localStorage.setItem("habin_posts", JSON.stringify(posts));
 
-    savePosts(posts);
+    alert("수정 완료");
+    location.href = "post.html?mode=view&id=" + id;
+  }
 
+  /* ============================
+     DELETE — 삭제
+  ============================ */
+  function deletePost() {
+    const params = new URLSearchParams(location.search);
+    const id = Number(params.get("id"));
+
+    if (!confirm("정말 삭제할까요?")) return;
+
+    let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+    posts = posts.filter(post => post.id !== id);
+
+    localStorage.setItem("habin_posts", JSON.stringify(posts));
     location.href = "list.html";
   }
 
-  /* -----------------------------
-      🔹 글 삭제
-  ----------------------------- */
-  function remove(id) {
-    if (!confirm("정말 삭제하시겠습니까?")) return;
-
-    const posts = loadPosts();
-    const filtered = posts.filter(p => p.id !== id);
-
-    savePosts(filtered);
-
-    location.href = "list.html";
+  /* ============================
+     버튼 연결
+  ============================ */
+  if (btnSave) {
+    btnSave.addEventListener("click", () => {
+      if (window.POST_MODE !== "new") return;
+      saveNew();
+    });
   }
 
-  return {
-    create,
-    update,
-    remove,
-    loadPosts
-  };
+  if (btnUpdate) {
+    btnUpdate.addEventListener("click", () => {
+      if (window.POST_MODE !== "edit") return;
+      updatePost();
+    });
+  }
+
+  if (btnDelete) {
+    btnDelete.addEventListener("click", deletePost);
+  }
 
 })();
 
