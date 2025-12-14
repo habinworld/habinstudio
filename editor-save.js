@@ -35,10 +35,7 @@
     location.href = "list.html";
   }
 
-  /* ============================
-     UPDATE — 기존 글 수정
-  ============================ */
-  /* ============================
+   /* ============================
    UPDATE — 기존 글 수정 (헌법 준수)
 ============================ */
 function updatePost() {
@@ -91,19 +88,11 @@ function updatePost() {
   /* ============================
      버튼 연결
   ============================ */
-  if (btnSave) {
-    btnSave.addEventListener("click", () => {
-      if (window.POST_MODE !== "new") return;
-      saveNew();
-    });
-  }
-
-  if (btnUpdate) {
-    btnUpdate.addEventListener("click", () => {
-      if (window.POST_MODE !== "edit") return;
-      updatePost();
-    });
-  }
+  btnSave &&
+  btnSave.addEventListener("click", () => {
+    window.POST_MODE === "new"  && saveNew();
+    window.POST_MODE === "edit" && updatePost();
+  });
 
   if (btnDelete) {
     btnDelete.addEventListener("click", deletePost);
