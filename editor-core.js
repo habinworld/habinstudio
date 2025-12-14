@@ -1,29 +1,54 @@
 /* ---------------------------------------------------
-   ⚙️ editor-core.js — EditorCore vFinal 안정판
-   Ha-Bin Studio · window.EditorCore 등록
+   ⚙️ editor-core.js — EditorCore vFinal
+   Ha-Bin Studio · Data → DOM Core
+   역할: 초기 데이터 바인딩 + 편집 명령 실행
+   ❌ UI 상태 제어
+   ❌ 저장/삭제 판단
 ---------------------------------------------------- */
 
 window.EditorCore = (function () {
 
-  // -------------------------------------------------
-  // 연결할 엔진들 (모두 window 전역)
-  // -------------------------------------------------
-  const TextEngine = window.TextEngine;
-  const ImageEngine = window.ImageEngine;
-  const StorageEngine = window.StorageEngine;
-  const ColorBasic = window.ColorBasic;
-  const ColorAdvanced = window.ColorAdvanced;
+  /* =================================================
+        1) 외부 엔진 연결 (전역 의존)
+  ================================================= */
+  const TextEngine     = window.TextEngine;
+  const ImageEngine    = window.ImageEngine;
+  const ColorBasic     = window.ColorBasic;
+  const ColorAdvanced  = window.ColorAdvanced;
 
-  // 본문 에디터
+  /* =================================================
+        2) DOM 참조 (고정 ID)
+  ================================================= */
   const editor = document.getElementById("hb-editor");
+  const title  = document.getElementById("hb-title");
 
-  // 중복 실행 방지
+  /* =================================================
+        3) id 기반 초기 로딩 (존재 / 비존재)
+        - 판단 없음
+        - 분기 없음
+        - 페이지 로드 시 1회
+  ================================================= */
+  const params = new URLSearchParams(location.search);
+  const id = Number(params.get("id"));
+
+  const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+  const record = posts.find(p => p.id === id);
+
+  record && (
+    title.value = record.title,
+    editor.innerHTML = record.content
+  );
+
+  /* =================================================
+        4) 실행 잠금 (중복 명령 방지)
+  ================================================= */
   let isLocked = false;
 
-
-  /* -------------------------------------------------
-        공용 실행 엔진 (execCommand wrapper)
-  -------------------------------------------------- */
+  /* =================================================
+        5) 공용 실행 엔진
+        - 판단 없음
+        - 명령만 전달
+  ================================================= */
   function execute(cmdObj) {
     if (!cmdObj || isLocked) return;
 
@@ -32,89 +57,63 @@ window.EditorCore = (function () {
 
     editor.focus();
 
-    // 폰트 사이즈(px) 직접 처리
-    if (cmd === "fontSizePx") {
-      applyFontSizePx(value);
-    }
-    // 줄간격 직접 처리
-    else if (cmd === "lineHeight") {
-      applyLineHeight(value);
-    }
-    // 그 외 execCommand
-    else {
-      document.execCommand(cmd, false, value || null);
-    }
+    cmd === "fontSizePx" && applyFontSizePx(value);
+    cmd === "lineHeight" && applyLineHeight(value);
+    cmd !== "fontSizePx" && cmd !== "lineHeight"
+      && document.execCommand(cmd, false, value || null);
 
     isLocked = false;
   }
 
-
-  /* -------------------------------------------------
-        px 기반 폰트사이즈 적용
-  -------------------------------------------------- */
+  /* =================================================
+        6) px 기반 폰트 크기
+  ================================================= */
   function applyFontSizePx(px) {
     const sel = window.getSelection();
     if (!sel.rangeCount) return;
 
     const range = sel.getRangeAt(0);
-
     const span = document.createElement("span");
     span.style.fontSize = px + "px";
 
     span.appendChild(range.extractContents());
     range.insertNode(span);
 
-    // 커서 span 끝에 위치시키기
     range.setStartAfter(span);
     range.setEndAfter(span);
     sel.removeAllRanges();
     sel.addRange(range);
   }
 
-
-  /* -------------------------------------------------
-        줄간격 적용
-  -------------------------------------------------- */
+  /* =================================================
+        7) 줄간격
+  ================================================= */
   function applyLineHeight(h) {
     const sel = window.getSelection();
     if (!sel.rangeCount) return;
 
     const node = sel.anchorNode.parentNode;
-    if (node && node.style) {
-      node.style.lineHeight = h;
-    }
+    node && node.style && (node.style.lineHeight = h);
   }
 
-
-  /* -------------------------------------------------
-        기본 색상 팝업 호출
-  -------------------------------------------------- */
+  /* =================================================
+        8) 색상 팝업
+  ================================================= */
   function openBasicColor(button, mode) {
-    ColorBasic.open(button, mode, function (color) {
-
-      const cmd = (mode === "text") ? "foreColor" : "hiliteColor";
-      execute({ cmd, value: color });
-
-    });
+    ColorBasic.open(button, mode, color =>
+      execute({ cmd: mode === "text" ? "foreColor" : "hiliteColor", value: color })
+    );
   }
 
-
-  /* -------------------------------------------------
-        고급 색상 팝업 호출
-  -------------------------------------------------- */
   function openAdvancedColor(button, mode) {
-    ColorAdvanced.open(button, mode, function (color) {
-
-      const cmd = (mode === "text") ? "foreColor" : "hiliteColor";
-      execute({ cmd, value: color });
-
-    });
+    ColorAdvanced.open(button, mode, color =>
+      execute({ cmd: mode === "text" ? "foreColor" : "hiliteColor", value: color })
+    );
   }
 
-
-  /* -------------------------------------------------
-        이미지 삽입 / 정렬
-  -------------------------------------------------- */
+  /* =================================================
+        9) 이미지
+  ================================================= */
   function insertImage(file) {
     ImageEngine.insert(file);
   }
@@ -123,65 +122,45 @@ window.EditorCore = (function () {
     ImageEngine.align(direction);
   }
 
-
-  /* -------------------------------------------------
-        저장 / 불러오기
-  -------------------------------------------------- */
-  function save(key) {
-    StorageEngine.save(key, editor.innerHTML);
-  }
-
-  function load(key) {
-    const data = StorageEngine.load(key);
-    if (data) editor.innerHTML = data;
-  }
-
-
-  /* -------------------------------------------------
-        클릭 → 포커스 유지
-  -------------------------------------------------- */
+  /* =================================================
+        10) 포커스 유지
+  ================================================= */
   editor.addEventListener("click", () => editor.focus());
 
-
-  /* -------------------------------------------------
-        외부에 제공할 API
-  -------------------------------------------------- */
+  /* =================================================
+        11) 외부 공개 API (명령만)
+  ================================================= */
   return {
     execute,
 
-    // 텍스트 엔진 연결
-    bold: () => execute(TextEngine.bold()),
-    italic: () => execute(TextEngine.italic()),
+    bold:      () => execute(TextEngine.bold()),
+    italic:    () => execute(TextEngine.italic()),
     underline: () => execute(TextEngine.underline()),
 
-    setFont: (f) => execute(TextEngine.setFont(f)),
-    setSize: (px) => execute(TextEngine.setSize(px)),
-    setLineHeight: (h) => execute(TextEngine.setLineHeight(h)),
+    setFont:       f  => execute(TextEngine.setFont(f)),
+    setSize:       px => execute(TextEngine.setSize(px)),
+    setLineHeight: h  => execute(TextEngine.setLineHeight(h)),
 
-    setColor: (c) => execute(TextEngine.setColor(c)),
-    setBgColor: (c) => execute(TextEngine.setBgColor(c)),
+    setColor:   c => execute(TextEngine.setColor(c)),
+    setBgColor: c => execute(TextEngine.setBgColor(c)),
 
-    alignLeft: () => execute(TextEngine.alignLeft()),
-    alignCenter: () => execute(TextEngine.alignCenter()),
-    alignRight: () => execute(TextEngine.alignRight()),
+    alignLeft:    () => execute(TextEngine.alignLeft()),
+    alignCenter:  () => execute(TextEngine.alignCenter()),
+    alignRight:   () => execute(TextEngine.alignRight()),
     alignJustify: () => execute(TextEngine.alignJustify()),
 
     ul: () => execute(TextEngine.ul()),
     ol: () => execute(TextEngine.ol()),
 
     clear: () => execute(TextEngine.clear()),
-
-    undo: () => execute(TextEngine.undo()),
-    redo: () => execute(TextEngine.redo()),
+    undo:  () => execute(TextEngine.undo()),
+    redo:  () => execute(TextEngine.redo()),
 
     openBasicColor,
     openAdvancedColor,
 
     insertImage,
-    imageAlign,
-
-    save,
-    load
+    imageAlign
   };
 
 })();
