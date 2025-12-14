@@ -84,16 +84,9 @@
   ============================ */
   resetUI();
 
-  switch (mode) {
-    case "edit":
-      modeEdit();
-      break;
-    case "view":
-      modeView();
-      break;
-    default:
-      modeNew();
-  }
+ mode === "new"  && modeNew();
+mode === "edit" && modeEdit();
+mode === "view" && modeView();
 
 })();
 
