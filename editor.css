@@ -56,18 +56,18 @@
    탑 버튼 4개 (엑셀형 명령 버튼)
 ============================ */
 .hb-top-btn {
-  padding: 6px 12px;
-  font-size: 15px;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 12px;      /* ⭐ 세로 padding 제거 */
 
+  font-size: 15px;
   background: #3558A8;
   color: #FFFFFF;
+
   border: none;
   border-radius: 6px;
   cursor: pointer;
 
-  /* 엑셀형 고정 규격 */
-  height: 32px;
-  line-height: 32px;
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -82,7 +82,7 @@
 }
 
 #hb-btn-update {
-  background: #6F6F6F;
+  background: #2E8B57;
 }
 
 #hb-btn-delete {
