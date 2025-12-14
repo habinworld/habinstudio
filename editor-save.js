@@ -38,25 +38,39 @@
   /* ============================
      UPDATE — 기존 글 수정
   ============================ */
-  function updatePost() {
-    const params = new URLSearchParams(location.search);
-    const id = Number(params.get("id"));
+  /* ============================
+   UPDATE — 기존 글 수정 (헌법 준수)
+============================ */
+function updatePost() {
+  const id = window.POST_ID;
 
-    if (!id) return alert("수정할 글 ID가 없습니다.");
+  const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
-    let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+  const titleEl  = document.getElementById("hb-title");
+  const editorEl = document.getElementById("hb-editor");
 
-    posts = posts.map(post =>
+  const nextPosts =
+    id &&
+    titleEl &&
+    editorEl &&
+    posts.map(post =>
       post.id === id
-        ? { ...post, title: hbTitle.value, content: hbEditor.innerHTML }
+        ? {
+            ...post,
+            title: titleEl.value.trim(),
+            content: editorEl.innerHTML,
+            date: new Date().toISOString()
+          }
         : post
     );
 
-    localStorage.setItem("habin_posts", JSON.stringify(posts));
+  nextPosts &&
+    localStorage.setItem("habin_posts", JSON.stringify(nextPosts));
 
-    alert("수정 완료");
-    location.href = "post.html?mode=view&id=" + id;
-  }
+  nextPosts &&
+    (location.href = `post.html?mode=view&id=${id}`);
+}
+
 
   /* ============================
      DELETE — 삭제
