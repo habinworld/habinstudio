@@ -12,7 +12,8 @@
   // ?mode=edit  → 수정
   // ?mode=view  → 보기
   const mode = params.get("mode") || "new";
-
+// 🔒 전역 모드 공개 (저장 엔진에서 사용)
+  window.POST_MODE = mode;
   // 요소 참조
   const editor = document.getElementById("hb-editor");
   const title  = document.getElementById("hb-title");
