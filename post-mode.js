@@ -40,11 +40,6 @@
   function modeNew() {
     editor.contentEditable = "true";
     title.readOnly = false;
-
-    btnSave.style.display = "inline-block";
-
-    toolbarBasic.style.display    = "block";
-    toolbarAdvanced.style.display = "block";
   }
 
   /* ============================
@@ -53,12 +48,6 @@
   function modeEdit() {
     editor.contentEditable = "true";
     title.readOnly = false;
-
-    btnUpdate.style.display = "inline-block";
-    btnDelete.style.display = "inline-block";
-
-    toolbarBasic.style.display    = "block";
-    toolbarAdvanced.style.display = "block";
   }
 
   /* ============================
@@ -67,9 +56,6 @@
   function modeView() {
     editor.contentEditable = "false";
     title.readOnly = true;
-
-    toolbarBasic.style.display    = "none";
-    toolbarAdvanced.style.display = "none";
   }
 
   /* ============================
