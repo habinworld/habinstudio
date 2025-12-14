@@ -32,13 +32,6 @@
   function resetUI() {
     editor.contentEditable = "false";
     title.readOnly = true;
-
-    btnSave.style.display   = "none";
-    btnUpdate.style.display = "none";
-    btnDelete.style.display = "none";
-
-    toolbarBasic.style.display    = "none";
-    toolbarAdvanced.style.display = "none";
   }
 
   /* ============================
