@@ -63,7 +63,7 @@ function updatePost() {
 
   nextPosts &&
     localStorage.setItem("habin_posts", JSON.stringify(nextPosts));
-
+  nextPosts && alert("저장 완료");
   nextPosts &&
     (location.href = `post.html?mode=view&id=${id}`);
 }
