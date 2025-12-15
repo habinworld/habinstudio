@@ -1,43 +1,45 @@
 /* ---------------------------------------------------
-   🎛 toolbar.css v8.0 — Optimized Ribbon Style
-   Ha-Bin Studio — Stable, Clean, Fast
+   🎛 toolbar.css v9 — Split Ribbon (FINAL)
+   Ha-Bin Studio — BASIC / ADVANCED
 ---------------------------------------------------- */
 
-/* ---------------------------
-   Toolbar Container
----------------------------- */
-#hb-toolbar {
+/* ============================
+   Toolbar Containers
+============================ */
+#hb-toolbar-basic,
+#hb-toolbar-advanced {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: nowrap;
 
-  padding: 10px 12px;
-  margin-bottom: 12px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
 
   background: #FFFFFF;
   border: 1px solid #E0E0E0;
   border-radius: 10px;
 
   position: relative;
-  z-index: 100; /* popups는 1000대 */
+  z-index: 100;
 }
 
-/* ---------------------------
+/* ============================
    Common Button Style
----------------------------- */
+============================ */
 .hb-btn {
-  width: 36px;
-  height: 36px;
+  height: 32px;
+  padding: 0 8px;
 
-  display: flex;
-  justify-content: center;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
 
   background: #FFFFFF;
   border: 1px solid #D5D5D5;
-
   border-radius: 6px;
-  font-size: 20px;
+
+  font-size: 14px;
   color: #2b2b2b;
 
   cursor: pointer;
@@ -56,7 +58,7 @@
 .hb-btn:active {
   background: #D5E4FF;
   border-color: #3558A8;
-  transform: scale(0.93);
+  transform: scale(0.95);
 }
 
 /* Focus */
@@ -64,70 +66,59 @@
   outline: 2px solid rgba(53,88,168,0.35);
 }
 
-/* ---------------------------
-   Text Color Buttons
----------------------------- */
-#hb-btn-color,
-#hb-btn-bgcolor,
-#hb-btn-advcolor,
-#hb-btn-advbg {
-  position: relative;
-  z-index: 1002;  /* ensures popup is above toolbar */
+/* ============================
+   BASIC Toolbar (굵게)
+============================ */
+#hb-toolbar-basic .hb-btn {
+  font-weight: 600;
 }
 
-/* ---------------------------
-   Image Buttons
----------------------------- */
-#hb-btn-image {
-  border-color: #BDD4FF;
-}
-
-#hb-btn-image:hover {
-  background: #EEF4FF;
-  border-color: #3558A8;
-}
-
-/* Image Align Buttons */
-#hb-btn-img-left,
-#hb-btn-img-center,
-#hb-btn-img-right {
+/* ============================
+   Icon / Emoji Buttons
+============================ */
+.hb-btn.icon {
   font-size: 18px;
 }
 
-/* ---------------------------
-   List Buttons
----------------------------- */
-#hb-btn-ul,
-#hb-btn-ol {
+/* ============================
+   Image Align Buttons
+============================ */
+#hb-btn-img-left,
+#hb-btn-img-center,
+#hb-btn-img-right {
   font-size: 16px;
 }
 
-/* ---------------------------
-   Undo / Redo
----------------------------- */
+/* ============================
+   List / Undo / Redo
+============================ */
+#hb-btn-ul,
+#hb-btn-ol {
+  font-size: 15px;
+}
+
 #hb-btn-undo,
 #hb-btn-redo {
   font-size: 18px;
 }
 
-/* ---------------------------
+/* ============================
    Mobile Optimization
----------------------------- */
+============================ */
 @media (max-width: 600px) {
 
-  #hb-toolbar {
-    gap: 5px;
-    padding: 8px;
+  #hb-toolbar-basic,
+  #hb-toolbar-advanced {
+    padding: 6px 8px;
+    gap: 4px;
   }
 
   .hb-btn {
-    width: 32px;
-    height: 32px;
-    font-size: 18px;
+    height: 30px;
+    font-size: 13px;
   }
 
-  #hb-btn-ul,
-  #hb-btn-ol {
-    font-size: 15px;
+  .hb-btn.icon {
+    font-size: 17px;
   }
 }
