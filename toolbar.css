@@ -90,8 +90,9 @@
 
 /* ADVANCED Buttons – 굵게 */
 #hb-toolbar-advanced .hb-btn {
-  min-width: 44px;
-  font-weight: 600;       /* BASIC과 동일 */
+   width: 60px;       /* 고정폭 */
+  min-width: 60px;   /* 안전장치 (선택) */
+  font-weight: 600;      /* BASIC과 동일 */
 }
 
 /* ADVANCED Dropdowns */
