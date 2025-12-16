@@ -81,6 +81,31 @@
 #hb-toolbar-basic .hb-btn {
   font-weight: 600;
 }
+/* ============================
+   ADVANCED Toolbar (FINAL)
+============================ */
+#hb-toolbar-advanced {
+  gap: 20px;              /* 5글자 드롭다운 기준 간격 */
+}
+
+/* ADVANCED Buttons – 굵게 */
+#hb-toolbar-advanced .hb-btn {
+  min-width: 44px;
+  font-weight: 600;       /* BASIC과 동일 */
+}
+
+/* ADVANCED Dropdowns */
+#hb-toolbar-advanced .hb-select {
+  min-width: 88px;        /* 5글자 체감 */
+  height: 32px;
+
+  font-size: 14px;
+  font-weight: 400;
+
+  border: 1px solid #B8C2D6;
+  border-radius: 6px;
+  background: #FFFFFF;
+}
 
 /* ============================
    Icon / Emoji Buttons
