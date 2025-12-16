@@ -153,5 +153,9 @@ function render(containerId, items) {
   setTimeout(bindEvents, 0);
 }
 
-  
+document.addEventListener("DOMContentLoaded", init);
+
+return { init };
+
+})();
 
