@@ -96,11 +96,11 @@
 
 /* ADVANCED Dropdowns */
 #hb-toolbar-advanced .hb-select {
-  min-width: 88px;        /* 5글자 체감 */
+  min-width: 99px;        /* 5글자 체감 */
   height: 32px;
 
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 500;
 
   border: 1px solid #B8C2D6;
   border-radius: 6px;
