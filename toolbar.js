@@ -45,33 +45,54 @@ window.Toolbar = (function () {
   /* =====================================================
      2) 렌더링
   ===================================================== */
+function render(containerId, items) {
+  const bar = document.getElementById(containerId);
+  if (!bar) return; // DOM 안전장치 (헌법 예외)
 
-  function render(containerId, buttons, isBasic = false) {
-    const bar = document.getElementById(containerId);
-    if (!bar) return;
+  items.forEach(item => {
 
-    buttons.forEach(btn => {
-      const el = document.createElement("button");
-      el.id = btn.id;
-      el.className = "hb-btn";
+    // 존재하면 생성: select
+    item.options && (() => {
+      const s = document.createElement("select");
+      s.id = item.id;
+      s.className = "hb-select";
 
-      if (btn.icon) el.classList.add("icon");
-      if (isBasic) el.classList.add("basic");
+      item.options.forEach(opt => {
+        const o = document.createElement("option");
+        o.value = opt;
+        o.textContent = opt;
+        s.appendChild(o);
+      });
 
-      el.textContent = btn.label;
-      bar.appendChild(el);
-    });
+      bar.appendChild(s);
+    })();
 
-    // 이미지 input (ADVANCED 전용)
-    if (containerId === "hb-toolbar-advanced") {
-      const input = document.createElement("input");
-      input.type = "file";
-      input.accept = "image/*";
-      input.id = "hb-image-input";
-      input.style.display = "none";
-      bar.appendChild(input);
-    }
-  }
+    // 존재하면 생성: button
+    item.label && (() => {
+      const b = document.createElement("button");
+      b.id = item.id;
+      b.className = "hb-btn";
+
+      item.icon && b.classList.add("icon");
+      b.textContent = item.label;
+
+      bar.appendChild(b);
+    })();
+
+  });
+
+  // 이미지 input (ADVANCED 전용)
+  containerId === "hb-toolbar-advanced" && (() => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.id = "hb-image-input";
+    input.style.display = "none";
+    bar.appendChild(input);
+  })();
+}
+
+  
 
   /* =====================================================
      3) 바인딩 헬퍼
@@ -126,16 +147,11 @@ window.Toolbar = (function () {
   /* =====================================================
      5) Init
   ===================================================== */
+ function init() {
+  render("hb-toolbar-basic", BASIC_BUTTONS);
+  render("hb-toolbar-advanced", ADVANCED_BUTTONS);
+  setTimeout(bindEvents, 0);
+}
 
-  function init() {
-    render("hb-toolbar-basic", BASIC_BUTTONS, true);
-    render("hb-toolbar-advanced", ADVANCED_BUTTONS, false);
-    setTimeout(bindEvents, 0);
-  }
-
-  document.addEventListener("DOMContentLoaded", init);
-
-  return { init };
-
-})();
+  
 
