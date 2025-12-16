@@ -85,7 +85,7 @@
    ADVANCED Toolbar (FINAL)
 ============================ */
 #hb-toolbar-advanced {
-  gap: 20px;              /* 5글자 드롭다운 기준 간격 */
+  gap: 24px;              /* 5글자 드롭다운 기준 간격 */
 }
 
 /* ADVANCED Buttons – 굵게 */
@@ -97,7 +97,7 @@
 /* ADVANCED Dropdowns */
 #hb-toolbar-advanced .hb-select {
   min-width: 99px;        /* 5글자 체감 */
-  height: 32px;
+  padding: 0 10px;
 
   font-size: 14px;
   font-weight: 500;
