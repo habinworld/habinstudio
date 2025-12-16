@@ -23,7 +23,16 @@
   position: relative;
   z-index: 100;
 }
+/* ============================
+   BASIC Toolbar (FINAL LAYOUT)
+============================ */
+#hb-toolbar-basic {
+  gap: 6px;              /* BASIC 버튼 간격 */
+}
 
+#hb-toolbar-basic .hb-btn {
+  min-width: 60px;       /* 3.5글자 폭 */
+}
 /* ============================
    Common Button Style
 ============================ */
