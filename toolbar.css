@@ -27,7 +27,7 @@
    BASIC Toolbar (FINAL LAYOUT)
 ============================ */
 #hb-toolbar-basic {
-  gap: 18px;              /* BASIC 버튼 간격 */
+  gap: 24px;              /* BASIC 버튼 간격 */
 }
 
 #hb-toolbar-basic .hb-btn {
