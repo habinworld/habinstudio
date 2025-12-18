@@ -161,7 +161,7 @@ function render(containerId, items) {
   );
 
   size && size.addEventListener("change", e =>
-    EditorCore.setFontSize(e.target.value)
+    EditorCore.setSize(e.target.value)
   );
 
   line && line.addEventListener("change", e =>
