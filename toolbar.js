@@ -68,6 +68,9 @@ function render(containerId, items) {
 
       item.options.forEach(opt => {
         const o = document.createElement("option");
+         // ⭐ 핵심: 객체 / 문자열 둘 다 지원
+    const value = (opt && opt.value) || opt;
+    const label = (opt && opt.label) || opt;
         o.value = opt;
         o.textContent = opt;
         s.appendChild(o);
