@@ -29,17 +29,32 @@ window.Toolbar = (function () {
 
   // 설정 / 구조 — ADVANCED (1줄)
   const ADVANCED_BUTTONS = [
-    {
+   {
   id: "hb-font-family",
-  options: ["Gowun", "Nanum", "Serif"]
+  options: [
+    { value: "'Gowun Dodum', sans-serif", label: "Gowun" },
+    { value: "'Nanum Myeongjo', serif",   label: "Nanum" },
+    { value: "'Noto Serif KR', serif",    label: "Serif" }
+  ]
 },
 {
   id: "hb-font-size",
-  options: ["12", "14", "16", "18", "20"]
+  options: [
+    { value: 12, label: "12" },
+    { value: 14, label: "14" },
+    { value: 16, label: "16" },
+    { value: 18, label: "18" },
+    { value: 20, label: "20" }
+  ]
 },
 {
   id: "hb-line-height",
-  options: ["1.2", "1.4", "1.6", "1.8"]
+  options: [
+    { value: "1.2", label: "1.2" },
+    { value: "1.4", label: "1.4" },
+    { value: "1.6", label: "1.6" },
+    { value: "1.8", label: "1.8" }
+  ]
 },
 
     { id: "hb-btn-color",     label: "🖌️", icon: true },
