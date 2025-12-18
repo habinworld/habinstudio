@@ -151,6 +151,23 @@ function render(containerId, items) {
     bind("hb-btn-img-left",   () => EditorCore.imageAlign("left"));
     bind("hb-btn-img-center", () => EditorCore.imageAlign("center"));
     bind("hb-btn-img-right",  () => EditorCore.imageAlign("right"));
+      // ADVANCED — select (폰트 / 크기 / 줄간격)
+  const font = document.getElementById("hb-font-family");
+  const size = document.getElementById("hb-font-size");
+  const line = document.getElementById("hb-line-height");
+
+  font && font.addEventListener("change", e =>
+    EditorCore.setFont(e.target.value)
+  );
+
+  size && size.addEventListener("change", e =>
+    EditorCore.setFontSize(e.target.value)
+  );
+
+  line && line.addEventListener("change", e =>
+    EditorCore.setLineHeight(e.target.value)
+  );
+ 
   }
 
   /* =====================================================
