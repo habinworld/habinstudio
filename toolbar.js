@@ -29,9 +29,18 @@ window.Toolbar = (function () {
 
   // 설정 / 구조 — ADVANCED (1줄)
   const ADVANCED_BUTTONS = [
-    { id: "hb-btn-font",      label: "폰트" },
-    { id: "hb-btn-size",      label: "크기" },
-    { id: "hb-btn-line",      label: "줄간격" },
+    {
+  id: "hb-font-family",
+  options: ["Gowun", "Nanum", "Serif"]
+},
+{
+  id: "hb-font-size",
+  options: ["12", "14", "16", "18", "20"]
+},
+{
+  id: "hb-line-height",
+  options: ["1.2", "1.4", "1.6", "1.8"]
+},
 
     { id: "hb-btn-color",     label: "🖌️", icon: true },
     { id: "hb-btn-bgcolor",   label: "🎨", icon: true },
