@@ -34,6 +34,7 @@ window.Toolbar = (function () {
   options: [
     { value: "'Gowun Dodum', sans-serif", label: "Gowun" },
     { value: "'Nanum Myeongjo', serif",   label: "Nanum" },
+     { value: "'HCR Batang', '함초롱바탕', serif", label: "함초롱" }, 
     { value: "'Noto Serif KR', serif",    label: "Serif" }
   ]
 },
