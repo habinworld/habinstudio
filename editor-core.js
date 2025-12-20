@@ -1,5 +1,5 @@
 /* ---------------------------------------------------
-   ⚙️ editor-core.js — EditorCore vFinal (Checked / Excel-Style Split)
+   ⚙️ editor-core.js — EditorCore vFinal (Excel-Style / No State)
    Ha-Bin Studio · Data → DOM Core
    역할: 초기 데이터 바인딩 + 편집 명령 실행
    ❌ UI 상태 제어
@@ -18,46 +18,17 @@ window.EditorCore = (function () {
 
   /* =================================================
         2) DOM 참조 (고정 ID)
-        - ⚠️ 반드시 먼저 잡아야 아래 함수들에서 사용 가능
   ================================================= */
   const editor = document.getElementById("hb-editor");
   const title  = document.getElementById("hb-title");
 
   // DOM이 없으면 조용히 종료 (헌법 예외: DOM 안전장치)
   if (!editor || !title) {
-    return {
-      execute: () => {}
-    };
-  }
-
-  /* =================================================
-        2-1) Font Size Mode (Excel-style Split)
-        - selection : 드래그 영역 적용
-        - cursor    : 커서 이후 입력 적용
-  ================================================= */
-  let FONT_SIZE_MODE = "selection"; // "selection" | "cursor"
-
-  /* =================================================
-        2-2) Selection Cache (Excel-style)
-        - 드롭다운(select) 클릭으로 selection이 사라지는 문제 해결
-  ================================================= */
-  let savedRange = null;
-
-  function saveSelection() {
-    const sel = window.getSelection();
-    if (!sel || !sel.rangeCount) return;
-
-    const r = sel.getRangeAt(0);
-    // editor 내부 selection만 저장
-    if (editor.contains(r.commonAncestorContainer)) {
-      savedRange = r.cloneRange();
-    }
+    return { execute: () => {} };
   }
 
   /* =================================================
         3) id 기반 초기 로딩 (존재 / 비존재)
-        - 판단 없음
-        - 분기 없음
         - 페이지 로드 시 1회
   ================================================= */
   const params = new URLSearchParams(location.search);
@@ -70,149 +41,124 @@ window.EditorCore = (function () {
     title.value = record.title,
     editor.innerHTML = record.content
   );
-// 🔒 첫 줄 안정화 (contenteditable 버그 방지)
-if (editor.innerHTML.trim() === "" || editor.innerHTML === "<br>") {
-  editor.innerHTML = "<p><br></p>";
-}
+
+  // 🔒 빈 편집기 첫줄 안정화 (contenteditable 초기 버그 완화)
+  if (editor.innerHTML.trim() === "" || editor.innerHTML === "<br>") {
+    editor.innerHTML = "<p><br></p>";
+  }
+
   /* =================================================
         4) 실행 잠금 (중복 명령 방지)
   ================================================= */
   let isLocked = false;
 
   /* =================================================
-        5) 공용 실행 엔진
-        - 판단 없음
-        - 명령만 전달
+        5) Typing Style Engine (커서 이후 입력 고정 장치)
+        - 상태 저장/복원 ❌
+        - "존재/비존재"로만 처리
   ================================================= */
-  function execute(cmdObj) {
-    if (!cmdObj || isLocked) return;
-
-    isLocked = true;
-    const { cmd, value } = cmdObj;
-
-    editor.focus();
-
-    if (cmd === "fontSizePx") {
-  const sel = window.getSelection();
-  const hasSelection =
-    sel && sel.rangeCount && !sel.getRangeAt(0).collapsed;
-
-  // 🚀 드래그면 즉시 (초고속)
-  if (hasSelection) {
-    applyFontSizePx(value);
-  }
-  // 🛡️ 커서면 안정 경로
-  else {
-    setTimeout(() => applyFontSizePx(value), 0);
-  }
-}
-    else if (cmd === "lineHeight") applyLineHeight(value);
-    else document.execCommand(cmd, false, value || null);
-
-    isLocked = false;
-  }
-// =================================================
-// Typing Style Engine (커서 이후 입력 고정 장치)
-// =================================================
-let typingFontSizePx = null;
-
-function getTypingSpan() {
-  return editor.querySelector("span[data-hb-typing='1']");
-}
-
-function removeTypingSpanIfEmpty() {
-  const t = getTypingSpan();
-  if (!t) return;
-  const txt = (t.textContent || "").replace(/\u200B/g, "");
-  if (txt.trim() === "") t.remove();
-}
-
-function ensureCaretInside(node, offset = 0) {
-  const sel = window.getSelection();
-  if (!sel) return;
-  const r = document.createRange();
-  r.setStart(node, offset);
-  r.collapse(true);
-  sel.removeAllRanges();
-  sel.addRange(r);
-}
-
-function applyTypingFontSize(px) {
-  typingFontSizePx = Number(px);
-  editor.focus();
-
-  removeTypingSpanIfEmpty();
-
-  const sel = window.getSelection();
-  if (!sel || !sel.rangeCount) return;
-  const range = sel.getRangeAt(0);
-
-  const container = range.commonAncestorContainer.nodeType === 3
-    ? range.commonAncestorContainer.parentNode
-    : range.commonAncestorContainer;
-
-  if (!editor.contains(container)) return;
-
-  const current = container.closest && container.closest("span[data-hb-typing='1']");
-  if (current) {
-    current.style.fontSize = typingFontSizePx + "px";
-    return;
+  function getTypingSpan() {
+    return editor.querySelector("span[data-hb-typing='1']");
   }
 
-  const span = document.createElement("span");
-  span.setAttribute("data-hb-typing", "1");
-  span.style.fontSize = typingFontSizePx + "px";
+  function removeTypingSpanIfEmpty() {
+    const t = getTypingSpan();
+    if (!t) return;
 
-  const z = document.createTextNode("\u200B");
-  span.appendChild(z);
-  range.insertNode(span);
+    // ZWSP 제거 후 내용이 없으면 제거
+    const txt = (t.textContent || "").replace(/\u200B/g, "").trim();
+    if (txt === "") t.remove();
+  }
 
-  ensureCaretInside(z, 1);
-}
+  function ensureCaretInsideTextNode(textNode, offset) {
+    const sel = window.getSelection();
+    if (!sel) return;
+    const r = document.createRange();
+    r.setStart(textNode, offset);
+    r.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(r);
+  }
+
+  function applyTypingFontSize(px) {
+    // ⚡ focus는 조건부 (속도)
+    if (document.activeElement !== editor) editor.focus();
+
+    removeTypingSpanIfEmpty();
+
+    const sel = window.getSelection();
+    if (!sel || !sel.rangeCount) return;
+    const range = sel.getRangeAt(0);
+
+    // editor 내부만 허용
+    const container = range.commonAncestorContainer.nodeType === 3
+      ? range.commonAncestorContainer.parentNode
+      : range.commonAncestorContainer;
+
+    if (!editor.contains(container)) return;
+
+    // 이미 typing span 안이면 스타일만 갱신
+    const current = container.closest && container.closest("span[data-hb-typing='1']");
+    if (current) {
+      current.style.fontSize = Number(px) + "px";
+      return;
+    }
+
+    // 새 typing span 생성 (ZWSP 1개)
+    const span = document.createElement("span");
+    span.setAttribute("data-hb-typing", "1");
+    span.style.fontSize = Number(px) + "px";
+
+    const z = document.createTextNode("\u200B");
+    span.appendChild(z);
+
+    range.insertNode(span);
+    ensureCaretInsideTextNode(z, 1);
+  }
 
   /* =================================================
-        6) px 기반 폰트 크기 (Excel-Style Split)
-        - A: 선택(드래그) 적용
-        - B: 커서 이후 적용
-        - 분기는 오직 applyFontSizePx에서 1회
+        6) px 기반 폰트 크기
+        - 드래그: 선택영역 래핑
+        - 커서: typing span 삽입
+        - 분기: "선택이 존재하는가" 1회
   ================================================= */
-function applyFontSizeToSelection(px) {
-  const sel = window.getSelection();
-  if (!sel || !sel.rangeCount) return;
+  function applyFontSizeToSelection(px) {
+    const sel = window.getSelection();
+    if (!sel || !sel.rangeCount) return;
 
-  const range = sel.getRangeAt(0);
-  if (range.collapsed) return;
+    const range = sel.getRangeAt(0);
+    if (range.collapsed) return;
 
-  if (!editor.contains(range.commonAncestorContainer)) return;
+    if (!editor.contains(range.commonAncestorContainer)) return;
 
-  const span = document.createElement("span");
-  span.style.fontSize = Number(px) + "px";
+    const span = document.createElement("span");
+    span.style.fontSize = Number(px) + "px";
 
-  span.appendChild(range.extractContents());
-  range.insertNode(span);
+    span.appendChild(range.extractContents());
+    range.insertNode(span);
 
-  range.setStartAfter(span);
-  range.collapse(true);
-  sel.removeAllRanges();
-  sel.addRange(range);
-}
-function applyFontSizePx(px) {
-  const sel = window.getSelection();
-  if (!sel || !sel.rangeCount) return;
-
-  const range = sel.getRangeAt(0);
-
-  // ✅ 드래그가 있으면 → 드래그 적용
-  if (!range.collapsed) {
-    removeTypingSpanIfEmpty();
-    applyFontSizeToSelection(px);
-    return;
+    range.setStartAfter(span);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
   }
 
-  // ✅ 커서만 있으면 → typing span (STEP 1에서 만든 엔진)
-  applyTypingFontSize(px);
-}
+  function applyFontSizePx(px) {
+    const sel = window.getSelection();
+    if (!sel || !sel.rangeCount) return;
 
+    const range = sel.getRangeAt(0);
+
+    // ✅ 드래그(선택) 존재 → 드래그 적용
+    if (!range.collapsed) {
+      removeTypingSpanIfEmpty();
+      applyFontSizeToSelection(px);
+      return;
+    }
+
+    // ✅ 커서만 존재 → 커서 이후 적용
+    applyTypingFontSize(px);
+  }
 
   /* =================================================
         7) 줄간격
@@ -226,7 +172,44 @@ function applyFontSizePx(px) {
   }
 
   /* =================================================
-        8) 색상 팝업
+        8) 공용 실행 엔진 (Excel-Style)
+        - "존재/비존재" 기반
+        - fontSizePx만 빠른경로/안정경로 분리
+  ================================================= */
+  function execute(cmdObj) {
+    if (!cmdObj || isLocked) return;
+
+    isLocked = true;
+    const { cmd, value } = cmdObj;
+
+    // ⚡ focus는 조건부 (속도)
+    if (document.activeElement !== editor) editor.focus();
+
+    if (cmd === "fontSizePx") {
+      const sel = window.getSelection();
+      const hasSelection = !!(sel && sel.rangeCount && !sel.getRangeAt(0).collapsed);
+
+      // 🚀 드래그면 즉시 (초고속)
+      if (hasSelection) {
+        applyFontSizePx(value);
+      }
+      // 🛡️ 커서면 다음 tick (select 포커스/selection 타이밍 안정화)
+      else {
+        setTimeout(() => applyFontSizePx(value), 0);
+      }
+    }
+    else if (cmd === "lineHeight") {
+      applyLineHeight(value);
+    }
+    else {
+      document.execCommand(cmd, false, value || null);
+    }
+
+    isLocked = false;
+  }
+
+  /* =================================================
+        9) 색상 팝업
   ================================================= */
   function openBasicColor(button, mode) {
     ColorBasic.open(button, mode, color =>
@@ -241,7 +224,7 @@ function applyFontSizePx(px) {
   }
 
   /* =================================================
-        9) 이미지
+        10) 이미지
   ================================================= */
   function insertImage(file) {
     ImageEngine.insert(file);
@@ -252,18 +235,15 @@ function applyFontSizePx(px) {
   }
 
   /* =================================================
-        10) 포커스 유지 + Selection Cache 이벤트
-        - ✅ 여기 3줄이 "연속 변경"을 살린다
+        11) 포커스 유지
+        - 불필요한 selection cache 없음 (속도/안정)
   ================================================= */
-  editor.addEventListener("click", () => editor.focus());
-
-  // ✅ 선택 저장 (드래그/키입력/터치)
-  editor.addEventListener("mouseup", saveSelection);
-  editor.addEventListener("keyup", saveSelection);
-  editor.addEventListener("touchend", saveSelection);
+  editor.addEventListener("click", () => {
+    if (document.activeElement !== editor) editor.focus();
+  });
 
   /* =================================================
-        11) 외부 공개 API (명령만)
+        12) 외부 공개 API (명령만)
         - 기존 toolbar.js 호출과 100% 호환 유지
   ================================================= */
   return {
@@ -304,13 +284,7 @@ function applyFontSizePx(px) {
 
     // 이미지
     insertImage,
-    imageAlign,
-
-    // (옵션) 폰트크기 모드 제어용 API — UI에서 쓰고 싶으면 사용
-    setFontSizeMode: mode => {
-      if (mode === "selection" || mode === "cursor") FONT_SIZE_MODE = mode;
-    },
-    getFontSizeMode: () => FONT_SIZE_MODE
+    imageAlign
   };
 
 })();
