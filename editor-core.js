@@ -68,22 +68,53 @@ window.EditorCore = (function () {
   /* =================================================
         6) px 기반 폰트 크기
   ================================================= */
-function applyFontSizePx(px) { 
-   const sel = window.getSelection(); 
-   if (!sel.rangeCount) return; const range = sel.getRangeAt(0);
-// 🔥 기존 font-size span 정리 (선택 영역 내부만) 
-   const container = range.commonAncestorContainer.nodeType === 3 ? 
-      range.commonAncestorContainer.parentNode : 
-      range.commonAncestorContainer; 
-   container.querySelectorAll("span[style*='font-size']").forEach(s => { s.style.fontSize = ""; }); 
-   // 🔥 새 span으로 감싸기 
-   const span = document.createElement("span"); 
-   span.style.fontSize = px + "px"; span.appendChild(range.extractContents()); range.insertNode(span); 
-   // 커서 정리 
-   range.setStartAfter(span); 
-   range.setEndAfter(span); 
-   sel.removeAllRanges(); 
-   sel.addRange(range); }                              
+function applyFontSizeToSelection(px) {
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
+
+  const range = sel.getRangeAt(0);
+  if (range.collapsed) return;
+
+  const span = document.createElement("span");
+  span.style.fontSize = px + "px";
+
+  span.appendChild(range.extractContents());
+  range.insertNode(span);
+
+  range.setStartAfter(span);
+  range.collapse(true);
+
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+function applyFontSizeFromCursor(px) {
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
+
+  const range = sel.getRangeAt(0);
+
+  const span = document.createElement("span");
+  span.style.fontSize = px + "px";
+
+  const textNode = document.createTextNode("");
+  span.appendChild(textNode);
+  range.insertNode(span);
+
+  const newRange = document.createRange();
+  newRange.setStart(textNode, 0);
+  newRange.collapse(true);
+
+  sel.removeAllRanges();
+  sel.addRange(newRange);
+}
+function applyFontSizePx(px) {
+  if (FONT_SIZE_MODE === "selection") {
+    applyFontSizeToSelection(px);
+  } else {
+    applyFontSizeFromCursor(px);
+  }
+}
+                      
   /* =================================================
         7) 줄간격
   ================================================= */
