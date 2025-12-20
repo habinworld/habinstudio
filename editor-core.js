@@ -106,7 +106,18 @@ if (editor.innerHTML.trim() === "" || editor.innerHTML === "<br>") {
     editor.focus();
 
     if (cmd === "fontSizePx") {
-  setTimeout(() => applyFontSizePx(value), 0);
+  const sel = window.getSelection();
+  const hasSelection =
+    sel && sel.rangeCount && !sel.getRangeAt(0).collapsed;
+
+  // 🚀 드래그면 즉시 (초고속)
+  if (hasSelection) {
+    applyFontSizePx(value);
+  }
+  // 🛡️ 커서면 안정 경로
+  else {
+    setTimeout(() => applyFontSizePx(value), 0);
+  }
 }
     else if (cmd === "lineHeight") applyLineHeight(value);
     else document.execCommand(cmd, false, value || null);
