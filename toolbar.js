@@ -40,15 +40,15 @@ window.Toolbar = (function () {
 },
 {
   id: "hb-font-size",
-  options: [
-    { value: 12, label: "12" },
-    { value: 14, label: "14" },
-    { value: 16, label: "16" },
-    { value: 18, label: "18" },
-    { value: 20, label: "20" }
-  ]
-},
-{
+options: Array.from({ length: 33 }, (_, i) => {
+  const size = (i + 4) * 2; // 8 ~ 72 (짝수)
+  return {
+    value: size + "px",
+    label: String(size)
+  };
+})
+}
+   {
   id: "hb-line-height",
   options: [
     { value: "1.2", label: "1.2" },
