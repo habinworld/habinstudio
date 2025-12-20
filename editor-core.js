@@ -160,7 +160,11 @@ if (editor.innerHTML.trim() === "" || editor.innerHTML === "<br>") {
     const range = sel.getRangeAt(0);
 
     // editor 내부만 허용
-    if (!editor.contains(range.commonAncestorContainer)) return;
+    const container = range.commonAncestorContainer.nodeType === 3
+  ? range.commonAncestorContainer.parentNode
+  : range.commonAncestorContainer;
+
+if (!editor.contains(container)) return;
 
     const span = document.createElement("span");
     span.style.fontSize = px + "px";
