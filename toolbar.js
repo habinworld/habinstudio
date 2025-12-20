@@ -172,17 +172,16 @@ function render(containerId, items) {
     bind("hb-btn-img-right",  () => EditorCore.imageAlign("right"));
       // ADVANCED — select (폰트 / 크기 / 줄간격)
   const font = document.getElementById("hb-font-family");
-  const size = document.getElementById("hb-font-size");
-  const line = document.getElementById("hb-line-height");
+const size = document.getElementById("hb-font-size");
+const line = document.getElementById("hb-line-height");
 
-  // ADVANCED — font family (속도 안정화)
-const font = document.getElementById("hb-font-family");
-
+/* -------------------------------
+   font-family (속도 안정화)
+-------------------------------- */
 let ffTimer = null;
 
 font && font.addEventListener("change", e => {
   const v = e.target.value;
-
   if (ffTimer) cancelAnimationFrame(ffTimer);
 
   ffTimer = requestAnimationFrame(() => {
@@ -190,30 +189,34 @@ font && font.addEventListener("change", e => {
   });
 });
 
-
-  // ADVANCED — font size (속도 안정화)
-const size = document.getElementById("hb-font-size");
-
+/* -------------------------------
+   font-size (속도 안정화)
+-------------------------------- */
 let fsTimer = null;
 
 size && size.addEventListener("change", e => {
   const v = e.target.value;
-
-  // ⛔ 연속 호출 제거
   if (fsTimer) cancelAnimationFrame(fsTimer);
 
-  // ✅ 다음 프레임 1회만 실행
   fsTimer = requestAnimationFrame(() => {
     EditorCore.setSize(v);
   });
 });
 
+/* -------------------------------
+   line-height (속도 + 안정 통일)
+-------------------------------- */
+let lhTimer = null;
 
-  line && line.addEventListener("change", e =>
-    EditorCore.setLineHeight(e.target.value)
-  );
- 
-  }
+line && line.addEventListener("change", e => {
+  const v = e.target.value;
+  if (lhTimer) cancelAnimationFrame(lhTimer);
+
+  lhTimer = requestAnimationFrame(() => {
+    EditorCore.setLineHeight(v);
+  });
+});
+
 
   /* =====================================================
      5) Init
