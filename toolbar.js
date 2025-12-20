@@ -43,7 +43,7 @@ window.Toolbar = (function () {
 options: Array.from({ length: 33 }, (_, i) => {
   const size = (i + 4) * 2; // 8 ~ 72 (짝수)
   return {
-    value: size + "px",
+    value: size,
     label: String(size)
   };
 })
