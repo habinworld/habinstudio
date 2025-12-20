@@ -47,7 +47,7 @@ options: Array.from({ length: 33 }, (_, i) => {
     label: String(size)
   };
 })
-}
+},
    {
   id: "hb-line-height",
   options: [
