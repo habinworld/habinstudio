@@ -22,7 +22,20 @@ window.EditorCore = (function () {
   ================================================= */
   const editor = document.getElementById("hb-editor");
   const title  = document.getElementById("hb-title");
+/* =================================================
+      🔹 커서 이후 입력 처리 (폰트 크기 유지)
+================================================= */
+editor && editor.addEventListener("input", () => {
+  if (!currentFontSize) return;
 
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
+
+  const node = sel.anchorNode;
+  if (!node || node.nodeType !== 3) return;
+
+  node.parentNode.style.fontSize = currentFontSize;
+});
   /* =================================================
         3) id 기반 초기 로딩 (존재 / 비존재)
         - 판단 없음
