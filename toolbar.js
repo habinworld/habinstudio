@@ -175,9 +175,21 @@ function render(containerId, items) {
   const size = document.getElementById("hb-font-size");
   const line = document.getElementById("hb-line-height");
 
-  font && font.addEventListener("change", e =>
-    EditorCore.setFont(e.target.value)
-  );
+  // ADVANCED — font family (속도 안정화)
+const font = document.getElementById("hb-font-family");
+
+let ffTimer = null;
+
+font && font.addEventListener("change", e => {
+  const v = e.target.value;
+
+  if (ffTimer) cancelAnimationFrame(ffTimer);
+
+  ffTimer = requestAnimationFrame(() => {
+    EditorCore.setFont(v);
+  });
+});
+
 
   // ADVANCED — font size (속도 안정화)
 const size = document.getElementById("hb-font-size");
