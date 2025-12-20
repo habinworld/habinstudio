@@ -74,46 +74,48 @@ window.EditorCore = (function () {
 
   const range = sel.getRangeAt(0);
 
-  // ⭐ CASE 0: 드래그 없음 (커서만 있음)
+  // ⭐ CASE 1: 실제 선택(드래그)이 있는 경우 (최우선)
+  if (!range.collapsed) {
+
+    // 순수 텍스트 선택
+    if (
+      range.startContainer === range.endContainer &&
+      range.startContainer.nodeType === 3
+    ) {
+      const span = document.createElement("span");
+      span.style.fontSize = px + "px";
+      range.surroundContents(span);
+      return;
+    }
+
+    // 요소 섞인 선택
+    const span = document.createElement("span");
+    span.style.fontSize = px + "px";
+    span.appendChild(range.extractContents());
+    range.insertNode(span);
+
+    range.setStartAfter(span);
+    range.setEndAfter(span);
+    sel.removeAllRanges();
+    sel.addRange(range);
+    return;
+  }
+
+  // ⭐ CASE 2: 커서만 있는 경우 (맨 마지막)
   if (range.collapsed) {
     const span = document.createElement("span");
     span.style.fontSize = px + "px";
-    span.appendChild(document.createTextNode("\u200B")); // zero-width
+    span.appendChild(document.createTextNode("\u200B"));
 
     range.insertNode(span);
 
-    // 커서를 span 안으로 이동
     const caret = document.createRange();
     caret.setStart(span.firstChild, 1);
     caret.collapse(true);
     sel.removeAllRanges();
     sel.addRange(caret);
-    return;
   }
-
-  // ⭐ CASE 1: 순수 텍스트 선택 (새 글)
-  if (
-    range.startContainer === range.endContainer &&
-    range.startContainer.nodeType === 3
-  ) {
-    const span = document.createElement("span");
-    span.style.fontSize = px + "px";
-    range.surroundContents(span);
-    return;
-  }
-
-  // ⭐ CASE 2: 기존 요소 구조
-  const span = document.createElement("span");
-  span.style.fontSize = px + "px";
-  span.appendChild(range.extractContents());
-  range.insertNode(span);
-
-  range.setStartAfter(span);
-  range.setEndAfter(span);
-  sel.removeAllRanges();
-  sel.addRange(range);
 }
-
 
   /* =================================================
         7) 줄간격
