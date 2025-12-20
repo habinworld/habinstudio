@@ -54,19 +54,6 @@ window.EditorCore = (function () {
     }
   }
 
-  function restoreSelection() {
-    if (!savedRange) return null;
-
-    editor.focus();
-
-    const sel = window.getSelection();
-    if (!sel) return null;
-
-    sel.removeAllRanges();
-    sel.addRange(savedRange);
-    return savedRange;
-  }
-
   /* =================================================
         3) id 기반 초기 로딩 (존재 / 비존재)
         - 판단 없음
