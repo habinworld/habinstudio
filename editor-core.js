@@ -111,6 +111,64 @@ if (editor.innerHTML.trim() === "" || editor.innerHTML === "<br>") {
 
     isLocked = false;
   }
+// =================================================
+// Typing Style Engine (커서 이후 입력 고정 장치)
+// =================================================
+let typingFontSizePx = null;
+
+function getTypingSpan() {
+  return editor.querySelector("span[data-hb-typing='1']");
+}
+
+function removeTypingSpanIfEmpty() {
+  const t = getTypingSpan();
+  if (!t) return;
+  const txt = (t.textContent || "").replace(/\u200B/g, "");
+  if (txt.trim() === "") t.remove();
+}
+
+function ensureCaretInside(node, offset = 0) {
+  const sel = window.getSelection();
+  if (!sel) return;
+  const r = document.createRange();
+  r.setStart(node, offset);
+  r.collapse(true);
+  sel.removeAllRanges();
+  sel.addRange(r);
+}
+
+function applyTypingFontSize(px) {
+  typingFontSizePx = Number(px);
+  editor.focus();
+
+  removeTypingSpanIfEmpty();
+
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
+  const range = sel.getRangeAt(0);
+
+  const container = range.commonAncestorContainer.nodeType === 3
+    ? range.commonAncestorContainer.parentNode
+    : range.commonAncestorContainer;
+
+  if (!editor.contains(container)) return;
+
+  const current = container.closest && container.closest("span[data-hb-typing='1']");
+  if (current) {
+    current.style.fontSize = typingFontSizePx + "px";
+    return;
+  }
+
+  const span = document.createElement("span");
+  span.setAttribute("data-hb-typing", "1");
+  span.style.fontSize = typingFontSizePx + "px";
+
+  const z = document.createTextNode("\u200B");
+  span.appendChild(z);
+  range.insertNode(span);
+
+  ensureCaretInside(z, 1);
+}
 
   /* =================================================
         6) px 기반 폰트 크기 (Excel-Style Split)
