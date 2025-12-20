@@ -74,45 +74,30 @@ function applyFontSizePx(px) {
 
   const range = sel.getRangeAt(0);
 
-  // ① 드래그가 있을 때 → 기존 텍스트 처리
-  if (!range.collapsed) {
-    const span = document.createElement("span");
-    span.style.fontSize = px;
+  // ✅ 드래그된 텍스트가 있을 때만 실행
+  if (range.collapsed) return;
 
-    span.appendChild(range.extractContents());
-    range.insertNode(span);
+  // 🔥 기존 font-size span 정리 (선택 영역 내부만)
+  const container = range.commonAncestorContainer.nodeType === 3
+    ? range.commonAncestorContainer.parentNode
+    : range.commonAncestorContainer;
 
-    range.setStartAfter(span);
-    range.setEndAfter(span);
-    sel.removeAllRanges();
-    sel.addRange(range);
-  }
+  container.querySelectorAll("span[style*='font-size']").forEach(s => {
+    s.style.fontSize = "";
+  });
 
-  // ② 항상 상태 저장 (핵심)
-  currentFontSize = px;
-}
-function setFontSize(px) {
-  const sel = window.getSelection();
-  if (!sel.rangeCount) return;
+  // 🔥 새 span으로 감싸기
+  const span = document.createElement("span");
+  span.style.fontSize = px + "px";
 
-  const range = sel.getRangeAt(0);
+  span.appendChild(range.extractContents());
+  range.insertNode(span);
 
-  // 1️⃣ 드래그가 있으면 → 기존 텍스트 처리
-  if (!range.collapsed) {
-    const span = document.createElement("span");
-    span.style.fontSize = px + "px";
-
-    span.appendChild(range.extractContents());
-    range.insertNode(span);
-
-    range.setStartAfter(span);
-    range.setEndAfter(span);
-    sel.removeAllRanges();
-    sel.addRange(range);
-  }
-
-  // 2️⃣ 항상 저장 (핵심)
-  currentTextStyle.fontSize = px + "px";
+  // 커서 정리
+  range.setStartAfter(span);
+  range.setEndAfter(span);
+  sel.removeAllRanges();
+  sel.addRange(range);
 }
 
   /* =================================================
