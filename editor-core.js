@@ -15,7 +15,7 @@ window.EditorCore = (function () {
   const ImageEngine    = window.ImageEngine;
   const ColorBasic     = window.ColorBasic;
   const ColorAdvanced  = window.ColorAdvanced;
- 
+  let FONT_SIZE_MODE = "selection";
   /* =================================================
         2) DOM 참조 (고정 ID)
   ================================================= */
