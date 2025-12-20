@@ -83,7 +83,10 @@ window.EditorCore = (function () {
     title.value = record.title,
     editor.innerHTML = record.content
   );
-
+// 🔒 첫 줄 안정화 (contenteditable 버그 방지)
+if (editor.innerHTML.trim() === "" || editor.innerHTML === "<br>") {
+  editor.innerHTML = "<p><br></p>";
+}
   /* =================================================
         4) 실행 잠금 (중복 명령 방지)
   ================================================= */
