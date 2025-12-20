@@ -179,10 +179,6 @@ function renderList() {
       <td><a href="post.html?mode=view&id=${p.id}" class="title-link">${p.isNotice ? "📌 " : ""}${p.title}</a></td>
       <td>${p.date}</td>
     `;
-// 🔥 강제 진입
-  tr.addEventListener("click", () => {
-    location.href = `post.html?mode=view&id=${p.id}`;
-  });
     if (p.isNotice) tr.classList.add("notice-row");
     tbody.appendChild(tr);
   });
