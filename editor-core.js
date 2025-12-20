@@ -97,6 +97,12 @@ function applyFontSizePx(px) {
   const editor = document.getElementById("hb-editor");
   if (!editor) return;
 
+   // ⭐ 기존 font-size span 정리 (핵심)
+editor.querySelectorAll("span[style*='font-size']").forEach(s => {
+  s.style.fontSize = ""; // 기존 값 제거
+});
+
+
   // 3️⃣ 결과 치환 (몇 번을 드래그해도 안정)
   const fonts = editor.querySelectorAll('font[size="7"]');
   fonts.forEach(f => {
