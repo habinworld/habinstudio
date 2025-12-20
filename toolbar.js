@@ -216,7 +216,7 @@ line && line.addEventListener("change", e => {
     EditorCore.setLineHeight(v);
   });
 });
-
+}
 
   /* =====================================================
      5) Init
