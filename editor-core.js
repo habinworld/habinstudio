@@ -138,8 +138,8 @@ window.EditorCore = (function () {
     underline: () => execute(TextEngine.underline()),
 
     setFont:       f  => execute(TextEngine.setFont(f)),
-    setSize:       px => execute(TextEngine.setSize(px)),
-    setLineHeight: h  => execute(TextEngine.setLineHeight(h)),
+    setSize: px => execute({ cmd: "fontSizePx", value: px }),
+    setLineHeight: h => execute({ cmd: "lineHeight", value: h }),
 
     setColor:   c => execute(TextEngine.setColor(c)),
     setBgColor: c => execute(TextEngine.setBgColor(c)),
