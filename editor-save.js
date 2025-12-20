@@ -13,13 +13,16 @@
      데이터 수집 (엑셀: 한 행)
   ============================ */
   function collectData() {
-    return {
-      id: Date.now(),
-      title: document.getElementById("hb-title").value.trim(),
-      content: document.getElementById("hb-editor").innerHTML,
-      date: new Date().toISOString()
-    };
-  }
+  const titleEl = document.getElementById("hb-title");
+  const title = titleEl && titleEl.value.trim();
+
+  return {
+    id: Date.now(),
+    title: title || "제목 없음",
+    content: document.getElementById("hb-editor").innerHTML,
+    date: new Date().toISOString()
+  };
+}
 
   /* ============================
      SAVE — 새 글
