@@ -74,10 +74,7 @@ function applyFontSizePx(px) {
 
   const range = sel.getRangeAt(0);
 
-  // ✅ 드래그된 텍스트가 있을 때만 실행
-  if (range.collapsed) return;
-
-  // 🔥 기존 font-size span 정리 (선택 영역 내부만)
+   // 🔥 기존 font-size span 정리 (선택 영역 내부만)
   const container = range.commonAncestorContainer.nodeType === 3
     ? range.commonAncestorContainer.parentNode
     : range.commonAncestorContainer;
