@@ -74,7 +74,24 @@ window.EditorCore = (function () {
 
   const range = sel.getRangeAt(0);
 
-  // ⭐ CASE 1: 순수 텍스트 노드 선택 (새 글)
+  // ⭐ CASE 0: 드래그 없음 (커서만 있음)
+  if (range.collapsed) {
+    const span = document.createElement("span");
+    span.style.fontSize = px + "px";
+    span.appendChild(document.createTextNode("\u200B")); // zero-width
+
+    range.insertNode(span);
+
+    // 커서를 span 안으로 이동
+    const caret = document.createRange();
+    caret.setStart(span.firstChild, 1);
+    caret.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(caret);
+    return;
+  }
+
+  // ⭐ CASE 1: 순수 텍스트 선택 (새 글)
   if (
     range.startContainer === range.endContainer &&
     range.startContainer.nodeType === 3
@@ -85,7 +102,7 @@ window.EditorCore = (function () {
     return;
   }
 
-  // ⭐ CASE 2: 기존 요소 구조 (기존 글)
+  // ⭐ CASE 2: 기존 요소 구조
   const span = document.createElement("span");
   span.style.fontSize = px + "px";
   span.appendChild(range.extractContents());
