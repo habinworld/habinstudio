@@ -69,21 +69,34 @@ window.EditorCore = (function () {
         6) px 기반 폰트 크기
   ================================================= */
   function applyFontSizePx(px) {
-    const sel = window.getSelection();
-    if (!sel.rangeCount) return;
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
 
-    const range = sel.getRangeAt(0);
+  const range = sel.getRangeAt(0);
+
+  // ⭐ CASE 1: 순수 텍스트 노드 선택 (새 글)
+  if (
+    range.startContainer === range.endContainer &&
+    range.startContainer.nodeType === 3
+  ) {
     const span = document.createElement("span");
     span.style.fontSize = px + "px";
-
-    span.appendChild(range.extractContents());
-    range.insertNode(span);
-
-    range.setStartAfter(span);
-    range.setEndAfter(span);
-    sel.removeAllRanges();
-    sel.addRange(range);
+    range.surroundContents(span);
+    return;
   }
+
+  // ⭐ CASE 2: 기존 요소 구조 (기존 글)
+  const span = document.createElement("span");
+  span.style.fontSize = px + "px";
+  span.appendChild(range.extractContents());
+  range.insertNode(span);
+
+  range.setStartAfter(span);
+  range.setEndAfter(span);
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
 
   /* =================================================
         7) 줄간격
