@@ -15,27 +15,13 @@ window.EditorCore = (function () {
   const ImageEngine    = window.ImageEngine;
   const ColorBasic     = window.ColorBasic;
   const ColorAdvanced  = window.ColorAdvanced;
- // ⭐ 현재 입력용 폰트 크기 상태 (엑셀식)
-  let currentFontSize = null;
+ 
   /* =================================================
         2) DOM 참조 (고정 ID)
   ================================================= */
   const editor = document.getElementById("hb-editor");
   const title  = document.getElementById("hb-title");
-/* =================================================
-      🔹 커서 이후 입력 처리 (폰트 크기 유지)
-================================================= */
-editor && editor.addEventListener("input", () => {
-  if (!currentFontSize) return;
 
-  const sel = window.getSelection();
-  if (!sel.rangeCount) return;
-
-  const node = sel.anchorNode;
-  if (!node || node.nodeType !== 3) return;
-
-  node.parentNode.style.fontSize = currentFontSize;
-});
   /* =================================================
         3) id 기반 초기 로딩 (존재 / 비존재)
         - 판단 없음
@@ -105,7 +91,29 @@ function applyFontSizePx(px) {
   // ② 항상 상태 저장 (핵심)
   currentFontSize = px;
 }
+function setFontSize(px) {
+  const sel = window.getSelection();
+  if (!sel.rangeCount) return;
 
+  const range = sel.getRangeAt(0);
+
+  // 1️⃣ 드래그가 있으면 → 기존 텍스트 처리
+  if (!range.collapsed) {
+    const span = document.createElement("span");
+    span.style.fontSize = px + "px";
+
+    span.appendChild(range.extractContents());
+    range.insertNode(span);
+
+    range.setStartAfter(span);
+    range.setEndAfter(span);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+
+  // 2️⃣ 항상 저장 (핵심)
+  currentTextStyle.fontSize = px + "px";
+}
 
   /* =================================================
         7) 줄간격
