@@ -179,9 +179,23 @@ function render(containerId, items) {
     EditorCore.setFont(e.target.value)
   );
 
-  size && size.addEventListener("change", e =>
-    EditorCore.setSize(e.target.value)
-  );
+  // ADVANCED — font size (속도 안정화)
+const size = document.getElementById("hb-font-size");
+
+let fsTimer = null;
+
+size && size.addEventListener("change", e => {
+  const v = e.target.value;
+
+  // ⛔ 연속 호출 제거
+  if (fsTimer) cancelAnimationFrame(fsTimer);
+
+  // ✅ 다음 프레임 1회만 실행
+  fsTimer = requestAnimationFrame(() => {
+    EditorCore.setSize(v);
+  });
+});
+
 
   line && line.addEventListener("change", e =>
     EditorCore.setLineHeight(e.target.value)
