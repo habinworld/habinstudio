@@ -74,27 +74,47 @@ function applyFontSizePx(px) {
 
   const range = sel.getRangeAt(0);
 
-   // 🔥 기존 font-size span 정리 (선택 영역 내부만)
-  const container = range.commonAncestorContainer.nodeType === 3
-    ? range.commonAncestorContainer.parentNode
-    : range.commonAncestorContainer;
+  // 🔒 editor 내부만 허용
+  if (!editor.contains(range.commonAncestorContainer)) return;
 
-  container.querySelectorAll("span[style*='font-size']").forEach(s => {
-    s.style.fontSize = "";
-  });
+  /* =================================================
+     ① 드래그된 텍스트가 있을 때
+  ================================================= */
+  if (!range.collapsed) {
 
-  // 🔥 새 span으로 감싸기
+    const span = document.createElement("span");
+    span.style.fontSize = px + "px";
+
+    span.appendChild(range.extractContents());
+    range.insertNode(span);
+
+    // 커서 정리
+    range.setStartAfter(span);
+    range.setEndAfter(span);
+    sel.removeAllRanges();
+    sel.addRange(range);
+    return;
+  }
+
+  /* =================================================
+     ② 커서만 있을 때 (이후 입력 기준점 생성)
+  ================================================= */
   const span = document.createElement("span");
   span.style.fontSize = px + "px";
 
-  span.appendChild(range.extractContents());
+  // 🔥 실제 입력 기준 노드
+  const textNode = document.createTextNode("");
+  span.appendChild(textNode);
+
   range.insertNode(span);
 
-  // 커서 정리
-  range.setStartAfter(span);
-  range.setEndAfter(span);
+  // 커서를 span 안에 고정
+  const newRange = document.createRange();
+  newRange.setStart(textNode, 0);
+  newRange.collapse(true);
+
   sel.removeAllRanges();
-  sel.addRange(range);
+  sel.addRange(newRange);
 }
 
   /* =================================================
