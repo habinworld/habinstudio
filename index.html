@@ -232,7 +232,7 @@ noticeList.innerHTML = notices.map((n, i) => `
     display:flex;
     align-items:center;
     cursor:pointer;
-  " onclick="location.href='view.html?id=${n.id}'">
+  " onclick="location.href='post.html?mode=view&id=${n.id}'">
 
     <span style="width:45px; text-align:center; color:#444;">
       ${notices.length - i}
@@ -265,6 +265,7 @@ function formatDate(dateString) {
 </script>
 </body>
 </html>
+
 
 
 
