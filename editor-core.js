@@ -15,7 +15,8 @@ window.EditorCore = (function () {
   const ImageEngine    = window.ImageEngine;
   const ColorBasic     = window.ColorBasic;
   const ColorAdvanced  = window.ColorAdvanced;
-
+ // ⭐ 현재 입력용 폰트 크기 상태 (엑셀식)
+  let currentFontSize = null;
   /* =================================================
         2) DOM 참조 (고정 ID)
   ================================================= */
