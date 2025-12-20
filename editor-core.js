@@ -76,9 +76,14 @@ function applyFontSizePx(px) {
       range.commonAncestorContainer.parentNode : 
       range.commonAncestorContainer; 
    container.querySelectorAll("span[style*='font-size']").forEach(s => { s.style.fontSize = ""; }); 
-   // 🔥 새 span으로 감싸기 const span = document.createElement("span"); 
+   // 🔥 새 span으로 감싸기 
+   const span = document.createElement("span"); 
    span.style.fontSize = px + "px"; span.appendChild(range.extractContents()); range.insertNode(span); 
-   // 커서 정리 range.setStartAfter(span); range.setEndAfter(span); sel.removeAllRanges(); sel.addRange(range); }                              
+   // 커서 정리 
+   range.setStartAfter(span); 
+   range.setEndAfter(span); 
+   sel.removeAllRanges(); 
+   sel.addRange(range); }                              
   /* =================================================
         7) 줄간격
   ================================================= */
