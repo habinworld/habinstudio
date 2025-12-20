@@ -176,81 +176,43 @@ function applyTypingFontSize(px) {
         - B: 커서 이후 적용
         - 분기는 오직 applyFontSizePx에서 1회
   ================================================= */
+function applyFontSizeToSelection(px) {
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
 
-  // A) 선택(드래그) 전용
-  function applyFontSizeToSelection(px) {
-    // ✅ select 클릭으로 selection이 날아간 경우 복원
-    const restored = restoreSelection();
+  const range = sel.getRangeAt(0);
+  if (range.collapsed) return;
 
-    const sel = window.getSelection();
-    if (!sel || !sel.rangeCount) return;
+  if (!editor.contains(range.commonAncestorContainer)) return;
 
-    const range = restored || sel.getRangeAt(0);
+  const span = document.createElement("span");
+  span.style.fontSize = Number(px) + "px";
 
-    // editor 내부만 허용
-    if (!editor.contains(range.commonAncestorContainer)) return;
+  span.appendChild(range.extractContents());
+  range.insertNode(span);
 
-    // 드래그가 없으면 종료 (A모드는 드래그 전용)
-    if (range.collapsed) return;
+  range.setStartAfter(span);
+  range.collapse(true);
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+function applyFontSizePx(px) {
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
 
-    const span = document.createElement("span");
-    span.style.fontSize = px + "px";
+  const range = sel.getRangeAt(0);
 
-    span.appendChild(range.extractContents());
-    range.insertNode(span);
-
-    // 커서 정리
-    range.setStartAfter(span);
-    range.collapse(true);
-
-    sel.removeAllRanges();
-    sel.addRange(range);
-
-    // 다음 실행 대비 저장
-    savedRange = range.cloneRange();
+  // ✅ 드래그가 있으면 → 드래그 적용
+  if (!range.collapsed) {
+    removeTypingSpanIfEmpty();
+    applyFontSizeToSelection(px);
+    return;
   }
 
-  // B) 커서 이후 입력 전용
-  function applyFontSizeFromCursor(px) {
-    const sel = window.getSelection();
-    if (!sel || !sel.rangeCount) return;
+  // ✅ 커서만 있으면 → typing span (STEP 1에서 만든 엔진)
+  applyTypingFontSize(px);
+}
 
-    const range = sel.getRangeAt(0);
-
-    // editor 내부만 허용
-    const container = range.commonAncestorContainer.nodeType === 3
-  ? range.commonAncestorContainer.parentNode
-  : range.commonAncestorContainer;
-
-if (!editor.contains(container)) return;
-
-    const span = document.createElement("span");
-    span.style.fontSize = px + "px";
-
-    // 입력 기준점(빈 텍스트 노드) 생성
-    const textNode = document.createTextNode("");
-    span.appendChild(textNode);
-    range.insertNode(span);
-
-    const newRange = document.createRange();
-    newRange.setStart(textNode, 0);
-    newRange.collapse(true);
-
-    sel.removeAllRanges();
-    sel.addRange(newRange);
-
-    // cursor 모드도 저장해두면 이후 동작 안정
-    savedRange = newRange.cloneRange();
-  }
-
-  // 실행부) 분기 1회
-  function applyFontSizePx(px) {
-    if (FONT_SIZE_MODE === "selection") {
-      applyFontSizeToSelection(px);
-    } else {
-      applyFontSizeFromCursor(px);
-    }
-  }
 
   /* =================================================
         7) 줄간격
