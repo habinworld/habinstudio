@@ -75,43 +75,22 @@ function applyFontSizePx(px) {
 
   const range = sel.getRangeAt(0);
 
-  // 1️⃣ 커서만 있을 때 → 다음 입력용
-  if (range.collapsed) {
+  // ① 드래그가 있을 때 → 기존 텍스트 처리
+  if (!range.collapsed) {
     const span = document.createElement("span");
-    span.style.fontSize = px + "px";
-    span.appendChild(document.createTextNode("\u200B"));
+    span.style.fontSize = px;
 
+    span.appendChild(range.extractContents());
     range.insertNode(span);
 
-    const caret = document.createRange();
-    caret.setStart(span.firstChild, 1);
-    caret.collapse(true);
+    range.setStartAfter(span);
+    range.setEndAfter(span);
     sel.removeAllRanges();
-    sel.addRange(caret);
-    return;
+    sel.addRange(range);
   }
 
-  // 2️⃣ 드래그 있을 때 → 브라우저 엔진에 맡김
-  document.execCommand("styleWithCSS", false, true);
-  document.execCommand("fontSize", false, "7"); // 임시 마커
-
-  const editor = document.getElementById("hb-editor");
-  if (!editor) return;
-
-   // ⭐ 기존 font-size span 정리 (핵심)
-editor.querySelectorAll("span[style*='font-size']").forEach(s => {
-  s.style.fontSize = ""; // 기존 값 제거
-});
-
-
-  // 3️⃣ 결과 치환 (몇 번을 드래그해도 안정)
-  const fonts = editor.querySelectorAll('font[size="7"]');
-  fonts.forEach(f => {
-    const span = document.createElement("span");
-    span.style.fontSize = px + "px";
-    span.innerHTML = f.innerHTML;
-    f.replaceWith(span);
-  });
+  // ② 항상 상태 저장 (핵심)
+  currentFontSize = px;
 }
 
 
