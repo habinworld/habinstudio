@@ -16,6 +16,30 @@ window.EditorCore = (function () {
   const ColorBasic     = window.ColorBasic;
   const ColorAdvanced  = window.ColorAdvanced;
   let FONT_SIZE_MODE = "selection";
+   let savedRange = null;
+
+function saveSelection() {
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
+
+  const r = sel.getRangeAt(0);
+  if (editor && editor.contains(r.commonAncestorContainer)) {
+    savedRange = r.cloneRange();
+  }
+}
+
+function restoreSelection() {
+  if (!savedRange || !editor) return null;
+
+  editor.focus();
+  const sel = window.getSelection();
+  if (!sel) return null;
+
+  sel.removeAllRanges();
+  sel.addRange(savedRange);
+  return savedRange;
+}
+
   /* =================================================
         2) DOM 참조 (고정 ID)
   ================================================= */
