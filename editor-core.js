@@ -105,7 +105,9 @@ if (editor.innerHTML.trim() === "" || editor.innerHTML === "<br>") {
 
     editor.focus();
 
-    if (cmd === "fontSizePx") applyFontSizePx(value);
+    if (cmd === "fontSizePx") {
+  setTimeout(() => applyFontSizePx(value), 0);
+}
     else if (cmd === "lineHeight") applyLineHeight(value);
     else document.execCommand(cmd, false, value || null);
 
