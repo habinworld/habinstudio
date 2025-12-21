@@ -52,18 +52,22 @@ window.ColorBasicEngine = (function () {
     popup.appendChild(box);
   });
 }
-popup.addEventListener("mousedown", e => {
+popup.addEventListener("click", e => {
+  e.preventDefault();
   e.stopPropagation();
 
   const box = e.target.closest("[data-color]");
   if (!box) return;
 
-  // ✅ 드래그/커서 모두 EditorCore가 처리
-  EditorCore.setColor(box.dataset.color);
+  // ⭐ 여기서 분기
+  if (currentMode === "text") {
+    EditorCore.setColor(box.dataset.color);
+  } else if (currentMode === "bg") {
+    EditorCore.setBgColor(box.dataset.color);
+  }
 
   close();
 });
-
 
 
 
