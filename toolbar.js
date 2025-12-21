@@ -50,11 +50,17 @@ options: Array.from({ length: 33 }, (_, i) => {
 },
    {
   id: "hb-line-height",
+  label: "줄간격",
+  type: "select",
   options: [
-    { value: "1.2", label: "1.2" },
-    { value: "1.4", label: "1.4" },
-    { value: "1.6", label: "1.6" },
-    { value: "1.8", label: "1.8" }
+    ...Array.from({ length: 20 }, (_, i) => {
+      const h = (i + 6) / 5; // 1.2 ~ 5.0 (0.2 단위)
+      return {
+        value: String(h),
+        label: h.toFixed(1)
+      };
+    }),
+    { value: "null", label: "기본" } // ← 중요 (문자열 null)
   ]
 },
 
