@@ -8,7 +8,8 @@ window.ColorBasicEngine = (function () {
 
   const popup = document.getElementById("hb-popup-color-basic");
   let isOpen = false;
-
+ // ⭐ 추가할 것 (여기!)
+  let currentMode = "text"; // "text" | "bg"
   /* --------------------------------------------------------
         📌 1) 기본 색상 팔레트 (16색)
   --------------------------------------------------------- */
