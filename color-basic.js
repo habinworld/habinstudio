@@ -70,7 +70,8 @@ popup.addEventListener("mousedown", e => {
   /* --------------------------------------------------------
         📌 3) 팝업 열기
   --------------------------------------------------------- */
-  function openAt(x, y) {
+  function openAt(x, y, mode = "text") {
+  currentMode = mode;   // ⭐ 핵심 한 줄
   if (isOpen) close();
 
   renderPopup();
