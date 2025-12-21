@@ -58,7 +58,7 @@ window.ColorBasicEngine = (function () {
   /* --------------------------------------------------------
         📌 3) 팝업 열기
   --------------------------------------------------------- */
-  function open(x, y) {
+  function openAt(x, y) {
     if (isOpen) {
       close();
       return;
@@ -98,7 +98,7 @@ window.ColorBasicEngine = (function () {
         📌 외부 API
   --------------------------------------------------------- */
   return {
-    open,
+    openAt,
     close
   };
 
