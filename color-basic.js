@@ -83,10 +83,9 @@ popup.addEventListener("mousedown", e => {
 
   isOpen = true;
 
-  setTimeout(() => {
-    document.addEventListener("mousedown", handleOutside, { once: true });
-  }, 0);
-}
+ setTimeout(() => {
+  document.addEventListener("click", handleOutside);
+}, 0);
 
 
   /* --------------------------------------------------------
@@ -95,6 +94,7 @@ popup.addEventListener("mousedown", e => {
   function close() {
     popup.style.display = "none";
     isOpen = false;
+     document.removeEventListener("click", handleOutside);
   }
 
   function handleOutside(e) {
