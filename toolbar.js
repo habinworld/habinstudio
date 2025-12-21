@@ -192,6 +192,18 @@ font && font.addEventListener("change", e => {
     EditorCore.setFont(v);
   });
 });
+const fontBtn = document.getElementById("hb-font-family-btn");
+const fontSel = document.getElementById("hb-font-family");
+
+fontBtn && fontSel && fontBtn.addEventListener("click", e => {
+  e.stopPropagation();
+  const r = fontBtn.getBoundingClientRect();
+
+  FontPopup.openAt(r.left, r.bottom, value => {
+    fontSel.value = value;
+    EditorCore.setFont(value);
+  });
+});
 
 /* -------------------------------
    font-size (속도 안정화)
