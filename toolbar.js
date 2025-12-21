@@ -107,7 +107,6 @@ function render(containerId, items) {
       const b = document.createElement("button");
       // ⭐ 핵심: popup이면 버튼 ID를 분리
       b.id = item.popup ? `${item.id}-btn` : item.id; 
-      b.id = item.id;
       b.className = "hb-btn";
 
       item.icon && b.classList.add("icon");
