@@ -180,28 +180,7 @@ function render(containerId, items) {
 const size = document.getElementById("hb-font-size");
 const line = document.getElementById("hb-line-height");
 
-/* -------------------------------
-   text color (basic)
--------------------------------- */
-const btnColor = document.getElementById("hb-btn-color");
 
-btnColor && btnColor.addEventListener("click", e => {
-  e.stopPropagation();
-  const r = btnColor.getBoundingClientRect();
-  ColorBasicEngine.openAt(r.left, r.bottom);
-});
-
-/* -------------------------------
-   background color (advanced)
--------------------------------- */
-const btnBgColor = document.getElementById("hb-btn-bgcolor");
-
-btnBgColor && btnBgColor.addEventListener("click", e => {
-  e.stopPropagation();
-  const r = btnBgColor.getBoundingClientRect();
-  ColorAdvancedEngine.openAt(r.left, r.bottom);
-});
-     
 /* -------------------------------
    font-family (속도 안정화)
 -------------------------------- */
