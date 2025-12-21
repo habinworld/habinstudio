@@ -38,6 +38,7 @@ window.Toolbar = (function () {
     { value: "'Noto Serif KR', serif",    label: "Serif" }
   ]
 },
+{ id: "hb-btn-font", label: "글자체" },     
 {
   id: "hb-font-size",
 options: Array.from({ length: 33 }, (_, i) => {
