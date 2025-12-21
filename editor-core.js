@@ -355,8 +355,8 @@ function applyTypingColor(color, mode) {
     setLineHeight: h  => execute({ cmd: "lineHeight", value: h }),
 
     // 색상
-    setColor:   c => execute(TextEngine.setColor(c)),
-    setBgColor: c => execute(TextEngine.setBgColor(c)),
+   setColor:   c => execute({ cmd: "textColor", value: c }),
+   setBgColor: c => execute({ cmd: "bgColor",   value: c }),
 
     // 정렬
     alignLeft:    () => execute(TextEngine.alignLeft()),
