@@ -217,7 +217,12 @@ line && line.addEventListener("change", e => {
   });
 });
 }
-
+const btnColor = document.getElementById("hb-btn-color");
+btnColor && btnColor.addEventListener("click", e => {
+  e.stopPropagation();
+  const r = btnColor.getBoundingClientRect();
+  ColorBasicEngine.openAt(r.left, r.bottom);
+});
   /* =====================================================
      5) Init
   ===================================================== */
