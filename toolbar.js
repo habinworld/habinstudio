@@ -50,8 +50,7 @@ options: Array.from({ length: 33 }, (_, i) => {
 },
    {
   id: "hb-line-height",
-  label: "줄간격",
-  type: "select",
+ type: "select",
   options: [
     ...Array.from({ length: 20 }, (_, i) => {
       const h = (i + 6) / 5; // 1.2 ~ 5.0 (0.2 단위)
