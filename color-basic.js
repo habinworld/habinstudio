@@ -23,37 +23,43 @@ window.ColorBasicEngine = (function () {
         📌 2) 팝업 렌더링
   --------------------------------------------------------- */
   function renderPopup() {
-    popup.innerHTML = ""; // 초기화
+  popup.innerHTML = "";
 
-    popup.style.position = "absolute";
-    popup.style.padding = "10px";
-    popup.style.background = "#FFFFFF";
-    popup.style.border = "1px solid #D0D0D0";
-    popup.style.borderRadius = "8px";
-    popup.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
-    popup.style.display = "grid";
-    popup.style.gridTemplateColumns = "repeat(4, 24px)";
-    popup.style.gap = "8px";
-    popup.style.zIndex = "9999";
+  popup.style.position = "absolute";
+  popup.style.padding = "10px";
+  popup.style.background = "#FFFFFF";
+  popup.style.border = "1px solid #D0D0D0";
+  popup.style.borderRadius = "8px";
+  popup.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
+  popup.style.display = "grid";
+  popup.style.gridTemplateColumns = "repeat(4, 24px)";
+  popup.style.gap = "8px";
+  popup.style.zIndex = "9999";
+  popup.style.pointerEvents = "auto";
 
-    COLORS.forEach(color => {
-      const box = document.createElement("div");
-      box.style.width = "24px";
-      box.style.height = "24px";
-      box.style.background = color;
-      box.style.borderRadius = "4px";
-      box.style.cursor = "pointer";
-      box.style.border = "1px solid #CCC";
+  // 🔒 팝업 내부 클릭 보호
+  popup.addEventListener("mousedown", e => {
+    e.stopPropagation();
+  });
 
-      box.addEventListener("click", function (e) {
-  e.stopPropagation();
-        EditorCore.applyColor(color);
-        close();
-      });
+  COLORS.forEach(color => {
+    const box = document.createElement("div");
+    box.style.width = "24px";
+    box.style.height = "24px";
+    box.style.background = color;
+    box.style.borderRadius = "4px";
+    box.style.cursor = "pointer";
+    box.style.border = "1px solid #CCC";
 
-      popup.appendChild(box);
+    box.addEventListener("mousedown", e => {
+      e.stopPropagation();
+      EditorCore.applyColor(color);
+      close();
     });
-  }
+
+    popup.appendChild(box);
+  });
+}
 
 
   /* --------------------------------------------------------
