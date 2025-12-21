@@ -216,15 +216,15 @@ line && line.addEventListener("change", e => {
     EditorCore.setLineHeight(v);
   });
 });
-// 글자색
-const btnColor = document.getElementById("hb-btn-color");
+
+     // 글자색
 btnColor && btnColor.addEventListener("click", e => {
   e.stopPropagation();
   const r = btnColor.getBoundingClientRect();
   ColorBasicEngine.openAt(r.left, r.bottom);
 });
- // 배경색
-const btnBgColor = document.getElementById("hb-btn-bgcolor");
+
+     // 배경색
 btnBgColor && btnBgColor.addEventListener("click", e => {
   e.preventDefault();
   e.stopPropagation();
