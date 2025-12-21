@@ -45,7 +45,8 @@ window.ColorBasicEngine = (function () {
       box.style.cursor = "pointer";
       box.style.border = "1px solid #CCC";
 
-      box.addEventListener("click", function () {
+      box.addEventListener("click", function (e) {
+  e.stopPropagation();
         EditorCore.applyColor(color);
         close();
       });
