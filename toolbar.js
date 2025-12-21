@@ -172,11 +172,12 @@ function render(containerId, items) {
     bind("hb-btn-img-left",   () => EditorCore.imageAlign("left"));
     bind("hb-btn-img-center", () => EditorCore.imageAlign("center"));
     bind("hb-btn-img-right",  () => EditorCore.imageAlign("right"));
-      // ADVANCED — select (폰트 / 크기 / 줄간격)
+      // ADVANCED — select (폰트 / 크기 / 줄간격,글자색, 배경색)
   const font = document.getElementById("hb-font-family");
 const size = document.getElementById("hb-font-size");
 const line = document.getElementById("hb-line-height");
-
+const btnColor = document.getElementById("hb-btn-color");
+const btnBgColor = document.getElementById("hb-btn-bgcolor");
 
 /* -------------------------------
    font-family (속도 안정화)
