@@ -154,10 +154,6 @@ function render(containerId, items) {
     bind("hb-btn-ul", () => EditorCore.ul());
     bind("hb-btn-ol", () => EditorCore.ol());
 
-    // ADVANCED — 자리만 (확장 예정)
-    bind("hb-btn-color",   e => EditorCore.openBasicColor(e.target, "text"));
-    bind("hb-btn-bgcolor", e => EditorCore.openBasicColor(e.target, "bg"));
-
     const input = document.getElementById("hb-image-input");
     bind("hb-btn-image", () => input && input.click());
 
