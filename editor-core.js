@@ -263,17 +263,60 @@ window.EditorCore = (function () {
   /* =================================================
         9) 색상 팝업
   ================================================= */
-  function openBasicColor(button, mode) {
-    ColorBasic.open(button, mode, color =>
-      execute({ cmd: mode === "text" ? "foreColor" : "hiliteColor", value: color })
-    );
-  }
+function applyColor(color, mode) {
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
 
-  function openAdvancedColor(button, mode) {
-    ColorAdvanced.open(button, mode, color =>
-      execute({ cmd: mode === "text" ? "foreColor" : "hiliteColor", value: color })
-    );
+  const range = sel.getRangeAt(0);
+  if (!editor.contains(range.commonAncestorContainer)) return;
+
+  const hasSelection = !range.collapsed;
+
+  hasSelection
+    ? document.execCommand(
+        mode === "text" ? "foreColor" : "hiliteColor",
+        false,
+        color
+      )
+    : applyTypingColor(color, mode);
+}
+
+let typingColorSpan = null;
+
+function removeTypingColorSpanIfEmpty() {
+  if (!typingColorSpan) return;
+  const t = typingColorSpan.textContent || "";
+  if (t === "\u200B" || t.trim() === "") {
+    typingColorSpan.remove();
   }
+  typingColorSpan = null;
+}
+
+function applyTypingColor(color, mode) {
+  removeTypingColorSpanIfEmpty();
+
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
+
+  const range = sel.getRangeAt(0);
+
+  const span = document.createElement("span");
+  if (mode === "text") span.style.color = color;
+  else span.style.backgroundColor = color;
+
+  span.textContent = "\u200B";
+  range.insertNode(span);
+
+  const r = document.createRange();
+  r.setStart(span.firstChild, 1);
+  r.collapse(true);
+
+  sel.removeAllRanges();
+  sel.addRange(r);
+
+  typingColorSpan = span;
+}
+
 
   /* =================================================
         10) 이미지
