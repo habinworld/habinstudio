@@ -157,3 +157,6 @@
     font-size: 17px;
   }
 }
+#hb-font-family {
+  display: none;   
+}
