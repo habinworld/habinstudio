@@ -31,6 +31,8 @@ window.Toolbar = (function () {
   const ADVANCED_BUTTONS = [
    {
   id: "hb-font-family",
+  popup: true, 
+  label: "글자체",     
   options: [
     { value: "'Gowun Dodum', sans-serif", label: "Gowun" },
     { value: "'Nanum Myeongjo', serif",   label: "Nanum" },
@@ -38,7 +40,6 @@ window.Toolbar = (function () {
     { value: "'Noto Serif KR', serif",    label: "Serif" }
   ]
 },
-{ id: "hb-btn-font", label: "글자체" },     
 {
   id: "hb-font-size",
 options: Array.from({ length: 33 }, (_, i) => {
