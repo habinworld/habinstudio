@@ -163,13 +163,52 @@ window.EditorCore = (function () {
   /* =================================================
         7) 줄간격
   ================================================= */
-  function applyLineHeight(h) {
+ function applyLineHeight(h) {
   const sel = window.getSelection();
   if (!sel || !sel.rangeCount) return;
 
-  let node = sel.anchorNode;
+  const range = sel.getRangeAt(0);
 
-  // 블록 탐색 (p / div / li)
+  // 적용 액션 (존재 / 비존재)
+  const ACTIONS = {
+    true:  el => el.style.removeProperty("line-height"),
+    false: el => el.style.setProperty("line-height", h)
+  };
+  const act = ACTIONS[h === null];
+
+  // 드래그 선택 영역 → 여러 블록
+  if (!range.collapsed) {
+    const blocks = new Set();
+
+    const walker = document.createTreeWalker(
+      editor,
+      NodeFilter.SHOW_ELEMENT,
+      {
+        acceptNode(node) {
+          if (
+            (node.tagName === "P" ||
+             node.tagName === "DIV" ||
+             node.tagName === "LI") &&
+            range.intersectsNode(node)
+          ) {
+            return NodeFilter.FILTER_ACCEPT;
+          }
+          return NodeFilter.FILTER_SKIP;
+        }
+      }
+    );
+
+    let node;
+    while ((node = walker.nextNode())) {
+      blocks.add(node);
+    }
+
+    blocks.forEach(act);
+    return;
+  }
+
+  // 커서만 있는 경우 → 단일 블록
+  let node = sel.anchorNode;
   while (node && node !== editor) {
     if (
       node.nodeType === 1 &&
@@ -177,19 +216,11 @@ window.EditorCore = (function () {
        node.tagName === "DIV" ||
        node.tagName === "LI")
     ) {
-      break;
+      act(node);
+      return;
     }
     node = node.parentNode;
   }
-
-  if (!node || node === editor) return;
-
-  const ACTIONS = {
-    true:  () => node.style.removeProperty("line-height"),
-    false: () => node.style.setProperty("line-height", h)
-  };
-
-  ACTIONS[h === null]();
 }
 
   /* =================================================
