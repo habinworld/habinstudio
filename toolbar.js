@@ -216,13 +216,23 @@ line && line.addEventListener("change", e => {
     EditorCore.setLineHeight(v);
   });
 });
-}
+// 글자색
 const btnColor = document.getElementById("hb-btn-color");
 btnColor && btnColor.addEventListener("click", e => {
   e.stopPropagation();
   const r = btnColor.getBoundingClientRect();
   ColorBasicEngine.openAt(r.left, r.bottom);
 });
+ // 배경색
+const btnBgColor = document.getElementById("hb-btn-bgcolor");
+btnBgColor && btnBgColor.addEventListener("click", e => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  const r = btnBgColor.getBoundingClientRect();
+  ColorBasicEngine.openAt(r.left, r.bottom);
+});    
+}     
   /* =====================================================
      5) Init
   ===================================================== */
