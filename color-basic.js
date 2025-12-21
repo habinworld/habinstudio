@@ -37,29 +37,28 @@ window.ColorBasicEngine = (function () {
   popup.style.zIndex = "9999";
   popup.style.pointerEvents = "auto";
 
-  // 🔒 팝업 내부 클릭 보호
-  popup.addEventListener("mousedown", e => {
-    e.stopPropagation();
-  });
-
   COLORS.forEach(color => {
     const box = document.createElement("div");
+    box.dataset.color = color;
     box.style.width = "24px";
     box.style.height = "24px";
     box.style.background = color;
     box.style.borderRadius = "4px";
     box.style.cursor = "pointer";
     box.style.border = "1px solid #CCC";
-
-    box.addEventListener("mousedown", e => {
-      e.stopPropagation();
-      EditorCore.applyColor(color);
-      close();
-    });
-
     popup.appendChild(box);
   });
 }
+popup.addEventListener("mousedown", e => {
+  e.stopPropagation();
+
+  const box = e.target.closest("[data-color]");
+  if (!box) return;
+
+  EditorCore.applyColor(box.dataset.color);
+  close();
+});
+
 
 
   /* --------------------------------------------------------
