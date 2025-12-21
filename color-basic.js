@@ -34,11 +34,12 @@ window.ColorBasicEngine = (function () {
   popup.style.display = "grid";
   popup.style.gridTemplateColumns = "repeat(4, 24px)";
   popup.style.gap = "8px";
-  popup.style.zIndex = "9999";
+  popup.style.zIndex = "999999";           // 팝업은 무조건 최상위
   popup.style.pointerEvents = "auto";
 
   COLORS.forEach(color => {
-    const box = document.createElement("div");
+    const box = document.createElement("button");
+    box.type = "button";
     box.dataset.color = color;
     box.style.width = "24px";
     box.style.height = "24px";
@@ -46,6 +47,7 @@ window.ColorBasicEngine = (function () {
     box.style.borderRadius = "4px";
     box.style.cursor = "pointer";
     box.style.border = "1px solid #CCC";
+    box.style.padding = "0";
     popup.appendChild(box);
   });
 }
@@ -55,9 +57,12 @@ popup.addEventListener("mousedown", e => {
   const box = e.target.closest("[data-color]");
   if (!box) return;
 
-  EditorCore.applyColor(box.dataset.color);
+  // ✅ 드래그/커서 모두 EditorCore가 처리
+  EditorCore.setColor(box.dataset.color);
+
   close();
 });
+
 
 
 
@@ -65,24 +70,23 @@ popup.addEventListener("mousedown", e => {
         📌 3) 팝업 열기
   --------------------------------------------------------- */
   function openAt(x, y) {
-    if (isOpen) {
-      close();
-      return;
-    }
+  if (isOpen) close();
 
-    renderPopup();
+  renderPopup();
 
-    popup.style.left = x + "px";
-    popup.style.top = y + "px";
-    popup.style.display = "grid";
+  // ✅ 어떤 컨테이너/레이어 영향도 안 받게 body 최상위로 올림
+  document.body.appendChild(popup);
 
-    isOpen = true;
+  popup.style.left = x + "px";
+  popup.style.top  = y + "px";
+  popup.style.display = "grid";
 
-    // 외부 클릭 시 닫기
-    setTimeout(() => {
-      document.addEventListener("click", handleOutside, { once: true });
-    }, 0);
-  }
+  isOpen = true;
+
+  setTimeout(() => {
+    document.addEventListener("mousedown", handleOutside, { once: true });
+  }, 0);
+}
 
 
   /* --------------------------------------------------------
