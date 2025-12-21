@@ -164,12 +164,33 @@ window.EditorCore = (function () {
         7) 줄간격
   ================================================= */
   function applyLineHeight(h) {
-    const sel = window.getSelection();
-    if (!sel || !sel.rangeCount) return;
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
 
-    const node = sel.anchorNode && sel.anchorNode.parentNode;
-    node && node.style && (node.style.lineHeight = h);
+  let node = sel.anchorNode;
+
+  // 블록 탐색 (p / div / li)
+  while (node && node !== editor) {
+    if (
+      node.nodeType === 1 &&
+      (node.tagName === "P" ||
+       node.tagName === "DIV" ||
+       node.tagName === "LI")
+    ) {
+      break;
+    }
+    node = node.parentNode;
   }
+
+  if (!node || node === editor) return;
+
+  const ACTIONS = {
+    true:  () => node.style.removeProperty("line-height"),
+    false: () => node.style.setProperty("line-height", h)
+  };
+
+  ACTIONS[h === null]();
+}
 
   /* =================================================
         8) 공용 실행 엔진 (Excel-Style)
