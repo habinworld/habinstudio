@@ -105,6 +105,8 @@ function render(containerId, items) {
     // 존재하면 생성: button
     item.label && (() => {
       const b = document.createElement("button");
+      // ⭐ 핵심: popup이면 버튼 ID를 분리
+      b.id = item.popup ? `${item.id}-btn` : item.id; 
       b.id = item.id;
       b.className = "hb-btn";
 
