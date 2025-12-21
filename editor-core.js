@@ -379,10 +379,7 @@ function applyTypingColor(color, mode) {
     undo:  () => execute(TextEngine.undo()),
     redo:  () => execute(TextEngine.redo()),
 
-    // 팝업
-    openBasicColor,
-    openAdvancedColor,
-
+   
     // 이미지
     insertImage,
     imageAlign
