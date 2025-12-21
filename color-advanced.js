@@ -133,7 +133,7 @@ window.ColorAdvancedEngine = (function () {
   /* --------------------------------------------------------
         📌 2) 팝업 열기
   --------------------------------------------------------- */
-  function open(x, y) {
+  function openAt(x, y) {
     if (isOpen) {
       close();
       return;
@@ -171,7 +171,7 @@ window.ColorAdvancedEngine = (function () {
         📌 외부 API
   --------------------------------------------------------- */
   return {
-    open,
+    openAt,
     close
   };
 
