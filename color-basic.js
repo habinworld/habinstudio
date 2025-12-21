@@ -86,7 +86,7 @@ popup.addEventListener("mousedown", e => {
  setTimeout(() => {
   document.addEventListener("click", handleOutside);
 }, 0);
-
+}
 
   /* --------------------------------------------------------
         📌 4) 팝업 닫기
