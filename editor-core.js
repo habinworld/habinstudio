@@ -253,6 +253,12 @@ window.EditorCore = (function () {
     else if (cmd === "lineHeight") {
       applyLineHeight(value);
     }
+    else if (cmd === "textColor") {
+  applyColor(value, "text");
+}
+else if (cmd === "bgColor") {
+  applyColor(value, "bg");
+}   
     else {
       document.execCommand(cmd, false, value || null);
     }
