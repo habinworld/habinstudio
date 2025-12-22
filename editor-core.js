@@ -265,10 +265,15 @@ else if (cmd === "bgColor") {
 
     isLocked = false;
   }
+/* =================================================
+      9) 색상 팝업 — FINAL (존재 / 비존재 헌법)
+      - 글자색: 드래그 or 커서
+      - 배경색: 드래그 전용 (커서 이후 ❌)
+================================================= */
 
-  /* =================================================
-        9) 색상 팝업
-  ================================================= */
+/* ---------------------------------
+   공용 색상 진입점
+--------------------------------- */
 function applyColor(color, mode) {
   const sel = window.getSelection();
   if (!sel || !sel.rangeCount) return;
@@ -276,19 +281,32 @@ function applyColor(color, mode) {
   const range = sel.getRangeAt(0);
   if (!editor.contains(range.commonAncestorContainer)) return;
 
+  /* 배경색: 선택 존재할 때만 */
+  if (mode === "bg") {
+    if (range.collapsed) return;   // ⭐ 핵심 헌법
+    applyColorToSelection(range, color, "bg");
+    return;
+  }
+
+  /* 글자색 */
   if (!range.collapsed) {
-    applyColorToSelection(range, color, mode);
+    applyColorToSelection(range, color, "text");
   } else {
-    applyTypingColor(color, mode);
+    applyTypingColor(color, "text");
   }
 }
+
+/* ---------------------------------
+   드래그 선택 영역 적용
+--------------------------------- */
 function applyColorToSelection(range, color, mode) {
   const span = document.createElement("span");
 
-  if (mode === "text") {
-    span.style.color = color;
-  } else {
+  if (mode === "bg") {
     span.style.backgroundColor = color;
+    span.style.lineHeight = "inherit"; // 줄간격 안정
+  } else {
+    span.style.color = color;
   }
 
   span.appendChild(range.extractContents());
@@ -302,19 +320,23 @@ function applyColorToSelection(range, color, mode) {
   sel.addRange(range);
 }
 
-
+/* ---------------------------------
+   커서 이후 글자색 (typing span)
+--------------------------------- */
 let typingColorSpan = null;
 
 function removeTypingColorSpanIfEmpty() {
   if (!typingColorSpan) return;
-  const t = typingColorSpan.textContent || "";
-  if (t === "\u200B" || t.trim() === "") {
-    typingColorSpan.remove();
-  }
+
+  const t = (typingColorSpan.textContent || "").replace(/\u200B/g, "").trim();
+  if (t === "") typingColorSpan.remove();
+
   typingColorSpan = null;
 }
 
 function applyTypingColor(color, mode) {
+  if (mode !== "text") return; // ⭐ 배경색 차단
+
   removeTypingColorSpanIfEmpty();
 
   const sel = window.getSelection();
@@ -323,10 +345,9 @@ function applyTypingColor(color, mode) {
   const range = sel.getRangeAt(0);
 
   const span = document.createElement("span");
-  if (mode === "text") span.style.color = color;
-  else span.style.backgroundColor = color;
+  span.style.color = color;
+  span.textContent = "\u200B"; // ZWSP
 
-  span.textContent = "\u200B";
   range.insertNode(span);
 
   const r = document.createRange();
@@ -338,7 +359,6 @@ function applyTypingColor(color, mode) {
 
   typingColorSpan = span;
 }
-
 
   /* =================================================
         10) 이미지
