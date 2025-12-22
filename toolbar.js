@@ -43,6 +43,8 @@ window.Toolbar = (function () {
 },
 {
   id: "hb-font-size",
+  popup: true, 
+  label: "크 기",    
 options: Array.from({ length: 33 }, (_, i) => {
   const size = (i + 4) * 2; // 8 ~ 72 (짝수)
   return {
@@ -53,7 +55,8 @@ options: Array.from({ length: 33 }, (_, i) => {
 },
    {
   id: "hb-line-height",
- type: "select",
+  popup: true, 
+  label: "줄간격", 
   options: [
     ...Array.from({ length: 20 }, (_, i) => {
       const h = (i + 6) / 5; // 1.2 ~ 5.0 (0.2 단위)
