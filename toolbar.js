@@ -216,20 +216,6 @@ fontBtn && fontSel && fontBtn.addEventListener("click", e => {
 });
 
 /* -------------------------------
-   font-size (속도 안정화)
--------------------------------- */
-let fsTimer = null;
-
-size && size.addEventListener("change", e => {
-  const v = e.target.value;
-  if (fsTimer) cancelAnimationFrame(fsTimer);
-
-  fsTimer = requestAnimationFrame(() => {
-    EditorCore.setSize(v);
-  });
-});
-
-/* -------------------------------
    line-height (속도 + 안정 통일)
 -------------------------------- */
 let lhTimer = null;
