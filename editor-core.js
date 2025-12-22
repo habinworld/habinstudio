@@ -304,8 +304,8 @@ function applyColorToSelection(range, color, mode) {
 
   if (mode === "bg") {
     span.style.backgroundColor = color;
-    span.style.lineHeight = "inherit"; // 줄간격 안정
-  } else {
+     } 
+  else {
     span.style.color = color;
   }
 
