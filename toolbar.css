@@ -163,8 +163,27 @@
 #hb-line-height {
   display: none;
 }
-#hb-popup .hb-btn {
+/* popup 컨테이너 */
+#hb-popup {
+  padding: 4px 0;
   border: none;
   box-shadow: none;
-  background: transparent;
+  background: #fff;
+}
+/* popup 리스트 항목 */
+#hb-popup .hb-btn {
+  all: unset;
+  display: block;
+
+  padding: 3px 8px;
+  line-height: 1.25;
+  font-size: 13px;
+
+  cursor: pointer;
+  color: #2b2b2b;
+}
+
+#hb-popup .hb-btn:hover {
+  background: #EAF2FF;
+  color: #3558A8;
 }
