@@ -230,6 +230,26 @@ size && size.addEventListener("change", e => {
     EditorCore.setSize(v);
   });
 });
+  const sizeBtn = document.getElementById("hb-font-size-btn");
+const sizeSel = document.getElementById("hb-font-size");
+
+sizeBtn && sizeSel && sizeBtn.addEventListener("click", e => {
+  e.stopPropagation();
+  const r = sizeBtn.getBoundingClientRect();
+
+  Popup.openAt(
+    r.left,
+    r.bottom,
+    Array.from(sizeSel.options).map(o => ({
+      value: o.value,
+      label: o.textContent
+    })),
+    value => {
+      sizeSel.value = value;
+      EditorCore.setSize(value);
+    }
+  );
+});   
 /* -------------------------------
    line-height (속도 + 안정 통일)
 -------------------------------- */
