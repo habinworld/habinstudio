@@ -263,7 +263,26 @@ line && line.addEventListener("change", e => {
     EditorCore.setLineHeight(v);
   });
 });
+const lineBtn = document.getElementById("hb-line-height-btn");
+const lineSel = document.getElementById("hb-line-height");
 
+lineBtn && lineSel && lineBtn.addEventListener("click", e => {
+  e.stopPropagation();
+  const r = lineBtn.getBoundingClientRect();
+
+  Popup.openAt(
+    r.left,
+    r.bottom,
+    Array.from(lineSel.options).map(o => ({
+      value: o.value,
+      label: o.textContent
+    })),
+    value => {
+      lineSel.value = value;
+      EditorCore.setLineHeight(value === "null" ? null : value);
+    }
+  );
+});
      // 글자색
 btnColor && btnColor.addEventListener("click", e => {
   e.stopPropagation();
