@@ -276,16 +276,32 @@ function applyColor(color, mode) {
   const range = sel.getRangeAt(0);
   if (!editor.contains(range.commonAncestorContainer)) return;
 
-  const hasSelection = !range.collapsed;
-
-  hasSelection
-    ? document.execCommand(
-        mode === "text" ? "foreColor" : "hiliteColor",
-        false,
-        color
-      )
-    : applyTypingColor(color, mode);
+  if (!range.collapsed) {
+    applyColorToSelection(range, color, mode);
+  } else {
+    applyTypingColor(color, mode);
+  }
 }
+function applyColorToSelection(range, color, mode) {
+  const span = document.createElement("span");
+
+  if (mode === "text") {
+    span.style.color = color;
+  } else {
+    span.style.backgroundColor = color;
+  }
+
+  span.appendChild(range.extractContents());
+  range.insertNode(span);
+
+  range.setStartAfter(span);
+  range.collapse(true);
+
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
 
 let typingColorSpan = null;
 
