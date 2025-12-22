@@ -157,6 +157,9 @@
     font-size: 17px;
   }
 }
-#hb-font-family {
-  display: none;   
+/* popup 사용 — select UI 숨김 */
+#hb-font-family,
+#hb-font-size,
+#hb-line-height {
+  display: none;
 }
