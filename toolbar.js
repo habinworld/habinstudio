@@ -198,7 +198,7 @@ fontBtn && fontSel && fontBtn.addEventListener("click", e => {
   e.stopPropagation();
   const r = fontBtn.getBoundingClientRect();
 
-  FontPopup.openAt(r.left, r.bottom, value => {
+  Popup.openAt(r.left, r.bottom, value => {
     fontSel.value = value;
     EditorCore.setFont(value);
   });
