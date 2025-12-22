@@ -198,10 +198,21 @@ fontBtn && fontSel && fontBtn.addEventListener("click", e => {
   e.stopPropagation();
   const r = fontBtn.getBoundingClientRect();
 
-  Popup.openAt(r.left, r.bottom, value => {
+  Popup.openAt(
+  r.left,
+  r.bottom,
+  fontSel.options
+    ? Array.from(fontSel.options).map(o => ({
+        value: o.value,
+        label: o.textContent
+      }))
+    : [],
+  value => {
     fontSel.value = value;
     EditorCore.setFont(value);
-  });
+  },
+  (btn, v) => btn.style.fontFamily = v
+);
 });
 
 /* -------------------------------
