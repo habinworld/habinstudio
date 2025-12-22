@@ -34,10 +34,11 @@ window.Toolbar = (function () {
   popup: true, 
   label: "글자체",     
   options: [
-    { value: "'Gowun Dodum', sans-serif", label: "Gowun" },
-    { value: "'Nanum Myeongjo', serif",   label: "Nanum" },
-     { value: "'HCR Batang', '함초롱바탕', serif", label: "함초롱" }, 
-    { value: "'Noto Serif KR', serif",    label: "Serif" }
+  { value: "'Noto Sans KR', sans-serif", label: "고딕 (Noto)" },
+  { value: "'Nanum Gothic', sans-serif", label: "고딕 (나눔)" },
+  { value: "'Gowun Dodum', sans-serif", label: "고딕 (고운)" },
+  { value: "'Nanum Myeongjo', serif", label: "명조 (나눔)" },
+  { value: "'HCR Batang', '함초롱바탕', serif", label: "명조 (함초롱)" }
   ]
 },
 {
