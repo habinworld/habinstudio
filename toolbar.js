@@ -296,7 +296,7 @@ btnBgColor && btnBgColor.addEventListener("click", e => {
   const r = btnBgColor.getBoundingClientRect();
   ColorBasicEngine.openAt(r.left, r.bottom, "bg");
 });
-     
+}     
   /* =====================================================
      5) Init
   ===================================================== */
