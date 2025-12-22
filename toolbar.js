@@ -287,18 +287,16 @@ lineBtn && lineSel && lineBtn.addEventListener("click", e => {
 btnColor && btnColor.addEventListener("click", e => {
   e.stopPropagation();
   const r = btnColor.getBoundingClientRect();
-  ColorBasicEngine.openAt(r.left, r.bottom);
+  ColorBasicEngine.openAt(r.left, r.bottom, "text");
 });
 
      // 배경색
 btnBgColor && btnBgColor.addEventListener("click", e => {
-  e.preventDefault();
   e.stopPropagation();
-
   const r = btnBgColor.getBoundingClientRect();
-  ColorBasicEngine.openAt(r.left, r.bottom);
-});    
-}     
+  ColorBasicEngine.openAt(r.left, r.bottom, "bg");
+});
+     
   /* =====================================================
      5) Init
   ===================================================== */
