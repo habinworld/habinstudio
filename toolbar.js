@@ -211,8 +211,6 @@ fontBtn && fontSel && fontBtn.addEventListener("click", e => {
     fontSel.value = value;
     EditorCore.setFont(value);
   },
-  (btn, v) => btn.style.fontFamily = v
-);
 });
 
 /* -------------------------------
