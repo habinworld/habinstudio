@@ -163,3 +163,8 @@
 #hb-line-height {
   display: none;
 }
+#hb-popup .hb-btn {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
