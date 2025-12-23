@@ -319,9 +319,10 @@ function applyColorToSelection(range, color, mode) {
     span.style.color === "" && span.style.removeProperty("color");
   }
 
-  span.appendChild(range.extractContents());
+  const content = range.extractContents();
+cleanColorSpans(content);
+span.appendChild(content);
   range.insertNode(span);
-
   range.setStartAfter(span);
   range.collapse(true);
 
