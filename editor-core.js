@@ -257,7 +257,7 @@ window.EditorCore = (function () {
   applyColor(value, "text");
 }
 else if (cmd === "bgColor") {
-  applyColor(value, "bg");
+  applyBgColor(value);
 }   
     else {
       document.execCommand(cmd, false, value || null);
