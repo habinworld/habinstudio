@@ -283,7 +283,6 @@ function applyColor(color, mode) {
 
   /* 배경색: 선택 존재할 때만 */
   if (mode === "bg") {
-    if (range.collapsed) return;   // ⭐ 핵심 헌법
     applyColorToSelection(range, color, "bg");
     return;
   }
