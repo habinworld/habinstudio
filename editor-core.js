@@ -321,12 +321,11 @@ function applyColor(color, mode) {
   }
 }
 /* =================================================
-   9-1) 배경색 — FINAL (Excel-Style)
-   규칙:
-   - span ❌
+   9-1) 배경색 — Excel Style FINAL
+   - 드래그한 텍스트만 적용
+   - 줄 전체 ❌
    - 커서 이후 ❌
-   - 드래그된 범위와 겹치는 "블록"만 처리
-   - 줄간격 / 글자색과 완전 분리
+   - 상태 ❌
 ================================================= */
 
 function applyBgColorExcel(color) {
@@ -334,44 +333,25 @@ function applyBgColorExcel(color) {
   if (!sel || !sel.rangeCount) return;
 
   const range = sel.getRangeAt(0);
+  if (range.collapsed) return;
   if (!editor.contains(range.commonAncestorContainer)) return;
 
-  const blocks = new Set();
+  const span = document.createElement("span");
 
-  const walker = document.createTreeWalker(
-    editor,
-    NodeFilter.SHOW_ELEMENT,
-    {
-      acceptNode(node) {
-        if (
-          (node.tagName === "P" ||
-           node.tagName === "DIV" ||
-           node.tagName === "LI") &&
-          range.intersectsNode(node)
-        ) {
-          return NodeFilter.FILTER_ACCEPT;
-        }
-        return NodeFilter.FILTER_SKIP;
-      }
-    }
-  );
+  span.style.backgroundColor = color;
+  span.style.display = "inline";
+  span.style.lineHeight = "normal";
+  span.style.boxDecorationBreak = "clone";
+  span.style.webkitBoxDecorationBreak = "clone";
 
-  let node;
-  while ((node = walker.nextNode())) {
-    blocks.add(node);
-  }
+  span.appendChild(range.extractContents());
+  range.insertNode(span);
 
-  // 🔴 핵심: 구조 변경 없음, style만 변경
-  blocks.forEach(block => {
-    if (!color || color === "transparent") {
-      block.style.removeProperty("background-color");
-    } else {
-      block.style.backgroundColor = color;
-    }
-  });
+  range.setStartAfter(span);
+  range.collapse(true);
 
-  // selection 정리 (엑셀식)
   sel.removeAllRanges();
+  sel.addRange(range);
 }
 
   /* =================================================
