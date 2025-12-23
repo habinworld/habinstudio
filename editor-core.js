@@ -323,7 +323,7 @@ function applyColor(color, mode) {
 
   /* 배경색: 선택 존재할 때만 */
   if (mode === "bg") {
-    applyBgColor(range, color);
+    applyBgColorToBlocks(range, color);
     return;
   }
 
