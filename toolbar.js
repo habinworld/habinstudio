@@ -293,10 +293,7 @@ btnColor && btnColor.addEventListener("click", e => {
      // 배경색
 btnBgColor && btnBgColor.addEventListener("click", e => {
   e.stopPropagation();
-   // ⭐ 여기 추가 (selection 저장)
-  EditorCore.saveBgRange();
-
-  const r = btnBgColor.getBoundingClientRect();
+   const r = btnBgColor.getBoundingClientRect();
   ColorBasicEngine.openAt(r.left, r.bottom, "bg");
 });
 }     
