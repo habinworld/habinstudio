@@ -265,15 +265,25 @@ else if (cmd === "bgColor") {
 
     isLocked = false;
   }
-/* =================================================
+/* ---------------------------------
+   색상 span 정리 (누적 방지)
+--------------------------------- */
+function cleanColorSpans(fragment) {
+  fragment.querySelectorAll("span[style*='color']").forEach(span => {
+    span.style.removeProperty("color");
+
+    // style이 완전히 비면 span 제거
+    if (!span.getAttribute("style")) {
+      span.replaceWith(...span.childNodes);
+    }
+  });
+}
+   /* =================================================
       9) 색상 팝업 — FINAL (존재 / 비존재 헌법)
       - 글자색: 드래그 or 커서
       - 배경색: 드래그 전용 (커서 이후 ❌)
 ================================================= */
 
-/* ---------------------------------
-   공용 색상 진입점
---------------------------------- */
 function applyColor(color, mode) {
   const sel = window.getSelection();
   if (!sel || !sel.rangeCount) return;
