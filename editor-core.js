@@ -257,7 +257,7 @@ window.EditorCore = (function () {
   applyColor(value, "text");
 }
 else if (cmd === "bgColor") {
-  applyBgColor(value);
+  applyBgColorExcel(value);
 }   
     else {
       document.execCommand(cmd, false, value || null);
@@ -321,62 +321,57 @@ function applyColor(color, mode) {
   }
 }
 /* =================================================
-   9-1) 배경색 — FINAL (Excel-Style / No State)
-   - 여러 줄 드래그 OK
-   - 텍스트만 배경색 적용
-   - 줄간격(line-height) 절대 재실행 ❌
-   - 블록(P/DIV/LI) 절대 조작 ❌
-   - 상태 저장 / 커서 유지 ❌
+   9-1) 배경색 — FINAL (Excel-Style)
+   규칙:
+   - span ❌
+   - 커서 이후 ❌
+   - 드래그된 범위와 겹치는 "블록"만 처리
+   - 줄간격 / 글자색과 완전 분리
 ================================================= */
 
-function applyBgColor(color) {
+function applyBgColorExcel(color) {
   const sel = window.getSelection();
   if (!sel || !sel.rangeCount) return;
 
   const range = sel.getRangeAt(0);
-  if (range.collapsed) return;
   if (!editor.contains(range.commonAncestorContainer)) return;
 
-  // 선택 영역을 fragment로 분리
-  const fragment = range.extractContents();
+  const blocks = new Set();
 
-  // fragment 내부 TEXT_NODE만 처리
-  applyBgColorToTextNodes(fragment, color);
-
-  // 원래 위치에 그대로 복원 (블록 구조 유지)
-  range.insertNode(fragment);
-  range.collapse(false);
-
-  sel.removeAllRanges();
-  sel.addRange(range);
-}
-
-/* ---------------------------------
-   fragment 내부 TEXT_NODE 전용 처리
---------------------------------- */
-function applyBgColorToTextNodes(fragment, color) {
   const walker = document.createTreeWalker(
-    fragment,
-    NodeFilter.SHOW_TEXT,
-    null
+    editor,
+    NodeFilter.SHOW_ELEMENT,
+    {
+      acceptNode(node) {
+        if (
+          (node.tagName === "P" ||
+           node.tagName === "DIV" ||
+           node.tagName === "LI") &&
+          range.intersectsNode(node)
+        ) {
+          return NodeFilter.FILTER_ACCEPT;
+        }
+        return NodeFilter.FILTER_SKIP;
+      }
+    }
   );
 
-  const targets = [];
   let node;
-
   while ((node = walker.nextNode())) {
-    if (node.textContent.trim()) {
-      targets.push(node);
-    }
+    blocks.add(node);
   }
 
-  targets.forEach(textNode => {
-    const span = document.createElement("span");
-    span.style.backgroundColor = color;
-
-    textNode.parentNode.replaceChild(span, textNode);
-    span.appendChild(textNode);
+  // 🔴 핵심: 구조 변경 없음, style만 변경
+  blocks.forEach(block => {
+    if (!color || color === "transparent") {
+      block.style.removeProperty("background-color");
+    } else {
+      block.style.backgroundColor = color;
+    }
   });
+
+  // selection 정리 (엑셀식)
+  sel.removeAllRanges();
 }
 
   /* =================================================
