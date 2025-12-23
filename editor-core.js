@@ -306,6 +306,7 @@ function applyColorToSelection(range, color, mode) {
      } 
   else {
     span.style.color = color;
+    span.style.color === "" && span.style.removeProperty("color");
   }
 
   span.appendChild(range.extractContents());
