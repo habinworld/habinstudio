@@ -293,7 +293,7 @@ function applyColor(color, mode) {
 
   /* 배경색: 선택 존재할 때만 */
   if (mode === "bg") {
-    applyColorToSelection(range, color, "bg");
+    applyBgColor(range, color);
     return;
   }
 
