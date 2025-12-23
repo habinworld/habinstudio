@@ -320,54 +320,44 @@ function applyColor(color, mode) {
     applyBgColorToBlocks(range, color);
   }
 }
-
-
 /* =================================================
-      9-1) 배경색 (Background Color) — 문단 단위
-      - P/DIV/LI 블록 스타일로만 처리
-      - 글자색(span) 로직과 완전 분리
+   9-1) 배경색 — FINAL (Excel-Style / No State)
+   - 드래그 선택 영역만 적용
+   - 여러 줄 드래그 OK
+   - 커서 이후 유지 ❌
+   - 블록 처리 ❌
 ================================================= */
 
-function applyBgColorToBlocks(range, color) {
-  const blocks = new Set();
-
-  const walker = document.createTreeWalker(
-    editor,
-    NodeFilter.SHOW_ELEMENT,
-    {
-      acceptNode(node) {
-        if (
-          (node.tagName === "P" ||
-           node.tagName === "DIV" ||
-           node.tagName === "LI") &&
-          range.intersectsNode(node)
-        ) {
-          return NodeFilter.FILTER_ACCEPT;
-        }
-        return NodeFilter.FILTER_SKIP;
-      }
-    }
-  );
-
-  let node;
-  while ((node = walker.nextNode())) blocks.add(node);
-
-  blocks.forEach(el => {
-    el.style.backgroundColor = color;
-  });
-}
-
-/* 배경색 진입점 (execute에서 호출) */
 function applyBgColor(color) {
   const sel = window.getSelection();
   if (!sel || !sel.rangeCount) return;
 
   const range = sel.getRangeAt(0);
+  if (range.collapsed) return;                // 커서만 있을 때 ❌
   if (!editor.contains(range.commonAncestorContainer)) return;
 
-  // 드래그든 커서든: "해당 블록들"에 적용
-  applyBgColorToBlocks(range, color);
+  applyBgColorToSelection(range, color);
 }
+
+/* ---------------------------------
+   드래그 선택 영역 적용 (배경색)
+--------------------------------- */
+function applyBgColorToSelection(range, color) {
+  const span = document.createElement("span");
+  span.style.backgroundColor = color;
+
+  const content = range.extractContents();
+  span.appendChild(content);
+
+  range.insertNode(span);
+  range.setStartAfter(span);
+  range.collapse(true);
+
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
 
 
   
