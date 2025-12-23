@@ -350,7 +350,11 @@ function applyColorToSelection(range, color, mode) {
   }
 
   const content = range.extractContents();
-cleanColorSpans(content);
+// ⭐ 검정색(리셋)일 때만 기존 색 제거
+if (color === "#000000") {
+  cleanColorSpans(content);
+}
+
 span.appendChild(content);
   range.insertNode(span);
   range.setStartAfter(span);
