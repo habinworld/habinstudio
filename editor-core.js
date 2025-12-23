@@ -283,6 +283,36 @@ function cleanColorSpans(fragment) {
       - 글자색: 드래그 or 커서
       - 배경색: 드래그 전용 (커서 이후 ❌)
 ================================================= */
+function applyBgColorToBlocks(range, color) {
+  const blocks = new Set();
+
+  const walker = document.createTreeWalker(
+    editor,
+    NodeFilter.SHOW_ELEMENT,
+    {
+      acceptNode(node) {
+        if (
+          (node.tagName === "P" ||
+           node.tagName === "DIV" ||
+           node.tagName === "LI") &&
+          range.intersectsNode(node)
+        ) {
+          return NodeFilter.FILTER_ACCEPT;
+        }
+        return NodeFilter.FILTER_SKIP;
+      }
+    }
+  );
+
+  let node;
+  while ((node = walker.nextNode())) {
+    blocks.add(node);
+  }
+
+  blocks.forEach(el => {
+    el.style.backgroundColor = color;
+  });
+}
 
 function applyColor(color, mode) {
   const sel = window.getSelection();
