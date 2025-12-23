@@ -266,27 +266,41 @@ else if (cmd === "bgColor") {
     isLocked = false;
   }
 /* =================================================
-      9) 글자색 (Text Color) — span / 문자 단위
-      - 드래그: span 래핑
-      - 커서: typing span
-      - 검정(#000000): "색상 제거" (누적 방지)
+   9) 글자색 — Excel Style (Block Only)
+   - 드래그 필수
+   - 커서 유지 ❌
 ================================================= */
 
-/* ---------------------------------
-   글자색 span 정리 (누적 방지)
---------------------------------- */
-function cleanColorSpans(fragment) {
-  fragment.querySelectorAll("span[style*='color']").forEach(span => {
-    span.style.removeProperty("color");
-    if (!span.getAttribute("style")) {
-      span.replaceWith(...span.childNodes);
+function applyTextColor(range, color) {
+  const blocks = new Set();
+
+  const walker = document.createTreeWalker(
+    editor,
+    NodeFilter.SHOW_ELEMENT,
+    {
+      acceptNode(node) {
+        if (
+          (node.tagName === "P" ||
+           node.tagName === "DIV" ||
+           node.tagName === "LI") &&
+          range.intersectsNode(node)
+        ) {
+          return NodeFilter.FILTER_ACCEPT;
+        }
+        return NodeFilter.FILTER_SKIP;
+      }
     }
+  );
+
+  let node;
+  while ((node = walker.nextNode())) {
+    blocks.add(node);
+  }
+
+  blocks.forEach(block => {
+    block.style.color = color;
   });
 }
-
-/* ---------------------------------
-   글자색 진입점 (이름 유지)
---------------------------------- */
 function applyColor(color, mode) {
   const sel = window.getSelection();
   if (!sel || !sel.rangeCount) return;
@@ -294,91 +308,17 @@ function applyColor(color, mode) {
   const range = sel.getRangeAt(0);
   if (!editor.contains(range.commonAncestorContainer)) return;
 
-  // 9번은 글자색만 담당 (bg는 절대 여기로 안 들어오게 execute에서 분리함)
-  if (!range.collapsed) {
-    applyColorToSelection(range, color, "text");
-  } else {
-    applyTypingColor(color, "text");
-  }
-}
+  // 드래그 없으면 아무것도 안 함 (엑셀식)
+  if (range.collapsed) return;
 
-/* ---------------------------------
-   드래그 선택 영역 글자색 적용
-   - 검정(#000000) = 색상 제거(리셋)
---------------------------------- */
-function applyColorToSelection(range, color, mode) {
-  const content = range.extractContents();
-
-  // reset 여부 (분기 최소화: 존재/비존재 방식)
-  const act = {
-    true: () => {
-      // ✅ 기존 색만 제거하고, 래핑 없이 그대로 삽입 (누적 방지 핵심)
-      cleanColorSpans(content);
-      range.insertNode(content);
-    },
-    false: () => {
-      const span = document.createElement("span");
-      span.style.color = color;
-      span.appendChild(content);
-      range.insertNode(span);
-      range.setStartAfter(span);
-    }
-  }[color === "#000000"];
-
-  act();
-
-  range.collapse(true);
-  const sel = window.getSelection();
-  sel.removeAllRanges();
-  sel.addRange(range);
-}
-
-/* ---------------------------------
-   커서 이후 글자색 (typing span)
-   - 검정(#000000) = "색상 유지"가 아니라 "색 제거"
-     → typingColorSpan 제거로 처리
---------------------------------- */
-let typingColorSpan = null;
-
-function removeTypingColorSpanIfEmpty() {
-  if (!typingColorSpan) return;
-
-  const t = (typingColorSpan.textContent || "").replace(/\u200B/g, "").trim();
-  if (t === "") typingColorSpan.remove();
-
-  typingColorSpan = null;
-}
-
-function applyTypingColor(color, mode) {
-  if (mode !== "text") return;
-
-  // 검정 = 리셋 : typing span 자체를 없애서 기본색(검정)으로 복귀
-  if (color === "#000000") {
-    removeTypingColorSpanIfEmpty();
+  if (mode === "text") {
+    applyTextColor(range, color);
     return;
   }
 
-  removeTypingColorSpanIfEmpty();
-
-  const sel = window.getSelection();
-  if (!sel || !sel.rangeCount) return;
-
-  const range = sel.getRangeAt(0);
-
-  const span = document.createElement("span");
-  span.style.color = color;
-  span.textContent = "\u200B";
-
-  range.insertNode(span);
-
-  const r = document.createRange();
-  r.setStart(span.firstChild, 1);
-  r.collapse(true);
-
-  sel.removeAllRanges();
-  sel.addRange(r);
-
-  typingColorSpan = span;
+  if (mode === "bg") {
+    applyBgColorToBlocks(range, color);
+  }
 }
 
 
