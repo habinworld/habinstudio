@@ -322,43 +322,56 @@ function applyColor(color, mode) {
 }
 /* =================================================
    9-1) 배경색 — FINAL (Excel-Style / No State)
-   - 드래그 선택 영역만 적용
-   - 여러 줄 드래그 OK
-   - 커서 이후 유지 ❌
-   - 블록 처리 ❌
-================================================= */
-
+   
+================================================= */   
 function applyBgColor(color) {
   const sel = window.getSelection();
   if (!sel || !sel.rangeCount) return;
 
   const range = sel.getRangeAt(0);
-  if (range.collapsed) return;                // 커서만 있을 때 ❌
+  if (range.collapsed) return;
   if (!editor.contains(range.commonAncestorContainer)) return;
 
-  applyBgColorToSelection(range, color);
-}
+  const fragment = range.extractContents();
+  applyBgColorFragment(fragment, color);
 
-/* ---------------------------------
-   드래그 선택 영역 적용 (배경색)
---------------------------------- */
-function applyBgColorToSelection(range, color) {
-  const span = document.createElement("span");
-  span.style.backgroundColor = color;
+  range.insertNode(fragment);
+  range.collapse(false);
 
-  const content = range.extractContents();
-  span.appendChild(content);
-
-  range.insertNode(span);
-  range.setStartAfter(span);
-  range.collapse(true);
-
-  const sel = window.getSelection();
   sel.removeAllRanges();
   sel.addRange(range);
 }
 
+/* ---------------------------------
+   fragment 내부 텍스트 단위 처리
+--------------------------------- */
+function applyBgColorFragment(fragment, color) {
+  const walker = document.createTreeWalker(
+    fragment,
+    NodeFilter.SHOW_TEXT,
+    {
+      acceptNode(node) {
+        return node.textContent.trim()
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_SKIP;
+      }
+    }
+  );
 
+  const targets = [];
+  let node;
+  while ((node = walker.nextNode())) {
+    targets.push(node);
+  }
+
+  targets.forEach(textNode => {
+    const span = document.createElement("span");
+    span.style.backgroundColor = color;
+
+    textNode.parentNode.replaceChild(span, textNode);
+    span.appendChild(textNode);
+  });
+}
 
   
   /* =================================================
