@@ -322,8 +322,13 @@ function applyColor(color, mode) {
 }
 /* =================================================
    9-1) 배경색 — FINAL (Excel-Style / No State)
-   
-================================================= */   
+   - 여러 줄 드래그 OK
+   - 텍스트만 배경색 적용
+   - 줄간격(line-height) 절대 재실행 ❌
+   - 블록(P/DIV/LI) 절대 조작 ❌
+   - 상태 저장 / 커서 유지 ❌
+================================================= */
+
 function applyBgColor(color) {
   const sel = window.getSelection();
   if (!sel || !sel.rangeCount) return;
@@ -332,9 +337,13 @@ function applyBgColor(color) {
   if (range.collapsed) return;
   if (!editor.contains(range.commonAncestorContainer)) return;
 
+  // 선택 영역을 fragment로 분리
   const fragment = range.extractContents();
-  applyBgColorFragment(fragment, color);
 
+  // fragment 내부 TEXT_NODE만 처리
+  applyBgColorToTextNodes(fragment, color);
+
+  // 원래 위치에 그대로 복원 (블록 구조 유지)
   range.insertNode(fragment);
   range.collapse(false);
 
@@ -343,25 +352,22 @@ function applyBgColor(color) {
 }
 
 /* ---------------------------------
-   fragment 내부 텍스트 단위 처리
+   fragment 내부 TEXT_NODE 전용 처리
 --------------------------------- */
-function applyBgColorFragment(fragment, color) {
+function applyBgColorToTextNodes(fragment, color) {
   const walker = document.createTreeWalker(
     fragment,
     NodeFilter.SHOW_TEXT,
-    {
-      acceptNode(node) {
-        return node.textContent.trim()
-          ? NodeFilter.FILTER_ACCEPT
-          : NodeFilter.FILTER_SKIP;
-      }
-    }
+    null
   );
 
   const targets = [];
   let node;
+
   while ((node = walker.nextNode())) {
-    targets.push(node);
+    if (node.textContent.trim()) {
+      targets.push(node);
+    }
   }
 
   targets.forEach(textNode => {
@@ -373,7 +379,6 @@ function applyBgColorFragment(fragment, color) {
   });
 }
 
-  
   /* =================================================
         10) 이미지
   ================================================= */
