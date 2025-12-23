@@ -257,7 +257,7 @@ window.EditorCore = (function () {
   applyColor(value, "text");
 }
 else if (cmd === "bgColor") {
-  applyBgColorExcel(value);
+  applyBgColor(value);
 }   
     else {
       document.execCommand(cmd, false, value || null);
@@ -321,35 +321,39 @@ function applyColor(color, mode) {
   }
 }
 /* =================================================
-   9-1) 배경색 — Excel Style FINAL
-   - 드래그한 텍스트만 적용
-   - 줄 전체 ❌
-   - 커서 이후 ❌
-   - 상태 ❌
+   9-1) 배경색 — FINAL (Excel-Style / No State)
+   - 드래그 선택 영역만 적용
+   - 여러 줄 드래그 OK
+   - 커서 이후 유지 ❌
+   - 블록 처리 ❌
 ================================================= */
 
-function applyBgColorExcel(color) {
+function applyBgColor(color) {
   const sel = window.getSelection();
   if (!sel || !sel.rangeCount) return;
 
   const range = sel.getRangeAt(0);
-  if (range.collapsed) return;
+  if (range.collapsed) return;                // 커서만 있을 때 ❌
   if (!editor.contains(range.commonAncestorContainer)) return;
 
+  applyBgColorToSelection(range, color);
+}
+
+/* ---------------------------------
+   드래그 선택 영역 적용 (배경색)
+--------------------------------- */
+function applyBgColorToSelection(range, color) {
   const span = document.createElement("span");
-
   span.style.backgroundColor = color;
-  span.style.display = "inline";
-  span.style.lineHeight = "normal";
-  span.style.boxDecorationBreak = "clone";
-  span.style.webkitBoxDecorationBreak = "clone";
 
-  span.appendChild(range.extractContents());
+  const content = range.extractContents();
+  span.appendChild(content);
+
   range.insertNode(span);
-
   range.setStartAfter(span);
   range.collapse(true);
 
+  const sel = window.getSelection();
   sel.removeAllRanges();
   sel.addRange(range);
 }
