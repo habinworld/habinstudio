@@ -1,80 +1,73 @@
-/* ------------------------------------------------------
-   🖼 Image v8.5 — Full Box / Handles / Selection 스타일
-   Ha-Bin Studio — 최종 안정판
-------------------------------------------------------- */
-
 /* 이미지 전체 박스 */
 .hb-img-box {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 8px;
+  display: inline-block;   /* ⭐ 핵심 수정 */
+  padding: 0;
   margin: 14px auto;
 
   max-width: 100%;
   user-select: none;
-
-  border-radius: 6px;
 }
 
 /* 내부 이미지 */
+.hb-img-box img,
 .hb-img-box .hb-img {
+  display: block;
   max-width: 100%;
   height: auto;
-  display: block;
   border-radius: 6px;
 }
 
 /* 선택 시 강조 */
 .hb-img-box.hb-img-selected {
-  outline: 2px solid #5BB6C8; /* 기존의 파란 outline */
-  background: rgba(91,182,200,0.08);
-  border-radius: 6px;
+  outline: 2px solid #5BB6C8;
+  outline-offset: 4px;
+  background: transparent; /* ⭐ flex용 배경 제거 */
 }
 
-/* 정렬 */
+/* 정렬 — margin 방식 (JS align과 정확히 맞음) */
 .hb-img-box.align-left {
-  justify-content: flex-start;
+  margin-left: 0;
+  margin-right: auto;
 }
 .hb-img-box.align-center {
-  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 .hb-img-box.align-right {
-  justify-content: flex-end;
+  margin-left: auto;
+  margin-right: 0;
 }
 
 /* 리사이즈 핸들 */
 .hb-resize-handle {
+  position: absolute;
   width: 12px;
   height: 12px;
+
+  right: -6px;
+  bottom: -6px;
+
   background: #ffffff;
   border: 2px solid #3558A8;
   border-radius: 50%;
-
-  position: absolute;
+  cursor: se-resize;
   z-index: 10;
-
-  cursor: pointer;
-  box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
-
-.hb-resize-handle.nw { top: -8px; left: -8px; cursor: nw-resize; }
-.hb-resize-handle.ne { top: -8px; right: -8px; cursor: ne-resize; }
-.hb-resize-handle.sw { bottom: -8px; left: -8px; cursor: sw-resize; }
-.hb-resize-handle.se { bottom: -8px; right: -8px; cursor: se-resize; }
 
 /* 선택되지 않은 경우 핸들 숨기기 */
 .hb-img-box:not(.hb-img-selected) .hb-resize-handle {
   display: none;
 }
 
-/* 모바일 대응 */
+/* 모바일 */
 @media (max-width: 600px) {
   .hb-resize-handle {
     width: 14px;
     height: 14px;
+    right: -7px;
+    bottom: -7px;
   }
 }
+
 
