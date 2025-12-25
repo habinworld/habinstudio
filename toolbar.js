@@ -183,8 +183,6 @@ function bindEvents() {
   const btnColor = document.getElementById("hb-btn-color");
   const btnBgColor = document.getElementById("hb-btn-bgcolor");
 
-}
-
 /* -------------------------------
    font-family (속도 안정화)
 -------------------------------- */
@@ -339,7 +337,7 @@ btnBgColor && btnBgColor.addEventListener("click", e => {
   e.stopPropagation();
   openBasicColor("bg", btnBgColor);
 });
-
+}
    
   /* =====================================================
      5) Init
