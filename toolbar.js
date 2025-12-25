@@ -283,13 +283,19 @@ lineBtn && lineSel && lineBtn.addEventListener("click", e => {
     }
   );
 });
- // 글자색
+ // =====================================================
+// COLOR (Stage-2: cmd only / ColorBasic = UI only)
+// =====================================================
+
+// 글자색
 btnColor && btnColor.addEventListener("click", e => {
   e.stopPropagation();
+
   const r = btnColor.getBoundingClientRect();
 
+  // ⚠️ ColorBasicEngine은 "UI만" → color만 콜백으로 반환
   ColorBasicEngine.openAt(r.left, r.bottom, color => {
-    EditorCore.execute({
+    window.EditorCore && EditorCore.execute({
       cmd: "color-text",
       value: color
     });
@@ -299,15 +305,17 @@ btnColor && btnColor.addEventListener("click", e => {
 // 배경색
 btnBgColor && btnBgColor.addEventListener("click", e => {
   e.stopPropagation();
+
   const r = btnBgColor.getBoundingClientRect();
 
   ColorBasicEngine.openAt(r.left, r.bottom, color => {
-    EditorCore.execute({
+    window.EditorCore && EditorCore.execute({
       cmd: "color-bg",
       value: color
     });
   });
 });
+
 }     
   /* =====================================================
      5) Init
