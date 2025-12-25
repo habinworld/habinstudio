@@ -290,8 +290,7 @@ btnColor && btnColor.addEventListener("click", e => {
 
   ColorBasicEngine.openAt(r.left, r.bottom, color => {
     EditorCore.execute({
-      cmd: "color",
-      mode: "text",
+      cmd: "color-text",
       value: color
     });
   });
@@ -304,8 +303,7 @@ btnBgColor && btnBgColor.addEventListener("click", e => {
 
   ColorBasicEngine.openAt(r.left, r.bottom, color => {
     EditorCore.execute({
-      cmd: "color",
-      mode: "bg",
+      cmd: "color-bg",
       value: color
     });
   });
