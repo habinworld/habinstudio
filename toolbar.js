@@ -118,13 +118,7 @@ function render(containerId, items) {
 
       bar.appendChild(b);
     })();
-
   });
-
-  // 이미지 input (ADVANCED 전용)
-  document.getElementById("hb-image-btn")?.addEventListener("click", () => {
-  document.getElementById("hb-image-input")?.click();
-});
 }
    /* =====================================================
      3) 바인딩 헬퍼
@@ -156,6 +150,14 @@ function render(containerId, items) {
     bind("hb-btn-ul", () => EditorCore.ul());
     bind("hb-btn-ol", () => EditorCore.ol());
 
+     function render(containerId, items) {
+  const bar = document.getElementById(containerId);
+  if (!bar) return;
+
+  items.forEach(item => {
+    // select / button 생성만
+  });
+}
     const input = document.getElementById("hb-image-input");
     bind("hb-btn-image", () => input && input.click());
 
@@ -166,7 +168,6 @@ function render(containerId, items) {
         input.value = "";
       });
     }
-
     bind("hb-btn-img-left",   () => EditorCore.imageAlign("left"));
     bind("hb-btn-img-center", () => EditorCore.imageAlign("center"));
     bind("hb-btn-img-right",  () => EditorCore.imageAlign("right"));
