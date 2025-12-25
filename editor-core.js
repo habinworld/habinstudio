@@ -225,9 +225,7 @@ window.EditorCore = (function () {
 
   /* =================================================
         8) 공용 실행 엔진 (Excel-Style)
-        - "존재/비존재" 기반
-        - fontSizePx만 빠른경로/안정경로 분리
-  ================================================= */
+   ================================================= */
   function execute(cmdObj) {
     if (!cmdObj || isLocked) return;
 
@@ -253,12 +251,7 @@ window.EditorCore = (function () {
     else if (cmd === "lineHeight") {
       applyLineHeight(value);
     }
-    else if (cmd === "textColor") {
-  applyColor(value, "text");
-}
-else if (cmd === "bgColor") {
-  applyBgColor(value);
-}   
+   
     else {
       document.execCommand(cmd, false, value || null);
     }
