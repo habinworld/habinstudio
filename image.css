@@ -53,5 +53,14 @@
 
 /* 선택 안 되면 숨김 */
 .hb-img-box:not(.hb-img-selected) .hb-resize-handle{ display:none; }
+/* 모바일 */
+@media (max-width: 600px) {
+  .hb-resize-handle {
+    width: 14px;
+    height: 14px;
+    right: -7px;
+    bottom: -7px;
+  }
+}
 
 
