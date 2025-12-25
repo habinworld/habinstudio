@@ -172,6 +172,10 @@ function render(containerId, items) {
     bind("hb-btn-img-left",   () => EditorCore.imageAlign("left"));
     bind("hb-btn-img-center", () => EditorCore.imageAlign("center"));
     bind("hb-btn-img-right",  () => EditorCore.imageAlign("right"));
+    bind("hb-btn-img-delete", () => {
+  window.ImageEngine && window.ImageEngine.removeSelected();
+});
+     
       // ADVANCED — select (폰트 / 크기 / 줄간격,글자색, 배경색)
   const font = document.getElementById("hb-font-family");
 const size = document.getElementById("hb-font-size");
