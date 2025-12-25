@@ -283,18 +283,32 @@ lineBtn && lineSel && lineBtn.addEventListener("click", e => {
     }
   );
 });
-     // 글자색
+ // 글자색
 btnColor && btnColor.addEventListener("click", e => {
   e.stopPropagation();
   const r = btnColor.getBoundingClientRect();
-  ColorBasicEngine.openAt(r.left, r.bottom, "text");
+
+  ColorBasicEngine.openAt(r.left, r.bottom, color => {
+    EditorCore.execute({
+      cmd: "color",
+      mode: "text",
+      value: color
+    });
+  });
 });
 
-     // 배경색
+// 배경색
 btnBgColor && btnBgColor.addEventListener("click", e => {
   e.stopPropagation();
-   const r = btnBgColor.getBoundingClientRect();
-  ColorBasicEngine.openAt(r.left, r.bottom, "bg");
+  const r = btnBgColor.getBoundingClientRect();
+
+  ColorBasicEngine.openAt(r.left, r.bottom, color => {
+    EditorCore.execute({
+      cmd: "color",
+      mode: "bg",
+      value: color
+    });
+  });
 });
 }     
   /* =====================================================
