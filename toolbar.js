@@ -77,7 +77,14 @@ options: Array.from({ length: 33 }, (_, i) => {
     { id: "hb-btn-img-center",label: "C" },
     { id: "hb-btn-img-right", label: "R" }
   ];
+  function render(containerId, items) {
+  const bar = document.getElementById(containerId);
+  if (!bar) return;
 
+  items.forEach(item => {
+    // select / button 생성만
+  });
+}
   /* =====================================================
      2) 렌더링
   ===================================================== */
@@ -150,14 +157,7 @@ function render(containerId, items) {
     bind("hb-btn-ul", () => EditorCore.ul());
     bind("hb-btn-ol", () => EditorCore.ol());
 
-     function render(containerId, items) {
-  const bar = document.getElementById(containerId);
-  if (!bar) return;
-
-  items.forEach(item => {
-    // select / button 생성만
-  });
-}
+   
     const input = document.getElementById("hb-image-input");
     bind("hb-btn-image", () => input && input.click());
 
