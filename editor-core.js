@@ -301,8 +301,8 @@ else {
     setLineHeight: h  => execute({ cmd: "lineHeight", value: h }),
 
     // 색상
-   setColor:   c => execute({ cmd: "foreColor",   value: c }),
-   setBgColor: c => execute({ cmd: "hiliteColor", value: c }),
+   setColor:   c => execute({ cmd: "color-text", value: c }),
+   setBgColor: c => execute({ cmd: "color-bg",   value: c }),
 
     // 정렬
     alignLeft:    () => execute(TextEngine.alignLeft()),
