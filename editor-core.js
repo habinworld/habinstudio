@@ -250,8 +250,15 @@ window.EditorCore = (function () {
       applyLineHeight(value);
     }
    
-    else {
-      document.execCommand(cmd, false, value || null);
+    else if (cmd === "color-text") {
+  window.ColorTextEngine && window.ColorTextEngine.apply(value);
+}
+else if (cmd === "color-bg") {
+  window.ColorBgEngine && window.ColorBgEngine.apply(value);
+}
+else {
+  document.execCommand(cmd, false, value || null);
+}
     }
 
     isLocked = false;
