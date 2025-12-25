@@ -104,6 +104,23 @@
 <script src="post-mode.js"></script>  
 <!-- 저장 시스템 -->
 <script src="editor-save.js"></script>
+  
+<!-- 🔌 이미지 input change 배선 (post.html 전용) -->
+<script>
+(function () {
+  const input = document.getElementById("hb-image-input");
+  if (!input) return;
+
+  input.addEventListener("change", e => {
+    const file = e.target.files[0];
+    if (file && window.EditorCore) {
+      EditorCore.insertImage(file);
+    }
+    e.target.value = "";
+  });
+})();
+</script>
+  
 </body>
 </html>
 
