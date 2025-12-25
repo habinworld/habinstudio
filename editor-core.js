@@ -265,7 +265,14 @@ else {
   /* =================================================
         10) 이미지
   ================================================= */
-  function insertImage(file) {
+  window.EditorCore = (function (Core) {
+  Core.insertImage = function (file) {
+    ImageEngine.insert(file);
+  };
+  return Core;
+})(window.EditorCore || {});
+   
+   function insertImage(file) {
     ImageEngine.insert(file);
   }
 
