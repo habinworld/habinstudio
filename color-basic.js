@@ -1,24 +1,29 @@
 /* ==========================================================
-   🎨 color-basic.js — Basic Color Palette Engine (FINAL)
-   역할:
-   - 기본 색상 선택
-   - 색없슴 = 기본값 강제 복귀
-     · 글자색 → #000000
-     · 배경색 → #FFFFFF
-   - Advanced 확장 여지 유지 (더보기 버튼)
+   🎨 color-basic.js — Basic Color Palette Engine (Stage 2)
+   ----------------------------------------------------------
+   역할 (헌법 고정):
+   ✔ 색상 선택 UI만 담당
+   ✔ 상태 저장 ❌
+   ✔ 실행 판단 ❌
+   ✔ EditorCore 직접 호출 ❌
+   ✔ 선택 결과를 "값"으로만 반환
+
+   반환 규칙:
+   - 색상 클릭 → "#RRGGBB"
+   - 색없슴 클릭 → null
+   - 의미 해석 / 기본값 결정은 Toolbar 책임
 ========================================================== */
 
 window.ColorBasicEngine = (function () {
 
   /* ======================================================
-     1) 상태 (최소)
+     1) 내부 상태 (UI 제어용 최소)
   ====================================================== */
   const popup = document.getElementById("hb-popup-color-basic");
   let isOpen = false;
-  let currentMode = "text"; // "text" | "bg"
 
   /* ======================================================
-     2) 기본 색상 (60색)
+     2) 기본 색상 팔레트 (고정 60색)
   ====================================================== */
   const COLORS = [
     "#000000","#444444","#777777","#BBBBBB","#FFFFFF",
@@ -37,12 +42,13 @@ window.ColorBasicEngine = (function () {
   ];
 
   /* ======================================================
-     3) 팝업 렌더링
+     3) 팝업 UI 렌더링 (UI ONLY)
+     - onSelect(value) 콜백으로 결과 전달
   ====================================================== */
-  function renderPopup() {
+  function renderPopup(onSelect) {
     popup.innerHTML = "";
 
-    /* ---- popup 기본 스타일 ---- */
+    /* --- 기본 스타일 --- */
     popup.style.position = "absolute";
     popup.style.padding = "10px";
     popup.style.background = "#FFFFFF";
@@ -56,7 +62,7 @@ window.ColorBasicEngine = (function () {
     popup.style.pointerEvents = "auto";
 
     /* ==================================================
-       상단 버튼 라인: 색없슴 / 더보기
+       상단 버튼: 색없슴 / 더보기(UI 자리만)
     ================================================== */
     const topBar = document.createElement("div");
     topBar.style.gridColumn = "span 10";
@@ -64,22 +70,17 @@ window.ColorBasicEngine = (function () {
     topBar.style.gridTemplateColumns = "1fr 1fr";
     topBar.style.gap = "6px";
 
-    // 색없슴
+    // 색없슴 → null 반환
     const noneBtn = document.createElement("button");
     noneBtn.type = "button";
     noneBtn.className = "hb-btn";
     noneBtn.textContent = "색없슴";
-
     noneBtn.onclick = () => {
-      if (currentMode === "text") {
-        EditorCore.setColor("#000000");   // 기본 글자색
-      } else {
-        EditorCore.setBgColor("#FFFFFF"); // 기본 배경색
-      }
+      onSelect && onSelect(null); // 의미 없음, 값만 반환
       close();
     };
 
-    // 더보기 (Advanced 예정)
+    // 더보기 (3단계 확장용 UI 자리)
     const moreBtn = document.createElement("button");
     moreBtn.type = "button";
     moreBtn.className = "hb-btn";
@@ -91,12 +92,11 @@ window.ColorBasicEngine = (function () {
     popup.appendChild(topBar);
 
     /* ==================================================
-       색상 팔레트 (60색, 고정 크기)
+       색상 팔레트 버튼
     ================================================== */
     COLORS.forEach(color => {
       const box = document.createElement("button");
       box.type = "button";
-      box.dataset.color = color;
       box.style.width = "18px";
       box.style.height = "18px";
       box.style.background = color;
@@ -106,11 +106,7 @@ window.ColorBasicEngine = (function () {
       box.style.cursor = "pointer";
 
       box.onclick = () => {
-        if (currentMode === "text") {
-          EditorCore.setColor(color);
-        } else {
-          EditorCore.setBgColor(color);
-        }
+        onSelect && onSelect(color); // 색상 값만 반환
         close();
       };
 
@@ -119,13 +115,12 @@ window.ColorBasicEngine = (function () {
   }
 
   /* ======================================================
-     4) 열기 / 닫기
+     4) 열기 / 닫기 (UI 제어만)
   ====================================================== */
-  function openAt(x, y, mode = "text") {
-    currentMode = mode;
+  function openAt(x, y, onSelect) {
     if (isOpen) close();
 
-    renderPopup();
+    renderPopup(onSelect);
     document.body.appendChild(popup);
 
     popup.style.left = x + "px";
@@ -133,6 +128,7 @@ window.ColorBasicEngine = (function () {
     popup.style.display = "grid";
 
     isOpen = true;
+
     setTimeout(() => {
       document.addEventListener("click", handleOutside);
     }, 0);
@@ -149,7 +145,7 @@ window.ColorBasicEngine = (function () {
   }
 
   /* ======================================================
-     5) 외부 API
+     5) 외부 공개 API (UI ONLY)
   ====================================================== */
   return {
     openAt,
@@ -157,6 +153,7 @@ window.ColorBasicEngine = (function () {
   };
 
 })();
+
 
 
 
