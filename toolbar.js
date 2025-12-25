@@ -158,17 +158,20 @@ function render(containerId, items) {
     bind("hb-btn-ul", () => EditorCore.ul());
     bind("hb-btn-ol", () => EditorCore.ol());
 
-   
-    const input = document.getElementById("hb-image-input");
-    bind("hb-btn-image", () => input && input.click());
+       // 이미지 버튼 → 즉시 input 클릭 (존재/비존재)
+bind("hb-btn-image", () => {
+  document.getElementById("hb-image-input")?.click();
+});
 
-    if (input) {
-      input.addEventListener("change", e => {
-        const file = e.target.files[0];
-        if (file) EditorCore.insertImage(file);
-        input.value = "";
-      });
-    }
+// 이미지 선택 → 삽입
+const input = document.getElementById("hb-image-input");
+
+input && input.addEventListener("change", e => {
+  const file = e.target.files[0];
+  file && EditorCore.insertImage(file);
+  e.target.value = "";
+});
+ }
     bind("hb-btn-img-left",   () => EditorCore.imageAlign("left"));
     bind("hb-btn-img-center", () => EditorCore.imageAlign("center"));
     bind("hb-btn-img-right",  () => EditorCore.imageAlign("right"));
