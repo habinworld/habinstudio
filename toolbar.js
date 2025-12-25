@@ -345,7 +345,7 @@ btnBgColor && btnBgColor.addEventListener("click", e => {
  function init() {
   render("hb-toolbar-basic", BASIC_BUTTONS);
   render("hb-toolbar-advanced", ADVANCED_BUTTONS);
-  setTimeout(bindEvents, 0);
+  bindEvents();
 }
 
 document.addEventListener("DOMContentLoaded", init);
