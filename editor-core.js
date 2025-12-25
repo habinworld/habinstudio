@@ -12,7 +12,9 @@ window.EditorCore = (function () {
         1) 외부 엔진 연결 (전역 의존)
   ================================================= */
   const TextEngine     = window.TextEngine;
-  const ImageEngine    = window.ImageEngine;
+  Core.insertImage = function (file) {
+  window.ImageEngine && window.ImageEngine.insert(file);
+};
   const ColorBasic     = window.ColorBasic;
   const ColorAdvanced  = window.ColorAdvanced;
 
