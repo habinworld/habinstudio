@@ -259,8 +259,6 @@ else if (cmd === "color-bg") {
 else {
   document.execCommand(cmd, false, value || null);
 }
-    }
-
     isLocked = false;
   }
 
