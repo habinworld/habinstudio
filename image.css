@@ -1,73 +1,57 @@
-/* 이미지 전체 박스 */
-.hb-img-box {
+/* 이미지 박스 */
+.hb-img-box{
   position: relative;
-  display: inline-block;   /* ⭐ 핵심 수정 */
-  padding: 0;
+  display: inline-block;
   margin: 14px auto;
-
-  max-width: 100%;
-  user-select: none;
 }
 
-/* 내부 이미지 */
-.hb-img-box img,
-.hb-img-box .hb-img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  border-radius: 6px;
+/* 선택 오버레이 (이미지 끝에 딱) */
+.hb-img-box::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border:2px solid #5BB6C8;
+  opacity:0;
+  pointer-events:none;
+}
+.hb-img-box.hb-img-selected::after{ opacity:1; }
+
+/* 정렬 */
+.hb-img-box.align-left{ margin-left:0; margin-right:auto; }
+.hb-img-box.align-center{ margin-left:auto; margin-right:auto; }
+.hb-img-box.align-right{ margin-left:auto; margin-right:0; }
+
+/* + 모양 리사이즈 핸들 */
+.hb-resize-handle{
+  position:absolute;
+  width:14px;
+  height:14px;
+  z-index:10;
+}
+.hb-resize-handle::before,
+.hb-resize-handle::after{
+  content:"";
+  position:absolute;
+  background:#3558A8;
+}
+.hb-resize-handle::before{
+  width:100%; height:2px; top:50%; left:0; transform:translateY(-50%);
+}
+.hb-resize-handle::after{
+  width:2px; height:100%; left:50%; top:0; transform:translateX(-50%);
 }
 
-/* 선택 시 강조 */
-.hb-img-box.hb-img-selected {
-  outline: 2px solid #5BB6C8;
-  outline-offset: 4px;
-  background: transparent; /* ⭐ flex용 배경 제거 */
-}
+/* 위치 */
+.hb-resize-handle.n  { top:-7px; left:50%; transform:translateX(-50%); cursor:n-resize; }
+.hb-resize-handle.s  { bottom:-7px; left:50%; transform:translateX(-50%); cursor:s-resize; }
+.hb-resize-handle.e  { right:-7px; top:50%; transform:translateY(-50%); cursor:e-resize; }
+.hb-resize-handle.w  { left:-7px; top:50%; transform:translateY(-50%); cursor:w-resize; }
+.hb-resize-handle.ne { top:-7px; right:-7px; cursor:ne-resize; }
+.hb-resize-handle.nw { top:-7px; left:-7px; cursor:nw-resize; }
+.hb-resize-handle.se { bottom:-7px; right:-7px; cursor:se-resize; }
+.hb-resize-handle.sw { bottom:-7px; left:-7px; cursor:sw-resize; }
 
-/* 정렬 — margin 방식 (JS align과 정확히 맞음) */
-.hb-img-box.align-left {
-  margin-left: 0;
-  margin-right: auto;
-}
-.hb-img-box.align-center {
-  margin-left: auto;
-  margin-right: auto;
-}
-.hb-img-box.align-right {
-  margin-left: auto;
-  margin-right: 0;
-}
-
-/* 리사이즈 핸들 */
-.hb-resize-handle {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-
-  right: -6px;
-  bottom: -6px;
-
-  background: #ffffff;
-  border: 2px solid #3558A8;
-  border-radius: 50%;
-  cursor: se-resize;
-  z-index: 10;
-}
-
-/* 선택되지 않은 경우 핸들 숨기기 */
-.hb-img-box:not(.hb-img-selected) .hb-resize-handle {
-  display: none;
-}
-
-/* 모바일 */
-@media (max-width: 600px) {
-  .hb-resize-handle {
-    width: 14px;
-    height: 14px;
-    right: -7px;
-    bottom: -7px;
-  }
-}
+/* 선택 안 되면 숨김 */
+.hb-img-box:not(.hb-img-selected) .hb-resize-handle{ display:none; }
 
 
