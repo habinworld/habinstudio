@@ -283,37 +283,58 @@ lineBtn && lineSel && lineBtn.addEventListener("click", e => {
     }
   );
 });
- // =====================================================
-// COLOR (Stage-2: cmd only / ColorBasic = UI only)
-// =====================================================
+/* =====================================================
+   COLOR — Toolbar (Stage 2 stable / Stage 3 ready)
+   역할:
+   - ColorBasicEngine : 기본 팔레트 UI
+   - ColorAdvancedEngine : (미구현) 고급 팔레트 UI
+   - Toolbar : 의미 해석 + cmd 결정
+===================================================== */
 
-// 글자색
+function openBasicColor(type, btn) {
+  const r = btn.getBoundingClientRect();
+
+  ColorBasicEngine.openAt(r.left, r.bottom, color => {
+    // 색없슴 처리 (Toolbar의 책임)
+    const value =
+      color === null
+        ? (type === "text" ? "#000000" : "#FFFFFF")
+        : color;
+
+    EditorCore.execute({
+      cmd: type === "text" ? "color-text" : "color-bg",
+      value
+    });
+  });
+}
+
+// (3단계 대비) 고급 색상 — 아직 미구현
+function openAdvancedColor(type, btn) {
+  console.warn("ColorAdvancedEngine not connected yet:", type);
+
+  // 3단계에서 여기에 연결
+  // ColorAdvancedEngine.openAt(x, y, color => {
+  //   EditorCore.execute({
+  //     cmd: type === "text" ? "color-text" : "color-bg",
+  //     value: color
+  //   });
+  // });
+}
+
+/* =========================
+   글자색 버튼
+========================= */
 btnColor && btnColor.addEventListener("click", e => {
   e.stopPropagation();
-
-  const r = btnColor.getBoundingClientRect();
-
-  // ⚠️ ColorBasicEngine은 "UI만" → color만 콜백으로 반환
-  ColorBasicEngine.openAt(r.left, r.bottom, color => {
-    window.EditorCore && EditorCore.execute({
-      cmd: "color-text",
-      value: color
-    });
-  });
+  openBasicColor("text", btnColor);
 });
 
-// 배경색
+/* =========================
+   배경색 버튼
+========================= */
 btnBgColor && btnBgColor.addEventListener("click", e => {
   e.stopPropagation();
-
-  const r = btnBgColor.getBoundingClientRect();
-
-  ColorBasicEngine.openAt(r.left, r.bottom, color => {
-    window.EditorCore && EditorCore.execute({
-      cmd: "color-bg",
-      value: color
-    });
-  });
+  openBasicColor("bg", btnBgColor);
 });
 
 }     
