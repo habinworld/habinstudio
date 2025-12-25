@@ -1,36 +1,38 @@
 /* ==========================================================
-   🎨 color-advanced.js — Final Stable Edition
-   Ha-Bin Studio · Advanced RGBA Color Engine
-   window.ColorAdvancedEngine 등록 버전
+   🎨 color-advanced.js — Advanced Color Engine (Stage 3)
+   ----------------------------------------------------------
+   역할:
+   ✔ 고급 RGBA 색상 선택 UI
+   ✔ 값만 반환 (rgba 문자열)
+   ❌ 실행 ❌ 판단 ❌ EditorCore 직접 호출
 ========================================================== */
 
 window.ColorAdvancedEngine = (function () {
 
-  const popup = document.getElementById("hb-popup-color-advanced");
+  let popup = null;
   let isOpen = false;
 
-  // RGBA 값 저장
-  let R = 0, G = 0, B = 0, A = 1;
+  /* ======================================================
+     UI 생성 (상태는 내부 지역변수로만 유지)
+  ====================================================== */
+  function createPopup(onSelect) {
 
+    // 지역 상태 (UI용, 외부로 안 나감)
+    let R = 0, G = 0, B = 0, A = 1;
 
-  /* --------------------------------------------------------
-        📌 1) 팝업 UI 렌더링
-  --------------------------------------------------------- */
-  function renderPopup() {
-    popup.innerHTML = ""; 
+    const box = document.createElement("div");
+    box.id = "hb-popup-color-advanced";
 
-    popup.style.position = "absolute";
-    popup.style.padding = "14px";
-    popup.style.background = "#FFFFFF";
-    popup.style.border = "1px solid #D0D0D0";
-    popup.style.borderRadius = "10px";
-    popup.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
-    popup.style.width = "240px";
-    popup.style.display = "block";
-    popup.style.zIndex = "9999";
-    popup.style.fontFamily = "Noto Sans KR, sans-serif";
-    popup.style.fontSize = "14px";
-
+    box.style.position = "absolute";
+    box.style.padding = "14px";
+    box.style.background = "#FFFFFF";
+    box.style.border = "1px solid #D0D0D0";
+    box.style.borderRadius = "10px";
+    box.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
+    box.style.width = "240px";
+    box.style.zIndex = "1000000";
+    box.style.fontFamily = "Noto Sans KR, sans-serif";
+    box.style.fontSize = "14px";
 
     /* ---------- 미리보기 ---------- */
     const preview = document.createElement("div");
@@ -38,138 +40,108 @@ window.ColorAdvancedEngine = (function () {
     preview.style.border = "1px solid #CCC";
     preview.style.borderRadius = "6px";
     preview.style.marginBottom = "12px";
-    preview.style.background = `rgba(${R},${G},${B},${A})`;
-    preview.id = "hb-adv-preview";
 
+    function updatePreview() {
+      preview.style.background = `rgba(${R},${G},${B},${A})`;
+    }
+    updatePreview();
 
-    /* ---------- 슬라이더 공통 함수 ---------- */
-    function makeSlider(label, value, min, max, step, onInput) {
+    /* ---------- 슬라이더 ---------- */
+    function makeSlider(label, min, max, step, onChange) {
       const wrap = document.createElement("div");
       wrap.style.marginBottom = "10px";
 
       const title = document.createElement("div");
-      title.textContent = `${label}: ${value}`;
-      title.className = "hb-adv-label";
+      title.style.fontSize = "12px";
 
       const input = document.createElement("input");
       input.type = "range";
       input.min = min;
       input.max = max;
       input.step = step;
-      input.value = value;
+      input.value = min;
       input.style.width = "100%";
 
-      input.addEventListener("input", function () {
-        title.textContent = `${label}: ${this.value}`;
-        onInput(this.value);
+      input.addEventListener("input", () => {
+        title.textContent = `${label}: ${input.value}`;
+        onChange(Number(input.value));
         updatePreview();
       });
+
+      title.textContent = `${label}: ${input.value}`;
 
       wrap.appendChild(title);
       wrap.appendChild(input);
       return wrap;
     }
 
-
-    /* ---------- 프리뷰 업데이트 ---------- */
-    function updatePreview() {
-      const box = document.getElementById("hb-adv-preview");
-      if (box) {
-        box.style.background = `rgba(${R},${G},${B},${A})`;
-      }
-    }
-
-
-    /* ---------- 버튼 영역 ---------- */
+    /* ---------- 버튼 ---------- */
     const btnArea = document.createElement("div");
     btnArea.style.textAlign = "right";
     btnArea.style.marginTop = "10px";
 
     const applyBtn = document.createElement("button");
+    applyBtn.className = "hb-btn";
     applyBtn.textContent = "적용";
-    applyBtn.style.padding = "6px 12px";
-    applyBtn.style.background = "#3558A8";
-    applyBtn.style.color = "#FFF";
-    applyBtn.style.border = "none";
-    applyBtn.style.borderRadius = "6px";
-    applyBtn.style.cursor = "pointer";
-    applyBtn.style.marginRight = "6px";
 
-    applyBtn.addEventListener("click", function () {
-      const rgba = `rgba(${R},${G},${B},${A})`;
-      EditorCore.applyColor(rgba);
+    applyBtn.onclick = () => {
+      onSelect && onSelect(`rgba(${R},${G},${B},${A})`);
       close();
-    });
+    };
 
     const cancelBtn = document.createElement("button");
+    cancelBtn.className = "hb-btn";
     cancelBtn.textContent = "취소";
-    cancelBtn.style.padding = "6px 12px";
-    cancelBtn.style.background = "#777";
-    cancelBtn.style.color = "#FFF";
-    cancelBtn.style.border = "none";
-    cancelBtn.style.borderRadius = "6px";
-    cancelBtn.style.cursor = "pointer";
-
-    cancelBtn.addEventListener("click", close);
+    cancelBtn.style.marginLeft = "6px";
+    cancelBtn.onclick = close;
 
     btnArea.appendChild(applyBtn);
     btnArea.appendChild(cancelBtn);
 
+    /* ---------- 조립 ---------- */
+    box.appendChild(preview);
+    box.appendChild(makeSlider("R", 0, 255, 1, v => R = v));
+    box.appendChild(makeSlider("G", 0, 255, 1, v => G = v));
+    box.appendChild(makeSlider("B", 0, 255, 1, v => B = v));
+    box.appendChild(makeSlider("A", 0, 1, 0.01, v => A = v));
+    box.appendChild(btnArea);
 
-    /* --------------------------------------------------------
-         📌 최종적으로 구성 요소를 popup에 넣기
-    --------------------------------------------------------- */
-    popup.appendChild(preview);
-
-    popup.appendChild(makeSlider("R", R, 0, 255, 1, v => R = Number(v)));
-    popup.appendChild(makeSlider("G", G, 0, 255, 1, v => G = Number(v)));
-    popup.appendChild(makeSlider("B", B, 0, 255, 1, v => B = Number(v)));
-    popup.appendChild(makeSlider("A", A, 0, 1, 0.01, v => A = Number(v)));
-
-    popup.appendChild(btnArea);
+    return box;
   }
 
+  /* ======================================================
+     열기 / 닫기
+  ====================================================== */
+  function openAt(x, y, onSelect) {
+    if (isOpen) close();
 
-  /* --------------------------------------------------------
-        📌 2) 팝업 열기
-  --------------------------------------------------------- */
-  function openAt(x, y) {
-    if (isOpen) {
-      close();
-      return;
-    }
-
-    renderPopup();
+    popup = createPopup(onSelect);
+    document.body.appendChild(popup);
 
     popup.style.left = x + "px";
-    popup.style.top = y + "px";
-    popup.style.display = "block";
+    popup.style.top  = y + "px";
 
     isOpen = true;
 
     setTimeout(() => {
-      document.addEventListener("click", handleOutside, { once: true });
+      document.addEventListener("click", handleOutside);
     }, 0);
   }
 
-
-  /* --------------------------------------------------------
-        📌 3) 팝업 닫기
-  --------------------------------------------------------- */
   function close() {
-    popup.style.display = "none";
+    if (popup) popup.remove();
+    popup = null;
     isOpen = false;
+    document.removeEventListener("click", handleOutside);
   }
 
   function handleOutside(e) {
-    if (!popup.contains(e.target)) {
-      close();
-    }
+    if (popup && !popup.contains(e.target)) close();
   }
 
-  /* --------------------------------------------------------
-        📌 외부 API
-  --------------------------------------------------------- */
+  /* ======================================================
+     외부 API
+  ====================================================== */
   return {
     openAt,
     close
