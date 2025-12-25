@@ -118,9 +118,7 @@ window.EditorCore = (function () {
 
   /* =================================================
         6) px 기반 폰트 크기
-        - 드래그: 선택영역 래핑
-        - 커서: typing span 삽입
-        - 분기: "선택이 존재하는가" 1회
+       
   ================================================= */
   function applyFontSizeToSelection(px) {
     const sel = window.getSelection();
@@ -296,8 +294,8 @@ window.EditorCore = (function () {
     setLineHeight: h  => execute({ cmd: "lineHeight", value: h }),
 
     // 색상
-   setColor:   c => execute({ cmd: "textColor", value: c }),
-   setBgColor: c => execute({ cmd: "bgColor",   value: c }),
+   setColor:   c => execute({ cmd: "foreColor",   value: c }),
+   setBgColor: c => execute({ cmd: "hiliteColor", value: c }),
 
     // 정렬
     alignLeft:    () => execute(TextEngine.alignLeft()),
