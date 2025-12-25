@@ -78,14 +78,7 @@ options: Array.from({ length: 33 }, (_, i) => {
     { id: "hb-btn-img-right", label: "R" },
     { id: "hb-btn-img-delete", label: "DEL" } 
   ];
-  function render(containerId, items) {
-  const bar = document.getElementById(containerId);
-  if (!bar) return;
-
-  items.forEach(item => {
-    // select / button 생성만
-  });
-}
+ 
   /* =====================================================
      2) 렌더링
   ===================================================== */
@@ -347,7 +340,7 @@ btnBgColor && btnBgColor.addEventListener("click", e => {
   openBasicColor("bg", btnBgColor);
 });
 
-}     
+   
   /* =====================================================
      5) Init
   ===================================================== */
