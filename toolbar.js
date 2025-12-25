@@ -140,51 +140,57 @@ function render(containerId, items) {
   /* =====================================================
      4) 이벤트 연결 (현재 사용 중인 것만)
   ===================================================== */
+function bindEvents() {
 
-  function bindEvents() {
+  // BASIC
+  bind("hb-btn-bold",      () => EditorCore.bold());
+  bind("hb-btn-italic",    () => EditorCore.italic());
+  bind("hb-btn-underline", () => EditorCore.underline());
 
-    // BASIC
-    bind("hb-btn-bold",      () => EditorCore.bold());
-    bind("hb-btn-italic",    () => EditorCore.italic());
-    bind("hb-btn-underline", () => EditorCore.underline());
+  bind("hb-btn-undo", () => EditorCore.undo());
+  bind("hb-btn-redo", () => EditorCore.redo());
 
-    bind("hb-btn-undo", () => EditorCore.undo());
-    bind("hb-btn-redo", () => EditorCore.redo());
+  bind("hb-btn-align-left",   () => EditorCore.alignLeft());
+  bind("hb-btn-align-center", () => EditorCore.alignCenter());
+  bind("hb-btn-align-right",  () => EditorCore.alignRight());
 
-    bind("hb-btn-align-left",   () => EditorCore.alignLeft());
-    bind("hb-btn-align-center", () => EditorCore.alignCenter());
-    bind("hb-btn-align-right",  () => EditorCore.alignRight());
+  bind("hb-btn-ul", () => EditorCore.ul());
+  bind("hb-btn-ol", () => EditorCore.ol());
 
-    bind("hb-btn-ul", () => EditorCore.ul());
-    bind("hb-btn-ol", () => EditorCore.ol());
+  /* ---------- 이미지 ---------- */
 
-       // 이미지 버튼 → 즉시 input 클릭 (존재/비존재)
-bind("hb-btn-image", () => {
-  document.getElementById("hb-image-input")?.click();
-});
+  // 이미지 버튼 → 즉시 input 클릭 (존재/비존재)
+  bind("hb-btn-image", () => {
+    document.getElementById("hb-image-input")?.click();
+  });
 
-// 이미지 선택 → 삽입
-const input = document.getElementById("hb-image-input");
+  // 이미지 선택 → 삽입
+  const input = document.getElementById("hb-image-input");
+  input && input.addEventListener("change", e => {
+    const file = e.target.files[0];
+    file && EditorCore.insertImage(file);
+    e.target.value = "";
+  });
 
-input && input.addEventListener("change", e => {
-  const file = e.target.files[0];
-  file && EditorCore.insertImage(file);
-  e.target.value = "";
-});
- }
-    bind("hb-btn-img-left",   () => EditorCore.imageAlign("left"));
-    bind("hb-btn-img-center", () => EditorCore.imageAlign("center"));
-    bind("hb-btn-img-right",  () => EditorCore.imageAlign("right"));
-    bind("hb-btn-img-delete", () => {
-  window.ImageEngine && window.ImageEngine.removeSelected();
-});
-     
-      // ADVANCED — select (폰트 / 크기 / 줄간격,글자색, 배경색)
+  // 이미지 정렬
+  bind("hb-btn-img-left",   () => EditorCore.imageAlign("left"));
+  bind("hb-btn-img-center", () => EditorCore.imageAlign("center"));
+  bind("hb-btn-img-right",  () => EditorCore.imageAlign("right"));
+
+  // 이미지 삭제
+  bind("hb-btn-img-delete", () => {
+    window.ImageEngine && window.ImageEngine.removeSelected();
+  });
+
+  /* ---------- ADVANCED ---------- */
+
   const font = document.getElementById("hb-font-family");
-const size = document.getElementById("hb-font-size");
-const line = document.getElementById("hb-line-height");
-const btnColor = document.getElementById("hb-btn-color");
-const btnBgColor = document.getElementById("hb-btn-bgcolor");
+  const size = document.getElementById("hb-font-size");
+  const line = document.getElementById("hb-line-height");
+  const btnColor = document.getElementById("hb-btn-color");
+  const btnBgColor = document.getElementById("hb-btn-bgcolor");
+
+}
 
 /* -------------------------------
    font-family (속도 안정화)
