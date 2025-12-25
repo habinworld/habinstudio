@@ -122,14 +122,9 @@ function render(containerId, items) {
   });
 
   // 이미지 input (ADVANCED 전용)
-  containerId === "hb-toolbar-advanced" && (() => {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = "image/*";
-    input.id = "hb-image-input";
-    input.style.display = "none";
-    bar.appendChild(input);
-  })();
+  document.getElementById("hb-image-btn")?.addEventListener("click", () => {
+  document.getElementById("hb-image-input")?.click();
+});
 }
    /* =====================================================
      3) 바인딩 헬퍼
