@@ -75,7 +75,8 @@ options: Array.from({ length: 33 }, (_, i) => {
     { id: "hb-btn-image",     label: "🖼️", icon: true },
     { id: "hb-btn-img-left",  label: "L" },
     { id: "hb-btn-img-center",label: "C" },
-    { id: "hb-btn-img-right", label: "R" }
+    { id: "hb-btn-img-right", label: "R" },
+    { id: "hb-btn-img-delete", label: "DEL" } 
   ];
   function render(containerId, items) {
   const bar = document.getElementById(containerId);
