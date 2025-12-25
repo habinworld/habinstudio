@@ -325,8 +325,17 @@ window.EditorCore = (function () {
   Core.redo  = () => execute(TextEngine.redo());
 
   // 이미지
-  Core.insertImage = insertImage;
-  Core.imageAlign  = imageAlign;
+  Core.insertImage = file => {
+  window.ImageEngine && window.ImageEngine.insert(file);
+};
+
+Core.imageAlign = dir => {
+  window.ImageEngine && window.ImageEngine.align(dir);
+};
+
+Core.removeImage = () => {
+  window.ImageEngine && window.ImageEngine.remove();
+};
 
   return Core;
 
