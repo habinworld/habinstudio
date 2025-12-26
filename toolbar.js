@@ -333,8 +333,6 @@ btnBgColor && btnBgColor.addEventListener("click", e => {
   bindEvents();
 }
 
-document.addEventListener("DOMContentLoaded", init);
-
 return { init };
 
 })();
