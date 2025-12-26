@@ -157,15 +157,7 @@ function bindEvents() {
     document.getElementById("hb-image-input")?.click();
   });
 
-  // 이미지 선택 → 삽입
-  const input = document.getElementById("hb-image-input");
-  input && input.addEventListener("change", e => {
-    const file = e.target.files[0];
-    file && EditorCore.insertImage(file);
-    e.target.value = "";
-  });
-
-  // 이미지 정렬
+   // 이미지 정렬
   bind("hb-btn-img-left",   () => EditorCore.imageAlign("left"));
   bind("hb-btn-img-center", () => EditorCore.imageAlign("center"));
   bind("hb-btn-img-right",  () => EditorCore.imageAlign("right"));
