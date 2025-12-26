@@ -1,7 +1,9 @@
 /* 이미지 박스 */
 .hb-img-box{
   position: relative;
-  display: inline-block;
+  display: block;          /* ⭐ 변경 */
+  width: fit-content;      /* ⭐ 추가 */
+  max-width: 100%;         /* ⭐ 안전 */
   margin: 14px auto;
 }
 
