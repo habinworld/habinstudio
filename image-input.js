@@ -1,16 +1,19 @@
-// image-input.js
+/* ---------------------------------------------------
+   🖼 image-input.js — BULLET Edition
+   Ha-Bin Studio
+   역할:
+   - input change → EditorCore 전달
+   - 단 1회 바인딩
+---------------------------------------------------- */
+
 (function () {
   const input = document.getElementById("hb-image-input");
-  if (!input || window.__HB_IMAGE_INPUT_BOUND__) return;
+  if (!input) return;
 
   input.addEventListener("change", e => {
     const file = e.target.files && e.target.files[0];
-    if (file && window.EditorCore) {
-      EditorCore.insertImage(file);
-    }
+    file && window.EditorCore && EditorCore.insertImage(file);
     e.target.value = "";
   });
-
-  window.__HB_IMAGE_INPUT_BOUND__ = true;
 })();
 
