@@ -1,48 +1,65 @@
 /* ---------------------------------------------------
-   🖼 ImageEngine — vFinal (ALL-IN-ONE)
+   🖼 ImageEngine — FINAL BULLET Edition
    Ha-Bin Studio
-   기능:
-   - 삽입 / 선택 / 해제
+   책임:
+   - 이미지 삽입 (즉시 반응)
+   - 선택 / 해제
+   - 정렬 (L / C / R)
    - 전방위 리사이즈 (8방향)
-   - 정렬 (left / center / right)
-   - 삭제 (DEL 버튼 + Delete/Backspace)
-   ❌ EditorCore / Toolbar 개입 없음
+   - 삭제 (툴바 DEL + Delete / Backspace)
+   원칙:
+   - 상태 저장 ❌
+   - 판단 ❌
+   - EditorCore / Toolbar 개입 ❌
+   - 존재 / 비존재 ✔
 ---------------------------------------------------- */
 
 window.ImageEngine = (function () {
 
+  /* ===================================================
+     0) 내부 상태 (ImageEngine만 소유)
+  =================================================== */
   const editor = document.getElementById("hb-editor");
   let currentBox = null;
 
   const HANDLES = ["n","s","e","w","ne","nw","se","sw"];
 
+  if (!editor) return {}; // DOM 안전장치
+
   /* ===================================================
-     1) 이미지 삽입
+     1) 이미지 삽입 — BULLET
   =================================================== */
   function insert(file) {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = document.createElement("img");
-      img.src = e.target.result;
-      img.style.display = "block";
-      img.style.maxWidth = "100%";
-      img.style.height = "auto";
+    if (!file) return;
 
-      const box = document.createElement("div");
-      box.className = "hb-img-box align-center";
-      box.appendChild(img);
+    // ① 박스 먼저 삽입 (체감 0ms)
+    const box = document.createElement("div");
+    box.className = "hb-img-box align-center";
 
-      addResizeHandles(box);
+    addResizeHandles(box);
 
-      box.addEventListener("click", ev => {
-        ev.stopPropagation();
-        selectBox(box);
-      });
-
-      insertNodeAtCursor(box);
+    box.addEventListener("click", e => {
+      e.stopPropagation();
       selectBox(box);
-    };
-    reader.readAsDataURL(file);
+    });
+
+    insertNodeAtCursor(box);
+    selectBox(box);
+
+    // ② 이미지 비동기 로딩
+    const img = document.createElement("img");
+    const url = URL.createObjectURL(file);
+
+    img.src = url;
+    img.decoding = "async";
+    img.loading = "eager";
+    img.style.display = "block";
+    img.style.maxWidth = "100%";
+    img.style.height = "auto";
+
+    img.onload = () => URL.revokeObjectURL(url);
+
+    box.appendChild(img);
   }
 
   /* ===================================================
@@ -73,7 +90,8 @@ window.ImageEngine = (function () {
   }
 
   function clearSelection() {
-    document.querySelectorAll(".hb-img-selected")
+    document
+      .querySelectorAll(".hb-img-selected")
       .forEach(el => el.classList.remove("hb-img-selected"));
     currentBox = null;
   }
@@ -87,10 +105,17 @@ window.ImageEngine = (function () {
   =================================================== */
   function align(direction) {
     if (!currentBox) return;
-    currentBox.classList.remove("align-left","align-center","align-right");
-    if (direction === "left") currentBox.classList.add("align-left");
-    else if (direction === "right") currentBox.classList.add("align-right");
-    else currentBox.classList.add("align-center");
+
+    currentBox.classList.remove(
+      "align-left",
+      "align-center",
+      "align-right"
+    );
+
+    direction === "left"  && currentBox.classList.add("align-left");
+    direction === "right" && currentBox.classList.add("align-right");
+    (!direction || direction === "center") &&
+      currentBox.classList.add("align-center");
   }
 
   /* ===================================================
@@ -101,7 +126,9 @@ window.ImageEngine = (function () {
       const h = document.createElement("div");
       h.className = "hb-resize-handle " + dir;
       box.appendChild(h);
-      h.addEventListener("mousedown", e => initResize(e, box, dir));
+      h.addEventListener("mousedown", e =>
+        initResize(e, box, dir)
+      );
     });
   }
 
@@ -113,43 +140,44 @@ window.ImageEngine = (function () {
     e.stopPropagation();
 
     const img = box.querySelector("img");
-    const rect = img.getBoundingClientRect();
+    if (!img) return;
 
+    const rect = img.getBoundingClientRect();
     const startX = e.clientX;
     const startY = e.clientY;
     const startW = rect.width;
     const startH = rect.height;
     const ratio  = startW / startH;
 
-    function resizeMove(ev) {
+    function move(ev) {
       let dx = ev.clientX - startX;
       let dy = ev.clientY - startY;
 
       let w = startW;
       let h = startH;
 
-      if (dir.includes("e")) w = startW + dx;
-      if (dir.includes("w")) w = startW - dx;
-      if (dir.includes("s")) h = startH + dy;
-      if (dir.includes("n")) h = startH - dy;
+      dir.includes("e") && (w = startW + dx);
+      dir.includes("w") && (w = startW - dx);
+      dir.includes("s") && (h = startH + dy);
+      dir.includes("n") && (h = startH - dy);
 
-      if (ev.shiftKey) h = w / ratio;
+      ev.shiftKey && (h = w / ratio);
 
       img.style.width  = Math.max(40, w) + "px";
       img.style.height = Math.max(40, h) + "px";
     }
 
     function stop() {
-      document.removeEventListener("mousemove", resizeMove);
+      document.removeEventListener("mousemove", move);
       document.removeEventListener("mouseup", stop);
     }
 
-    document.addEventListener("mousemove", resizeMove);
+    document.addEventListener("mousemove", move);
     document.addEventListener("mouseup", stop);
   }
 
   /* ===================================================
-     7) 삭제
+     7) 삭제 (툴바 + 키보드)
   =================================================== */
   function remove() {
     if (!currentBox) return;
@@ -158,8 +186,10 @@ window.ImageEngine = (function () {
     target.remove();
   }
 
+  // 키보드 Delete / Backspace
   document.addEventListener("keydown", e => {
     if (!currentBox) return;
+
     if (e.key === "Delete" || e.key === "Backspace") {
       e.preventDefault();
       remove();
@@ -167,7 +197,7 @@ window.ImageEngine = (function () {
   });
 
   /* ===================================================
-     8) 외부 API
+     8) 외부 API (배선판 전용)
   =================================================== */
   return {
     insert,
