@@ -5,7 +5,9 @@
 
   input.addEventListener("change", e => {
     const file = e.target.files && e.target.files[0];
-    file && window.EditorCore && EditorCore.insertImage(file);
+    if (file && window.EditorCore) {
+      EditorCore.insertImage(file);
+    }
     e.target.value = "";
   });
 
