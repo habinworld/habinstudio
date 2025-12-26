@@ -150,13 +150,10 @@ function bindEvents() {
   bind("hb-btn-ul", () => EditorCore.ul());
   bind("hb-btn-ol", () => EditorCore.ol());
 
-  /* ---------- 이미지 ---------- */
-
-  // 이미지 버튼 → 즉시 input 클릭 (존재/비존재)
+   // 이미지 버튼 → 즉시 input 클릭 (존재/비존재)
  bind("hb-btn-image", () => {
   document.getElementById("hb-image-input")?.click();
 });
-
    // 이미지 정렬,삭제
   bind("hb-btn-img-left",   () => EditorCore.imageAlign("left"));
   bind("hb-btn-img-center", () => EditorCore.imageAlign("center"));
