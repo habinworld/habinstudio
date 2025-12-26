@@ -153,19 +153,15 @@ function bindEvents() {
   /* ---------- 이미지 ---------- */
 
   // 이미지 버튼 → 즉시 input 클릭 (존재/비존재)
-  bind("hb-btn-image", () => {
-    document.getElementById("hb-image-input")?.click();
-  });
+ bind("hb-btn-image", () => {
+  document.getElementById("hb-image-input")?.click();
+});
 
-   // 이미지 정렬
+   // 이미지 정렬,삭제
   bind("hb-btn-img-left",   () => EditorCore.imageAlign("left"));
   bind("hb-btn-img-center", () => EditorCore.imageAlign("center"));
   bind("hb-btn-img-right",  () => EditorCore.imageAlign("right"));
-
-  // 이미지 삭제
-  bind("hb-btn-img-delete", () => {
-    window.ImageEngine && window.ImageEngine.removeSelected();
-  });
+  bind("hb-btn-img-delete", () => EditorCore.removeImage());
 
   /* ---------- ADVANCED ---------- */
 
