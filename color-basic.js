@@ -85,8 +85,7 @@ window.ColorBasicEngine = (function () {
     moreBtn.type = "button";
     moreBtn.className = "hb-btn";
     moreBtn.textContent = "더보기…";
-    moreBtn.disabled = true;
-
+   
     topBar.appendChild(noneBtn);
     topBar.appendChild(moreBtn);
     popup.appendChild(topBar);
