@@ -112,8 +112,6 @@ window.ColorAdvancedEngine = (function () {
   /* ======================================================
    열기 / 닫기 (MOUSEDOWN 기반 · Stable)
 ====================================================== */
-let isOpen = false;
-
 function openAt(x, y, onSelect) {
   if (isOpen) close();
 
@@ -128,7 +126,7 @@ function openAt(x, y, onSelect) {
 }
 
 function close() {
-  console.log("❌ close() called");
+   if (!isOpen) return;
 
   popup.style.display = "none";
   popup.innerHTML = "";
