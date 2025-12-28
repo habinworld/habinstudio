@@ -269,7 +269,7 @@ lineBtn && lineSel && lineBtn.addEventListener("click", e => {
     }
   );
 });
-}   
+  
 /* =====================================================
    COLOR — Toolbar (Stage 2 stable / Stage 3 ready)
    역할:
@@ -329,7 +329,7 @@ btnBgColor && btnBgColor.addEventListener("click", e => {
   e.stopPropagation();
   openBasicColor("bg", btnBgColor);
 });
-
+} 
    
   /* =====================================================
      5) Init
