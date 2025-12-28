@@ -165,8 +165,8 @@ function bindEvents() {
   const font = document.getElementById("hb-font-family");
   const size = document.getElementById("hb-font-size");
   const line = document.getElementById("hb-line-height");
-  const btnColor = document.getElementById("hb-btn-color");
-  const btnBgColor = document.getElementById("hb-btn-bgcolor");
+  const btnColor = document.getElementById("hb-btn-color-btn");
+  const btnBgColor = document.getElementById("hb-btn-bgcolor-btn");
 
 /* -------------------------------
    font-family (속도 안정화)
