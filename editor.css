@@ -228,7 +228,9 @@
   left: -9999px;
   top: 0;
 }
-
+#hb-editor {
+  scroll-behavior: auto;
+}
 
 
 
