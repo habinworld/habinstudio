@@ -113,7 +113,6 @@ window.ColorAdvancedEngine = (function () {
      열기 / 닫기
   ====================================================== */
   function openAt(x, y, onSelect) {
-    if (isOpen) close();
 
     popup = createPopup(onSelect);
     document.body.appendChild(popup);
