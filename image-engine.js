@@ -35,7 +35,7 @@ window.ImageEngine = (function () {
     // ① 박스 먼저 삽입 (체감 0ms)
     const box = document.createElement("div");
     box.className = "hb-img-box align-center";
-
+    box.contentEditable = "false"; // ★ 여기 (추가)
     addResizeHandles(box);
 
     box.addEventListener("click", e => {
@@ -53,12 +53,6 @@ box.addEventListener("dblclick", e => {
   e.stopPropagation();
 
   const isFree = box.classList.toggle("free");
-
-  // ⭐ 핵심: FREE 이동 중엔 편집기 개입 차단
-  box.setAttribute(
-    "contenteditable",
-    isFree ? "false" : "true"
-  );
 
   // FREE → FLOW 복귀 시 좌표 정리
   if (!isFree) {
@@ -122,7 +116,13 @@ box.appendChild(img);
   editor.addEventListener("click", e => {
     if (!e.target.closest(".hb-img-box")) clearSelection();
   });
-
+  /* ===================================================
+   3-1) DROP 차단 (이미지 복사 방지)
+=================================================== */
+editor.addEventListener("drop", e => {
+  if (!e.target.closest(".hb-img-box")) return;
+  e.preventDefault();
+});
   /* ===================================================
      4) 정렬
   =================================================== */
