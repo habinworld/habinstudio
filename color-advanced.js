@@ -125,10 +125,6 @@ function openAt(x, y, onSelect) {
   popup.style.display = "block";
 
   isOpen = true;
-
-  setTimeout(() => {
-    document.addEventListener("mousedown", handleOutside);
-  }, 0);
 }
 
 function close() {
@@ -136,18 +132,8 @@ function close() {
 
   popup.style.display = "none";
   popup.innerHTML = "";
-
   isOpen = false;
-  document.removeEventListener("mousedown", handleOutside);
 }
-
-function handleOutside(e) {
-  const path = e.composedPath ? e.composedPath() : [];
-  if (!path.includes(popup)) {
-    close();
-  }
-}
-
   /* ======================================================
      외부 API
   ====================================================== */
