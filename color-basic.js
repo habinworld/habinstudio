@@ -88,8 +88,11 @@ moreBtn.textContent = "더보기…";
 moreBtn.addEventListener("click", e => {
   e.preventDefault();
   e.stopPropagation();
+ // 1️⃣ 신호만 보냄
   onSelect && onSelect("__ADVANCED__");
-  close();
+
+  // 2️⃣ 닫기는 다음 틱에서
+  setTimeout(close, 0);
 });
 
 topBar.appendChild(noneBtn);
