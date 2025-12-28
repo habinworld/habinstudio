@@ -70,12 +70,20 @@ box.addEventListener("dblclick", e => {
     // ② 이미지 비동기 로딩
 const img = document.createElement("img");
 
-// ✅ 분신 방지 핵심: img native drag 봉인 (유입 기능은 안 건드림)
+// ⭐⭐⭐ 이게 핵심
 img.draggable = false;
 img.addEventListener("dragstart", e => e.preventDefault());
 
 const url = URL.createObjectURL(file);
-
+img.src = url;
+img.decoding = "async";
+img.loading = "eager";
+img.style.display = "block";
+img.style.maxWidth = "100%";
+img.style.height = "auto";
+img.onload = () => URL.revokeObjectURL(url); 
+box.appendChild(img); 
+  }
 
   /* ===================================================
      2) 커서 위치 삽입
