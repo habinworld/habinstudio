@@ -123,10 +123,10 @@ window.ColorAdvancedEngine = (function () {
 
     isOpen = true;
 
-    setTimeout(() => {
-      document.addEventListener("mousedown", handleOutside);
-    }, 0);
-  }
+    requestAnimationFrame(() => {
+    document.addEventListener("mousedown", handleOutside);
+  });
+}
 
   function close() {
     if (popup) popup.remove();
