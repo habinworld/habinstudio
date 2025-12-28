@@ -175,7 +175,40 @@ window.ImageEngine = (function () {
     document.addEventListener("mousemove", move);
     document.addEventListener("mouseup", stop);
   }
+  /* ===================================================
+   6-1) FREE 이동 (문단 ↔ 자유 이동)
+=================================================== */
+function enableFreeMove(box) {
+  let sx, sy, ox, oy;
 
+  box.addEventListener("mousedown", e => {
+    if (!box.classList.contains("free")) return;
+
+    e.preventDefault();
+    sx = e.clientX;
+    sy = e.clientY;
+
+    const r  = box.getBoundingClientRect();
+    const pr = editor.getBoundingClientRect();
+
+    ox = r.left - pr.left;
+    oy = r.top  - pr.top;
+
+    function move(ev) {
+      box.style.left = ox + (ev.clientX - sx) + "px";
+      box.style.top  = oy + (ev.clientY - sy) + "px";
+    }
+
+    function up() {
+      document.removeEventListener("mousemove", move);
+      document.removeEventListener("mouseup", up);
+    }
+
+    document.addEventListener("mousemove", move);
+    document.addEventListener("mouseup", up);
+  });
+}
+ 
   /* ===================================================
      7) 삭제 (툴바 + 키보드)
   =================================================== */
