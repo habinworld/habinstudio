@@ -85,7 +85,11 @@ window.ColorBasicEngine = (function () {
     moreBtn.type = "button";
     moreBtn.className = "hb-btn";
     moreBtn.textContent = "더보기…";
-   
+    moreBtn.onclick = () => {
+  // Toolbar 함수 직접 호출 (지금 단계 OK)
+  window.openAdvancedColor &&
+    window.openAdvancedColor(type, btn);
+}; 
     topBar.appendChild(noneBtn);
     topBar.appendChild(moreBtn);
     popup.appendChild(topBar);
