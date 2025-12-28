@@ -45,6 +45,20 @@ window.ImageEngine = (function () {
 
     insertNodeAtCursor(box);
     selectBox(box);
+        // ⭐ ①-1: FREE 이동 연결
+    enableFreeMove(box);
+
+    // ⭐ FLOW ↔ FREE 전환 (더블클릭)
+    box.addEventListener("dblclick", e => {
+      e.stopPropagation();
+      box.classList.toggle("free");
+
+      // FREE → FLOW 복귀 시 좌표 정리
+      if (!box.classList.contains("free")) {
+        box.style.left = "";
+        box.style.top  = "";
+      }
+    });
 
     // ② 이미지 비동기 로딩
     const img = document.createElement("img");
