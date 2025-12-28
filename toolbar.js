@@ -281,6 +281,11 @@ function openBasicColor(type, btn) {
   const r = btn.getBoundingClientRect();
 
   ColorBasicEngine.openAt(r.left, r.bottom, color => {
+     // 🔹 더보기 → 고급 색상
+    if (color === "__ADVANCED__") {
+      openAdvancedColor(type, btn);
+      return;
+    }
     // 색없슴 처리 (Toolbar의 책임)
     const value =
       color === null
