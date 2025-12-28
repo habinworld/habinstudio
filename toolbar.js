@@ -294,18 +294,20 @@ function openBasicColor(type, btn) {
   });
 }
 
-// (3단계 대비) 고급 색상 — 아직 미구현
+// (3단계 대비) 고급 색상
 function openAdvancedColor(type, btn) {
-  console.warn("ColorAdvancedEngine not connected yet:", type);
+  const r = btn.getBoundingClientRect();
 
-   ColorAdvancedEngine.openAt(x, y, color => {
-     EditorCore.execute({
-       cmd: type === "text" ? "color-text" : "color-bg",
-       value: color
-     });
-   });
+  ColorAdvancedEngine.openAt(r.left, r.bottom, color => {
+    if (!color) return;
+
+    EditorCore.execute({
+      cmd: type === "text" ? "color-text" : "color-bg",
+      value: color
+    });
+  });
 }
-
+  
 /* =========================
    글자색 버튼
 ========================= */
