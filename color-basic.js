@@ -86,13 +86,13 @@ window.ColorBasicEngine = (function () {
     moreBtn.className = "hb-btn";
     moreBtn.textContent = "더보기…";
     moreBtn.onclick = () => {
-  // Toolbar 함수 직접 호출 (지금 단계 OK)
-moreBtn.addEventListener("click", e => {
+  // 더보기 버튼
+moreBtn.onclick = e => {
   e.preventDefault();
-  e.stopPropagation();      // ⭐ 중요
-  onSelect && onSelect("__ADVANCED__"); // 신호값만 반환
+  e.stopPropagation();
+  onSelect && onSelect("__ADVANCED__");
   close();
-});
+};
     topBar.appendChild(noneBtn);
     topBar.appendChild(moreBtn);
     popup.appendChild(topBar);
