@@ -55,6 +55,23 @@
 
 /* 선택 안 되면 숨김 */
 .hb-img-box:not(.hb-img-selected) .hb-resize-handle{ display:none; }
+
+/* 에디터를 기준 좌표로 */
+#hb-editor {
+  position: relative;
+}
+
+/* 기본: 문단 흐름 */
+.hb-img-box {
+  position: relative;
+}
+
+/* FREE 모드 */
+.hb-img-box.free {
+  position: absolute;
+  z-index: 20;
+  cursor: move;
+}
 /* 모바일 */
 @media (max-width: 600px) {
   .hb-resize-handle {
@@ -64,5 +81,3 @@
     bottom: -7px;
   }
 }
-
-
