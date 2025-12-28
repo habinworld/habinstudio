@@ -80,22 +80,21 @@ window.ColorBasicEngine = (function () {
       close();
     };
 
-    // 더보기 (3단계 확장용 UI 자리)
-    const moreBtn = document.createElement("button");
-    moreBtn.type = "button";
-    moreBtn.className = "hb-btn";
-    moreBtn.textContent = "더보기…";
-    moreBtn.onclick = () => {
-  // 더보기 버튼
-moreBtn.onclick = e => {
+   // 더보기 → "__ADVANCED__" 신호값 반환
+const moreBtn = document.createElement("button");
+moreBtn.type = "button";
+moreBtn.className = "hb-btn";
+moreBtn.textContent = "더보기…";
+moreBtn.addEventListener("click", e => {
   e.preventDefault();
   e.stopPropagation();
   onSelect && onSelect("__ADVANCED__");
   close();
-};
-    topBar.appendChild(noneBtn);
-    topBar.appendChild(moreBtn);
-    popup.appendChild(topBar);
+});
+
+topBar.appendChild(noneBtn);
+topBar.appendChild(moreBtn);
+popup.appendChild(topBar);
 
     /* ==================================================
        색상 팔레트 버튼
