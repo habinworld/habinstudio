@@ -124,7 +124,7 @@ window.ColorAdvancedEngine = (function () {
     isOpen = true;
 
     setTimeout(() => {
-      document.addEventListener("click", handleOutside);
+      document.addEventListener("mousedown", handleOutside);
     }, 0);
   }
 
