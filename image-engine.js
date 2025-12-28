@@ -45,20 +45,28 @@ window.ImageEngine = (function () {
 
     insertNodeAtCursor(box);
     selectBox(box);
-        // ⭐ ①-1: FREE 이동 연결
-    enableFreeMove(box);
+       // ⭐ ①-1: FREE 이동 연결
+enableFreeMove(box);
 
-    // ⭐ FLOW ↔ FREE 전환 (더블클릭)
-    box.addEventListener("dblclick", e => {
-      e.stopPropagation();
-      box.classList.toggle("free");
+// ⭐ FLOW ↔ FREE 전환 (더블클릭)
+box.addEventListener("dblclick", e => {
+  e.stopPropagation();
 
-      // FREE → FLOW 복귀 시 좌표 정리
-      if (!box.classList.contains("free")) {
-        box.style.left = "";
-        box.style.top  = "";
-      }
-    });
+  const isFree = box.classList.toggle("free");
+
+  // ⭐ 핵심: FREE 이동 중엔 편집기 개입 차단
+  box.setAttribute(
+    "contenteditable",
+    isFree ? "false" : "true"
+  );
+
+  // FREE → FLOW 복귀 시 좌표 정리
+  if (!isFree) {
+    box.style.left = "";
+    box.style.top  = "";
+  }
+});
+
 
     // ② 이미지 비동기 로딩
     const img = document.createElement("img");
