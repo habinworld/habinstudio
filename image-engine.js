@@ -70,6 +70,17 @@ box.addEventListener("dblclick", e => {
 
     // ② 이미지 비동기 로딩
     const img = document.createElement("img");
+    // ⭐⭐⭐ 이게 핵심
+img.draggable = false;
+img.addEventListener("dragstart", e => e.preventDefault());
+
+const url = URL.createObjectURL(file);
+img.src = url;
+img.decoding = "async";
+img.loading = "eager";
+img.style.display = "block";
+img.style.maxWidth = "100%";
+img.style.height = "auto"; 
     const url = URL.createObjectURL(file);
 
     img.src = url;
