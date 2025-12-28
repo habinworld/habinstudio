@@ -87,9 +87,12 @@ window.ColorBasicEngine = (function () {
     moreBtn.textContent = "더보기…";
     moreBtn.onclick = () => {
   // Toolbar 함수 직접 호출 (지금 단계 OK)
-  window.openAdvancedColor &&
-    window.openAdvancedColor(type, btn);
-}; 
+moreBtn.addEventListener("click", e => {
+  e.preventDefault();
+  e.stopPropagation();      // ⭐ 중요
+  onSelect && onSelect("__ADVANCED__"); // 신호값만 반환
+  close();
+});
     topBar.appendChild(noneBtn);
     topBar.appendChild(moreBtn);
     popup.appendChild(topBar);
