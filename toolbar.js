@@ -3,7 +3,6 @@
    Ha-Bin Studio — BASIC / ADVANCED Toolbar
    구조 확정 / 기능 확장 안전
 ---------------------------------------------------- */
-console.log("🔥 toolbar.js loaded");
 window.Toolbar = (function () {
 
   /* =====================================================
