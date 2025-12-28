@@ -222,6 +222,12 @@
     padding: 5px 10px;
   }
 }
+/* image input — speed fix (FINAL) */
+#hb-image-input {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+}
 
 
 
