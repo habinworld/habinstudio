@@ -112,35 +112,25 @@ window.ColorAdvancedEngine = (function () {
   /* ======================================================
    열기 / 닫기 (MOUSEDOWN 기반 · Stable)
 ====================================================== */
-
 let isOpen = false;
 
-/**
- * 팝업 열기
- */
 function openAt(x, y, onSelect) {
   if (isOpen) close();
 
-  // 내용 생성
   popup.innerHTML = "";
   popup.appendChild(createPopup(onSelect));
 
-  // 위치 / 표시
   popup.style.left = x + "px";
   popup.style.top  = y + "px";
   popup.style.display = "block";
 
   isOpen = true;
 
-  // 같은 마우스 이벤트 충돌 방지
   setTimeout(() => {
     document.addEventListener("mousedown", handleOutside);
   }, 0);
 }
 
-/**
- * 팝업 닫기
- */
 function close() {
   if (!isOpen) return;
 
@@ -151,16 +141,13 @@ function close() {
   document.removeEventListener("mousedown", handleOutside);
 }
 
-/**
- * 외부 클릭(마우스 다운) 감지
- */
 function handleOutside(e) {
   const path = e.composedPath ? e.composedPath() : [];
-
   if (!path.includes(popup)) {
     close();
   }
 }
+
   /* ======================================================
      외부 API
   ====================================================== */
