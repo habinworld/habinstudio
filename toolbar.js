@@ -282,7 +282,7 @@ function openBasicColor(type, btn) {
 
   ColorBasicEngine.openAt(r.left, r.bottom, color => {
      // 🔹 더보기 → 고급 색상
-    if (result && result.type === "ADVANCED") {
+    if (color === "ADVANCED") {
   openAdvancedColor(type, btn);
   return;
 }
