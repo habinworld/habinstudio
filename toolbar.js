@@ -298,13 +298,12 @@ function openBasicColor(type, btn) {
 function openAdvancedColor(type, btn) {
   console.warn("ColorAdvancedEngine not connected yet:", type);
 
-  // 3단계에서 여기에 연결
-  // ColorAdvancedEngine.openAt(x, y, color => {
-  //   EditorCore.execute({
-  //     cmd: type === "text" ? "color-text" : "color-bg",
-  //     value: color
-  //   });
-  // });
+   ColorAdvancedEngine.openAt(x, y, color => {
+     EditorCore.execute({
+       cmd: type === "text" ? "color-text" : "color-bg",
+       value: color
+     });
+   });
 }
 
 /* =========================
