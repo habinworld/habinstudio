@@ -9,7 +9,7 @@
 
 window.ColorAdvancedEngine = (function () {
 
-  let popup = null;
+  const popup = document.getElementById("hb-popup-color-advanced");
   let isOpen = false;
 
   /* ======================================================
