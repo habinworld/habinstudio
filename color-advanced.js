@@ -128,7 +128,7 @@ function openAt(x, y, onSelect) {
 }
 
 function close() {
-  if (!isOpen) return;
+  console.log("❌ close() called");
 
   popup.style.display = "none";
   popup.innerHTML = "";
