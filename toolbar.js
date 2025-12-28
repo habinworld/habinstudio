@@ -69,8 +69,8 @@ options: Array.from({ length: 33 }, (_, i) => {
   ]
 },
 
-    { id: "hb-btn-color",     label: "🖌️", icon: true },
-    { id: "hb-btn-bgcolor",   label: "🎨", icon: true },
+    { id: "hb-btn-color",     label: "🖌️", icon: true, popup: true },
+    { id: "hb-btn-bgcolor",   label: "🎨", icon: true, popup: true },
 
     { id: "hb-btn-image",     label: "🖼️", icon: true },
     { id: "hb-btn-img-left",  label: "L" },
