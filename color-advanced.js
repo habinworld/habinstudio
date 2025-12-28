@@ -155,7 +155,9 @@ function close() {
  * 외부 클릭(마우스 다운) 감지
  */
 function handleOutside(e) {
-  if (!popup.contains(e.target)) {
+  const path = e.composedPath ? e.composedPath() : [];
+
+  if (!path.includes(popup)) {
     close();
   }
 }
