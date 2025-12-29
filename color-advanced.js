@@ -1,36 +1,30 @@
 /* ==========================================================
-   🎨 color-advanced.js — Advanced Color Engine (Stage 3)
+   🎨 color-advanced.js — Advanced Color Engine (MODE Version)
    ----------------------------------------------------------
    역할:
    ✔ 고급 RGBA 색상 선택 UI
    ✔ 값만 반환 (rgba 문자열)
-   ❌ 실행 ❌ 판단 ❌ EditorCore 직접 호출
+   ✔ 뒤로 버튼으로 MODE_BASIC 복귀 신호
+   ❌ 팝업 열기/닫기 ❌ 실행 ❌ 판단
 ========================================================== */
 
 window.ColorAdvancedEngine = (function () {
 
-  const popup = document.getElementById("hb-popup-color-advanced");
-  let isOpen = false;
-
   /* ======================================================
-     UI 생성 (상태는 내부 지역변수로만 유지)
+     UI 생성 (팝업 컨테이너는 외부에서 전달됨)
   ====================================================== */
-  function createPopup(onSelect) {
+  function createUI(onSelect, onBack) {
 
-    // 지역 상태 (UI용, 외부로 안 나감)
+    // 지역 상태 (UI 전용)
     let R = 0, G = 0, B = 0, A = 1;
 
     const box = document.createElement("div");
-    box.id = "hb-popup-color-advanced";
-
-    box.style.position = "absolute";
     box.style.padding = "14px";
     box.style.background = "#FFFFFF";
     box.style.border = "1px solid #D0D0D0";
     box.style.borderRadius = "10px";
     box.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
     box.style.width = "240px";
-    box.style.zIndex = "1000000";
     box.style.fontFamily = "Noto Sans KR, sans-serif";
     box.style.fontSize = "14px";
 
@@ -80,23 +74,26 @@ window.ColorAdvancedEngine = (function () {
     btnArea.style.textAlign = "right";
     btnArea.style.marginTop = "10px";
 
+    const backBtn = document.createElement("button");
+    backBtn.className = "hb-btn";
+    backBtn.textContent = "뒤로";
+
+    backBtn.onclick = () => {
+      onBack && onBack(); // MODE_BASIC 복귀
+    };
+
     const applyBtn = document.createElement("button");
     applyBtn.className = "hb-btn";
     applyBtn.textContent = "적용";
+    applyBtn.style.marginLeft = "6px";
 
     applyBtn.onclick = () => {
       onSelect && onSelect(`rgba(${R},${G},${B},${A})`);
-      close();
+      // ❌ close 없음
     };
 
-    const cancelBtn = document.createElement("button");
-    cancelBtn.className = "hb-btn";
-    cancelBtn.textContent = "취소";
-    cancelBtn.style.marginLeft = "6px";
-    cancelBtn.onclick = close;
-
+    btnArea.appendChild(backBtn);
     btnArea.appendChild(applyBtn);
-    btnArea.appendChild(cancelBtn);
 
     /* ---------- 조립 ---------- */
     box.appendChild(preview);
@@ -110,37 +107,19 @@ window.ColorAdvancedEngine = (function () {
   }
 
   /* ======================================================
-   열기 / 닫기 (MOUSEDOWN 기반 · Stable)
-====================================================== */
-function openAt(x, y, onSelect) {
-  if (isOpen) close();
-
-  popup.innerHTML = "";
-  popup.appendChild(createPopup(onSelect));
-
-  popup.style.left = x + "px";
-  popup.style.top  = y + "px";
-  popup.style.display = "block";
-
-  isOpen = true;
-}
-
-function close() {
-   if (!isOpen) return;
-
-  popup.style.display = "none";
-  popup.innerHTML = "";
-  isOpen = false;
-}
-  /* ======================================================
-     외부 API
+     외부 API (MODE 전환용)
   ====================================================== */
+  function render(popup, onSelect, onBack) {
+    popup.innerHTML = "";
+    popup.appendChild(createUI(onSelect, onBack));
+  }
+
   return {
-    openAt,
-    close
+    render
   };
 
 })();
+
 
 
 
