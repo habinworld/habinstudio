@@ -42,7 +42,7 @@
     }
 
     // 2) 색상 값 → 실행 (배경색)
-    ColorBgEngine.apply(value === null ? "#000000" : value);
+    ColorBgEngine.apply(value === null ? "#FFFFFF" : value);
   }
 
   /* --------------------------------------------------
