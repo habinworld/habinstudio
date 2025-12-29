@@ -268,51 +268,22 @@ lineBtn && lineSel && lineBtn.addEventListener("click", e => {
     }
   );
 });
-  
 /* =====================================================
-   COLOR — Toolbar (Stage 2 stable / Stage 3 ready)
+   COLOR — Toolbar (MODE Entry Only)
    역할:
-   - ColorBasicEngine : 기본 팔레트 UI
-   - ColorAdvancedEngine : (미구현) 고급 팔레트 UI
-   - Toolbar : 의미 해석 + cmd 결정
+   - 색상 UI 진입만 담당
+   - 판단 / 적용 / 팝업 제어 ❌
 ===================================================== */
 
-function openBasicColor(type, btn) {
-  const r = btn.getBoundingClientRect();
+btnColor && btnColor.addEventListener("click", e => {
+  e.stopPropagation();
+  openTextColorUI(btnColor, HB_COLOR_POPUP);
+});
 
-  ColorBasicEngine.openAt(r.left, r.bottom, color => {
-     // 🔹 더보기 → 고급 색상
-    if (color === "ADVANCED") {
-  openAdvancedColor(type, btn);
-  return;
-}
-    // 색없슴 처리 (Toolbar의 책임)
-    const value =
-      color === null
-        ? (type === "text" ? "#000000" : "#FFFFFF")
-        : color;
-
-    EditorCore.execute({
-      cmd: type === "text" ? "color-text" : "color-bg",
-      value
-    });
-  });
-}
-
-// (3단계 대비) 고급 색상
-function openAdvancedColor(type, btn) {
-  const r = btn.getBoundingClientRect();
-
-  ColorAdvancedEngine.openAt(r.left, r.bottom, color => {
-    if (!color) return;
-
-    EditorCore.execute({
-      cmd: type === "text" ? "color-text" : "color-bg",
-      value: color
-    });
-  });
-}
-  
+btnBgColor && btnBgColor.addEventListener("click", e => {
+  e.stopPropagation();
+  openBgColorUI(btnBgColor, HB_COLOR_POPUP);
+});
 /* =========================
    글자색 버튼
 ========================= */
