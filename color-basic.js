@@ -1,29 +1,16 @@
 /* ==========================================================
-   🎨 color-basic.js — Basic Color Palette Engine (Stage 2)
+   🎨 color-basic.js — Basic Color Palette Engine (FINAL)
    ----------------------------------------------------------
    역할 (헌법 고정):
-   ✔ 색상 선택 UI만 담당
-   ✔ 상태 저장 ❌
-   ✔ 실행 판단 ❌
-   ✔ EditorCore 직접 호출 ❌
-   ✔ 선택 결과를 "값"으로만 반환
-
-   반환 규칙:
-   - 색상 클릭 → "#RRGGBB"
-   - 색없슴 클릭 → null
-   - 의미 해석 / 기본값 결정은 Toolbar 책임
+   ✔ BASIC 색상 선택 UI 렌더링만 담당
+   ✔ 값 또는 "__ADVANCED__" 신호만 반환
+   ❌ 팝업 열기/닫기 ❌ 상태 저장 ❌ 판단 ❌ 실행
 ========================================================== */
 
 window.ColorBasicEngine = (function () {
 
   /* ======================================================
-     1) 내부 상태 (UI 제어용 최소)
-  ====================================================== */
-  const popup = document.getElementById("hb-popup-color-basic");
-  let isOpen = false;
-
-  /* ======================================================
-     2) 기본 색상 팔레트 (고정 60색)
+     1) 고정 색상 팔레트
   ====================================================== */
   const COLORS = [
     "#000000","#444444","#777777","#BBBBBB","#FFFFFF",
@@ -42,14 +29,14 @@ window.ColorBasicEngine = (function () {
   ];
 
   /* ======================================================
-     3) 팝업 UI 렌더링 (UI ONLY)
-     - onSelect(value) 콜백으로 결과 전달
+     2) BASIC UI 렌더링
+     - popup: 이미 열린 팝업 컨테이너
+     - onSelect(value): 값 또는 "__ADVANCED__"
   ====================================================== */
-  function renderPopup(onSelect) {
+  function render(popup, onSelect) {
     popup.innerHTML = "";
 
-    /* --- 기본 스타일 --- */
-    popup.style.position = "absolute";
+    /* ---------- 팝업 기본 스타일 ---------- */
     popup.style.padding = "10px";
     popup.style.background = "#FFFFFF";
     popup.style.border = "1px solid #D0D0D0";
@@ -58,50 +45,40 @@ window.ColorBasicEngine = (function () {
     popup.style.display = "grid";
     popup.style.gridTemplateColumns = "repeat(10, 18px)";
     popup.style.gap = "4px";
-    popup.style.zIndex = "999999";
     popup.style.pointerEvents = "auto";
 
-    /* ==================================================
-       상단 버튼: 색없슴 / 더보기(UI 자리만)
-    ================================================== */
+    /* ---------- 상단 버튼 영역 ---------- */
     const topBar = document.createElement("div");
     topBar.style.gridColumn = "span 10";
     topBar.style.display = "grid";
     topBar.style.gridTemplateColumns = "1fr 1fr";
     topBar.style.gap = "6px";
 
-    // 색없슴 → null 반환
+    // 색없슴
     const noneBtn = document.createElement("button");
     noneBtn.type = "button";
     noneBtn.className = "hb-btn";
     noneBtn.textContent = "색없슴";
     noneBtn.onclick = () => {
-      onSelect && onSelect(null); // 의미 없음, 값만 반환
-      close();
+      onSelect && onSelect(null);
     };
 
-   // 더보기 → "__ADVANCED__" 신호값 반환
-const moreBtn = document.createElement("button");
-moreBtn.type = "button";
-moreBtn.className = "hb-btn";
-moreBtn.textContent = "더보기…";
-moreBtn.addEventListener("click", e => {
-  e.preventDefault();
-  e.stopPropagation();
- // 1️⃣ 신호만 보냄
-  onSelect && onSelect("__ADVANCED__");
+    // 더보기 → MODE_ADVANCED 신호
+    const moreBtn = document.createElement("button");
+    moreBtn.type = "button";
+    moreBtn.className = "hb-btn";
+    moreBtn.textContent = "더보기…";
+    moreBtn.onclick = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      onSelect && onSelect("__ADVANCED__");
+    };
 
-  // 2️⃣ 닫기는 다음 틱에서
-  setTimeout(close, 0);
-});
+    topBar.appendChild(noneBtn);
+    topBar.appendChild(moreBtn);
+    popup.appendChild(topBar);
 
-topBar.appendChild(noneBtn);
-topBar.appendChild(moreBtn);
-popup.appendChild(topBar);
-
-    /* ==================================================
-       색상 팔레트 버튼
-    ================================================== */
+    /* ---------- 색상 팔레트 ---------- */
     COLORS.forEach(color => {
       const box = document.createElement("button");
       box.type = "button";
@@ -114,8 +91,7 @@ popup.appendChild(topBar);
       box.style.cursor = "pointer";
 
       box.onclick = () => {
-        onSelect && onSelect(color); // 색상 값만 반환
-        close();
+        onSelect && onSelect(color);
       };
 
       popup.appendChild(box);
@@ -123,44 +99,14 @@ popup.appendChild(topBar);
   }
 
   /* ======================================================
-     4) 열기 / 닫기 (UI 제어만)
-  ====================================================== */
-  function openAt(x, y, onSelect) {
-    if (isOpen) close();
-
-    renderPopup(onSelect);
-    document.body.appendChild(popup);
-
-    popup.style.left = x + "px";
-    popup.style.top  = y + "px";
-    popup.style.display = "grid";
-
-    isOpen = true;
-
-    setTimeout(() => {
-      document.addEventListener("click", handleOutside);
-    }, 0);
-  }
-
-  function close() {
-    popup.style.display = "none";
-    isOpen = false;
-    document.removeEventListener("click", handleOutside);
-  }
-
-  function handleOutside(e) {
-    if (!popup.contains(e.target)) close();
-  }
-
-  /* ======================================================
-     5) 외부 공개 API (UI ONLY)
+     외부 공개 API
   ====================================================== */
   return {
-    openAt,
-    close
+    render
   };
 
 })();
+
 
 
 
