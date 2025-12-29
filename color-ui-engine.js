@@ -52,9 +52,12 @@
       }
 
       // 2) 색상 값 → 실행 엔진
-      applyColor(type, value === null
+     const finalValue =
+  value == null || value === "null"
     ? (type === "text" ? "#000000" : "#FFFFFF")
-    : value);
+    : value;
+
+applyColor(type, finalValue);
     });
   }
 
