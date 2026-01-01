@@ -37,9 +37,9 @@ if (isCollapsed) {
   let current = node.closest("p, li, div[data-hb-block]");
 
   // 커서가 editor 레벨에 걸린 경우 → 첫 문단 사용
-  if (!current && editor.firstElementChild) {
-    current = editor.firstElementChild;
-  }
+  if (!current) {
+  current = editor.querySelector("p, li, div[data-hb-block]");
+}
 
   if (current) {
     normalizeBlock(current);
