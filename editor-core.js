@@ -320,7 +320,14 @@ function insertAtCursor(editor, frag) {
         11) 공개 API (기존 toolbar.js 호출 호환)
   ================================================= */
   Core.execute = execute;
-
+  // 🔒 selection 복원 (줄간격 / 팝업 전용)
+  Core.restoreSelection = () => {
+    if (!lastSelectionRange) return;
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(lastSelectionRange.cloneRange());
+  };
+ 
   // 텍스트 스타일
   Core.bold      = () => execute(TextEngine.bold());
   Core.italic    = () => execute(TextEngine.italic());
@@ -367,4 +374,3 @@ Core.removeImage = () => {
 
 })();
 
-globalThis.EditorCore = window.EditorCore;
