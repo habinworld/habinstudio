@@ -161,66 +161,7 @@ window.EditorCore = (function () {
 
     applyTypingFontSize(px);
   }
-
-  /* =================================================
-        7) 줄간격 (존재/비존재)
-  ================================================= */
-  function applyLineHeight(h) {
-    const sel = window.getSelection();
-    if (!sel || !sel.rangeCount) return;
-
-    const range = sel.getRangeAt(0);
-
-    const ACTIONS = {
-      true:  el => el.style.removeProperty("line-height"),
-      false: el => el.style.setProperty("line-height", h)
-    };
-    const act = ACTIONS[h === null];
-
-    // 드래그 선택 영역 → 여러 블록
-    if (!range.collapsed) {
-      const blocks = new Set();
-
-      const walker = document.createTreeWalker(
-        editor,
-        NodeFilter.SHOW_ELEMENT,
-        {
-          acceptNode(node) {
-            if (
-              (node.tagName === "P" ||
-               node.tagName === "DIV" ||
-               node.tagName === "LI") &&
-              range.intersectsNode(node)
-            ) return NodeFilter.FILTER_ACCEPT;
-
-            return NodeFilter.FILTER_SKIP;
-          }
-        }
-      );
-
-      let node;
-      while ((node = walker.nextNode())) blocks.add(node);
-
-      blocks.forEach(act);
-      return;
-    }
-
-    // 커서만 있는 경우 → 단일 블록
-    let node = sel.anchorNode;
-    while (node && node !== editor) {
-      if (
-        node.nodeType === 1 &&
-        (node.tagName === "P" ||
-         node.tagName === "DIV" ||
-         node.tagName === "LI")
-      ) {
-        act(node);
-        return;
-      }
-      node = node.parentNode;
-    }
-  }
-
+  
   /* =================================================
         8) 공용 실행 엔진 (Excel-Style)
         - EditorCore는 판단하지 않고 "execute"로만 전달
@@ -247,9 +188,10 @@ window.EditorCore = (function () {
 
     // --- Line Height ---
     if (cmd === "lineHeight") {
-      applyLineHeight(value);
-      isLocked = false;
-      return;
+  window.LineHeightEngine &&
+    window.LineHeightEngine.apply(editor, window.getSelection(), value);
+  isLocked = false;
+  return;
     }
 
     // --- Color (실행 전용 엔진 호출) ---
