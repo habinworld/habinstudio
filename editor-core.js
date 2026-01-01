@@ -189,7 +189,7 @@ window.EditorCore = (function () {
     // --- Line Height ---
     if (cmd === "lineHeight") {
   window.LineHeightEngine &&
-    window.LineHeightEngine.apply(editor, value);
+    window.LineHeightEngine.apply(editor, window.getSelection(), value);
   isLocked = false;
   return;
     }
