@@ -66,7 +66,7 @@ function saveSelection() {
   // 반드시 clone
   lastSelectionRange = range.cloneRange();
 }
-EditorCore.getLastSelection = () => lastSelectionRange;
+Core.getLastSelection = () => lastSelectionRange;
   /* =================================================
         3) id 기반 초기 로딩 (존재 / 비존재)
         - 페이지 로드 시 1회
