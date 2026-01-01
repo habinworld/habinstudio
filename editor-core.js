@@ -87,6 +87,10 @@ Core.getLastSelection = () => lastSelectionRange;
     if (editor.innerHTML.trim() === "" || editor.innerHTML === "<br>") {
       editor.innerHTML = "<p><br></p>";
     }
+     // 🚨 깨진 p 구조 강제 정리 (중첩 p 제거)
+editor.innerHTML = editor.innerHTML
+  .replace(/<p>\s*<p>/g, "<p>")
+  .replace(/<\/p>\s*<\/p>/g, "</p>");
   })();
 
   /* =================================================
