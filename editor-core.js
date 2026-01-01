@@ -247,31 +247,21 @@ function insertAtCursor(editor, frag) {
     }
 
     // --- Line Height ---
-   if (cmd === "lineHeight") {
-  let sel = window.getSelection();
+  if (cmd === "lineHeight") {
 
-  // 1) 현재 selection이 editor 내부면 그대로 사용
-  if (sel && sel.rangeCount) {
-    const r = sel.getRangeAt(0);
-    const node = r.commonAncestorContainer.nodeType === 3
-      ? r.commonAncestorContainer.parentNode
-      : r.commonAncestorContainer;
-
-    if (editor.contains(node)) {
-      window.LineHeightEngine.apply(editor, sel, value);
-      isLocked = false;
-      return;
+  // 1️⃣ 무조건 마지막 selection 복원
+  const last = Core.getLastSelection && Core.getLastSelection();
+  if (last) {
+    const sel = window.getSelection();
+    if (sel) {
+      sel.removeAllRanges();
+      sel.addRange(last.cloneRange());
     }
   }
 
-  // 2) selection이 editor 밖으로 튀었으면 마지막 selection으로 복원
-  const last = Core.getLastSelection && Core.getLastSelection();
-  if (last) {
-    const sel2 = window.getSelection();
-    if (sel2) {
-      sel2.removeAllRanges();
-      sel2.addRange(last.cloneRange());
-    }
+  // 2️⃣ 복원된 selection으로 다시 얻기
+  const sel2 = window.getSelection();
+  if (sel2 && sel2.rangeCount) {
     window.LineHeightEngine.apply(editor, sel2, value);
     saveSelection();
   }
