@@ -101,4 +101,4 @@ if (isCollapsed) {
   return { apply };
 
 })();
-
+globalThis.LineHeightEngine = window.LineHeightEngine;
