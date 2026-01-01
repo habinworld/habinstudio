@@ -87,11 +87,24 @@ Core.getLastSelection = () => lastSelectionRange;
     if (editor.innerHTML.trim() === "" || editor.innerHTML === "<br>") {
       editor.innerHTML = "<p><br></p>";
     }
-     // 🚨 깨진 p 구조 강제 정리 (중첩 p 제거)
-editor.innerHTML = editor.innerHTML
-  .replace(/<p>\s*<p>/g, "<p>")
-  .replace(/<\/p>\s*<\/p>/g, "</p>");
+    // ✅ 이것만 유지
+  (function normalizeParagraphs() {
+    const blocks = Array.from(editor.children);
+
+    blocks.forEach(block => {
+      if (block.tagName !== "P") return;
+
+      const innerPs = Array.from(block.children).filter(el => el.tagName === "P");
+      if (!innerPs.length) return;
+
+      innerPs.forEach(p => {
+        editor.insertBefore(p, block);
+      });
+
+      block.remove();
+    });
   })();
+})();
 
   /* =================================================
         4) 실행 잠금 (중복 명령 방지)
