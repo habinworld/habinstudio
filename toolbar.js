@@ -258,6 +258,7 @@ lineBtn && lineSel && lineBtn.addEventListener("mousedown", e => {
       label: o.textContent
     })),
     value => {
+      EditorCore.restoreSelection && EditorCore.restoreSelection();  
       lineSel.value = value;
 
       // ✅ 속도 안정화(타이머 유지)
