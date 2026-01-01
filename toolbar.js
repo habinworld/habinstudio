@@ -240,19 +240,14 @@ sizeBtn && sizeSel && sizeBtn.addEventListener("click", e => {
 -------------------------------- */
 let lhTimer = null;
 
-line && line.addEventListener("change", e => {
-  const v = e.target.value;
-  if (lhTimer) cancelAnimationFrame(lhTimer);
-
-  lhTimer = requestAnimationFrame(() => {
-    EditorCore.setLineHeight(v);
-  });
-});
 const lineBtn = document.getElementById("hb-line-height-btn");
 const lineSel = document.getElementById("hb-line-height");
 
-lineBtn && lineSel && lineBtn.addEventListener("click", e => {
+// ✅ 버튼은 mousedown + preventDefault (selection 유지)
+lineBtn && lineSel && lineBtn.addEventListener("mousedown", e => {
+  e.preventDefault();   // 🔒 selection/body 튐 차단 (핵심)
   e.stopPropagation();
+
   const r = lineBtn.getBoundingClientRect();
 
   Popup.openAt(
@@ -264,7 +259,12 @@ lineBtn && lineSel && lineBtn.addEventListener("click", e => {
     })),
     value => {
       lineSel.value = value;
-      EditorCore.setLineHeight(value === "null" ? null : value);
+
+      // ✅ 속도 안정화(타이머 유지)
+      lhTimer && cancelAnimationFrame(lhTimer);
+      lhTimer = requestAnimationFrame(() => {
+        EditorCore.setLineHeight(value === "null" ? null : value);
+      });
     }
   );
 });
