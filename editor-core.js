@@ -30,7 +30,10 @@ window.EditorCore = (function () {
   ================================================= */
   const editor = document.getElementById("hb-editor");
   const title  = document.getElementById("hb-title");
-
+  // ★ 블록 최소 1개 보장 (1번 핵심)
+if (editor && !editor.querySelector("[data-hb-block]")) {
+  editor.innerHTML = '<div data-hb-block><br></div>';
+} 
   // DOM이 없으면 조용히 종료 (헌법 예외: DOM 안전장치)
   if (!editor || !title) {
     Core.execute = () => {};
