@@ -34,7 +34,7 @@ if (isCollapsed) {
     ? range.startContainer.parentNode
     : range.startContainer;
 
-  let current = node.closest("p, li, div[data-hb-block]");
+  let current = node.closest("p") || editor.querySelector("p");
 
   // 커서가 editor 레벨에 걸린 경우 → 첫 문단 사용
   if (!current) {
