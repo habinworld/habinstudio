@@ -29,19 +29,25 @@ window.LineHeightEngine = (function () {
     if (!blocks.size) return;
 
     // 🔒 커서만 있는 경우: 현재 문단 1개만 적용
-    if (isCollapsed && blocks.size > 1) {
-      const node = range.startContainer.nodeType === 3
-        ? range.startContainer.parentNode
-        : range.startContainer;
+if (isCollapsed) {
+  const node = range.startContainer.nodeType === 3
+    ? range.startContainer.parentNode
+    : range.startContainer;
 
-      const current = node.closest("p, li, div[data-hb-block]");
-      if (current) {
-        normalizeBlock(current);
-        current.style.lineHeight = String(value);
-        return;
-      }
-    }
+  let current = node.closest("p, li, div[data-hb-block]");
 
+  // 커서가 editor 레벨에 걸린 경우 → 첫 문단 사용
+  if (!current && editor.firstElementChild) {
+    current = editor.firstElementChild;
+  }
+
+  if (current) {
+    normalizeBlock(current);
+    current.style.lineHeight = String(value);
+    return;
+  }
+}
+    
     // 🔒 일반 선택 범위: 겹치는 문단만 적용
     blocks.forEach(block => {
       normalizeBlock(block);
