@@ -202,7 +202,6 @@ editor.addEventListener("paste", function (e) {
   lines.forEach(line => {
     const p = document.createElement("p");
     p.textContent = line.trim() === "" ? "\u00A0" : line;
-    p.style.lineHeight = "1.2"; // 🔒 출발선 통일 (계산 ❌, 선언 ⭕) 
     frag.appendChild(p);
   });
 
