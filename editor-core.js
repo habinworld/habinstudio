@@ -247,8 +247,23 @@ function insertAtCursor(editor, frag) {
 
     // --- Line Height ---
     if (cmd === "lineHeight") {
-  window.LineHeightEngine &&
-    window.LineHeightEngine.apply(editor, window.getSelection(), value);
+  const sel = window.getSelection();
+
+  // 1) 현재 selection이 유효하면 그대로 사용
+  if (sel && sel.rangeCount && !sel.getRangeAt(0).collapsed) {
+    window.LineHeightEngine &&
+      window.LineHeightEngine.apply(editor, sel, value);
+
+  // 2) selection이 깨졌으면 마지막 저장된 selection 사용
+  } else if (Core.getLastSelection()) {
+    const fakeSel = {
+      rangeCount: 1,
+      getRangeAt: () => Core.getLastSelection()
+    };
+    window.LineHeightEngine &&
+      window.LineHeightEngine.apply(editor, fakeSel, value);
+  }
+
   isLocked = false;
   return;
     }
