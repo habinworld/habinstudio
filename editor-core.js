@@ -45,20 +45,27 @@ let lastSelectionRange = null;
 
 editor.addEventListener("mouseup", saveSelection);
 editor.addEventListener("keyup", saveSelection);
-document.addEventListener("selectionchange", saveSelection);
+
 function saveSelection() {
+   // editor가 포커스가 아닐 땐 저장하지 않는다
+  if (document.activeElement !== editor) return;
+
   const sel = window.getSelection();
-  if (!sel || !sel.rangeCount) return;
+  if (!sel || sel.rangeCount === 0) return;
 
   const range = sel.getRangeAt(0);
-  if (!editor.contains(range.commonAncestorContainer)) return;
 
-  // 반드시 clone (원본 range는 브라우저가 바꾼다)
+  // editor 내부 selection만 허용
+  const node =
+    range.commonAncestorContainer.nodeType === 3
+      ? range.commonAncestorContainer.parentNode
+      : range.commonAncestorContainer;
+
+  if (!editor.contains(node)) return;
+
+  // 반드시 clone
   lastSelectionRange = range.cloneRange();
 }
-
-// 엔진에서 쓰도록 공개 (배선만)
-Core.getLastSelection = () => lastSelectionRange;
 
   /* =================================================
         3) id 기반 초기 로딩 (존재 / 비존재)
