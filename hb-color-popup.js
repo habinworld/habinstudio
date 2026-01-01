@@ -50,6 +50,20 @@ window.HB_COLOR_POPUP = (function () {
     if (popup) popup.style.display = "none";
     active = false; 
   }
+    /* --------------------------------------------------
+     ESC 키 — 팝업 닫기 (UI 전역 제스처)
+  -------------------------------------------------- */
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    if (!active) return;
+
+    close();
+
+    // MODE 초기화 (존재할 때만)
+    if (typeof window.MODE !== "undefined") {
+      window.MODE = "BASIC";
+    }
+  });
 
   return {
     openAt,
