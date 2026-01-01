@@ -247,16 +247,18 @@ function insertAtCursor(editor, frag) {
     }
 
     // --- Line Height ---
-    if (cmd === "lineHeight") {
+   if (cmd === "lineHeight") {
   let sel = window.getSelection();
 
-  // 1) 현재 selection이 "editor 내부"면 (collapsed여도) 그대로 사용
+  // 1) 현재 selection이 editor 내부면 그대로 사용
   if (sel && sel.rangeCount) {
     const r = sel.getRangeAt(0);
-    const node = r.commonAncestorContainer.nodeType === 3 ? r.commonAncestorContainer.parentNode : r.commonAncestorContainer;
+    const node = r.commonAncestorContainer.nodeType === 3
+      ? r.commonAncestorContainer.parentNode
+      : r.commonAncestorContainer;
 
     if (editor.contains(node)) {
-      window.LineHeightEngine && window.LineHeightEngine.apply(editor, sel, value);
+      window.LineHeightEngine.apply(editor, sel, value);
       isLocked = false;
       return;
     }
@@ -265,14 +267,18 @@ function insertAtCursor(editor, frag) {
   // 2) selection이 editor 밖으로 튀었으면 마지막 selection으로 복원
   const last = Core.getLastSelection && Core.getLastSelection();
   if (last) {
-    const fakeSel = { rangeCount: 1, getRangeAt: () => last };
-    window.LineHeightEngine && window.LineHeightEngine.apply(editor, fakeSel, value);
+    const sel2 = window.getSelection();
+    if (sel2) {
+      sel2.removeAllRanges();
+      sel2.addRange(last.cloneRange());
+    }
+    window.LineHeightEngine.apply(editor, sel2, value);
+    saveSelection();
   }
 
   isLocked = false;
   return;
-    }
-
+}
     // --- Color (실행 전용 엔진 호출) ---
     if (cmd === "color-text") {
       window.ColorTextEngine && window.ColorTextEngine.apply(value);
