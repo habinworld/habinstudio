@@ -284,21 +284,6 @@ btnBgColor && btnBgColor.addEventListener("click", e => {
   e.stopPropagation();
   openBgColorUI(btnBgColor, HB_COLOR_POPUP);
 });
-/* =========================
-   글자색 버튼
-========================= */
-btnColor && btnColor.addEventListener("click", e => {
-  e.stopPropagation();
-  openBasicColor("text", btnColor);
-});
-
-/* =========================
-   배경색 버튼
-========================= */
-btnBgColor && btnBgColor.addEventListener("click", e => {
-  e.stopPropagation();
-  openBasicColor("bg", btnBgColor);
-});
 } 
    
   /* =====================================================
