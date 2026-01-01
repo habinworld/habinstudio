@@ -227,7 +227,8 @@ editor.addEventListener("paste", function (e) {
   const frag = document.createDocumentFragment();
 
   lines.forEach(line => {
-    const p = document.createElement("p");
+    const block = document.createElement("div"); 
+    block.setAttribute("data-hb-block", ""); 
     p.textContent = line.trim() === "" ? "\u00A0" : line;
     frag.appendChild(p);
   });
