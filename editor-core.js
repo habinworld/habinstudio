@@ -298,6 +298,8 @@ if (sel2 && sel2.rangeCount) {
 
 isLocked = false;
 return;
+}
+     
     // --- Color (실행 전용 엔진 호출) ---
     if (cmd === "color-text") {
       window.ColorTextEngine && window.ColorTextEngine.apply(value);
