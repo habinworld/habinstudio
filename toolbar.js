@@ -265,7 +265,7 @@ lineBtn && lineSel && lineBtn.addEventListener("mousedown", e => {
       // ✅ 속도 안정화(타이머 유지)
       lhTimer && cancelAnimationFrame(lhTimer);
       lhTimer = requestAnimationFrame(() => {
-        EditorCore.setLineHeight(value === "null" ? null : value);
+        window.EditorCore?.setLineHeight(value === "null" ? null : Number(value));
       });
     }
   );
