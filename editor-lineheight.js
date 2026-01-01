@@ -14,8 +14,7 @@ window.LineHeightEngine = (function () {
      Public API
   ================================================== */
   function apply(editor, selection, value) {
-     document.body.style.outline = "5px solid red";
-    if (!editor || !selection || !selection.rangeCount || value == null) return;
+ if (!editor || !selection || !selection.rangeCount || value == null) return;
 
     let range = selection.getRangeAt(0);
 
