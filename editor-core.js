@@ -206,6 +206,7 @@ editor.addEventListener("paste", function (e) {
   });
 
   insertAtCursor(editor, frag);
+  saveSelection(); 
 });
 
 function insertAtCursor(editor, frag) {
