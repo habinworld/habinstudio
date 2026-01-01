@@ -1,58 +1,76 @@
 /* ======================================================
-   📏 editor-lineheight.js — LineHeightEngine (FINAL v3.1)
+   📏 editor-lineheight.js — LineHeightEngine (FINAL v4)
    ------------------------------------------------------
    Ha-Bin Studio 헌법 적용
 
-   ✔ 외부 규칙 전부 무시
-   ✔ 줄간격 = 문서 전체 규칙
-   ✔ 외부 복사 잔재(line-height/margin/padding) 제거(옵션)
-   ✔ <p> 없는 텍스트도 문단으로 정규화(최소 안전장치)
+   ✔ 외부 규칙 무시
+   ✔ 선택한 "문단 단위"에만 적용
+   ✔ 문단 내부 inline line-height 전부 제거
+   ✔ editor-core는 배선판 유지
 ====================================================== */
 
 window.LineHeightEngine = (function () {
 
-  function apply(editor, value, options) {
-    if (!editor || value == null) return;
+  function apply(editor, selection, value) {
+    if (!editor || !selection || value == null) return;
 
-    // 옵션 (기본: 하빈식 "완전 통일")
-    const opt = {
-      resetParagraphSpace: true,   // ✅ 문단 간격까지 정화
-      resetFontSize: false,        // 필요하면 true (줄간격 체감 통일)
-      ...options
-    };
+    const range = selection.rangeCount
+      ? selection.getRangeAt(0)
+      : null;
 
-    normalizeLooseText(editor);
+    if (!range) return;
 
+    // 1️⃣ 선택 범위 안의 문단 수집
+    const blocks = collectSelectedBlocks(editor, range);
+
+    // 안전장치: 블록이 하나도 안 잡히면 현재 문단
+    if (!blocks.length) {
+      const b = getCurrentBlock(editor, range);
+      b && blocks.push(b);
+    }
+
+    // 2️⃣ 선택 문단들에만 동일 적용
+    blocks.forEach(block => {
+      clearInlineLineHeight(block);
+      block.style.lineHeight = String(value);
+    });
+  }
+
+  /* --------------------------------------------------
+     선택 범위와 겹치는 문단 수집
+  -------------------------------------------------- */
+  function collectSelectedBlocks(editor, range) {
+    const result = [];
     const blocks = editor.querySelectorAll("p,div,li");
-    blocks.forEach(block => applyToBlock(block, String(value), opt));
+
+    blocks.forEach(block => {
+      try {
+        if (range.intersectsNode(block)) {
+          result.push(block);
+        }
+      } catch (_) {}
+    });
+
+    return result;
   }
 
-  function applyToBlock(blockEl, value, opt) {
-    if (!blockEl) return;
+  /* --------------------------------------------------
+     커서만 있을 때 현재 문단
+  -------------------------------------------------- */
+  function getCurrentBlock(editor, range) {
+    let node = range.startContainer;
+    if (node.nodeType !== 1) node = node.parentNode;
 
-    // 1) 외부 line-height 잔재 제거
-    clearInlineLineHeight(blockEl);
-
-    // 2) (옵션) 문단 간격 잔재 제거 — 한글/웹에서 가장 흔한 교란
-    if (opt.resetParagraphSpace) {
-      blockEl.style.removeProperty("margin");
-      blockEl.style.removeProperty("margin-top");
-      blockEl.style.removeProperty("margin-bottom");
-      blockEl.style.removeProperty("padding");
+    while (node && node !== editor) {
+      if (isBlock(node)) return node;
+      node = node.parentNode;
     }
-
-    // 3) (옵션) 글자크기 잔재 제거 — 줄간격 체감 통일용
-    if (opt.resetFontSize) {
-      blockEl.style.removeProperty("font-size");
-      blockEl.querySelectorAll("*").forEach(el => {
-        el.style.removeProperty("font-size");
-      });
-    }
-
-    // 4) 에디터 규칙 강제
-    blockEl.style.lineHeight = value;
+    return null;
   }
 
+  /* --------------------------------------------------
+     외부 복사 잔재 제거
+  -------------------------------------------------- */
   function clearInlineLineHeight(root) {
     if (root.style && root.style.lineHeight) {
       root.style.removeProperty("line-height");
@@ -64,31 +82,14 @@ window.LineHeightEngine = (function () {
     });
   }
 
-  // editor 바로 아래에 텍스트가 떠돌면 <p>로 감싸 문단화
-  function normalizeLooseText(editor) {
-    const nodes = Array.from(editor.childNodes);
-    const hasLooseText = nodes.some(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim() !== "");
-
-    if (!hasLooseText) return;
-
-    const frag = document.createDocumentFragment();
-    nodes.forEach(n => {
-      if (n.nodeType === Node.TEXT_NODE) {
-        const t = n.textContent.replace(/\s+/g, " ").trim();
-        if (!t) return;
-        const p = document.createElement("p");
-        p.textContent = t;
-        frag.appendChild(p);
-      } else {
-        frag.appendChild(n);
-      }
-    });
-
-    editor.innerHTML = "";
-    editor.appendChild(frag);
+  function isBlock(node) {
+    return (
+      node &&
+      node.nodeType === 1 &&
+      (node.tagName === "P" || node.tagName === "DIV" || node.tagName === "LI")
+    );
   }
 
   return { apply };
 
 })();
-
