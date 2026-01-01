@@ -34,12 +34,12 @@ if (isCollapsed) {
     ? range.startContainer.parentNode
     : range.startContainer;
 
-  let current = node.closest("p") || editor.querySelector("p");
+  let current = node.closest("[data-hb-block]");
 
-  // 커서가 editor 레벨에 걸린 경우 → 첫 문단 사용
+  // fallback: 항상 최소 1블록 보장
   if (!current) {
-  current = editor.querySelector("p, li, div[data-hb-block]");
-}
+    current = editor.querySelector("[data-hb-block]");
+  }
 
   if (current) {
     normalizeBlock(current);
