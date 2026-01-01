@@ -367,4 +367,4 @@ Core.removeImage = () => {
 
 })();
 
-
+globalThis.EditorCore = window.EditorCore;
