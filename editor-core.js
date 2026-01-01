@@ -36,6 +36,29 @@ window.EditorCore = (function () {
     Core.execute = () => {};
     return Core;
   }
+  /* =================================================
+   🔒 Last Selection Snapshot (Core Infrastructure)
+   - 툴바 클릭으로 selection 소실 방지
+   - 판단 ❌ / 계산 ❌ / 저장만
+================================================= */
+let lastSelectionRange = null;
+
+editor.addEventListener("mouseup", saveSelection);
+editor.addEventListener("keyup", saveSelection);
+
+function saveSelection() {
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
+
+  const range = sel.getRangeAt(0);
+  if (!editor.contains(range.commonAncestorContainer)) return;
+
+  // 반드시 clone (원본 range는 브라우저가 바꾼다)
+  lastSelectionRange = range.cloneRange();
+}
+
+// 엔진에서 쓰도록 공개 (배선만)
+Core.getLastSelection = () => lastSelectionRange;
 
   /* =================================================
         3) id 기반 초기 로딩 (존재 / 비존재)
