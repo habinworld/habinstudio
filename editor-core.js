@@ -161,7 +161,43 @@ window.EditorCore = (function () {
 
     applyTypingFontSize(px);
   }
-  
+  /* =================================================
+   🔒 TEXT ONLY PASTE — Core IO Gate
+   외부 규칙 완전 차단
+================================================= */
+editor.addEventListener("paste", function (e) {
+  e.preventDefault();
+
+  // 무조건 text/plain만 수용
+  const text = (e.clipboardData || window.clipboardData)
+    .getData("text/plain")
+    .replace(/\r/g, "");
+
+  const lines = text.split(/\n+/);
+  const frag = document.createDocumentFragment();
+
+  lines.forEach(line => {
+    const p = document.createElement("p");
+    p.textContent = line.trim() === "" ? "\u00A0" : line;
+    frag.appendChild(p);
+  });
+
+  insertAtCursor(editor, frag);
+});
+
+function insertAtCursor(editor, frag) {
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) {
+    editor.appendChild(frag);
+    return;
+  }
+
+  const range = sel.getRangeAt(0);
+  range.deleteContents();
+  range.insertNode(frag);
+  range.collapse(false);
+}
+
   /* =================================================
         8) 공용 실행 엔진 (Excel-Style)
         - EditorCore는 판단하지 않고 "execute"로만 전달
