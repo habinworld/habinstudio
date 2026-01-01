@@ -286,15 +286,18 @@ function insertAtCursor(editor, frag) {
   }
 
   // 2️⃣ 복원된 selection으로 적용
-  const sel2 = window.getSelection();
-  if (sel2 && sel2.rangeCount) {
-    window.LineHeightEngine.apply(editor, sel2, value);
-    saveSelection();
-  }
-
-  isLocked = false;
-  return;
+const sel2 = window.getSelection();
+if (sel2 && sel2.rangeCount) {
+  window.LineHeightEngine.apply(
+    editor,
+    sel2,
+    value === null ? null : Number(value)
+  );
+  saveSelection();
 }
+
+isLocked = false;
+return;
     // --- Color (실행 전용 엔진 호출) ---
     if (cmd === "color-text") {
       window.ColorTextEngine && window.ColorTextEngine.apply(value);
