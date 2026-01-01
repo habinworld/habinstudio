@@ -14,7 +14,7 @@ window.LineHeightEngine = (function () {
      Public API
   ================================================== */
   function apply(editor, selection, value) {
- if (!editor || !selection || !selection.rangeCount || value == null) return;
+ if (!editor || !selection || !selection.rangeCount) return;
 
     let range = selection.getRangeAt(0);
 
