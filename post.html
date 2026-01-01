@@ -83,34 +83,40 @@
 <!-- =============================
      7) JS 로딩 순서 (고정)
 ============================== -->
-<!-- 텍스트 엔진 -->
+
+<!-- 1️⃣ 공용 UI -->
+<script src="popup.js"></script>
+
+<!-- 2️⃣ 텍스트 / 줄간격 -->
 <script src="text-engine.js"></script>
-<!-- 저장소 엔진 -->
-<script src="storage-engine.js"></script>
-<!-- 에디터 핵심 엔진 -->
-<script src="editor-lineheight.js"></script>  
-<script src="editor-core.js"></script>
-<!-- 색상 엔진 -->
-<script src="popup.js"></script>   
+<script src="editor-lineheight.js"></script>
+
+<!-- 3️⃣ 색상 엔진 -->
 <script src="color-text.js"></script>
 <script src="color-bg.js"></script>
 <script src="color-basic.js"></script>
 <script src="color-advanced.js"></script>
 <script src="hb-color-popup.js"></script>
-<script src="color-ui-engine.js"></script>  
-   <!-- 이미지 엔진 -->
+<script src="color-ui-engine.js"></script>
+
+<!-- 4️⃣ 이미지 엔진 -->
 <script src="image-engine.js"></script>
 <script src="image-input.js"></script>
-<script src="image-paste.js"></script> <!-- Ctrl+V -->
-<script src="image-drop.js"></script>  <!-- Drag & Drop -->  
-  <!-- 툴바 엔진 -->
+<script src="image-paste.js"></script>
+<script src="image-drop.js"></script>
+
+<!-- 5️⃣ 에디터 CORE (⚠️ 반드시 엔진들 뒤) -->
+<script src="editor-core.js"></script>
+
+<!-- 6️⃣ 툴바 -->
 <script src="toolbar.js"></script>
- <script>
+<script>
   Toolbar.init();
-</script> 
-<!-- 🔥 모드 스위치 (view / edit / new) -->
-<script src="post-mode.js"></script>  
-<!-- 저장 시스템 -->
+</script>
+
+<!-- 7️⃣ 모드 / 저장 -->
+<script src="post-mode.js"></script>
+<script src="storage-engine.js"></script>
 <script src="editor-save.js"></script>
 
 </body>
