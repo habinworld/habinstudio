@@ -1,9 +1,9 @@
 /* ======================================================
-   📏 editor-lineheight.js — LineHeightEngine (FINAL)
+   📏 editor-lineheight.js — LineHeightEngine (FINAL v2)
    ------------------------------------------------------
    원칙:
    - 적용 대상은 P / DIV / LI 문단만
-   - selection은 믿지 않고 "문단 경계"만 신뢰
+   - selection 불신, 문단 경계만 신뢰
    - 계산 ❌ / 선언 ⭕
 ====================================================== */
 
@@ -12,9 +12,15 @@ window.LineHeightEngine = (function () {
   function apply(editor, selection, value) {
     if (!editor || !selection || !selection.rangeCount || value == null) return;
 
-    const range = selection.getRangeAt(0);
-    const blocks = collectBlocks(editor, range);
+    let range = selection.getRangeAt(0);
 
+    // 🔒 selection이 <body> 등 editor 밖이면 editor 기준으로 보정
+    if (!editor.contains(range.commonAncestorContainer)) {
+      range = document.createRange();
+      range.selectNodeContents(editor);
+    }
+
+    const blocks = collectBlocks(editor, range);
     if (!blocks.size) return;
 
     blocks.forEach(block => {
@@ -23,10 +29,6 @@ window.LineHeightEngine = (function () {
     });
   }
 
-  /* --------------------------------------------------
-     선택 range와 "실제로 겹치는" 문단만 수집
-     (intersectsNode ❌ / boundary 비교 ⭕)
-  -------------------------------------------------- */
   function collectBlocks(editor, range) {
     const set = new Set();
     const blocks = editor.querySelectorAll("p,div,li");
@@ -48,9 +50,6 @@ window.LineHeightEngine = (function () {
     return set;
   }
 
-  /* --------------------------------------------------
-     외부 복사 규칙 완전 제거 (출발선 통일)
-  -------------------------------------------------- */
   function normalizeBlock(block) {
     block.style.lineHeight = "";
     block.style.margin = "";
@@ -67,4 +66,3 @@ window.LineHeightEngine = (function () {
   return { apply };
 
 })();
-
