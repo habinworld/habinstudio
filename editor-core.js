@@ -248,18 +248,20 @@ function insertAtCursor(editor, frag) {
 
     // --- Line Height ---
   if (cmd === "lineHeight") {
-
-  // 1️⃣ 무조건 마지막 selection 복원
+ // 1️⃣ 마지막 selection 무조건 복원
   const last = Core.getLastSelection && Core.getLastSelection();
-  if (last) {
-    const sel = window.getSelection();
-    if (sel) {
-      sel.removeAllRanges();
-      sel.addRange(last.cloneRange());
-    }
+  if (!last) {
+    isLocked = false;
+    return;
   }
 
-  // 2️⃣ 복원된 selection으로 다시 얻기
+  const sel = window.getSelection();
+  if (sel) {
+    sel.removeAllRanges();
+    sel.addRange(last.cloneRange());
+  }
+
+  // 2️⃣ 복원된 selection으로 적용
   const sel2 = window.getSelection();
   if (sel2 && sel2.rangeCount) {
     window.LineHeightEngine.apply(editor, sel2, value);
