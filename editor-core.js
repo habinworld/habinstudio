@@ -45,7 +45,7 @@ let lastSelectionRange = null;
 
 editor.addEventListener("mouseup", saveSelection);
 editor.addEventListener("keyup", saveSelection);
-
+document.addEventListener("selectionchange", saveSelection);
 function saveSelection() {
   const sel = window.getSelection();
   if (!sel || !sel.rangeCount) return;
@@ -249,21 +249,25 @@ function insertAtCursor(editor, frag) {
 
     // --- Line Height ---
     if (cmd === "lineHeight") {
-  const sel = window.getSelection();
+  let sel = window.getSelection();
 
-  // 1) 현재 selection이 유효하면 그대로 사용
-  if (sel && sel.rangeCount && !sel.getRangeAt(0).collapsed) {
-    window.LineHeightEngine &&
-      window.LineHeightEngine.apply(editor, sel, value);
+  // 1) 현재 selection이 "editor 내부"면 (collapsed여도) 그대로 사용
+  if (sel && sel.rangeCount) {
+    const r = sel.getRangeAt(0);
+    const node = r.commonAncestorContainer.nodeType === 3 ? r.commonAncestorContainer.parentNode : r.commonAncestorContainer;
 
-  // 2) selection이 깨졌으면 마지막 저장된 selection 사용
-  } else if (Core.getLastSelection()) {
-    const fakeSel = {
-      rangeCount: 1,
-      getRangeAt: () => Core.getLastSelection()
-    };
-    window.LineHeightEngine &&
-      window.LineHeightEngine.apply(editor, fakeSel, value);
+    if (editor.contains(node)) {
+      window.LineHeightEngine && window.LineHeightEngine.apply(editor, sel, value);
+      isLocked = false;
+      return;
+    }
+  }
+
+  // 2) selection이 editor 밖으로 튀었으면 마지막 selection으로 복원
+  const last = Core.getLastSelection && Core.getLastSelection();
+  if (last) {
+    const fakeSel = { rangeCount: 1, getRangeAt: () => last };
+    window.LineHeightEngine && window.LineHeightEngine.apply(editor, fakeSel, value);
   }
 
   isLocked = false;
