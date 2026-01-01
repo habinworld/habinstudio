@@ -8,7 +8,7 @@
    - editor / body 전염 절대 금지
    - 단독 사용 가능 (EditorCore 수정 불필요)
 ====================================================== */
-
+console.log("LH apply", selection && selection.rangeCount);
 window.LineHeightEngine = (function () {
 
   /* ==================================================
