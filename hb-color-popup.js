@@ -11,7 +11,7 @@
 window.HB_COLOR_POPUP = (function () {
 
   let popup = null;
-
+  let active = false;
   /* --------------------------------------------------
      팝업 DOM 보장
   -------------------------------------------------- */
@@ -39,7 +39,7 @@ window.HB_COLOR_POPUP = (function () {
     el.style.left = r.left + "px";
     el.style.top  = r.bottom + "px";
     el.style.display = "block";
-
+    active = true; 
     return el;
   }
 
@@ -48,6 +48,7 @@ window.HB_COLOR_POPUP = (function () {
   -------------------------------------------------- */
   function close() {
     if (popup) popup.style.display = "none";
+    active = false; 
   }
 
   return {
