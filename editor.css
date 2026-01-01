@@ -231,10 +231,5 @@
 #hb-editor {
   scroll-behavior: auto;
 }
-#hb-editor p,
-#hb-editor div,
-#hb-editor li {
-  line-height: 1.2;
-}
 
 
