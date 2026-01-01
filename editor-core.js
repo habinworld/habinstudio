@@ -272,6 +272,7 @@ function insertAtCursor(editor, frag) {
 
     // --- Line Height ---
   if (cmd === "lineHeight") {
+     editor.focus();
  // 1️⃣ 마지막 selection 무조건 복원
   const last = Core.getLastSelection && Core.getLastSelection();
   if (!last) {
