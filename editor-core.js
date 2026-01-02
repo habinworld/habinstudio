@@ -326,19 +326,33 @@ function insertAtCursor(editor, frag) {
   Core.redo  = () => execute(TextEngine.redo());
 /* =================================================
    📏 Line-height Request (Document Model)
+   - 문단(Paragraph) 기준 단일 적용
+   - 이름 통일: data-hb-paragraph
 ================================================= */
-Core.requestLineHeight = function (variant) {
+
+/* 🔑 현재 커서가 속한 문단 하나를 정확히 찾는다 */
+function getParagraphFromSelection() {
   const sel = window.getSelection();
-  if (!sel || !sel.rangeCount) return;
+  if (!sel || !sel.rangeCount) return null;
 
   let node = sel.getRangeAt(0).startContainer;
+
+  // textNode → element
   if (node.nodeType === 3) node = node.parentNode;
 
-  const block = node.closest("[data-hb-block]");
-  if (!block) return;
+  const editor = document.getElementById("hb-editor");
+  if (!editor || !editor.contains(node)) return null;
 
-  window.LineHeightEngine?.apply(block, variant);
-};
+  // 🚨 문단은 이것 하나만 인정
+  return node.closest("[data-hb-paragraph]");
+}
+
+Core.requestLineHeight = function (variant) {
+  const paragraph = getParagraphFromSelection();
+  if (!paragraph) return;
+
+  window.LineHeightEngine?.apply(paragraph, variant);
+};;
 
   // 이미지
   Core.insertImage = file => {
