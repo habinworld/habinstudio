@@ -123,16 +123,24 @@ window.ColorBasicEngine = (function () {
     popup.appendChild(makeDivider());
 
     /* ==================================================
-       C) 질서 있는 60색 팔레트
-    ================================================== */
-    COLORS.forEach(color => {
-      const box = createColorBox(color, false);
-      box.onclick = () => {
-        onSelect && onSelect(color);
-      };
-      popup.appendChild(box);
-    });
+   C) 질서 있는 60색 팔레트 (세로 6단 기준 렌더)
+================================================== */
+const ROWS = 10; // 명도 단계
+const COLS = 6;  // 색상 계열 수
+
+for (let row = 0; row < ROWS; row++) {
+  for (let col = 0; col < COLS; col++) {
+    const index = col * ROWS + row;
+    const color = COLORS[index];
+    if (!color) continue;
+
+    const box = createColorBox(color, false);
+    box.onclick = () => {
+      onSelect && onSelect(color);
+    };
+    popup.appendChild(box);
   }
+}
 
   /* ======================================================
      공통: 색상 셀 생성
