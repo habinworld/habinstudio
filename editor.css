@@ -124,25 +124,30 @@
 #hb-editor {
   width: 100%;
   min-height: 500px;
+  max-height: 70vh;          /* 본문만 스크롤 */
 
   padding: 20px;
   background: #FFFFFF;
 
- /* 🎯 2중 테두리 */
-  border: 2px solid #3558A8;                 /* 바깥 테두리 (하빈 은남색) */
-  box-shadow: 0 0 0 3px rgba(91,182,200,0.3); /* 안쪽 은청빛 링 */
-
+  /* 🎯 2중 테두리 */
+  border: 2px solid #3558A8;                 
+  box-shadow: 0 0 0 3px rgba(91,182,200,0.3);
   border-radius: 10px;
 
-  line-height: 1.75;
+  /* 문서 타이포 */
   font-size: 17px;
+  line-height: 1.75;
 
-  overflow: auto;
+  /* 스크롤 정책 */
+  overflow-y: auto;          /* 세로만 */
+  overflow-x: hidden;        /* 가로 봉인 */
 }
 
+/* 포커스 시 */
 #hb-editor:focus {
   outline: 2px solid rgba(53, 88, 168, 0.35);
 }
+
 
 /* ============================
    하단 버튼 (목록 / 메인)
