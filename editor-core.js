@@ -195,7 +195,6 @@ paragraph.setAttribute("data-hb-paragraph", "");
   });
 
   insertAtCursor(editor, frag);
-  saveSelection && saveSelection();
 });
 
 function insertAtCursor(editor, frag) {
