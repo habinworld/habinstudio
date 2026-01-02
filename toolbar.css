@@ -187,3 +187,22 @@
   background: #EAF2FF;
   color: #3558A8;
 }
+/* ============================
+   한글·엑셀식 Toolbar 고정
+============================ */
+
+/* BASIC 툴바 */
+#hb-toolbar-basic {
+  position: sticky;
+  top: 0;
+  z-index: 300;
+  background: #FFFFFF;
+}
+
+/* ADVANCED 툴바 */
+#hb-toolbar-advanced {
+  position: sticky;
+  top: 34px;          /* BASIC 높이만큼 */
+  z-index: 300;
+  background: #FFFFFF;
+}
