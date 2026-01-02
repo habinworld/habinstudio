@@ -84,6 +84,9 @@ window.ColorBasicEngine = (function () {
   moreBtn.type = "button";
   moreBtn.className = "hb-btn";
   moreBtn.textContent = "더보기…";
+  [noneBtn, moreBtn].forEach(btn => {
+  btn.style.padding = "2px 6px"; // 🔥 세로만 줄임
+});   
   moreBtn.onclick = (e) => {
     e.preventDefault();
     e.stopPropagation();
