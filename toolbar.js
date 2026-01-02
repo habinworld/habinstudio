@@ -67,7 +67,7 @@ options: Array.from({ length: 33 }, (_, i) => {
     { value: "lh-normal", label: "보통" },
     { value: "lh-wide", label: "넓게" }
   ]
-}
+},
 
     { id: "hb-btn-color",     label: "🖌️", icon: true, popup: true },
     { id: "hb-btn-bgcolor",   label: "🎨", icon: true, popup: true },
@@ -77,7 +77,7 @@ options: Array.from({ length: 33 }, (_, i) => {
     { id: "hb-btn-img-center",label: "C" },
     { id: "hb-btn-img-right", label: "R" },
     { id: "hb-btn-img-delete", label: "DEL" },
-  
+  ];
  
   /* =====================================================
      2) 렌더링
