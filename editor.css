@@ -242,9 +242,9 @@
 }
 
 /* 문단 예외 상태 */
-.lh-tight  { line-height: 1.4; }
-.lh-normal { line-height: 1.8; }
-.lh-wide   { line-height: 2.0; }
+.lh-tight  { line-height: 1.2; }
+.lh-normal { line-height: 2.0; }
+.lh-wide   { line-height: 3.0; }
 
 
 
