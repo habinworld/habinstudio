@@ -55,17 +55,14 @@ options: Array.from({ length: 33 }, (_, i) => {
 },
    {
   id: "hb-line-height",
-  popup: true, 
-  label: "줄간격", 
+  popup: true,
+  label: "줄간격",
   options: [
-    ...Array.from({ length: 20 }, (_, i) => {
-      const h = (i + 6) / 5; // 1.2 ~ 5.0 (0.2 단위)
-      return {
-        value: String(h),
-        label: h.toFixed(1)
-      };
-    }),
-    { value: "null", label: "기본" } // ← 중요 (문자열 null)
+    { value: "default", label: "기본 (1.4)" },
+    { value: "lh-12",   label: "1.2 · 주석" },
+    { value: "lh-16",   label: "1.6 · 일반" },
+    { value: "lh-18",   label: "1.8 · 넉넉" },
+    { value: "lh-20",   label: "2.0 · 강조" }
   ]
 },
 
