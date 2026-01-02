@@ -29,16 +29,22 @@ window.EditorCore = (function () {
         2) DOM 참조 (고정 ID)
   ================================================= */
   const editor = document.getElementById("hb-editor");
-  const title  = document.getElementById("hb-title");
-  // ★ 블록 최소 1개 보장 (1번 핵심)
-if (editor && !editor.querySelector("[data-hb-block]")) {
-  editor.innerHTML = '<div data-hb-block><br></div>';
-} 
-  // DOM이 없으면 조용히 종료 (헌법 예외: DOM 안전장치)
-  if (!editor || !title) {
-    Core.execute = () => {};
-    return Core;
-  }
+const title  = document.getElementById("hb-title");
+
+// DOM이 없으면 조용히 종료 (헌법 예외)
+if (!editor || !title) {
+  Core.execute = () => {};
+  return Core;
+}
+
+// ★ 블록 최소 1개 보장 (DOM 방식 · 안전)
+if (!editor.querySelector("[data-hb-block]")) {
+  const block = document.createElement("div");
+  block.setAttribute("data-hb-block", "");
+  block.appendChild(document.createElement("br"));
+  editor.appendChild(block);
+}
+
   /* =================================================
    🔒 Last Selection Snapshot (Core Infrastructure)
    - 툴바 클릭으로 selection 소실 방지
