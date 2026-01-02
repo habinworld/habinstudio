@@ -60,19 +60,26 @@ window.ColorBasicEngine = (function () {
   function render(popup, onSelect) {
     popup.innerHTML = "";
 
-    /* ---------- 팝업 기본 스타일 ---------- */
-    popup.style.padding = "10px";
-    popup.style.background = "#FFFFFF";
-    popup.style.border = "1px solid #D0D0D0";
-    popup.style.borderRadius = "8px";
-    popup.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
-    popup.style.display = "block";
-    popup.style.gridTemplateRows = "repeat(6, 18px)"; // 세로 6칸 고정
-    popup.style.gridAutoFlow = "column";              // 세로 우선 채우기
-    popup.style.gridAutoColumns = "18px";             // 컬럼 너비
-    popup.style.gap = "4px";
-    popup.style.pointerEvents = "auto";
+       /* ---------- 팝업 기본 스타일 (컨테이너 전용) ---------- */
+   popup.style.padding = "10px";
+   popup.style.background = "#FFFFFF";
+   popup.style.border = "1px solid #D0D0D0";
+   popup.style.borderRadius = "8px";
+   popup.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
+   popup.style.display = "block";        // ❗ grid 사용 금지
+   popup.style.pointerEvents = "auto";
+   /* ---------- 색상 팔레트 전용 Grid ---------- */
+const paletteGrid = document.createElement("div");
+paletteGrid.style.display = "grid";
+paletteGrid.style.gridTemplateRows = "repeat(6, 18px)"; // 세로 6개
+paletteGrid.style.gridAutoFlow = "column";              // 세로 우선
+paletteGrid.style.gridAutoColumns = "18px";
+paletteGrid.style.gap = "4px";
+paletteGrid.style.marginTop = "8px";
 
+popup.appendChild(paletteGrid);
+     
+     
     /* ==================================================
        A) 상단 명령 버튼
        [ 색없슴 ] [ 더보기… ]
