@@ -233,17 +233,17 @@ sizeBtn && sizeSel && sizeBtn.addEventListener("click", e => {
     }
   );
 });   
+
 /* -------------------------------
-   line-height (속도 + 안정 통일)
+   line-height (헌법 버전)
 -------------------------------- */
-let lhTimer = null;
 
 const lineBtn = document.getElementById("hb-line-height-btn");
 const lineSel = document.getElementById("hb-line-height");
 
-// ✅ 버튼은 mousedown + preventDefault (selection 유지)
+// 버튼은 mousedown + preventDefault (포커스 유지용만)
 lineBtn && lineSel && lineBtn.addEventListener("mousedown", e => {
-  e.preventDefault();   // 🔒 selection/body 튐 차단 (핵심)
+  e.preventDefault();
   e.stopPropagation();
 
   const r = lineBtn.getBoundingClientRect();
@@ -255,15 +255,9 @@ lineBtn && lineSel && lineBtn.addEventListener("mousedown", e => {
       value: o.value,
       label: o.textContent
     })),
-    value => {
-      window.EditorCore?.restoreSelection && window.EditorCore.restoreSelection();  
-      lineSel.value = value;
-
-      // ✅ 속도 안정화(타이머 유지)
-      lhTimer && cancelAnimationFrame(lhTimer);
-      lhTimer = requestAnimationFrame(() => {
-        window.EditorCore?.setLineHeight(value === "null" ? null : Number(value));
-      });
+    variant => {
+      lineSel.value = variant;
+      window.EditorCore?.requestLineHeight(variant);
     }
   );
 });
