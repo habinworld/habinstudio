@@ -275,34 +275,14 @@ function insertAtCursor(editor, frag) {
     }
 
     // --- Line Height ---
-  if (cmd === "lineHeight") {
-     editor.focus();
- // 1️⃣ 마지막 selection 무조건 복원
-  const last = Core.getLastSelection && Core.getLastSelection();
-  if (!last) {
-    isLocked = false;
-    return;
-  }
-
+  function getCurrentBlock() {
   const sel = window.getSelection();
-  if (sel) {
-    sel.removeAllRanges();
-    sel.addRange(last.cloneRange());
-  }
+  if (!sel || !sel.rangeCount) return null;
 
-  // 2️⃣ 복원된 selection으로 적용
-const sel2 = window.getSelection();
-if (sel2 && sel2.rangeCount) {
-  window.LineHeightEngine.apply(
-    editor,
-    sel2,
-    value === null ? null : Number(value)
-  );
-  saveSelection();
-}
+  let node = sel.getRangeAt(0).startContainer;
+  if (node.nodeType === 3) node = node.parentNode;
 
-isLocked = false;
-return;
+  return node.closest && node.closest("[data-hb-block]");
 }
      
     // --- Color (실행 전용 엔진 호출) ---
@@ -346,14 +326,23 @@ return;
   /* =================================================
         11) 공개 API (기존 toolbar.js 호출 호환)
   ================================================= */
-  Core.execute = execute;
-  // 🔒 selection 복원 (줄간격 / 팝업 전용)
-  Core.restoreSelection = () => {
-    if (!lastSelectionRange) return;
-    const sel = window.getSelection();
-    sel.removeAllRanges();
-    sel.addRange(lastSelectionRange.cloneRange());
-  };
+  /**
+ * 줄간격 상태 요청
+ * @param {string} variant - "lh-12" | "lh-16" | "lh-18" | "lh-20" | "default"
+ */
+Core.requestLineHeight = function (variant) {
+  const block = getCurrentBlock();
+  if (!block) return;
+
+  if (!window.LineHeightEngine) return;
+
+  if (variant === "default") {
+    window.LineHeightEngine.clearVariant(block);
+    return;
+  }
+
+  window.LineHeightEngine.applyVariant(block, variant);
+};
  
   // 텍스트 스타일
   Core.bold      = () => execute(TextEngine.bold());
