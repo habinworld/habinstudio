@@ -234,33 +234,34 @@ sizeBtn && sizeSel && sizeBtn.addEventListener("click", e => {
   );
 });   
 
-/* -------------------------------
-   line-height (헌법 버전)
--------------------------------- */
+/* ===============================
+   📏 Line-height Toolbar (Final)
+================================ */
 
-const lineBtn = document.getElementById("hb-line-height-btn");
-const lineSel = document.getElementById("hb-line-height");
-
-// 버튼은 mousedown + preventDefault (포커스 유지용만)
-lineBtn && lineSel && lineBtn.addEventListener("mousedown", e => {
-  e.preventDefault();
-  e.stopPropagation();
-
-  const r = lineBtn.getBoundingClientRect();
-
-  Popup.openAt(
-    r.left,
-    r.bottom,
-    Array.from(lineSel.options).map(o => ({
-      value: o.value,
-      label: o.textContent
-    })),
-    variant => {
-      lineSel.value = variant;
-      window.EditorCore?.requestLineHeight(variant);
-    }
-  );
+// 대표 버튼: 하위 버튼 토글
+bind("hb-btn-line-height", () => {
+  document
+    .getElementById("hb-lineheight-panel")
+    ?.classList.toggle("open");
 });
+
+// 실행 버튼들
+bind("hb-btn-lh-tight", () => {
+  EditorCore.requestLineHeight("lh-tight");
+});
+
+bind("hb-btn-lh-normal", () => {
+  EditorCore.requestLineHeight("lh-normal");
+});
+
+bind("hb-btn-lh-wide", () => {
+  EditorCore.requestLineHeight("lh-wide");
+});
+
+bind("hb-btn-lh-default", () => {
+  EditorCore.requestLineHeight("default");
+});
+
 /* =====================================================
    COLOR — Toolbar (MODE Entry Only)
    역할:
