@@ -38,9 +38,9 @@ if (!editor || !title) {
 }
 
 // ★ 블록 최소 1개 보장 (DOM 방식 · 안전)
-if (!editor.querySelector("[data-hb-block]")) {
+if (!editor.querySelector("[data-hb-paragraph]")) {
   const block = document.createElement("div");
-  block.setAttribute("data-hb-block", "");
+  block.setAttribute("data-hb-paragraph", "");
   block.appendChild(document.createElement("br"));
   editor.appendChild(block);
 }
