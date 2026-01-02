@@ -312,29 +312,24 @@ function insertAtCursor(editor, frag) {
    - 문단(Paragraph) 기준 단일 적용
    - 이름 통일: data-hb-paragraph
 ================================================= */
-
-/* 🔑 현재 커서가 속한 문단 하나를 정확히 찾는다 */
-function getParagraphFromSelection() {
-  const sel = window.getSelection();
-  if (!sel || !sel.rangeCount) return null;
-
-  let node = sel.getRangeAt(0).startContainer;
-
-  // textNode → element
-  if (node.nodeType === 3) node = node.parentNode;
-
-  const editor = document.getElementById("hb-editor");
-  if (!editor || !editor.contains(node)) return null;
-
-  // 🚨 문단은 이것 하나만 인정
-  return node.closest("[data-hb-paragraph]");
-}
-
 Core.requestLineHeight = function (variant) {
-  const paragraph = getParagraphFromSelection();
-  if (!paragraph) return;
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
 
-  window.LineHeightEngine?.apply(paragraph, variant);
+  const range = sel.getRangeAt(0);
+  const editor = document.getElementById("hb-editor");
+  if (!editor) return;
+
+  const paragraphs = Array.from(
+    editor.querySelectorAll("[data-hb-paragraph]")
+  );
+
+  paragraphs.forEach(p => {
+    // 선택 영역과 겹치는 모든 문단에 적용
+    if (range.intersectsNode(p)) {
+      window.LineHeightEngine?.apply(p, variant);
+    }
+  });
 };
 
   // 이미지
