@@ -37,12 +37,12 @@ if (!editor || !title) {
   return Core;
 }
 
-// ★ 블록 최소 1개 보장 (DOM 방식 · 안전)
+// ★ 문단 최소 1개 보장 (Paragraph · 브라우저 개입 차단)
 if (!editor.querySelector("[data-hb-paragraph]")) {
-  const block = document.createElement("div");
-  block.setAttribute("data-hb-paragraph", "");
-  block.appendChild(document.createElement("br"));
-  editor.appendChild(block);
+  const paragraph = document.createElement("div");
+  paragraph.setAttribute("data-hb-paragraph", "");
+  paragraph.innerHTML = "&nbsp;";   // ✅ br 금지
+  editor.appendChild(paragraph);
 }
   
   /* =================================================
