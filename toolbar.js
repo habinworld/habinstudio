@@ -241,29 +241,28 @@ sizeBtn && sizeSel && sizeBtn.addEventListener("click", e => {
    📏 Line-height Toolbar (Final)
 ================================ */
 
-// 대표 버튼: 하위 버튼 토글
-bind("hb-btn-line-height", () => {
-  document
-    .getElementById("hb-lineheight-panel")
-    ?.classList.toggle("open");
+const lhBtn = document.getElementById("hb-line-height-btn");
+const lhSel = document.getElementById("hb-line-height");
+
+lhBtn && lhSel && lhBtn.addEventListener("mousedown", e => {
+  e.preventDefault();
+  e.stopPropagation();
+
+  const r = lhBtn.getBoundingClientRect();
+
+  Popup.openAt(
+    r.left,
+    r.bottom,
+    Array.from(lhSel.options).map(o => ({
+      value: o.value,
+      label: o.textContent
+    })),
+    v => {
+      EditorCore.requestLineHeight(v);
+    }
+  );
 });
 
-// 실행 버튼들
-bind("hb-btn-lh-tight", () => {
-  EditorCore.requestLineHeight("lh-tight");
-});
-
-bind("hb-btn-lh-normal", () => {
-  EditorCore.requestLineHeight("lh-normal");
-});
-
-bind("hb-btn-lh-wide", () => {
-  EditorCore.requestLineHeight("lh-wide");
-});
-
-bind("hb-btn-lh-default", () => {
-  EditorCore.requestLineHeight("default");
-});
 
 /* =====================================================
    COLOR — Toolbar (MODE Entry Only)
