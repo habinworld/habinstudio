@@ -238,12 +238,12 @@
 
 /* 문서 기본 줄간격 */
 #hb-editor {
-  line-height: 1.4;
+  line-height: 1.6;
 }
 
 /* 문단 예외 상태 */
-.lh-tight  { line-height: 1.2; }
-.lh-normal { line-height: 1.6; }
+.lh-tight  { line-height: 1.4; }
+.lh-normal { line-height: 1.8; }
 .lh-wide   { line-height: 2.0; }
 
 
