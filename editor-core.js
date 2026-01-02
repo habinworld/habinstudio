@@ -44,37 +44,7 @@ if (!editor.querySelector("[data-hb-block]")) {
   block.appendChild(document.createElement("br"));
   editor.appendChild(block);
 }
-
-  /* =================================================
-   🔒 Last Selection Snapshot (Core Infrastructure)
-   - 툴바 클릭으로 selection 소실 방지
-   - 판단 ❌ / 계산 ❌ / 저장만
-================================================= */
-let lastSelectionRange = null;
-
-editor.addEventListener("mouseup", saveSelection);
-editor.addEventListener("keyup", saveSelection);
-
-function saveSelection() {
-  if (!editor.contains(document.activeElement)) return;
-
-  const sel = window.getSelection();
-  if (!sel || sel.rangeCount === 0) return;
-
-  const range = sel.getRangeAt(0);
-
-  const node =
-    range.commonAncestorContainer.nodeType === 3
-      ? range.commonAncestorContainer.parentNode
-      : range.commonAncestorContainer;
-
-  if (!editor.contains(node)) return;
-
-  lastSelectionRange = range.cloneRange();
-}
-
-Core.getLastSelection = () => lastSelectionRange;
-
+  
   /* =================================================
         3) id 기반 초기 로딩 (존재 / 비존재)
         - 페이지 로드 시 1회
@@ -285,17 +255,7 @@ function insertAtCursor(editor, frag) {
       return;
     }
 
-    // --- Line Height ---
-  function getCurrentBlock() {
-  const sel = window.getSelection();
-  if (!sel || !sel.rangeCount) return null;
-
-  let node = sel.getRangeAt(0).startContainer;
-  if (node.nodeType === 3) node = node.parentNode;
-
-  return node.closest && node.closest("[data-hb-block]");
-}
-     
+      
     // --- Color (실행 전용 엔진 호출) ---
     if (cmd === "color-text") {
       window.ColorTextEngine && window.ColorTextEngine.apply(value);
@@ -345,8 +305,7 @@ function insertAtCursor(editor, frag) {
   // 폰트/크기/줄간격
   Core.setFont       = f  => execute(TextEngine.setFont(f));
   Core.setSize       = px => execute({ cmd: "fontSizePx", value: px });
-  Core.setLineHeight = h  => execute({ cmd: "lineHeight", value: h });
-
+ 
   // 색상 (cmd 고정)
   Core.setColor   = c => execute({ cmd: "color-text", value: c });
   Core.setBgColor = c => execute({ cmd: "color-bg",   value: c });
