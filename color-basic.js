@@ -59,9 +59,7 @@ window.ColorBasicEngine = (function () {
   ====================================================== */
   function render(popup, onSelect) {
     popup.innerHTML = "";
-/* ===============================
-     0) 팝업 컨테이너 (레이아웃 ❌)
-  =============================== */
+/* 0) 팝업 컨테이너 */
   popup.style.padding = "10px";
   popup.style.background = "#FFFFFF";
   popup.style.border = "1px solid #D0D0D0";
@@ -69,10 +67,8 @@ window.ColorBasicEngine = (function () {
   popup.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
   popup.style.display = "block";
   popup.style.pointerEvents = "auto";
-       
-     /* ===============================
-     A) 상단 버튼
-  =============================== */
+
+  /* A) 상단 버튼 */
   const topBar = document.createElement("div");
   topBar.style.display = "grid";
   topBar.style.gridTemplateColumns = "1fr 1fr";
@@ -97,15 +93,9 @@ window.ColorBasicEngine = (function () {
   topBar.appendChild(noneBtn);
   topBar.appendChild(moreBtn);
   popup.appendChild(topBar);
-
   popup.appendChild(makeDivider());
 
-    /* ---------- 구분선 ---------- */
-    popup.appendChild(makeDivider());
-
-    /* ===============================
-     B) 표준 원색 10
-  =============================== */
+  /* B) 표준 원색 10 */
   const standardGrid = document.createElement("div");
   standardGrid.style.display = "grid";
   standardGrid.style.gridTemplateColumns = "repeat(10, 18px)";
@@ -120,14 +110,7 @@ window.ColorBasicEngine = (function () {
   popup.appendChild(standardGrid);
   popup.appendChild(makeDivider());
 
-    /* ---------- 구분선 ---------- */
-    popup.appendChild(makeDivider());
-
-  /* ===============================
-     C) 기본 팔레트 (세로 6개씩)
-     - COLORS는 이미 6개씩 묶여 있음
-     - Grid가 배치 담당
-  =============================== */
+  /* C) 기본 팔레트 (세로 6개씩) */
   const paletteGrid = document.createElement("div");
   paletteGrid.style.display = "grid";
   paletteGrid.style.gridTemplateRows = "repeat(6, 18px)";
@@ -143,6 +126,7 @@ window.ColorBasicEngine = (function () {
 
   popup.appendChild(paletteGrid);
 }
+
   /* ======================================================
      공통: 색상 셀 생성
   ====================================================== */
