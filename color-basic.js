@@ -35,18 +35,12 @@ window.ColorBasicEngine = (function () {
      "#666666","#777777","#888888","#999999","#AAAAAA","#BBBBBB",
     // Red (6)
     "#4A0000","#7A0000","#B00000","#E00000","#FF3333","#FF6666",
-   // Orange (10)
-    "#4A2A00","#7A4200","#B06000","#E08000","#FFA500",
-    "#FFB733","#FFC966","#FFDB99","#FFEACC","#FFF5E6",
-
-    // Yellow (10)
-    "#4A4A00","#7A7A00","#B0B000","#E0E000","#FFFF33",
-    "#FFFF66","#FFFF99","#FFFFB3","#FFFFD6","#FFFFED",
-
-    // Green (10)
-    "#004A1A","#007A2A","#00B040","#00E060","#33FF88",
-    "#66FFAA","#99FFCC","#B3FFDD","#D6FFEE","#EDFFF7",
-
+   // Orange (6)
+    "#4A2A00","#7A4200","#B06000","#E08000","#FFA500","#FFB733",
+    // Yellow (6)
+    "#4A4A00","#7A7A00","#B0B000","#E0E000","#FFFF33","#FFFF66",
+    // Green (6)
+    "#004A1A","#007A2A","#00B040","#00E060","#33FF88","#66FFAA",
     // Blue / Purple (10)
     "#001A4A","#002A7A","#0040B0","#0060E0","#3388FF",
     "#66AAFF","#99CCFF","#B3DDFF","#D6EEFF","#EDF7FF"
