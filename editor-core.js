@@ -202,11 +202,11 @@ editor.addEventListener("paste", function (e) {
   const frag = document.createDocumentFragment();
 
   lines.forEach(line => {
-    const block = document.createElement("div");
-    block.setAttribute("data-hb-block", "");
+    const paragraph = document.createElement("div");
+paragraph.setAttribute("data-hb-paragraph", "");
 
     // 빈 줄도 문단으로 유지
-    block.textContent = line.trim() === "" ? "\u00A0" : line;
+    paragraph.textContent = line.trim() === "" ? "\u00A0" : line;
     frag.appendChild(block);
   });
 
