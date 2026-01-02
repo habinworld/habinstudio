@@ -63,7 +63,7 @@ if (!editor.querySelector("[data-hb-paragraph]")) {
 
     // 🔒 빈 편집기 첫줄 안정화 (contenteditable 초기 버그 완화)
     if (editor.innerHTML.trim() === "" || editor.innerHTML === "<br>") {
-      editor.innerHTML = "<p><br></p>";
+      editor.innerHTML = "<div data-hb-paragraph>&nbsp;</div>";
     }
     // ✅ 이것만 유지
   (function normalizeParagraphs() {
