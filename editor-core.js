@@ -207,7 +207,7 @@ paragraph.setAttribute("data-hb-paragraph", "");
 
     // 빈 줄도 문단으로 유지
     paragraph.textContent = line.trim() === "" ? "\u00A0" : line;
-    frag.appendChild(block);
+    frag.appendChild(paragraph);
   });
 
   insertAtCursor(editor, frag);
