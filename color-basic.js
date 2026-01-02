@@ -59,95 +59,89 @@ window.ColorBasicEngine = (function () {
   ====================================================== */
   function render(popup, onSelect) {
     popup.innerHTML = "";
+/* ===============================
+     0) 팝업 컨테이너 (레이아웃 ❌)
+  =============================== */
+  popup.style.padding = "10px";
+  popup.style.background = "#FFFFFF";
+  popup.style.border = "1px solid #D0D0D0";
+  popup.style.borderRadius = "8px";
+  popup.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
+  popup.style.display = "block";
+  popup.style.pointerEvents = "auto";
+       
+     /* ===============================
+     A) 상단 버튼
+  =============================== */
+  const topBar = document.createElement("div");
+  topBar.style.display = "grid";
+  topBar.style.gridTemplateColumns = "1fr 1fr";
+  topBar.style.gap = "6px";
 
-       /* ---------- 팝업 기본 스타일 (컨테이너 전용) ---------- */
-   popup.style.padding = "10px";
-   popup.style.background = "#FFFFFF";
-   popup.style.border = "1px solid #D0D0D0";
-   popup.style.borderRadius = "8px";
-   popup.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
-   popup.style.display = "block";        // ❗ grid 사용 금지
-   popup.style.pointerEvents = "auto";
-   /* ---------- 색상 팔레트 전용 Grid ---------- */
+  const noneBtn = document.createElement("button");
+  noneBtn.type = "button";
+  noneBtn.className = "hb-btn";
+  noneBtn.textContent = "색없슴";
+  noneBtn.onclick = () => onSelect && onSelect(null);
+
+  const moreBtn = document.createElement("button");
+  moreBtn.type = "button";
+  moreBtn.className = "hb-btn";
+  moreBtn.textContent = "더보기…";
+  moreBtn.onclick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onSelect && onSelect("__ADVANCED__");
+  };
+
+  topBar.appendChild(noneBtn);
+  topBar.appendChild(moreBtn);
+  popup.appendChild(topBar);
+
+  popup.appendChild(makeDivider());
+
+    /* ---------- 구분선 ---------- */
+    popup.appendChild(makeDivider());
+
+    /* ===============================
+     B) 표준 원색 10
+  =============================== */
+  const standardGrid = document.createElement("div");
+  standardGrid.style.display = "grid";
+  standardGrid.style.gridTemplateColumns = "repeat(10, 18px)";
+  standardGrid.style.gap = "4px";
+
+  STANDARD_COLORS.forEach(color => {
+    const box = createColorBox(color, true);
+    box.onclick = () => onSelect && onSelect(color);
+    standardGrid.appendChild(box);
+  });
+
+  popup.appendChild(standardGrid);
+  popup.appendChild(makeDivider());
+
+    /* ---------- 구분선 ---------- */
+    popup.appendChild(makeDivider());
+
+  /* ===============================
+     C) 기본 팔레트 (세로 6개씩)
+     - COLORS는 이미 6개씩 묶여 있음
+     - Grid가 배치 담당
+  =============================== */
   const paletteGrid = document.createElement("div");
   paletteGrid.style.display = "grid";
-  paletteGrid.style.gridTemplateRows = "repeat(6, 18px)"; // 세로 6개
-  paletteGrid.style.gridAutoFlow = "column";              // 세로 우선
+  paletteGrid.style.gridTemplateRows = "repeat(6, 18px)";
+  paletteGrid.style.gridAutoFlow = "column";
   paletteGrid.style.gridAutoColumns = "18px";
   paletteGrid.style.gap = "4px";
-  paletteGrid.style.marginTop = "8px";
+
+  COLORS.forEach(color => {
+    const box = createColorBox(color, false);
+    box.onclick = () => onSelect && onSelect(color);
+    paletteGrid.appendChild(box);
+  });
 
   popup.appendChild(paletteGrid);
-     
-     
-    /* ==================================================
-       A) 상단 명령 버튼
-       [ 색없슴 ] [ 더보기… ]
-    ================================================== */
-    const topBar = document.createElement("div");
-    topBar.style.gridColumn = "span 10";
-    topBar.style.display = "grid";
-    topBar.style.gridTemplateColumns = "1fr 1fr";
-    topBar.style.gap = "6px";
-
-    const noneBtn = document.createElement("button");
-    noneBtn.type = "button";
-    noneBtn.className = "hb-btn";
-    noneBtn.textContent = "색없슴";
-    noneBtn.onclick = () => {
-      onSelect && onSelect(null);
-    };
-
-    const moreBtn = document.createElement("button");
-    moreBtn.type = "button";
-    moreBtn.className = "hb-btn";
-    moreBtn.textContent = "더보기…";
-    moreBtn.onclick = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      onSelect && onSelect("__ADVANCED__");
-    };
-
-    topBar.appendChild(noneBtn);
-    topBar.appendChild(moreBtn);
-    popup.appendChild(topBar);
-
-    /* ---------- 구분선 ---------- */
-    popup.appendChild(makeDivider());
-
-    /* ==================================================
-       B) 표준 원색 10
-    ================================================== */
-    STANDARD_COLORS.forEach(color => {
-      const box = createColorBox(color, true);
-      box.onclick = () => {
-        onSelect && onSelect(color);
-      };
-      popup.appendChild(box);
-    });
-
-    /* ---------- 구분선 ---------- */
-    popup.appendChild(makeDivider());
-
-    /* ==================================================
-   C) 질서 있는 60색 팔레트 (세로 6단 기준 렌더)
-================================================== */
-const ROWS = 10; // 명도 단계
-const COLS = 6;  // 색상 계열 수
-
-for (let row = 0; row < ROWS; row++) {
-  for (let col = 0; col < COLS; col++) {
-    const index = col * ROWS + row;
-    const color = COLORS[index];
-    if (!color) continue;
-
-    const box = createColorBox(color, false);
-    box.onclick = () => {
-      onSelect && onSelect(color);
-    };
-    paletteGrid.appendChild(box);
-  }
-}
 }
   /* ======================================================
      공통: 색상 셀 생성
