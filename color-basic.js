@@ -69,15 +69,15 @@ window.ColorBasicEngine = (function () {
    popup.style.display = "block";        // ❗ grid 사용 금지
    popup.style.pointerEvents = "auto";
    /* ---------- 색상 팔레트 전용 Grid ---------- */
-const paletteGrid = document.createElement("div");
-paletteGrid.style.display = "grid";
-paletteGrid.style.gridTemplateRows = "repeat(6, 18px)"; // 세로 6개
-paletteGrid.style.gridAutoFlow = "column";              // 세로 우선
-paletteGrid.style.gridAutoColumns = "18px";
-paletteGrid.style.gap = "4px";
-paletteGrid.style.marginTop = "8px";
+  const paletteGrid = document.createElement("div");
+  paletteGrid.style.display = "grid";
+  paletteGrid.style.gridTemplateRows = "repeat(6, 18px)"; // 세로 6개
+  paletteGrid.style.gridAutoFlow = "column";              // 세로 우선
+  paletteGrid.style.gridAutoColumns = "18px";
+  paletteGrid.style.gap = "4px";
+  paletteGrid.style.marginTop = "8px";
 
-popup.appendChild(paletteGrid);
+  popup.appendChild(paletteGrid);
      
      
     /* ==================================================
