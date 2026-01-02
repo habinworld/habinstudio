@@ -145,7 +145,7 @@ for (let row = 0; row < ROWS; row++) {
     box.onclick = () => {
       onSelect && onSelect(color);
     };
-    popup.appendChild(box);
+    paletteGrid.appendChild(box);
   }
 }
 }
