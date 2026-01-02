@@ -217,8 +217,8 @@ Core.getLastSelection = () => lastSelectionRange;
 
     applyTypingFontSize(px);
   }
-  /* =================================================
-   🔒 TEXT ONLY PASTE — Core IO Gate
+ /* =================================================
+   🔒 TEXT ONLY PASTE — Core IO Gate (Final)
    외부 규칙 완전 차단
 ================================================= */
 editor.addEventListener("paste", function (e) {
@@ -233,14 +233,16 @@ editor.addEventListener("paste", function (e) {
   const frag = document.createDocumentFragment();
 
   lines.forEach(line => {
-    const block = document.createElement("div"); 
-    block.setAttribute("data-hb-block", ""); 
-    p.textContent = line.trim() === "" ? "\u00A0" : line;
-    frag.appendChild(p);
+    const block = document.createElement("div");
+    block.setAttribute("data-hb-block", "");
+
+    // 빈 줄도 문단으로 유지
+    block.textContent = line.trim() === "" ? "\u00A0" : line;
+    frag.appendChild(block);
   });
 
   insertAtCursor(editor, frag);
-  saveSelection(); 
+  saveSelection && saveSelection();
 });
 
 function insertAtCursor(editor, frag) {
@@ -254,7 +256,11 @@ function insertAtCursor(editor, frag) {
   range.deleteContents();
   range.insertNode(frag);
   range.collapse(false);
+
+  sel.removeAllRanges();
+  sel.addRange(range);
 }
+
 
   /* =================================================
         8) 공용 실행 엔진 (Excel-Style)
