@@ -57,14 +57,17 @@ options: Array.from({ length: 33 }, (_, i) => {
 // 📏 Line-height Toolbar
 // ===============================
 
-// 대표 버튼 (이름 표시용)
-{ id: "hb-btn-line-height", label: "줄간격" },
-
-// 하위 실행 버튼들
-{ id: "hb-btn-lh-tight",   label: "좁게" },
-{ id: "hb-btn-lh-normal",  label: "보통" },
-{ id: "hb-btn-lh-wide",    label: "넓게" },
-{ id: "hb-btn-lh-default", label: "기본" },
+{
+  id: "hb-line-height",
+  popup: true,
+  label: "줄간격",
+  options: [
+    { value: "default", label: "기본" },
+    { value: "lh-tight", label: "좁게" },
+    { value: "lh-normal", label: "보통" },
+    { value: "lh-wide", label: "넓게" }
+  ]
+}
 
     { id: "hb-btn-color",     label: "🖌️", icon: true, popup: true },
     { id: "hb-btn-bgcolor",   label: "🎨", icon: true, popup: true },
