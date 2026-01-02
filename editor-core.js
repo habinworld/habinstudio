@@ -29,7 +29,7 @@ window.EditorCore = (function () {
         2) DOM 참조 (고정 ID)
   ================================================= */
   const editor = document.getElementById("hb-editor");
-const title  = document.getElementById("hb-title");
+  const title = document.getElementById("hb-title");
 
 // DOM이 없으면 조용히 종료 (헌법 예외)
 if (!editor || !title) {
