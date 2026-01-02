@@ -65,23 +65,7 @@ if (!editor.querySelector("[data-hb-paragraph]")) {
     if (editor.innerHTML.trim() === "" || editor.innerHTML === "<br>") {
       editor.innerHTML = "<div data-hb-paragraph>&nbsp;</div>";
     }
-    // ✅ 이것만 유지
-  (function normalizeParagraphs() {
-    const blocks = Array.from(editor.children);
-
-    blocks.forEach(block => {
-      if (block.tagName !== "P") return;
-
-      const innerPs = Array.from(block.children).filter(el => el.tagName === "P");
-      if (!innerPs.length) return;
-
-      innerPs.forEach(p => {
-        editor.insertBefore(p, block);
-      });
-
-      block.remove();
-    });
-  })();
+   
 })();
 
   /* =================================================
