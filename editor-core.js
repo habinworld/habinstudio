@@ -335,7 +335,7 @@ Core.requestLineHeight = function (variant) {
   if (!paragraph) return;
 
   window.LineHeightEngine?.apply(paragraph, variant);
-};;
+};
 
   // 이미지
   Core.insertImage = file => {
