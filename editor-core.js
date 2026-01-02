@@ -337,25 +337,7 @@ function insertAtCursor(editor, frag) {
   /* =================================================
         11) 공개 API (기존 toolbar.js 호출 호환)
   ================================================= */
-  /**
- * 줄간격 상태 요청
- * @param {string} variant - "lh-12" | "lh-16" | "lh-18" | "lh-20" | "default"
- */
-Core.requestLineHeight = function (variant) {
-  const block = getCurrentBlock();
-  if (!block) return;
-
-  if (!window.LineHeightEngine) return;
-
-  if (variant === "default") {
-    window.LineHeightEngine.clearVariant(block);
-    return;
-  }
-
-  window.LineHeightEngine.applyVariant(block, variant);
-};
- 
-  // 텍스트 스타일
+    // 텍스트 스타일
   Core.bold      = () => execute(TextEngine.bold());
   Core.italic    = () => execute(TextEngine.italic());
   Core.underline = () => execute(TextEngine.underline());
@@ -383,6 +365,21 @@ Core.requestLineHeight = function (variant) {
   Core.clear = () => execute(TextEngine.clear());
   Core.undo  = () => execute(TextEngine.undo());
   Core.redo  = () => execute(TextEngine.redo());
+/* =================================================
+   📏 Line-height Request (Document Model)
+================================================= */
+Core.requestLineHeight = function (variant) {
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
+
+  let node = sel.getRangeAt(0).startContainer;
+  if (node.nodeType === 3) node = node.parentNode;
+
+  const block = node.closest("[data-hb-block]");
+  if (!block) return;
+
+  window.LineHeightEngine?.apply(block, variant);
+};
 
   // 이미지
   Core.insertImage = file => {
