@@ -53,18 +53,18 @@ options: Array.from({ length: 33 }, (_, i) => {
   };
 })
 },
-   {
-  id: "hb-line-height",
-  popup: true,
-  label: "줄간격",
-  options: [
-    { value: "default", label: "기본 (1.4)" },
-    { value: "lh-12",   label: "1.2 · 주석" },
-    { value: "lh-16",   label: "1.6 · 일반" },
-    { value: "lh-18",   label: "1.8 · 넉넉" },
-    { value: "lh-20",   label: "2.0 · 강조" }
-  ]
-},
+// ===============================
+// 📏 Line-height Toolbar
+// ===============================
+
+// 대표 버튼 (이름 표시용)
+{ id: "hb-btn-line-height", label: "줄간격" },
+
+// 하위 실행 버튼들
+{ id: "hb-btn-lh-tight",   label: "좁게" },
+{ id: "hb-btn-lh-normal",  label: "보통" },
+{ id: "hb-btn-lh-wide",    label: "넓게" },
+{ id: "hb-btn-lh-default", label: "기본" },
 
     { id: "hb-btn-color",     label: "🖌️", icon: true, popup: true },
     { id: "hb-btn-bgcolor",   label: "🎨", icon: true, popup: true },
@@ -73,8 +73,8 @@ options: Array.from({ length: 33 }, (_, i) => {
     { id: "hb-btn-img-left",  label: "L" },
     { id: "hb-btn-img-center",label: "C" },
     { id: "hb-btn-img-right", label: "R" },
-    { id: "hb-btn-img-delete", label: "DEL" } 
-  ];
+    { id: "hb-btn-img-delete", label: "DEL" },
+  
  
   /* =====================================================
      2) 렌더링
