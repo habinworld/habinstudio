@@ -67,7 +67,9 @@ window.ColorBasicEngine = (function () {
     popup.style.borderRadius = "8px";
     popup.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
     popup.style.display = "grid";
-    popup.style.gridTemplateColumns = "repeat(10, 18px)";
+    popup.style.gridTemplateRows = "repeat(6, 18px)"; // 세로 6칸 고정
+    popup.style.gridAutoFlow = "column";              // 세로 우선 채우기
+    popup.style.gridAutoColumns = "18px";             // 컬럼 너비
     popup.style.gap = "4px";
     popup.style.pointerEvents = "auto";
 
