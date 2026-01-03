@@ -34,7 +34,7 @@
 .hb-resize-handle::after{
   content:"";
   position:absolute;
-  background:#3558A8;
+  background:#FF1493;
 }
 .hb-resize-handle::before{
   width:6px; height:1px; top:50%; left:0; transform:translateY(-50%);
