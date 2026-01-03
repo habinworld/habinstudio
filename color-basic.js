@@ -61,80 +61,171 @@ window.ColorBasicEngine = (function () {
 
   return list; // 정확히 256
 }
+/* ======================================================  
+ ramp16 적용 · STANDARD 256 팔레트
+  ====================================================== */
 function buildPalette16x16() {
   const rows = [];
-  const MAX = 160; // 🔑 진한 시작값 (255 금지)
 
-  // 16칸 v 생성
-  const v16 = (start, end) =>
-    Array.from({ length: 16 }, (_, i) =>
-      Math.round(start + (end - start) * i / 15)
-    );
+  // 🔑 공통 램프
+  // 0~7  : dark → pure
+  // 8~9  : pure 유지 (원색 구간)
+  // 10~15: pure → light
+  function ramp16(i, dark, pure, light) {
+    if (i <= 7) {
+      return Math.round(dark + (pure - dark) * (i / 7));
+    }
+    if (i <= 9) {
+      return pure;
+    }
+    return Math.round(pure + (light - pure) * ((i - 9) / 6));
+  }
 
   /* =========================
      무채 2줄
   ========================= */
 
   // 1줄: 검정 → 연검정
-  rows.push(v16(0, 200).map(v => `rgb(${v},${v},${v})`));
+  rows.push(
+    Array.from({ length: 16 }, (_, i) => {
+      const v = ramp16(i, 0, 0, 200);
+      return `rgb(${v},${v},${v})`;
+    })
+  );
 
   // 2줄: 진회색 → 연회색
-  rows.push(v16(40, 200).map(v => `rgb(${v},${v},${v})`));
+  rows.push(
+    Array.from({ length: 16 }, (_, i) => {
+      const v = ramp16(i, 40, 40, 200);
+      return `rgb(${v},${v},${v})`;
+    })
+  );
 
   /* =========================
-     유채 14줄 (MAX = 160)
+     유채 14줄
   ========================= */
 
   // 3줄: 빨강
-  rows.push(v16(0, 200).map(v => `rgb(${MAX},${v},${v})`));
+  rows.push(
+    Array.from({ length: 16 }, (_, i) => {
+      const r = ramp16(i, 40, 255, 230);
+      return `rgb(${r},0,0)`;
+    })
+  );
 
   // 4줄: 주황
   rows.push(
-    v16(0, 200).map((v, i) => {
-      const g = Math.round(80 + (120 * i) / 15);
-      return `rgb(${MAX},${g},${v})`;
+    Array.from({ length: 16 }, (_, i) => {
+      const r = ramp16(i, 40, 255, 230);
+      const g = ramp16(i, 20, 165, 230);
+      return `rgb(${r},${g},0)`;
     })
   );
 
   // 5줄: 노랑
-  rows.push(v16(0, 200).map(v => `rgb(${MAX},${MAX},${v})`));
+  rows.push(
+    Array.from({ length: 16 }, (_, i) => {
+      const v = ramp16(i, 40, 255, 230);
+      return `rgb(${v},${v},0)`;
+    })
+  );
 
   // 6줄: 연두
-  rows.push(v16(0, 200).map(v => `rgb(${v},${MAX},${v})`));
+  rows.push(
+    Array.from({ length: 16 }, (_, i) => {
+      const g = ramp16(i, 40, 255, 230);
+      return `rgb(${g},255,0)`;
+    })
+  );
 
   // 7줄: 초록
-  rows.push(v16(0, 200).map(v => `rgb(0,${MAX},${v})`));
+  rows.push(
+    Array.from({ length: 16 }, (_, i) => {
+      const g = ramp16(i, 40, 255, 230);
+      return `rgb(0,${g},0)`;
+    })
+  );
 
   // 8줄: 청록
-  rows.push(v16(0, 200).map(v => `rgb(${v},${MAX},${MAX})`));
+  rows.push(
+    Array.from({ length: 16 }, (_, i) => {
+      const g = ramp16(i, 40, 255, 230);
+      const b = ramp16(i, 40, 255, 230);
+      return `rgb(0,${g},${b})`;
+    })
+  );
 
   // 9줄: 하늘
-  rows.push(v16(0, 200).map(v => `rgb(${v},${v},${MAX})`));
+  rows.push(
+    Array.from({ length: 16 }, (_, i) => {
+      const b = ramp16(i, 40, 255, 230);
+      return `rgb(0,0,${b})`;
+    })
+  );
 
   // 10줄: 파랑
-  rows.push(v16(0, 200).map(v => `rgb(0,${v},${MAX})`));
+  rows.push(
+    Array.from({ length: 16 }, (_, i) => {
+      const b = ramp16(i, 40, 255, 230);
+      return `rgb(0,0,${b})`;
+    })
+  );
 
   // 11줄: 남색
-  rows.push(v16(0, 200).map(v => `rgb(${Math.round(v / 2)},0,${MAX})`));
+  rows.push(
+    Array.from({ length: 16 }, (_, i) => {
+      const b = ramp16(i, 60, 255, 200);
+      return `rgb(40,0,${b})`;
+    })
+  );
 
   // 12줄: 보라
-  rows.push(v16(0, 200).map(v => `rgb(${MAX},${v},${MAX})`));
+  rows.push(
+    Array.from({ length: 16 }, (_, i) => {
+      const v = ramp16(i, 40, 255, 230);
+      return `rgb(${v},0,${v})`;
+    })
+  );
 
   // 13줄: 자주
-  rows.push(v16(0, 200).map(v => `rgb(${MAX},${Math.round(v / 2)},${v})`));
+  rows.push(
+    Array.from({ length: 16 }, (_, i) => {
+      const r = ramp16(i, 40, 255, 230);
+      const b = ramp16(i, 20, 180, 230);
+      return `rgb(${r},0,${b})`;
+    })
+  );
 
   // 14줄: 핑크
-  rows.push(v16(0, 200).map(v => `rgb(${MAX},${v},${Math.round(v / 2)})`));
+  rows.push(
+    Array.from({ length: 16 }, (_, i) => {
+      const r = ramp16(i, 40, 255, 230);
+      const g = ramp16(i, 20, 180, 230);
+      return `rgb(${r},${g},${g})`;
+    })
+  );
 
   // 15줄: 살구
-  rows.push(v16(0, 200).map(v => `rgb(${MAX},120,${v})`));
+  rows.push(
+    Array.from({ length: 16 }, (_, i) => {
+      const r = ramp16(i, 40, 255, 230);
+      const g = ramp16(i, 60, 200, 230);
+      return `rgb(${r},${g},120)`;
+    })
+  );
 
   // 16줄: 아이보리
-  rows.push(v16(80, 200).map(v => `rgb(${MAX},${MAX},${v})`));
+  rows.push(
+    Array.from({ length: 16 }, (_, i) => {
+      const v = ramp16(i, 80, 255, 255);
+      return `rgb(${v},${v},${v})`;
+    })
+  );
 
   // 16 × 16 = 256
   return rows.flat();
 }
+
  
   /* ======================================================
      외부 진입점
