@@ -1,28 +1,23 @@
 /* ==========================================================
-   🎨 color-advanced.js — Advanced Color Engine (RGB FINAL)
+   🎨 color-advanced.js — Advanced Color Engine (FINAL)
    ----------------------------------------------------------
-   역할:
-   ✔ 마름모(벌집) 기반 고급 색상 선택 UI
-   ✔ RGB 기반 자유 색 선택 (1024 대비)
-   ✔ 선택 값 확정 시 rgba 문자열 반환
-   ✔ 뒤로 버튼 → MODE_BASIC 복귀 신호
-   ❌ 팝업 열기/닫기 ❌ ESC ❌ 실행 ❌ MODE 판단
+   형식:
+   ✔ 사각 색 평면 (연속 RGB)
+   ✔ 벌집 오버레이 (UI 가이드 전용)
+   ✔ 클릭 위치 = 색
+   ✔ B 축으로 1024 확장 준비
 ========================================================== */
 
 window.ColorAdvancedEngine = (function () {
 
-  /* ======================================================
-     UI 생성
-  ====================================================== */
   function createUI(onSelect, onBack) {
 
     /* ---------- 상태 ---------- */
     let currentRGBA = "rgba(0,0,0,1)";
     let previewRGBA = currentRGBA;
 
-    /* ---------- B 축 (1024 대비) ---------- */
-    let bIndex = 8;            // 기본 중간 밝기
-    const B_LEVELS = 16;       // 8×8×16 = 1024
+    let bIndex = 8;
+    const B_LEVELS = 16;
 
     /* ---------- 컨테이너 ---------- */
     const box = document.createElement("div");
@@ -35,13 +30,10 @@ window.ColorAdvancedEngine = (function () {
     box.style.fontFamily = "Noto Sans KR, sans-serif";
     box.style.fontSize = "13px";
 
-    /* ==================================================
-       상단 바
-    ================================================== */
+    /* ---------- 상단 ---------- */
     const top = document.createElement("div");
     top.style.display = "flex";
     top.style.justifyContent = "space-between";
-    top.style.alignItems = "center";
     top.style.marginBottom = "8px";
 
     const title = document.createElement("div");
@@ -53,77 +45,112 @@ window.ColorAdvancedEngine = (function () {
     backBtn.textContent = "뒤로";
     backBtn.onclick = () => onBack && onBack();
 
-    top.appendChild(title);
-    top.appendChild(backBtn);
+    top.append(title, backBtn);
 
     /* ==================================================
-       마름모(벌집) 캔버스
+       색 평면 + 벌집 오버레이
     ================================================== */
-    const canvas = document.createElement("canvas");
-    canvas.width = 240;
-    canvas.height = 190;
-    canvas.style.display = "block";
-    canvas.style.cursor = "pointer";
+    const wrap = document.createElement("div");
+    wrap.style.position = "relative";
+    wrap.style.width = "240px";
+    wrap.style.height = "190px";
 
-    const ctx = canvas.getContext("2d");
+    const colorCanvas = document.createElement("canvas");
+    colorCanvas.width = 240;
+    colorCanvas.height = 190;
+    colorCanvas.style.position = "absolute";
+    colorCanvas.style.left = "0";
+    colorCanvas.style.top = "0";
+    colorCanvas.style.cursor = "crosshair";
 
-    /* ---------- 벌집 좌표 ---------- */
-    const cells = [];
-    const R = 10;
-    const dx = R * 1.75;
-    const dy = R * 1.5;
-    const rows = [6,7,8,9,10,11,10,9,8,7,6];
-    const cx0 = canvas.width / 2;
+    const gridCanvas = document.createElement("canvas");
+    gridCanvas.width = 240;
+    gridCanvas.height = 190;
+    gridCanvas.style.position = "absolute";
+    gridCanvas.style.left = "0";
+    gridCanvas.style.top = "0";
+    gridCanvas.style.pointerEvents = "none";
 
-    /* ==================================================
-       벌집 그리기 (RGB 기반)
-    ================================================== */
-    function redraw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      cells.length = 0;
+    wrap.append(colorCanvas, gridCanvas);
 
+    const colorCtx = colorCanvas.getContext("2d");
+    const gridCtx = gridCanvas.getContext("2d");
+
+    /* ---------- 색 평면 ---------- */
+    function drawColorPlane() {
+      const img = colorCtx.createImageData(240, 190);
+      const data = img.data;
+      const b = Math.round(bIndex * 255 / (B_LEVELS - 1));
+
+      let i = 0;
+      for (let y = 0; y < 190; y++) {
+        for (let x = 0; x < 240; x++) {
+          data[i++] = Math.round(x / 239 * 255);
+          data[i++] = Math.round(y / 189 * 255);
+          data[i++] = b;
+          data[i++] = 255;
+        }
+      }
+      colorCtx.putImageData(img, 0, 0);
+    }
+
+    /* ---------- 벌집 오버레이 ---------- */
+    function drawHoneycomb() {
+      gridCtx.clearRect(0, 0, 240, 190);
+
+      const R = 10;
+      const dx = R * 1.75;
+      const dy = R * 1.5;
+      const rows = [6,7,8,9,10,11,10,9,8,7,6];
+      const cx0 = 240 / 2;
       let y = 22;
 
-      rows.forEach((count, ri) => {
+      gridCtx.strokeStyle = "rgba(0,0,0,0.15)";
+      gridCtx.lineWidth = 1;
+
+      rows.forEach(count => {
         let x = cx0 - ((count - 1) * dx) / 2;
-
-        for (let ci = 0; ci < count; ci++) {
-
-          const nx = (ci - (count - 1) / 2) / ((count - 1) / 2 || 1);
-          const ny = (ri - (rows.length - 1) / 2) / ((rows.length - 1) / 2);
-
-          const r = Math.round((nx + 1) / 2 * 255);
-          const g = Math.round((ny + 1) / 2 * 255);
-          const b = Math.round(bIndex * 255 / (B_LEVELS - 1));
-
-          const rgba = `rgba(${r},${g},${b},1)`;
-
-          cells.push({ x, y, rgba });
-
-          ctx.beginPath();
-          for (let i = 0; i < 6; i++) {
-            const a = Math.PI / 3 * i + Math.PI / 6;
+        for (let i = 0; i < count; i++) {
+          gridCtx.beginPath();
+          for (let k = 0; k < 6; k++) {
+            const a = Math.PI / 3 * k + Math.PI / 6;
             const px = x + R * Math.cos(a);
             const py = y + R * Math.sin(a);
-            i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+            k === 0 ? gridCtx.moveTo(px, py) : gridCtx.lineTo(px, py);
           }
-          ctx.closePath();
-          ctx.fillStyle = rgba;
-          ctx.fill();
-          ctx.strokeStyle = "rgba(0,0,0,0.12)";
-          ctx.stroke();
-
+          gridCtx.closePath();
+          gridCtx.stroke();
           x += dx;
         }
         y += dy;
       });
     }
 
-    redraw();
+    function redrawAll() {
+      drawColorPlane();
+      drawHoneycomb();
+    }
 
-    /* ==================================================
-       B 축 컨트롤
-    ================================================== */
+    redrawAll();
+
+    /* ---------- 클릭 = 색 ---------- */
+    colorCanvas.onclick = e => {
+      const rect = colorCanvas.getBoundingClientRect();
+      const scaleX = colorCanvas.width / rect.width;
+      const scaleY = colorCanvas.height / rect.height;
+
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
+
+      const r = Math.round(x / 239 * 255);
+      const g = Math.round(y / 189 * 255);
+      const b = Math.round(bIndex * 255 / (B_LEVELS - 1));
+
+      previewRGBA = `rgba(${r},${g},${b},1)`;
+      next.chip.style.background = previewRGBA;
+    };
+
+    /* ---------- B 축 ---------- */
     const bBar = document.createElement("div");
     bBar.style.display = "flex";
     bBar.style.gap = "6px";
@@ -134,7 +161,7 @@ window.ColorAdvancedEngine = (function () {
     down.textContent = "B-";
     down.onclick = () => {
       bIndex = Math.max(0, bIndex - 1);
-      redraw();
+      redrawAll();
     };
 
     const up = document.createElement("button");
@@ -142,20 +169,12 @@ window.ColorAdvancedEngine = (function () {
     up.textContent = "B+";
     up.onclick = () => {
       bIndex = Math.min(B_LEVELS - 1, bIndex + 1);
-      redraw();
+      redrawAll();
     };
 
-    bBar.appendChild(down);
-    bBar.appendChild(up);
+    bBar.append(down, up);
 
-    /* ==================================================
-       현재 색 / 새 색 패널
-    ================================================== */
-    const panel = document.createElement("div");
-    panel.style.display = "flex";
-    panel.style.justifyContent = "space-between";
-    panel.style.marginTop = "10px";
-
+    /* ---------- 현재 / 새 색 ---------- */
     function makeChip(label, color) {
       const wrap = document.createElement("div");
       wrap.style.textAlign = "center";
@@ -172,20 +191,21 @@ window.ColorAdvancedEngine = (function () {
       text.style.fontSize = "11px";
       text.style.marginTop = "2px";
 
-      wrap.appendChild(chip);
-      wrap.appendChild(text);
+      wrap.append(chip, text);
       return { wrap, chip };
     }
+
+    const panel = document.createElement("div");
+    panel.style.display = "flex";
+    panel.style.justifyContent = "space-between";
+    panel.style.marginTop = "10px";
 
     const cur = makeChip("현재 색", currentRGBA);
     const next = makeChip("새 색", previewRGBA);
 
-    panel.appendChild(cur.wrap);
-    panel.appendChild(next.wrap);
+    panel.append(cur.wrap, next.wrap);
 
-    /* ==================================================
-       적용 버튼
-    ================================================== */
+    /* ---------- 적용 ---------- */
     const applyBtn = document.createElement("button");
     applyBtn.className = "hb-btn";
     applyBtn.textContent = "적용";
@@ -198,41 +218,11 @@ window.ColorAdvancedEngine = (function () {
       onSelect && onSelect(currentRGBA);
     };
 
-    /* ==================================================
-       클릭 처리
-    ================================================== */
-   canvas.onclick = e => {
-  const rect = canvas.getBoundingClientRect();
-  const px = e.clientX - rect.left;
-  const py = e.clientY - rect.top;
-
-  // 캔버스 기준 정규화 (-1 ~ 1)
-  const nx = (px / canvas.width) * 2 - 1;
-  const ny = (py / canvas.height) * 2 - 1;
-
-  // RGB 계산 (연속 색)
-  const r = Math.round((nx + 1) / 2 * 255);
-  const g = Math.round((ny + 1) / 2 * 255);
-  const b = Math.round(bIndex * 255 / (B_LEVELS - 1));
-
-  previewRGBA = `rgba(${r},${g},${b},1)`;
-  next.chip.style.background = previewRGBA;
-};
-
-
     /* ---------- 조립 ---------- */
-    box.appendChild(top);
-    box.appendChild(canvas);
-    box.appendChild(bBar);
-    box.appendChild(panel);
-    box.appendChild(applyBtn);
-
+    box.append(top, wrap, bBar, panel, applyBtn);
     return box;
   }
 
-  /* ======================================================
-     외부 API
-  ====================================================== */
   function render(popup, onSelect, onBack) {
     popup.innerHTML = "";
     popup.appendChild(createUI(onSelect, onBack));
@@ -241,4 +231,3 @@ window.ColorAdvancedEngine = (function () {
   return { render };
 
 })();
-
