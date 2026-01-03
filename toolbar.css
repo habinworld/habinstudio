@@ -67,14 +67,16 @@
 
 /* Active */
 .hb-btn:active {
-  background: #D5E4FF;
-  border-color: #3558A8;
+  background: #FFD1E3;
+  border-color: #FF69B4;
+  color: #3558A8; 
   transform: scale(0.95);
 }
 
 /* Focus */
-.hb-btn:focus {
-  outline: 2px solid rgba(53,88,168,0.35);
+.hb-btn:focus-visible {
+  outline: 2px solid rgba(255,105,180,0.55);
+  outline-offset: 2px;
 }
 
 /* ============================
