@@ -158,22 +158,8 @@
   display: none;
   z-index: 1000;
   background: #FFFFFF;
-
-  border: 1px solid #8F8F8F; /* 기본 2단계 진한 회색 */
-  border-radius: 8px;
-  padding: 8px;
-
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-/* 팝업 호버 – 핑크 포인트 */
-#hb-popup-color-basic:hover,
-#hb-popup-color-advanced:hover,
-#hb-popup-image:hover {
-  border-color: #FF69B4;
-  box-shadow: 0 0 0 2px rgba(255,105,180,0.18);
-}
 
 /* ============================
    이미지 input 숨김
