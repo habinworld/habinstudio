@@ -13,14 +13,9 @@
   align-items: center;
   flex-wrap: nowrap;
   gap: 24px;
-
   padding: 8px 10px;
   margin-bottom: 1px;
-
   background: #FFFFFF;
-  border: 1px solid #C0C6D4;
-  border-radius: 10px;
-
   position: relative;
   z-index: 300;
 }
