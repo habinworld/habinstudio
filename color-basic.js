@@ -1,36 +1,33 @@
 /* ==========================================================
-   🎨 color-basic.js — BASIC Color Palette Engine (FINAL)
+   🎨 color-basic.js — BASIC + STANDARD(256) Color Engine
    ----------------------------------------------------------
-   역할 (헌법 고정):
-   ✔ BASIC 색상 선택 UI 렌더링
-   ✔ 상단 버튼 3개 (색없슴 / 표준색 / 더보기…)
-   ✔ 기본 10색 + 60색 사각 팔레트
-   ✔ 값만 반환 (color | null | "__STANDARD__" | "__ADVANCED__")
-   ❌ 팝업 열기/닫기 ❌ 상태 저장 ❌ 실행 ❌ 판단
+   ✔ 단일 파일
+   ✔ View 전환 방식 (엑셀식)
+   ✔ BASIC : 10색 + 60색
+   ✔ STANDARD : 256 벌집(마름모)
+   ✔ ADVANCED 연결용 신호만 반환
 ========================================================== */
 
 window.ColorBasicEngine = (function () {
 
   /* ======================================================
-     기본 10색 (상단 1줄)
+     상태 (단 하나)
+  ====================================================== */
+  let view = "BASIC"; // "BASIC" | "STANDARD_256"
+  let baseColor = "#000000";
+
+  /* ======================================================
+     BASIC : 기본 10색
   ====================================================== */
   const STANDARD_COLORS = [
-    "#000000", // 검정
-    "#FFFFFF", // 흰색
-    "#FF0000", // 빨강
-    "#FF9900", // 주황
-    "#FFFF00", // 노랑
-    "#00CC00", // 초록
-    "#00FFFF", // 하늘
-    "#0000FF", // 파랑
-    "#9900FF", // 보라
-    "#FF00FF"  // 자홍
+    "#000000","#FFFFFF","#FF0000","#FF9900","#FFFF00",
+    "#00CC00","#00FFFF","#0000FF","#9900FF","#FF00FF"
   ];
 
   /* ======================================================
-     BASIC 60색 팔레트 (사각)
+     BASIC : 60색 사각 팔레트
   ====================================================== */
-  const COLORS = [
+  const COLORS_60 = [
     "#000000","#111111","#222222","#333333","#444444","#555555",
     "#666666","#777777","#888888","#999999","#AAAAAA","#BBBBBB",
 
@@ -46,105 +43,192 @@ window.ColorBasicEngine = (function () {
   ];
 
   /* ======================================================
-     BASIC UI 렌더링
+     외부 진입점
   ====================================================== */
   function render(popup, onSelect) {
     popup.innerHTML = "";
+    if (view === "BASIC") {
+      renderBasicView(popup, onSelect);
+      return;
+    }
+    if (view === "STANDARD_256") {
+      renderStandard256View(popup, onSelect);
+      return;
+    }
+  }
 
-    /* ---------- 팝업 기본 스타일 ---------- */
+  /* ======================================================
+     BASIC VIEW
+  ====================================================== */
+  function renderBasicView(popup, onSelect) {
+
+    baseStyle(popup);
+
+    /* ---------- 상단 버튼 ---------- */
+    const top = gridBar(3);
+
+    top.appendChild(makeBtn("색없슴", () => onSelect(null)));
+    top.appendChild(makeBtn("표준색", () => {
+      view = "STANDARD_256";
+      render(popup, onSelect);
+    }));
+    top.appendChild(makeBtn("더보기…", () => onSelect("__ADVANCED__")));
+
+    popup.appendChild(top);
+    popup.appendChild(divider());
+
+    /* ---------- 기본 10색 ---------- */
+    const row10 = gridRow(10);
+    STANDARD_COLORS.forEach(c => {
+      row10.appendChild(colorBox(c, true, () => onSelect(c)));
+    });
+    popup.appendChild(row10);
+    popup.appendChild(divider());
+
+    /* ---------- 60색 사각 ---------- */
+    const grid60 = document.createElement("div");
+    grid60.style.display = "grid";
+    grid60.style.gridTemplateRows = "repeat(6, 18px)";
+    grid60.style.gridAutoFlow = "column";
+    grid60.style.gridAutoColumns = "18px";
+    grid60.style.gap = "4px";
+
+    COLORS_60.forEach(c => {
+      grid60.appendChild(colorBox(c, false, () => onSelect(c)));
+    });
+
+    popup.appendChild(grid60);
+  }
+
+  /* ======================================================
+     STANDARD 256 VIEW (벌집)
+  ====================================================== */
+  function renderStandard256View(popup, onSelect) {
+
+    baseStyle(popup);
+    let currentColor = baseColor;
+
+    /* ---------- 상단 ---------- */
+    const top = document.createElement("div");
+    top.style.display = "flex";
+    top.style.justifyContent = "space-between";
+    top.style.marginBottom = "8px";
+
+    const title = document.createElement("div");
+    title.textContent = "표준색";
+    title.style.fontWeight = "600";
+
+    const backBtn = makeBtn("뒤로", () => {
+      view = "BASIC";
+      render(popup, onSelect);
+    });
+
+    top.appendChild(title);
+    top.appendChild(backBtn);
+    popup.appendChild(top);
+
+    /* ---------- 벌집 ---------- */
+    const grid = document.createElement("div");
+    grid.style.display = "grid";
+    grid.style.gridTemplateColumns = "repeat(16, 18px)";
+    grid.style.gap = "4px 2px";
+    grid.style.justifyContent = "center";
+
+    const steps = [0,51,102,153,204,255];
+    const colors = [];
+
+    for (let g of steps)
+      for (let r of steps)
+        for (let b of steps)
+          colors.push(`rgb(${r},${g},${b})`);
+
+    colors.slice(0,256).forEach((c,i)=>{
+      const cell = document.createElement("div");
+      cell.style.width = "18px";
+      cell.style.height = "18px";
+      cell.style.background = c;
+      cell.style.clipPath =
+        "polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%)";
+      if (Math.floor(i/16)%2) cell.style.marginLeft = "9px";
+      cell.onclick = () => {
+        currentColor = c;
+        curChip.style.background = c;
+      };
+      grid.appendChild(cell);
+    });
+
+    popup.appendChild(grid);
+
+    /* ---------- 하단 ---------- */
+    const footer = document.createElement("div");
+    footer.style.display = "flex";
+    footer.style.justifyContent = "space-between";
+    footer.style.marginTop = "10px";
+
+    const chips = document.createElement("div");
+    chips.style.display = "flex";
+    chips.style.gap = "12px";
+
+    const baseChip = chip("기존색", baseColor);
+    const curChip = chip("현재색", currentColor);
+
+    chips.appendChild(baseChip);
+    chips.appendChild(curChip);
+
+    const applyBtn = makeBtn("적용", () => onSelect(currentColor));
+
+    footer.appendChild(chips);
+    footer.appendChild(applyBtn);
+    popup.appendChild(footer);
+  }
+
+  /* ======================================================
+     공통 UI
+  ====================================================== */
+  function baseStyle(popup) {
     popup.style.padding = "10px";
     popup.style.background = "#FFFFFF";
     popup.style.border = "1px solid #D0D0D0";
     popup.style.borderRadius = "8px";
     popup.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
-    popup.style.pointerEvents = "auto";
-
-    /* ==================================================
-       A) 상단 버튼 3개
-    ================================================== */
-    const topBar = document.createElement("div");
-    topBar.style.display = "grid";
-    topBar.style.gridTemplateColumns = "1fr 1fr 1fr";
-    topBar.style.gap = "6px";
-
-    const noneBtn = makeBtn("색없슴", () => onSelect(null));
-    const standardBtn = makeBtn("표준색", () => onSelect("__STANDARD__"));
-    const moreBtn = makeBtn("더보기…", () => onSelect("__ADVANCED__"));
-
-    topBar.appendChild(noneBtn);
-    topBar.appendChild(standardBtn);
-    topBar.appendChild(moreBtn);
-
-    popup.appendChild(topBar);
-    popup.appendChild(makeDivider());
-
-    /* ==================================================
-       B) 기본 10색 (상단 1줄)
-    ================================================== */
-    const standardGrid = document.createElement("div");
-    standardGrid.style.display = "grid";
-    standardGrid.style.gridTemplateColumns = "repeat(10, 18px)";
-    standardGrid.style.gap = "4px";
-
-    STANDARD_COLORS.forEach(color => {
-      const box = createColorBox(color, true);
-      box.onclick = () => onSelect(color);
-      standardGrid.appendChild(box);
-    });
-
-    popup.appendChild(standardGrid);
-    popup.appendChild(makeDivider());
-
-    /* ==================================================
-       C) BASIC 60색 사각 팔레트
-    ================================================== */
-    const paletteGrid = document.createElement("div");
-    paletteGrid.style.display = "grid";
-    paletteGrid.style.gridTemplateRows = "repeat(6, 18px)";
-    paletteGrid.style.gridAutoFlow = "column";
-    paletteGrid.style.gridAutoColumns = "18px";
-    paletteGrid.style.gap = "4px";
-
-    COLORS.forEach(color => {
-      const box = createColorBox(color, false);
-      box.onclick = () => onSelect(color);
-      paletteGrid.appendChild(box);
-    });
-
-    popup.appendChild(paletteGrid);
   }
 
-  /* ======================================================
-     공통 UI 파트
-  ====================================================== */
-  function makeBtn(text, onClick) {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "hb-btn";
-    btn.textContent = text;
-    btn.style.padding = "2px 6px";
-    btn.onclick = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      onClick();
-    };
-    return btn;
+  function makeBtn(text, fn) {
+    const b = document.createElement("button");
+    b.className = "hb-btn";
+    b.textContent = text;
+    b.onclick = fn;
+    return b;
   }
 
-  function createColorBox(color, isStandard) {
-    const box = document.createElement("button");
-    box.type = "button";
-    box.style.width = "18px";
-    box.style.height = "18px";
-    box.style.background = color;
-    box.style.border = isStandard ? "1px solid #000" : "1px solid #CCC";
-    box.style.borderRadius = "3px";
-    box.style.padding = "0";
-    box.style.cursor = "pointer";
-    return box;
+  function colorBox(color, strong, fn) {
+    const b = document.createElement("button");
+    b.style.width = "18px";
+    b.style.height = "18px";
+    b.style.background = color;
+    b.style.border = strong ? "1px solid #000" : "1px solid #CCC";
+    b.style.borderRadius = "3px";
+    b.onclick = fn;
+    return b;
   }
 
-  function makeDivider() {
+  function gridBar(n) {
+    const d = document.createElement("div");
+    d.style.display = "grid";
+    d.style.gridTemplateColumns = `repeat(${n},1fr)`;
+    d.style.gap = "6px";
+    return d;
+  }
+
+  function gridRow(n) {
+    const d = document.createElement("div");
+    d.style.display = "grid";
+    d.style.gridTemplateColumns = `repeat(${n},18px)`;
+    d.style.gap = "4px";
+    return d;
+  }
+
+  function divider() {
     const d = document.createElement("div");
     d.style.height = "1px";
     d.style.background = "#DDD";
@@ -152,8 +236,25 @@ window.ColorBasicEngine = (function () {
     return d;
   }
 
+  function chip(label, color) {
+    const w = document.createElement("div");
+    w.style.textAlign = "center";
+    const b = document.createElement("div");
+    b.style.width = "48px";
+    b.style.height = "22px";
+    b.style.border = "1px solid #CCC";
+    b.style.borderRadius = "6px";
+    b.style.background = color;
+    const t = document.createElement("div");
+    t.textContent = label;
+    t.style.fontSize = "12px";
+    w.appendChild(b);
+    w.appendChild(t);
+    return w;
+  }
+
   /* ======================================================
-     외부 API
+     공개 API
   ====================================================== */
   return { render };
 
