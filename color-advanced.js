@@ -201,22 +201,24 @@ window.ColorAdvancedEngine = (function () {
     /* ==================================================
        클릭 처리
     ================================================== */
-    canvas.onclick = e => {
-      const rect = canvas.getBoundingClientRect();
-      const px = e.clientX - rect.left;
-      const py = e.clientY - rect.top;
+   canvas.onclick = e => {
+  const rect = canvas.getBoundingClientRect();
+  const px = e.clientX - rect.left;
+  const py = e.clientY - rect.top;
 
-      for (let i = cells.length - 1; i >= 0; i--) {
-        const c = cells[i];
-        const dx = px - c.x;
-        const dy = py - c.y;
-        if (dx * dx + dy * dy <= R * R) {
-          previewRGBA = c.rgba;
-          next.chip.style.background = previewRGBA;
-          return;
-        }
-      }
-    };
+  // 캔버스 기준 정규화 (-1 ~ 1)
+  const nx = (px / canvas.width) * 2 - 1;
+  const ny = (py / canvas.height) * 2 - 1;
+
+  // RGB 계산 (연속 색)
+  const r = Math.round((nx + 1) / 2 * 255);
+  const g = Math.round((ny + 1) / 2 * 255);
+  const b = Math.round(bIndex * 255 / (B_LEVELS - 1));
+
+  previewRGBA = `rgba(${r},${g},${b},1)`;
+  next.chip.style.background = previewRGBA;
+};
+
 
     /* ---------- 조립 ---------- */
     box.appendChild(top);
