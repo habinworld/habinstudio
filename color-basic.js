@@ -84,6 +84,23 @@ function rgbToHsl(r, g, b) {
   }
   return { h, s, l };
 }
+* =======================
+   🔧 2번: 정렬 함수 (여기!)
+======================= */
+function sortColors256(colors) {
+  return colors.slice().sort((a, b) => {
+    const [r1,g1,b1] = a.match(/\d+/g).map(Number);
+    const [r2,g2,b2] = b.match(/\d+/g).map(Number);
+
+    const c1 = rgbToHsl(r1, g1, b1);
+    const c2 = rgbToHsl(r2, g2, b2);
+
+    // 위 → 아래 : 명도
+    if (c1.l !== c2.l) return c1.l - c2.l;
+    // 좌 → 우 : 색상
+    return c1.h - c2.h;
+  });
+}
   /* ======================================================
      외부 진입점
   ====================================================== */
