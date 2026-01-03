@@ -152,20 +152,21 @@ window.ColorBasicEngine = (function () {
 
     const colors = buildColors256();
 
-    colors.forEach((c, i) => {
-      const cell = document.createElement("div");
-      cell.style.width = "18px";
-      cell.style.height = "18px";
-      cell.style.background = c;
-      cell.style.width = "16px";
-      cell.style.height = "16px";
-      cell.style.border = "1px solid #E0E0E0";
-      cell.onclick = () => {
-        currentColor = c;
-        curChip.style.background = c;
-      };
-      grid.appendChild(cell);
-    });
+    colors.forEach((c) => {
+  const cell = document.createElement("div");
+  cell.style.width = "16px";
+  cell.style.height = "16px";
+  cell.style.background = c;
+  cell.style.border = "1px solid #E0E0E0";
+  cell.style.cursor = "pointer";
+
+  cell.onclick = () => {
+    currentColor = c;
+    curChip.style.background = c;
+  };
+
+  grid.appendChild(cell);
+});
 
     popup.appendChild(grid);
 
