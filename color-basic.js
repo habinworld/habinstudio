@@ -170,31 +170,65 @@ window.ColorBasicEngine = (function () {
 
     popup.appendChild(grid);
 
-    /* ---------- 하단 ---------- */
-    const footer = document.createElement("div");
-    footer.style.display = "flex";
-    footer.style.justifyContent = "space-between";
-    footer.style.marginTop = "10px";
+   /* ==================================================
+   하단: 기준색 / 현재색 / 적용  (Advanced 완전 복사)
+================================================== */
+const panel = document.createElement("div");
+panel.style.display = "flex";
+panel.style.alignItems = "center";
+panel.style.gap = "20px";
 
-    const chips = document.createElement("div");
-    chips.style.display = "flex";
-    chips.style.gap = "12px";
+function makeChip(label, color) {
+  const wrap = document.createElement("div");
+  wrap.style.textAlign = "center";
 
-    const baseChip = chip("기존색", baseColor);
-    const curChip = chip("현재색", currentColor);
+  const chip = document.createElement("div");
+  chip.style.width = "60px";
+  chip.style.height = "25px";
+  chip.style.border = "1px solid #CCC";
+  chip.style.borderRadius = "6px";
+  chip.style.background = color;
 
-    chips.appendChild(baseChip);
-    chips.appendChild(curChip);
+  const text = document.createElement("div");
+  text.textContent = label;
+  text.style.fontSize = "15px";
+  text.style.fontWeight = "600";
+  text.style.marginTop = "4px";
+  text.style.color = (label === "현재색") ? "#00CC00" : "#333";
 
-    const applyBtn = makeBtn("적용", () => {
-      baseColor = currentColor;
-      onSelect(currentColor);
-    });
+  wrap.appendChild(chip);
+  wrap.appendChild(text);
+  return { wrap, chip };
+}
 
-    footer.appendChild(chips);
-    footer.appendChild(applyBtn);
-    popup.appendChild(footer);
-  }
+/* Advanced와 동일한 의미 */
+let currentRGBA = baseColor;   // 기준색 (열릴 때)
+let previewRGBA = baseColor;   // 현재색 (선택 중)
+
+const base = makeChip("기준색", currentRGBA);
+const cur  = makeChip("현재색", previewRGBA);
+
+panel.appendChild(base.wrap);
+panel.appendChild(cur.wrap);
+
+const footer = document.createElement("div");
+footer.style.display = "flex";
+footer.style.alignItems = "center";
+footer.style.justifyContent = "space-between";
+footer.style.marginTop = "12px";
+
+const applyBtn = document.createElement("button");
+applyBtn.className = "hb-btn";
+applyBtn.textContent = "적용";
+applyBtn.style.color = "#FF0000";
+
+applyBtn.onclick = () => {
+  onSelect && onSelect(previewRGBA);
+};
+
+footer.appendChild(panel);
+footer.appendChild(applyBtn);
+popup.appendChild(footer);
 
   /* ======================================================
      공통 UI
