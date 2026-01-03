@@ -227,7 +227,7 @@ applyBtn.onclick = () => {
 footer.appendChild(panel);
 footer.appendChild(applyBtn);
 popup.appendChild(footer);
-
+}
   /* ======================================================
      공통 UI
   ====================================================== */
