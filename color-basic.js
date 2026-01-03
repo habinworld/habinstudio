@@ -44,16 +44,23 @@ window.ColorBasicEngine = (function () {
      STANDARD : 256색 (Excel Color Cube)
   ====================================================== */
   function buildColors256() {
-    const list = [];
-    const steps = [0, 51, 102, 153, 204, 255];
+  const list = [];
+  const steps = [0, 51, 102, 153, 204, 255];
 
-    for (let g of steps)
-      for (let r of steps)
-        for (let b of steps)
-          list.push(`rgb(${r},${g},${b})`);
+  // 1) 216 color cube
+  for (let g of steps)
+    for (let r of steps)
+      for (let b of steps)
+        list.push(`rgb(${r},${g},${b})`);
 
-    return list.slice(0, 256);
+  // 2) 40 grayscale
+  for (let i = 0; i < 40; i++) {
+    const v = Math.round((255 * i) / 39);
+    list.push(`rgb(${v},${v},${v})`);
   }
+
+  return list; // 정확히 256
+}
 
   /* ======================================================
      외부 진입점
