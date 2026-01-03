@@ -1,23 +1,36 @@
 /* ==========================================================
-   🎨 color-advanced.js — Advanced Color Engine (FINAL)
+   🎨 color-advanced.js — Excel-Style Advanced Color Engine (FINAL)
    ----------------------------------------------------------
-   형식:
-   ✔ 사각 색 평면 (연속 RGB)
-   ✔ 벌집 오버레이 (UI 가이드 전용)
-   ✔ 클릭 위치 = 색
-   ✔ B 축으로 1024 확장 준비
+   역할:
+   ✔ Excel 사용자 지정 RGB 방식 UI
+   ✔ 색 평면(2D) + 세로 슬라이더(1D) + RGB 숫자 입력
+   ✔ 선택 값 확정 시 rgba 문자열 반환
+   ✔ 뒤로 버튼 → MODE_BASIC 복귀 신호
+   ❌ 팝업 열기/닫기 ❌ ESC ❌ 실행 ❌ MODE 판단
 ========================================================== */
 
 window.ColorAdvancedEngine = (function () {
 
+  function clamp255(n) {
+    n = Number(n);
+    if (Number.isNaN(n)) return 0;
+    return Math.max(0, Math.min(255, Math.round(n)));
+  }
+
+  function rgbaStr(r, g, b) {
+    return `rgba(${r},${g},${b},1)`;
+  }
+
+  /* ======================================================
+     UI 생성
+  ====================================================== */
   function createUI(onSelect, onBack) {
 
-    /* ---------- 상태 ---------- */
-    let currentRGBA = "rgba(0,0,0,1)";
-    let previewRGBA = currentRGBA;
+    /* ---------- 상태 (Excel: RGB 정수 = 유일한 진실) ---------- */
+    let state = { r: 0, g: 0, b: 0 };
 
-    let bIndex = 8;
-    const B_LEVELS = 16;
+    let currentRGBA = rgbaStr(state.r, state.g, state.b);
+    let previewRGBA = currentRGBA;
 
     /* ---------- 컨테이너 ---------- */
     const box = document.createElement("div");
@@ -26,15 +39,18 @@ window.ColorAdvancedEngine = (function () {
     box.style.border = "1px solid #D0D0D0";
     box.style.borderRadius = "10px";
     box.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
-    box.style.width = "260px";
+    box.style.width = "300px";
     box.style.fontFamily = "Noto Sans KR, sans-serif";
     box.style.fontSize = "13px";
 
-    /* ---------- 상단 ---------- */
+    /* ==================================================
+       상단 바
+    ================================================== */
     const top = document.createElement("div");
     top.style.display = "flex";
     top.style.justifyContent = "space-between";
-    top.style.marginBottom = "8px";
+    top.style.alignItems = "center";
+    top.style.marginBottom = "10px";
 
     const title = document.createElement("div");
     title.textContent = "사용자 지정 색";
@@ -45,167 +61,307 @@ window.ColorAdvancedEngine = (function () {
     backBtn.textContent = "뒤로";
     backBtn.onclick = () => onBack && onBack();
 
-    top.append(title, backBtn);
+    top.appendChild(title);
+    top.appendChild(backBtn);
 
     /* ==================================================
-       색 평면 + 벌집 오버레이
+       색 선택 영역 (사각 평면 + 세로 슬라이더)
     ================================================== */
-    const wrap = document.createElement("div");
-    wrap.style.position = "relative";
-    wrap.style.width = "240px";
-    wrap.style.height = "190px";
+    const pickerRow = document.createElement("div");
+    pickerRow.style.display = "flex";
+    pickerRow.style.gap = "10px";
+    pickerRow.style.alignItems = "flex-start";
 
-    const colorCanvas = document.createElement("canvas");
-    colorCanvas.width = 240;
-    colorCanvas.height = 190;
-    colorCanvas.style.position = "absolute";
-    colorCanvas.style.left = "0";
-    colorCanvas.style.top = "0";
-    colorCanvas.style.cursor = "crosshair";
+    // 평면(2D): X=R, Y=G / 세로 슬라이더: B
+    const planeWrap = document.createElement("div");
+    planeWrap.style.position = "relative";
+    planeWrap.style.width = "200px";
+    planeWrap.style.height = "140px";
+    planeWrap.style.border = "1px solid #CCC";
+    planeWrap.style.borderRadius = "6px";
+    planeWrap.style.overflow = "hidden";
 
-    const gridCanvas = document.createElement("canvas");
-    gridCanvas.width = 240;
-    gridCanvas.height = 190;
-    gridCanvas.style.position = "absolute";
-    gridCanvas.style.left = "0";
-    gridCanvas.style.top = "0";
-    gridCanvas.style.pointerEvents = "none";
+    const plane = document.createElement("canvas");
+    plane.width = 200;
+    plane.height = 140;
+    plane.style.display = "block";
+    plane.style.cursor = "crosshair";
 
-    wrap.append(colorCanvas, gridCanvas);
+    // 마커(오버레이)
+    const marker = document.createElement("div");
+    marker.style.position = "absolute";
+    marker.style.width = "10px";
+    marker.style.height = "10px";
+    marker.style.border = "2px solid #FFFFFF";
+    marker.style.boxShadow = "0 0 0 1px rgba(0,0,0,0.6)";
+    marker.style.borderRadius = "2px";
+    marker.style.pointerEvents = "none";
+    marker.style.left = "0px";
+    marker.style.top = "0px";
 
-    const colorCtx = colorCanvas.getContext("2d");
-    const gridCtx = gridCanvas.getContext("2d");
+    planeWrap.appendChild(plane);
+    planeWrap.appendChild(marker);
 
-    /* ---------- 색 평면 ---------- */
-    function drawColorPlane() {
-      const img = colorCtx.createImageData(240, 190);
+    // B 슬라이더 (세로)
+    const sliderWrap = document.createElement("div");
+    sliderWrap.style.display = "flex";
+    sliderWrap.style.flexDirection = "column";
+    sliderWrap.style.alignItems = "center";
+    sliderWrap.style.gap = "6px";
+
+    const bLabel = document.createElement("div");
+    bLabel.textContent = "B";
+    bLabel.style.fontWeight = "600";
+
+    const bSlider = document.createElement("input");
+    bSlider.type = "range";
+    bSlider.min = "0";
+    bSlider.max = "255";
+    bSlider.value = String(state.b);
+    bSlider.style.width = "16px";
+    bSlider.style.height = "140px";
+    bSlider.style.writingMode = "bt-lr";         // 일부 브라우저
+    bSlider.style.webkitAppearance = "slider-vertical"; // 크롬/엣지
+    bSlider.style.padding = "0";
+
+    const bValue = document.createElement("div");
+    bValue.textContent = String(state.b);
+    bValue.style.fontSize = "12px";
+    bValue.style.color = "#555";
+
+    sliderWrap.appendChild(bLabel);
+    sliderWrap.appendChild(bSlider);
+    sliderWrap.appendChild(bValue);
+
+    pickerRow.appendChild(planeWrap);
+    pickerRow.appendChild(sliderWrap);
+
+    /* ---------- 평면 그리기 (Excel식: 현재 B 고정, R/G 평면) ---------- */
+    const pctx = plane.getContext("2d");
+
+    function drawPlane() {
+      const w = plane.width;
+      const h = plane.height;
+      const img = pctx.createImageData(w, h);
       const data = img.data;
-      const b = Math.round(bIndex * 255 / (B_LEVELS - 1));
 
+      const B = state.b;
       let i = 0;
-      for (let y = 0; y < 190; y++) {
-        for (let x = 0; x < 240; x++) {
-          data[i++] = Math.round(x / 239 * 255);
-          data[i++] = Math.round(y / 189 * 255);
-          data[i++] = b;
+
+      for (let y = 0; y < h; y++) {
+        const g = Math.round((y / (h - 1)) * 255);
+        for (let x = 0; x < w; x++) {
+          const r = Math.round((x / (w - 1)) * 255);
+          data[i++] = r;
+          data[i++] = g;
+          data[i++] = B;
           data[i++] = 255;
         }
       }
-      colorCtx.putImageData(img, 0, 0);
+
+      pctx.putImageData(img, 0, 0);
+      moveMarkerFromState();
     }
 
-    /* ---------- 벌집 오버레이 ---------- */
-    function drawHoneycomb() {
-      gridCtx.clearRect(0, 0, 240, 190);
+    function moveMarkerFromState() {
+      const w = plane.width;
+      const h = plane.height;
 
-      const R = 10;
-      const dx = R * 1.75;
-      const dy = R * 1.5;
-      const rows = [6,7,8,9,10,11,10,9,8,7,6];
-      const cx0 = 240 / 2;
-      let y = 22;
+      const x = Math.round((state.r / 255) * (w - 1));
+      const y = Math.round((state.g / 255) * (h - 1));
 
-      gridCtx.strokeStyle = "rgba(0,0,0,0.15)";
-      gridCtx.lineWidth = 1;
-
-      rows.forEach(count => {
-        let x = cx0 - ((count - 1) * dx) / 2;
-        for (let i = 0; i < count; i++) {
-          gridCtx.beginPath();
-          for (let k = 0; k < 6; k++) {
-            const a = Math.PI / 3 * k + Math.PI / 6;
-            const px = x + R * Math.cos(a);
-            const py = y + R * Math.sin(a);
-            k === 0 ? gridCtx.moveTo(px, py) : gridCtx.lineTo(px, py);
-          }
-          gridCtx.closePath();
-          gridCtx.stroke();
-          x += dx;
-        }
-        y += dy;
-      });
+      marker.style.left = `${x - 5}px`;
+      marker.style.top = `${y - 5}px`;
     }
 
-    function redrawAll() {
-      drawColorPlane();
-      drawHoneycomb();
-    }
+    function setRGFromPointer(ev) {
+      const rect = plane.getBoundingClientRect();
+      const scaleX = plane.width / rect.width;
+      const scaleY = plane.height / rect.height;
 
-    redrawAll();
+      const px = (ev.clientX - rect.left) * scaleX;
+      const py = (ev.clientY - rect.top) * scaleY;
 
-    /* ---------- 클릭 = 색 ---------- */
-    colorCanvas.onclick = e => {
-      const rect = colorCanvas.getBoundingClientRect();
-      const scaleX = colorCanvas.width / rect.width;
-      const scaleY = colorCanvas.height / rect.height;
+      const x = Math.max(0, Math.min(plane.width - 1, px));
+      const y = Math.max(0, Math.min(plane.height - 1, py));
 
-      const x = (e.clientX - rect.left) * scaleX;
-      const y = (e.clientY - rect.top) * scaleY;
+      state.r = clamp255((x / (plane.width - 1)) * 255);
+      state.g = clamp255((y / (plane.height - 1)) * 255);
 
-      const r = Math.round(x / 239 * 255);
-      const g = Math.round(y / 189 * 255);
-      const b = Math.round(bIndex * 255 / (B_LEVELS - 1));
-
-      previewRGBA = `rgba(${r},${g},${b},1)`;
+      syncInputsFromState();
+      previewRGBA = rgbaStr(state.r, state.g, state.b);
       next.chip.style.background = previewRGBA;
-    };
+      moveMarkerFromState();
+    }
 
-    /* ---------- B 축 ---------- */
-    const bBar = document.createElement("div");
-    bBar.style.display = "flex";
-    bBar.style.gap = "6px";
-    bBar.style.marginTop = "6px";
+    // 클릭/드래그 지원
+    let dragging = false;
+    plane.addEventListener("mousedown", (e) => {
+      dragging = true;
+      setRGFromPointer(e);
+    });
+    window.addEventListener("mousemove", (e) => {
+      if (!dragging) return;
+      setRGFromPointer(e);
+    });
+    window.addEventListener("mouseup", () => {
+      dragging = false;
+    });
 
-    const down = document.createElement("button");
-    down.className = "hb-btn";
-    down.textContent = "B-";
-    down.onclick = () => {
-      bIndex = Math.max(0, bIndex - 1);
-      redrawAll();
-    };
+    /* ==================================================
+       색 모델 / RGB 입력 (Excel식)
+    ================================================== */
+    const form = document.createElement("div");
+    form.style.marginTop = "10px";
+    form.style.display = "grid";
+    form.style.gridTemplateColumns = "80px 1fr";
+    form.style.gap = "6px 8px";
+    form.style.alignItems = "center";
 
-    const up = document.createElement("button");
-    up.className = "hb-btn";
-    up.textContent = "B+";
-    up.onclick = () => {
-      bIndex = Math.min(B_LEVELS - 1, bIndex + 1);
-      redrawAll();
-    };
+    function makeLabel(text) {
+      const el = document.createElement("div");
+      el.textContent = text;
+      el.style.color = "#333";
+      return el;
+    }
 
-    bBar.append(down, up);
+    // 색 모델 (고정: RGB)
+    const modelLabel = makeLabel("색 모델(D):");
+    const modelSelect = document.createElement("select");
+    modelSelect.disabled = true;
+    modelSelect.style.height = "26px";
+    modelSelect.style.border = "1px solid #CCC";
+    modelSelect.style.borderRadius = "6px";
+    modelSelect.style.padding = "0 6px";
+    const opt = document.createElement("option");
+    opt.value = "RGB";
+    opt.textContent = "RGB";
+    modelSelect.appendChild(opt);
 
-    /* ---------- 현재 / 새 색 ---------- */
+    function makeNumRow(name, initial, onChange) {
+      const input = document.createElement("input");
+      input.type = "number";
+      input.min = "0";
+      input.max = "255";
+      input.step = "1";
+      input.value = String(initial);
+      input.style.height = "26px";
+      input.style.border = "1px solid #CCC";
+      input.style.borderRadius = "6px";
+      input.style.padding = "0 8px";
+      input.style.width = "100%";
+
+      input.addEventListener("input", () => onChange(input.value));
+      input.addEventListener("blur", () => {
+        // blur 시 정리
+        input.value = String(clamp255(input.value));
+      });
+
+      return input;
+    }
+
+    const rLabel = makeLabel("빨강(R):");
+    const gLabel = makeLabel("녹색(G):");
+    const bNumLabel = makeLabel("파랑(B):");
+
+    const rInput = makeNumRow("R", state.r, (v) => {
+      state.r = clamp255(v);
+      syncInputsFromState();
+      previewRGBA = rgbaStr(state.r, state.g, state.b);
+      next.chip.style.background = previewRGBA;
+      moveMarkerFromState();
+    });
+
+    const gInput = makeNumRow("G", state.g, (v) => {
+      state.g = clamp255(v);
+      syncInputsFromState();
+      previewRGBA = rgbaStr(state.r, state.g, state.b);
+      next.chip.style.background = previewRGBA;
+      moveMarkerFromState();
+    });
+
+    const bInput = makeNumRow("B", state.b, (v) => {
+      state.b = clamp255(v);
+      syncInputsFromState();
+      bSlider.value = String(state.b);
+      bValue.textContent = String(state.b);
+      drawPlane();
+      previewRGBA = rgbaStr(state.r, state.g, state.b);
+      next.chip.style.background = previewRGBA;
+    });
+
+    function syncInputsFromState() {
+      // 숫자칸 동기화
+      if (document.activeElement !== rInput) rInput.value = String(state.r);
+      if (document.activeElement !== gInput) gInput.value = String(state.g);
+      if (document.activeElement !== bInput) bInput.value = String(state.b);
+
+      bSlider.value = String(state.b);
+      bValue.textContent = String(state.b);
+    }
+
+    form.appendChild(modelLabel);
+    form.appendChild(modelSelect);
+
+    form.appendChild(rLabel);
+    form.appendChild(rInput);
+
+    form.appendChild(gLabel);
+    form.appendChild(gInput);
+
+    form.appendChild(bNumLabel);
+    form.appendChild(bInput);
+
+    // 슬라이더 변경 → B 변경
+    bSlider.addEventListener("input", () => {
+      state.b = clamp255(bSlider.value);
+      bInput.value = String(state.b);
+      bValue.textContent = String(state.b);
+      drawPlane();
+      previewRGBA = rgbaStr(state.r, state.g, state.b);
+      next.chip.style.background = previewRGBA;
+    });
+
+    /* ==================================================
+       현재 색 / 새 색 패널 (Excel식)
+    ================================================== */
+    const panel = document.createElement("div");
+    panel.style.display = "flex";
+    panel.style.justifyContent = "flex-end";
+    panel.style.gap = "10px";
+    panel.style.marginTop = "10px";
+
     function makeChip(label, color) {
       const wrap = document.createElement("div");
       wrap.style.textAlign = "center";
 
       const chip = document.createElement("div");
-      chip.style.width = "48px";
-      chip.style.height = "28px";
+      chip.style.width = "70px";
+      chip.style.height = "42px";
       chip.style.border = "1px solid #CCC";
       chip.style.borderRadius = "6px";
       chip.style.background = color;
 
       const text = document.createElement("div");
       text.textContent = label;
-      text.style.fontSize = "11px";
-      text.style.marginTop = "2px";
+      text.style.fontSize = "12px";
+      text.style.marginTop = "4px";
+      text.style.color = "#333";
 
-      wrap.append(chip, text);
+      wrap.appendChild(chip);
+      wrap.appendChild(text);
       return { wrap, chip };
     }
 
-    const panel = document.createElement("div");
-    panel.style.display = "flex";
-    panel.style.justifyContent = "space-between";
-    panel.style.marginTop = "10px";
-
-    const cur = makeChip("현재 색", currentRGBA);
     const next = makeChip("새 색", previewRGBA);
+    const cur = makeChip("현재 색", currentRGBA);
 
-    panel.append(cur.wrap, next.wrap);
+    panel.appendChild(next.wrap);
+    panel.appendChild(cur.wrap);
 
-    /* ---------- 적용 ---------- */
+    /* ==================================================
+       적용 버튼
+    ================================================== */
     const applyBtn = document.createElement("button");
     applyBtn.className = "hb-btn";
     applyBtn.textContent = "적용";
@@ -218,11 +374,24 @@ window.ColorAdvancedEngine = (function () {
       onSelect && onSelect(currentRGBA);
     };
 
+    /* ---------- 초기 렌더 ---------- */
+    drawPlane();
+    previewRGBA = rgbaStr(state.r, state.g, state.b);
+    next.chip.style.background = previewRGBA;
+
     /* ---------- 조립 ---------- */
-    box.append(top, wrap, bBar, panel, applyBtn);
+    box.appendChild(top);
+    box.appendChild(pickerRow);
+    box.appendChild(form);
+    box.appendChild(panel);
+    box.appendChild(applyBtn);
+
     return box;
   }
 
+  /* ======================================================
+     외부 API (MODE 전환 계약)
+  ====================================================== */
   function render(popup, onSelect, onBack) {
     popup.innerHTML = "";
     popup.appendChild(createUI(onSelect, onBack));
