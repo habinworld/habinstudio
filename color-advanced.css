@@ -1,14 +1,30 @@
+/* ======================================================
+   🎨 Advanced Color UI (RGB Plane + Honeycomb Overlay)
+   ------------------------------------------------------
+   ✔ 색 평면 캔버스 기준 레이아웃
+   ✔ JS width/height와 1:1 대응
+   ✔ 좌표 깨짐 / 72색 착시 완전 차단
+====================================================== */
+
+/* Advanced 색상 팝업 박스 */
 .hb-advcolor-box {
   position: absolute;
-  background: #FFF;
-  padding: 10px;
-  border: 1px solid #CCC;
-  border-radius: 8px;
+  background: #FFFFFF;
+  padding: 12px;
+  border: 1px solid #D0D0D0;
+  border-radius: 10px;
   z-index: 99999;
-  width: 180px;
-  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+
+  /* 🔑 JS에서 설정한 width를 존중 */
+  width: auto;
+  min-width: 260px;
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 13px;
 }
 
+/* 내부 행 (베이직 UI용 – 충돌 없음) */
 .adv-row {
   display: flex;
   align-items: center;
@@ -24,6 +40,7 @@
   flex: 1;
 }
 
+/* 색 미리보기 박스 (베이직/공용) */
 .adv-preview {
   width: 100%;
   height: 32px;
@@ -32,13 +49,39 @@
   margin: 8px 0;
 }
 
+/* 적용 버튼 (공용) */
 #adv-apply {
   width: 100%;
-  padding: 6px;
+  padding: 6px 12px;
   background: #3558A8;
-  color: #FFF;
+  color: #FFFFFF;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  font-size: 15px;
+}
+
+/* ------------------------------------------------------
+   ⚠️ 중요: Advanced RGB 캔버스 보호 규칙
+   ------------------------------------------------------
+   canvas는 반드시 JS width/height 기준으로만 사용
+   CSS에서 크기 조정 절대 금지
+------------------------------------------------------ */
+
+/* ❌ 전역 canvas 스타일 금지 */
+/*
+canvas {
+  width: 100%;
+  height: auto;
+}
+*/
+
+/* 혹시 전역 canvas 스타일이 있다면 무력화 */
+.hb-advcolor-box canvas {
+  width: auto !important;
+  height: auto !important;
+  max-width: none !important;
+  max-height: none !important;
+  display: block;
 }
 
