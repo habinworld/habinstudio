@@ -221,7 +221,7 @@ function sortColorsForGrid(colors) {
 
     const grayRow1 = buildGrayRowBlack();   // 1줄: 검정 → 연회색
     const grayRow2 = buildGrayRowDark();    // 2줄: 진그레이 → 연회색
-    
+    const colorPart = buildColors256().slice(32);
 const colors = [
   ...grayRow1,
   ...grayRow2,
