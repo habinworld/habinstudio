@@ -227,6 +227,7 @@ const colors = [
   ...grayRow2,
   ...colorPart
 ];
+     console.assert(colors.length === 256, "❌ colors 개수 오류:", colors.length);
     colors.forEach((c) => {
   const cell = document.createElement("div");
   cell.style.width = "16px";
