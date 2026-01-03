@@ -117,8 +117,8 @@ window.ColorBasicEngine = (function () {
   }
 
   /* ======================================================
-     STANDARD 256 VIEW (벌집)
-  ====================================================== */
+     STANDARD 256 VIEW 
+     ====================================================== */
   function renderStandard256View(popup, onSelect) {
 
     baseStyle(popup);
@@ -146,8 +146,8 @@ window.ColorBasicEngine = (function () {
     /* ---------- 벌집 ---------- */
     const grid = document.createElement("div");
     grid.style.display = "grid";
-    grid.style.gridTemplateColumns = "repeat(16, 18px)";
-    grid.style.gap = "4px 2px";
+    grid.style.gridTemplateColumns = "repeat(16, 16px)";
+    grid.style.gap = "1px";
     grid.style.justifyContent = "center";
 
     const colors = buildColors256();
