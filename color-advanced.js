@@ -80,15 +80,15 @@ window.ColorAdvancedEngine = (function () {
     // 평면(2D): X=R, Y=G / 세로 슬라이더: B
     const planeWrap = document.createElement("div");
     planeWrap.style.position = "relative";
-    planeWrap.style.width = "200px";
-    planeWrap.style.height = "140px";
+    planeWrap.style.width = "320px";
+    planeWrap.style.height = "220px";
     planeWrap.style.border = "1px solid #CCC";
     planeWrap.style.borderRadius = "6px";
     planeWrap.style.overflow = "hidden";
 
     const plane = document.createElement("canvas");
-    plane.width = 200;
-    plane.height = 140;
+    plane.width = 320;
+    plane.height = 220;
     plane.style.display = "block";
     plane.style.cursor = "crosshair";
 
