@@ -236,8 +236,15 @@ function sortColorsForGrid(colors) {
     grid.style.rowGap = "0px";    // 세로는 제거
     grid.style.justifyContent = "center";
 
-    const colors = sortColors256(buildColors256());
+    const grayRow1 = buildGrayRowBlack();   // 1줄: 검정 → 연회색
+    const grayRow2 = buildGrayRowDark();    // 2줄: 진그레이 → 연회색
+    const colorPart = sortColorsForGrid(buildColors256());
 
+const colors = [
+  ...grayRow1,
+  ...grayRow2,
+  ...colorPart
+];
     colors.forEach((c) => {
   const cell = document.createElement("div");
   cell.style.width = "16px";
