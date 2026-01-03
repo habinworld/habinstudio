@@ -155,7 +155,7 @@ window.ColorBasicEngine = (function () {
   cell.style.width = "16px";
   cell.style.height = "13px";
   cell.style.background = c;
-  cell.style.border = "solid #E0E0E0";
+  cell.style.border = "1px solid #E0E0E0";
   cell.style.cursor = "pointer";
 
   cell.onclick = () => {
