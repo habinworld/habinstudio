@@ -21,4 +21,10 @@
 .hb-color-basic-item:hover {
   transform: scale(1.1);
 }
-
+/* ==============================
+   STANDARD 256 : 엑셀식 고정 테이블
+   ============================== */
+#hb-color-popup.hb-color-standard {
+  width: 320px;
+  height: 370px;   /* 고정 */
+}
