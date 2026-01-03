@@ -59,9 +59,15 @@ window.ColorAdvancedEngine = (function () {
     backBtn.className = "hb-btn";
     backBtn.textContent = "뒤로";
     backBtn.onclick = () => onBack && onBack();
+    // 제목 + 뒤로 묶기
+    const titleWrap = document.createElement("div");
+    titleWrap.style.display = "flex";
+    titleWrap.style.alignItems = "center";
+    titleWrap.style.gap = "6px";
+    titleWrap.appendChild(title);
+    titleWrap.appendChild(backBtn);
 
-    top.appendChild(title);
-    top.appendChild(backBtn);
+    top.appendChild(titleWrap);
 
     /* ==================================================
        색 선택 영역 (사각 평면 + 세로 슬라이더)
