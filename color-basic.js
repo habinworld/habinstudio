@@ -34,11 +34,26 @@ window.ColorBasicEngine = (function () {
     "#4A2A00","#7A4200","#B06000","#E08000","#FFA500","#FFB733",
     "#4A4A00","#7A7A00","#B0B000","#E0E000","#FFFF33","#FFFF66",
     "#004A1A","#007A2A","#00B040","#00E060","#33FF88","#66FFAA",
-    "#00384A","#005E7A","#0086B0","#00B0F0","#33C8FF","#66DAFF", 
+    "#00384A","#005E7A","#0086B0","#00B0F0","#33C8FF","#66DAFF",
     "#001A4A","#002A7A","#0040B0","#0060E0","#3388FF","#66AAFF",
     "#2B0033","#4A0066","#6A0099","#8A33CC","#AA66EE","#CC99FF",
     "#7A003C","#A8004F","#D40063","#FF2E7E","#FF6FA6","#FF9FC5"
   ];
+
+  /* ======================================================
+     STANDARD : 256색 (Excel Color Cube)
+  ====================================================== */
+  function buildColors256() {
+    const list = [];
+    const steps = [0, 51, 102, 153, 204, 255];
+
+    for (let g of steps)
+      for (let r of steps)
+        for (let b of steps)
+          list.push(`rgb(${r},${g},${b})`);
+
+    return list.slice(0, 256);
+  }
 
   /* ======================================================
      외부 진입점
@@ -55,6 +70,10 @@ window.ColorBasicEngine = (function () {
     }
   }
 
+  function setView(v) {
+    view = v;
+  }
+
   /* ======================================================
      BASIC VIEW
   ====================================================== */
@@ -64,7 +83,6 @@ window.ColorBasicEngine = (function () {
 
     /* ---------- 상단 버튼 ---------- */
     const top = gridBar(3);
-
     top.appendChild(makeBtn("색없슴", () => onSelect(null)));
     top.appendChild(makeBtn("표준색", () => {
       view = "STANDARD_256";
@@ -132,22 +150,16 @@ window.ColorBasicEngine = (function () {
     grid.style.gap = "4px 2px";
     grid.style.justifyContent = "center";
 
-    const steps = [0,51,102,153,204,255];
-    const colors = [];
+    const colors = buildColors256();
 
-    for (let g of steps)
-      for (let r of steps)
-        for (let b of steps)
-          colors.push(`rgb(${r},${g},${b})`);
-
-    colors.slice(0,256).forEach((c,i)=>{
+    colors.forEach((c, i) => {
       const cell = document.createElement("div");
       cell.style.width = "18px";
       cell.style.height = "18px";
       cell.style.background = c;
       cell.style.clipPath =
         "polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%)";
-      if (Math.floor(i/16)%2) cell.style.marginLeft = "9px";
+      if (Math.floor(i / 16) % 2) cell.style.marginLeft = "9px";
       cell.onclick = () => {
         currentColor = c;
         curChip.style.background = c;
@@ -173,7 +185,10 @@ window.ColorBasicEngine = (function () {
     chips.appendChild(baseChip);
     chips.appendChild(curChip);
 
-    const applyBtn = makeBtn("적용", () => onSelect(currentColor));
+    const applyBtn = makeBtn("적용", () => {
+      baseColor = currentColor;
+      onSelect(currentColor);
+    });
 
     footer.appendChild(chips);
     footer.appendChild(applyBtn);
@@ -254,7 +269,10 @@ window.ColorBasicEngine = (function () {
   /* ======================================================
      공개 API
   ====================================================== */
-  return { render };
+  return {
+    render,
+    setView
+  };
 
 })();
 
