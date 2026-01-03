@@ -360,7 +360,7 @@ window.ColorAdvancedEngine = (function () {
 const footer = document.createElement("div");
 footer.style.display = "flex";
 footer.style.alignItems = "center";
-footer.style.gap = "8px";
+footer.style.gap = "12px";
 footer.style.marginTop = "10px";
     /* ==================================================
        적용 버튼
