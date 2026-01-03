@@ -36,7 +36,6 @@ window.ColorAdvancedEngine = (function () {
     const box = document.createElement("div");
     box.style.padding = "12px";
     box.style.background = "#FFFFFF";
-    box.style.border = "1px solid #D0D0D0";
     box.style.borderRadius = "10px";
     box.style.boxShadow = "0 2px 8px rgba(0,0,0,0.15)";
     box.style.width = "300px";
