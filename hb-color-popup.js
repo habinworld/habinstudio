@@ -20,7 +20,7 @@ window.HB_COLOR_POPUP = (function () {
 
     popup = document.createElement("div");
     popup.id = "hb-color-popup";
-    popup.style.position = "absolute";
+    popup.style.position = "fixed";
     popup.style.display = "none";
     popup.style.zIndex = "999999";
 
