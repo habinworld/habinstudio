@@ -322,7 +322,7 @@ window.ColorAdvancedEngine = (function () {
     });
 
     /* ==================================================
-       현재 색 / 새 색 패널 (Excel식)
+       기존색 / 현재색 패널 (Excel식)
     ================================================== */
     const panel = document.createElement("div");
     panel.style.display = "flex";
@@ -352,12 +352,17 @@ window.ColorAdvancedEngine = (function () {
       return { wrap, chip };
     }
 
-    const next = makeChip("새 색", previewRGBA);
-    const cur = makeChip("현재 색", currentRGBA);
+    const next = makeChip("현재색", previewRGBA);
+    const cur = makeChip("기존색", currentRGBA);
 
     panel.appendChild(next.wrap);
     panel.appendChild(cur.wrap);
-
+    // 하단 1줄 래퍼 (기존색 / 현재색 / 적용)
+const footer = document.createElement("div");
+footer.style.display = "flex";
+footer.style.alignItems = "center";
+footer.style.gap = "8px";
+footer.style.marginTop = "10px";
     /* ==================================================
        적용 버튼
     ================================================== */
