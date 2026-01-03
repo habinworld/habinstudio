@@ -166,12 +166,12 @@ function formatDate(dateStr) {
   if (isNaN(d)) return dateStr;
 
   const yyyy = d.getFullYear();
-  const m = d.getMonth() + 1;
-  const day = d.getDate();
+  const mm = String(d.getMonth() + 1).padStart(2, "0"); // ⭐ 01~12
+  const dd = String(d.getDate()).padStart(2, "0");      // ⭐ 01~31
   const hh = String(d.getHours()).padStart(2, "0");
   const min = String(d.getMinutes()).padStart(2, "0");
 
-  return `${yyyy}-${m}-${day} ${hh}:${min}`;
+  return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
 }
 /* 📌 목록 출력 */
 function renderList() {
