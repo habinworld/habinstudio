@@ -233,14 +233,7 @@ function buildPalette16x16() {
     grid.style.rowGap = "0px";    // 세로는 제거
     grid.style.justifyContent = "center";
 
-    const grayRow1 = buildGrayRowBlack();   // 1줄: 검정 → 연회색
-    const grayRow2 = buildGrayRowDark();    // 2줄: 진그레이 → 연회색
-    const colorPart = buildColors256().slice(32);
-const colors = [
-  ...grayRow1,
-  ...grayRow2,
-  ...colorPart
-];
+  const colors = buildPalette16x16();
      
     colors.forEach((c) => {
   const cell = document.createElement("div");
