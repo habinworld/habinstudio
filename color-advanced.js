@@ -326,48 +326,82 @@ window.ColorAdvancedEngine = (function () {
       previewRGBA = rgbaStr(state.r, state.g, state.b);
       next.chip.style.background = previewRGBA;
     });
+/* ==================================================
+   기준색 / 현재색 패널 (상태 그룹)
+================================================== */
+const panel = document.createElement("div");
+panel.style.display = "flex";
+panel.style.alignItems = "center";
+panel.style.gap = "8px";     // 상태 그룹 내부 간격
 
-    /* ==================================================
-       기존색 / 현재색 패널 (Excel식)
-    ================================================== */
-    const panel = document.createElement("div");
-    panel.style.display = "flex";
-    panel.style.justifyContent = "flex-end";
-    panel.style.gap = "10px";
-    panel.style.marginTop = "10px";
+function makeChip(label, color) {
+  const wrap = document.createElement("div");
+  wrap.style.textAlign = "center";
 
-    function makeChip(label, color) {
-      const wrap = document.createElement("div");
-      wrap.style.textAlign = "center";
+  const chip = document.createElement("div");
+  chip.style.width = "40px";
+  chip.style.height = "25px";
+  chip.style.border = "1px solid #CCC";
+  chip.style.borderRadius = "6px";
+  chip.style.background = color;
 
-      const chip = document.createElement("div");
-      chip.style.width = "40px";
-      chip.style.height = "25px";
-      chip.style.border = "1px solid #CCC";
-      chip.style.borderRadius = "6px";
-      chip.style.background = color;
+  const text = document.createElement("div");
+  text.textContent = label;
+  text.style.fontSize = "12px";
+  text.style.marginTop = "4px";
+  text.style.color = (label === "현재색") ? "#3558A8" : "#333";
 
-      const text = document.createElement("div");
-      text.textContent = label;
-      text.style.fontSize = "12px";
-      text.style.marginTop = "4px";
-      text.style.color = (label === "현재색") ? "#3558A8" : "#333";
+  wrap.appendChild(chip);
+  wrap.appendChild(text);
+  return { wrap, chip };
+}
 
-      wrap.appendChild(chip);
-      wrap.appendChild(text);
-      return { wrap, chip };
-    }
-    const cur = makeChip("기존색", currentRGBA);
-    const next = makeChip("현재색", previewRGBA);
-    panel.appendChild(cur.wrap);
-    panel.appendChild(next.wrap);
-    
-    // 하단 1줄 래퍼 (기존색 / 현재색 / 적용)
+// 상태 칩 생성
+const base = makeChip("기준색", currentRGBA);
+const cur  = makeChip("현재색", previewRGBA);
+
+// 상태 패널 조립
+panel.appendChild(base.wrap);
+panel.appendChild(cur.wrap);
+
+
+/* ==================================================
+   하단 footer (상태 / 행동 분리 컨테이너)
+================================================== */
 const footer = document.createElement("div");
 footer.style.display = "flex";
 footer.style.alignItems = "center";
-footer.style.gap = "12px";
-footer.style.marginTop = "10px";
+footer.style.justifyContent = "space-between"; // ⭐ 핵심
+footer.style.marginTop = "12px";
+
+
+/* ==================================================
+   적용 버튼 (행동)
+================================================== */
+const applyBtn = document.createElement("button");
+applyBtn.className = "hb-btn";
+applyBtn.textContent = "적용";
+applyBtn.style.color = "#FF0000";
+
+applyBtn.onclick = () => {
+  currentRGBA = previewRGBA;
+  base.chip.style.background = currentRGBA;
+  onSelect && onSelect(currentRGBA);
+};
+
+
+/* ==================================================
+   최종 조립
+================================================== */
+box.appendChild(top);
+box.appendChild(pickerRow);
+box.appendChild(form);
+
+footer.appendChild(panel);     // 왼쪽: 상태 그룹
+footer.appendChild(applyBtn);  // 오른쪽: 적용 버튼
+
+box.appendChild(footer);
+
     /* ==================================================
        적용 버튼
     ================================================== */
