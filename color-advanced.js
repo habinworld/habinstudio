@@ -345,7 +345,7 @@ window.ColorAdvancedEngine = (function () {
       text.textContent = label;
       text.style.fontSize = "12px";
       text.style.marginTop = "4px";
-      text.style.color = "#333";
+      text.style.color = (label === "현재색") ? "#3558A8" : "#333";
 
       wrap.appendChild(chip);
       wrap.appendChild(text);
