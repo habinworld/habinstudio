@@ -120,10 +120,8 @@ window.ColorBasicEngine = (function () {
      STANDARD 256 VIEW 
      ====================================================== */
   function renderStandard256View(popup, onSelect) {
-
     baseStyle(popup);
-    let currentColor = baseColor;
-
+   
     /* ---------- 상단 ---------- */
     const top = document.createElement("div");
     top.style.display = "flex";
