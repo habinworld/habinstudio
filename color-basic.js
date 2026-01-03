@@ -4,7 +4,7 @@
    ✔ 단일 파일
    ✔ View 전환 방식 (엑셀식)
    ✔ BASIC : 10색 + 60색
-   ✔ STANDARD : 256 벌집(마름모)
+   ✔ STANDARD : 256 
    ✔ ADVANCED 연결용 신호만 반환
 ========================================================== */
 
@@ -143,7 +143,7 @@ window.ColorBasicEngine = (function () {
     top.appendChild(backBtn);
     popup.appendChild(top);
 
-    /* ---------- 벌집 ---------- */
+    /* ---------- 사각형 ---------- */
     const grid = document.createElement("div");
     grid.style.display = "grid";
     grid.style.gridTemplateColumns = "repeat(16, 16px)";
@@ -157,9 +157,9 @@ window.ColorBasicEngine = (function () {
       cell.style.width = "18px";
       cell.style.height = "18px";
       cell.style.background = c;
-      cell.style.clipPath =
-        "polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%)";
-      if (Math.floor(i / 16) % 2) cell.style.marginLeft = "9px";
+      cell.style.width = "16px";
+      cell.style.height = "16px";
+      cell.style.border = "1px solid #E0E0E0";
       cell.onclick = () => {
         currentColor = c;
         curChip.style.background = c;
