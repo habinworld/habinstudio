@@ -368,7 +368,7 @@ footer.style.marginTop = "10px";
     const applyBtn = document.createElement("button");
     applyBtn.className = "hb-btn";
     applyBtn.textContent = "적용";
-    
+    applyBtn.style.color = "#FF0000";
     applyBtn.onclick = () => {
       currentRGBA = previewRGBA;
       cur.chip.style.background = currentRGBA;
