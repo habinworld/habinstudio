@@ -51,9 +51,8 @@
 
 /* 적용 버튼 (공용) */
 #adv-apply {
-  width: 100%;
   padding: 6px 12px;
-  background: #3558A8;
+  background: #FF69B4;
   color: #FFFFFF;
   border: none;
   border-radius: 6px;
