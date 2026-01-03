@@ -329,7 +329,8 @@ window.ColorAdvancedEngine = (function () {
 
       const text = document.createElement("div");
       text.textContent = label;
-      text.style.fontSize = "12px";
+      text.style.fontSize = "15px";
+      text.style.fontWeight = "600"; 
       text.style.marginTop = "4px";
       text.style.color = (label === "현재색") ? "#3558A8" : "#333";
 
