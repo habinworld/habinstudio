@@ -385,8 +385,9 @@ footer.style.marginTop = "10px";
     box.appendChild(top);
     box.appendChild(pickerRow);
     box.appendChild(form);
-    box.appendChild(panel);
-    box.appendChild(applyBtn);
+    footer.appendChild(panel);     // 기존색 / 현재색
+    footer.appendChild(applyBtn);  // 적용
+    box.appendChild(footer);
 
     return box;
   }
