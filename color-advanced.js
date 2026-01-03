@@ -248,7 +248,7 @@ window.ColorAdvancedEngine = (function () {
       input.style.border = "1px solid #CCC";
       input.style.borderRadius = "6px";
       input.style.padding = "0 8px";
-      input.style.width = "100%";
+      input.style.width = "64px";
 
       input.addEventListener("input", () => onChange(input.value));
       input.addEventListener("blur", () => {
