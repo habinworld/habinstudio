@@ -144,7 +144,7 @@ window.ColorBasicEngine = (function () {
     /* ---------- 사각형 ---------- */
     const grid = document.createElement("div");
     grid.style.display = "grid";
-    grid.style.gridTemplateColumns = "repeat(16, 16px)";
+    grid.style.gridTemplateColumns = "repeat(16, 13px)";
     grid.style.gap = "1px";
     grid.style.justifyContent = "center";
 
