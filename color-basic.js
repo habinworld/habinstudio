@@ -161,9 +161,9 @@ window.ColorBasicEngine = (function () {
   cell.style.cursor = "pointer";
 
   cell.onclick = () => {
-    currentColor = c;
-    curChip.style.background = c;
-  };
+  previewRGBA = c;
+  cur.chip.style.background = previewRGBA;
+};
 
   grid.appendChild(cell);
 });
