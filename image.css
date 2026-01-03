@@ -26,8 +26,8 @@
 /* + 모양 리사이즈 핸들 */
 .hb-resize-handle{
   position:absolute;
-  width:6px;
-  height:6px;
+  width:7px;
+  height:7px;
   z-index:10;
 }
 .hb-resize-handle::before,
@@ -37,10 +37,10 @@
   background:#FF1493;
 }
 .hb-resize-handle::before{
-  width:6px; height:1px; top:50%; left:0; transform:translateY(-50%);
+  width:7px; height:1px; top:50%; left:0; transform:translateY(-50%);
 }
 .hb-resize-handle::after{
-  width:1px; height:6px; left:50%; top:0; transform:translateX(-50%);
+  width:1px; height:7px; left:50%; top:0; transform:translateX(-50%);
 }
 
 /* 위치 */
