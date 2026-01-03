@@ -402,35 +402,13 @@ footer.appendChild(applyBtn);  // 오른쪽: 적용 버튼
 
 box.appendChild(footer);
 
-    /* ==================================================
-       적용 버튼
-    ================================================== */
-    const applyBtn = document.createElement("button");
-    applyBtn.className = "hb-btn";
-    applyBtn.textContent = "적용";
-    applyBtn.style.color = "#FF0000";
-    applyBtn.onclick = () => {
-      currentRGBA = previewRGBA;
-      cur.chip.style.background = currentRGBA;
-      onSelect && onSelect(currentRGBA);
-    };
-
-    /* ---------- 초기 렌더 ---------- */
+  /* ---------- 초기 렌더 ---------- */
     drawPlane();
     previewRGBA = rgbaStr(state.r, state.g, state.b);
     next.chip.style.background = previewRGBA;
-
-    /* ---------- 조립 ---------- */
-    box.appendChild(top);
-    box.appendChild(pickerRow);
-    box.appendChild(form);
-    footer.appendChild(panel);     // 기존색 / 현재색
-    footer.appendChild(applyBtn);  // 적용
-    box.appendChild(footer);
-
+    
     return box;
-  }
-
+  
   /* ======================================================
      외부 API (MODE 전환 계약)
   ====================================================== */
