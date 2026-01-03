@@ -351,12 +351,11 @@ window.ColorAdvancedEngine = (function () {
       wrap.appendChild(text);
       return { wrap, chip };
     }
-
-    const next = makeChip("현재색", previewRGBA);
     const cur = makeChip("기존색", currentRGBA);
-
-    panel.appendChild(next.wrap);
+    const next = makeChip("현재색", previewRGBA);
     panel.appendChild(cur.wrap);
+    panel.appendChild(next.wrap);
+    
     // 하단 1줄 래퍼 (기존색 / 현재색 / 적용)
 const footer = document.createElement("div");
 footer.style.display = "flex";
