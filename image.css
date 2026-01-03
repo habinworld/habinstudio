@@ -1,13 +1,23 @@
+/* =================================================
+   Image Box & Resize Handle (CLEAN)
+   ※ 기능 변경 없음 / 중복 제거만 수행
+================================================= */
+
 /* 이미지 박스 */
 .hb-img-box{
   position: relative;
-  display: block;          /* ⭐ 변경 */
-  width: fit-content;      /* ⭐ 추가 */
-  max-width: 100%;         /* ⭐ 안전 */
+  display: block;
+  width: fit-content;
+  max-width: 100%;
   margin: 14px auto;
 }
 
-/* 선택 오버레이 (이미지 끝에 딱) */
+/* 정렬 */
+.hb-img-box.align-left   { margin-left:0;    margin-right:auto; }
+.hb-img-box.align-center { margin-left:auto; margin-right:auto; }
+.hb-img-box.align-right  { margin-left:auto; margin-right:0; }
+
+/* 선택 오버레이 */
 .hb-img-box::after{
   content:"";
   position:absolute;
@@ -16,12 +26,9 @@
   opacity:0;
   pointer-events:none;
 }
-.hb-img-box.hb-img-selected::after{ opacity:1; }
-
-/* 정렬 */
-.hb-img-box.align-left{ margin-left:0; margin-right:auto; }
-.hb-img-box.align-center{ margin-left:auto; margin-right:auto; }
-.hb-img-box.align-right{ margin-left:auto; margin-right:0; }
+.hb-img-box.hb-img-selected::after{
+  opacity:1;
+}
 
 /* + 모양 리사이즈 핸들 */
 .hb-resize-handle{
@@ -30,54 +37,64 @@
   height:7px;
   z-index:10;
 }
+
+/* + 선 */
 .hb-resize-handle::before,
 .hb-resize-handle::after{
   content:"";
   position:absolute;
-  background:#FF1493;
-}
-.hb-resize-handle::before{
-  width:7px; height:1px; top:50%; left:0; transform:translateY(-50%);
-}
-.hb-resize-handle::after{
-  width:1px; height:7px; left:50%; top:0; transform:translateX(-50%);
+  background:#FF1493; /* HOT PINK */
 }
 
-/* 위치 */
-.hb-resize-handle.n  { top:-7px; left:50%; transform:translateX(-50%); cursor:n-resize; }
+/* 가로선 */
+.hb-resize-handle::before{
+  width:7px;
+  height:1px;
+  top:50%;
+  left:0;
+  transform:translateY(-50%);
+}
+
+/* 세로선 */
+.hb-resize-handle::after{
+  width:1px;
+  height:7px;
+  top:0;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+/* 핸들 위치 */
+.hb-resize-handle.n  { top:-7px;    left:50%; transform:translateX(-50%); cursor:n-resize; }
 .hb-resize-handle.s  { bottom:-7px; left:50%; transform:translateX(-50%); cursor:s-resize; }
-.hb-resize-handle.e  { right:-7px; top:50%; transform:translateY(-50%); cursor:e-resize; }
-.hb-resize-handle.w  { left:-7px; top:50%; transform:translateY(-50%); cursor:w-resize; }
-.hb-resize-handle.ne { top:-7px; right:-7px; cursor:ne-resize; }
-.hb-resize-handle.nw { top:-7px; left:-7px; cursor:nw-resize; }
-.hb-resize-handle.se { bottom:-7px; right:-7px; cursor:se-resize; }
-.hb-resize-handle.sw { bottom:-7px; left:-7px; cursor:sw-resize; }
+.hb-resize-handle.e  { right:-7px;  top:50%;  transform:translateY(-50%); cursor:e-resize; }
+.hb-resize-handle.w  { left:-7px;   top:50%;  transform:translateY(-50%); cursor:w-resize; }
+.hb-resize-handle.ne { top:-7px;    right:-7px;  cursor:ne-resize; }
+.hb-resize-handle.nw { top:-7px;    left:-7px;   cursor:nw-resize; }
+.hb-resize-handle.se { bottom:-7px; right:-7px;  cursor:se-resize; }
+.hb-resize-handle.sw { bottom:-7px; left:-7px;   cursor:sw-resize; }
 
 /* 선택 안 되면 숨김 */
-.hb-img-box:not(.hb-img-selected) .hb-resize-handle{ display:none; }
+.hb-img-box:not(.hb-img-selected) .hb-resize-handle{
+  display:none;
+}
 
-/* 에디터를 기준 좌표로 */
-#hb-editor {
+/* 에디터 기준 좌표 */
+#hb-editor{
   position: relative;
 }
 
-/* 기본: 문단 흐름 */
-.hb-img-box {
-  position: relative;
+/* FREE 이동 모드 */
+.hb-img-box.free{
+  position:absolute;
+  z-index:20;
+  cursor:move;
 }
 
-/* FREE 모드 */
-.hb-img-box.free {
-  position: absolute;
-  z-index: 20;
-  cursor: move;
-}
 /* 모바일 */
-@media (max-width: 600px) {
-  .hb-resize-handle {
-    width: 14px;
-    height: 14px;
-    right: -7px;
-    bottom: -7px;
+@media (max-width:600px){
+  .hb-resize-handle{
+    width:14px;
+    height:14px;
   }
 }
