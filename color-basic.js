@@ -61,68 +61,82 @@ window.ColorBasicEngine = (function () {
 
   return list; // 정확히 256
 }
-/* ======================================================
-   🔧 정렬 유틸
-====================================================== */
- function rgbToHsl(r, g, b) {
-  r /= 255; g /= 255; b /= 255;
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  let h, s, l = (max + min) / 2;
+function buildPalette16x16() {
+  const rows = [];
 
-  if (max === min) {
-    h = s = 0;
-  } else {
-    const d = max - min;
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-    switch (max) {
-      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-      case g: h = (b - r) / d + 2; break;
-      case b: h = (r - g) / d + 4; break;
-    }
-    h *= 60;
-  }
-  return { h, s, l };
-}  
-   /* =======================
-   🔧 GRAY ROWS (상단 2줄)
-======================= */
-function buildGrayRowBlack() {
-  const row = [];
-  for (let i = 0; i < 16; i++) {
-    const v = Math.round((200 * i) / 15); // 0 → 200
-    row.push(`rgb(${v},${v},${v})`);
-  }
-  return row;
-}
+  // 공통 v 계산 (16칸)
+  const v16 = (start, end) =>
+    Array.from({ length: 16 }, (_, i) =>
+      Math.round(start + (end - start) * i / 15)
+    );
 
-function buildGrayRowDark() {
-  const row = [];
-  for (let i = 0; i < 16; i++) {
-    const v = Math.round(60 + ((200 - 60) * i) / 15); // 60 → 200
-    row.push(`rgb(${v},${v},${v})`);
-  }
-  return row;
-}
+  /* 1줄: 검정 → 연검정 */
+  rows.push(v16(0, 200).map(v => `rgb(${v},${v},${v})`));
 
-/* =======================
-   🔧 COLOR SORT (아래 14줄)
-======================= */
-function sortColorsForGrid(colors) {
-  const buckets = Array.from({ length: 14 }, () => []);
+  /* 2줄: 진회색 → 연회색 */
+  rows.push(v16(60, 200).map(v => `rgb(${v},${v},${v})`));
 
-  colors.forEach(c => {
-    const [r, g, b] = c.match(/\d+/g).map(Number);
-    if (r === g && g === b) return; // 회색 제외
+  /* 3줄: 빨강 */
+  rows.push(v16(0, 200).map(v => `rgb(255,${v},${v})`));
 
-    const { h, l } = rgbToHsl(r, g, b);
-    const row = Math.min(13, Math.floor(l * 14));
-    buckets[row].push({ c, h });
-  });
-
-  return buckets.flatMap(row =>
-    row.sort((a, b) => a.h - b.h).map(v => v.c)
+  /* 4줄: 주황 */
+  rows.push(
+    v16(0, 200).map((v, i) => {
+      const g = Math.round(80 + (120 * i) / 15);
+      return `rgb(255,${g},${v})`;
+    })
   );
+
+  /* 5줄: 노랑 */
+  rows.push(v16(0, 200).map(v => `rgb(255,255,${v})`));
+
+  /* 6줄: 연두 */
+  rows.push(v16(0, 200).map(v => `rgb(${v},255,${v})`));
+
+  /* 7줄: 초록 */
+  rows.push(v16(0, 200).map(v => `rgb(0,255,${v})`));
+
+  /* 8줄: 청록 */
+  rows.push(v16(0, 200).map(v => `rgb(${v},255,255)`));
+
+  /* 9줄: 하늘 */
+  rows.push(v16(0, 200).map(v => `rgb(${v},${v},255)`));
+
+  /* 10줄: 파랑 */
+  rows.push(v16(0, 200).map(v => `rgb(0,${v},255)`));
+
+  /* 11줄: 남색 */
+  rows.push(
+    v16(80, 200).map(v => `rgb(${v},0,255)`)
+  );
+
+  /* 12줄: 보라 */
+  rows.push(v16(0, 200).map(v => `rgb(255,${v},255)`));
+
+  /* 13줄: 자주 */
+  rows.push(
+    v16(0, 200).map((v, i) => {
+      const r = Math.round((120 * i) / 15);
+      return `rgb(255,${r},${v})`;
+    })
+  );
+
+  /* 14줄: 핑크 */
+  rows.push(
+    v16(0, 200).map((v, i) => {
+      const r = Math.round(120 + (80 * i) / 15);
+      return `rgb(255,${v},${r})`;
+    })
+  );
+
+  /* 15줄: 살구 */
+  rows.push(v16(0, 200).map(v => `rgb(255,200,${v})`));
+
+  /* 16줄: 아이보리 */
+  rows.push(v16(150, 255).map(v => `rgb(255,255,${v})`));
+
+  // 16줄 × 16칸 → 256칸
+  return rows.flat();
 }
  
   /* ======================================================
