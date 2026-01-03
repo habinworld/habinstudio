@@ -280,7 +280,6 @@ btnBgColor && btnBgColor.addEventListener("click", e => {
   e.stopPropagation();
   openBgColorUI(btnBgColor, HB_COLOR_POPUP);
 });
-} 
    
   /* =====================================================
      5) Init
