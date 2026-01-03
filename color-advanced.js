@@ -52,15 +52,12 @@ window.ColorAdvancedEngine = (function () {
     backBtn.textContent = "뒤로";
     backBtn.onclick = () => onBack && onBack();
 
-    // 제목 + 뒤로 묶기
-    const titleWrap = document.createElement("div");
-    titleWrap.style.display = "flex";
-    titleWrap.style.alignItems = "center";
-    titleWrap.style.gap = "6px";
-    titleWrap.appendChild(title);
-    titleWrap.appendChild(backBtn);
+    top.style.display = "flex";
+    top.style.alignItems = "center";
+    top.style.justifyContent = "space-between"; // ⭐ 핵심
 
-    top.appendChild(titleWrap);
+    top.appendChild(title);
+    top.appendChild(backBtn);
 
     /* ==================================================
        색 선택 영역 (사각 평면 + 세로 슬라이더)
@@ -73,14 +70,14 @@ window.ColorAdvancedEngine = (function () {
     const planeWrap = document.createElement("div");
     planeWrap.style.position = "relative";
     planeWrap.style.width = "320px";
-    planeWrap.style.height = "220px";
+    planeWrap.style.height = "250px";
     planeWrap.style.border = "1px solid #CCC";
     planeWrap.style.borderRadius = "6px";
     planeWrap.style.overflow = "hidden";
 
     const plane = document.createElement("canvas");
     plane.width = 320;
-    plane.height = 220;
+    plane.height = 250;
     plane.style.display = "block";
     plane.style.cursor = "crosshair";
 
