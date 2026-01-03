@@ -152,7 +152,8 @@ window.ColorBasicEngine = (function () {
     const grid = document.createElement("div");
     grid.style.display = "grid";
     grid.style.gridTemplateColumns = "repeat(16, 13px)";
-    grid.style.gap = "1px";
+    grid.style.columnGap = "1px"; // 가로만
+    grid.style.rowGap = "0px";    // 세로는 제거
     grid.style.justifyContent = "center";
 
     const colors = buildColors256();
