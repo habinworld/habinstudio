@@ -195,7 +195,7 @@ function sortColors256(colors) {
     grid.style.rowGap = "0px";    // 세로는 제거
     grid.style.justifyContent = "center";
 
-    const colors = buildColors256();
+    const colors = sortColors256(buildColors256());
 
     colors.forEach((c) => {
   const cell = document.createElement("div");
