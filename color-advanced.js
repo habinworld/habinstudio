@@ -335,8 +335,8 @@ window.ColorAdvancedEngine = (function () {
       wrap.style.textAlign = "center";
 
       const chip = document.createElement("div");
-      chip.style.width = "70px";
-      chip.style.height = "42px";
+      chip.style.width = "35px";
+      chip.style.height = "21px";
       chip.style.border = "1px solid #CCC";
       chip.style.borderRadius = "6px";
       chip.style.background = color;
