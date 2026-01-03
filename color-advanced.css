@@ -84,4 +84,10 @@ canvas {
   max-height: none !important;
   display: block;
 }
-
+/* 하단 상태 + 적용 버튼 1줄 정렬 */
+.adv-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
