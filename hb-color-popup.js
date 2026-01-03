@@ -32,16 +32,30 @@ window.HB_COLOR_POPUP = (function () {
      열기 (anchor 기준)
      → popup DOM 반환
   -------------------------------------------------- */
-  function openAt(anchor) {
-    const el = ensure();
-    const r = anchor.getBoundingClientRect();
+  function openAt(anchor, mode) {
+  const el = ensure();
+  const r = anchor.getBoundingClientRect();
 
-    el.style.left = r.left + "px";
-    el.style.top  = r.bottom + "px";
-    el.style.display = "block";
-    active = true; 
-    return el;
+  el.classList.remove(
+    "hb-color-standard",
+    "hb-color-advanced"
+  );
+
+  if (mode === "STANDARD_256") {
+    el.classList.add("hb-color-standard");
   }
+
+  if (mode === "ADVANCED") {
+    el.classList.add("hb-color-advanced");
+  }
+
+  el.style.left = r.left + "px";
+  el.style.top  = r.bottom + "px";
+  el.style.display = "block";
+  active = true;
+
+  return el;
+}
 
   /* --------------------------------------------------
      닫기
