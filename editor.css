@@ -117,7 +117,34 @@
 #hb-editor:focus {
   outline: none;
 }
+/* =========================
+   Editor Scrollbar (Lavender)
+   ※ 에디터 전용
+========================= */
 
+/* Chrome / Edge */
+#hb-editor::-webkit-scrollbar {
+  width: 10px;
+}
+
+#hb-editor::-webkit-scrollbar-track {
+  background: #EEEAF6;   /* 연보라 트랙 */
+}
+
+#hb-editor::-webkit-scrollbar-thumb {
+  background: #A6A0C8;   /* 연보라 손잡이 */
+  border-radius: 6px;
+}
+
+#hb-editor::-webkit-scrollbar-thumb:hover {
+  background: #8F88B8;   /* 살짝 진해짐 */
+}
+
+/* Firefox */
+#hb-editor {
+  scrollbar-width: thin;
+  scrollbar-color: #A6A0C8 #EEEAF6;
+}
 /* ============================
    줄간격 프리셋
 ============================ */
