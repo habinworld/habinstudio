@@ -19,6 +19,7 @@
   return {
     id: Date.now(),
     title: title || "제목 없음",
+    writer: "하빈", 
     content: document.getElementById("hb-editor").innerHTML,
     date: new Date().toISOString()
   };
