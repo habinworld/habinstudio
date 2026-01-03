@@ -144,7 +144,7 @@ window.ColorBasicEngine = (function () {
     /* ---------- 사각형 ---------- */
     const grid = document.createElement("div");
     grid.style.display = "grid";
-    grid.style.gridTemplateColumns = "repeat(16, 16px)";
+    grid.style.gridTemplateColumns = "repeat(16, 13px)";
     grid.style.gap = "1px";
     grid.style.justifyContent = "center";
 
@@ -153,9 +153,9 @@ window.ColorBasicEngine = (function () {
     colors.forEach((c) => {
   const cell = document.createElement("div");
   cell.style.width = "16px";
-  cell.style.height = "16px";
+  cell.style.height = "13px";
   cell.style.background = c;
-  cell.style.border = "1px solid #E0E0E0";
+  cell.style.border = "solid #E0E0E0";
   cell.style.cursor = "pointer";
 
   cell.onclick = () => {
