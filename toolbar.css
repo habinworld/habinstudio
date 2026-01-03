@@ -1,6 +1,7 @@
 /* ---------------------------------------------------
-   🎛 toolbar.css v9 — Split Ribbon (FINAL)
-   Ha-Bin Studio — BASIC / ADVANCED
+   🎛 toolbar.css v10 — FINAL CLEAN RIBBON
+   Ha-Bin Studio • Excel / HWP Style Toolbar
+   ※ ID / CLASS 100% 유지 · 역할 정리 완료
 ---------------------------------------------------- */
 
 /* ============================
@@ -10,8 +11,8 @@
 #hb-toolbar-advanced {
   display: flex;
   align-items: center;
-  gap: 4px;
   flex-wrap: nowrap;
+  gap: 24px;
 
   padding: 8px 10px;
   margin-bottom: 1px;
@@ -21,18 +22,20 @@
   border-radius: 10px;
 
   position: relative;
-  z-index: 100;
-}
-/* ============================
-   BASIC Toolbar (FINAL LAYOUT)
-============================ */
-#hb-toolbar-basic {
-  gap: 24px;              /* BASIC 버튼 간격 */
+  z-index: 300;
 }
 
-#hb-toolbar-basic .hb-btn {
-  min-width: 60px;       /* 3.5글자 폭 */
+/* BASIC / ADVANCED 위치 고정 */
+#hb-toolbar-basic {
+  position: sticky;
+  top: 0;
 }
+
+#hb-toolbar-advanced {
+  position: sticky;
+  top: 34px; /* BASIC 높이 */
+}
+
 /* ============================
    Common Button Style
 ============================ */
@@ -49,11 +52,15 @@
   border-radius: 6px;
 
   font-size: 14px;
-  color: #2b2b2b;
+  font-weight: 600;
+  color: #2B2B2B;
 
   cursor: pointer;
-  transition: all 0.15s ease;
   user-select: none;
+  transition: background 0.15s ease,
+              border-color 0.15s ease,
+              color 0.15s ease,
+              transform 0.1s ease;
 }
 
 /* Hover */
@@ -76,36 +83,31 @@
 }
 
 /* ============================
-   BASIC Toolbar (굵게)
+   BASIC Toolbar
 ============================ */
 #hb-toolbar-basic .hb-btn {
-  font-weight: 600;
+  min-width: 60px;
 }
+
 /* ============================
-   ADVANCED Toolbar (FINAL)
+   ADVANCED Toolbar
 ============================ */
-#hb-toolbar-advanced {
-  gap: 24px;              /* 5글자 드롭다운 기준 간격 */
-}
-
-/* ADVANCED Buttons – 굵게 */
 #hb-toolbar-advanced .hb-btn {
-   width: 60px;       /* 고정폭 */
-  min-width: 60px;   /* 안전장치 (선택) */
-  font-weight: 600;      /* BASIC과 동일 */
+  width: 60px;
+  min-width: 60px;
 }
 
-/* ADVANCED Dropdowns */
+/* Dropdowns */
 #hb-toolbar-advanced .hb-select {
-  min-width: 99px;        /* 5글자 체감 */
+  min-width: 99px;
   padding: 0 10px;
 
   font-size: 14px;
   font-weight: 500;
 
+  background: #FFFFFF;
   border: 1px solid #B8C2D6;
   border-radius: 6px;
-  background: #FFFFFF;
 }
 
 /* ============================
@@ -115,18 +117,12 @@
   font-size: 18px;
 }
 
-/* ============================
-   Image Align Buttons
-============================ */
 #hb-btn-img-left,
 #hb-btn-img-center,
 #hb-btn-img-right {
   font-size: 16px;
 }
 
-/* ============================
-   List / Undo / Redo
-============================ */
 #hb-btn-ul,
 #hb-btn-ol {
   font-size: 15px;
@@ -138,6 +134,53 @@
 }
 
 /* ============================
+   Color Button (JS Color Wins)
+============================ */
+.hb-color-btn {
+  background: transparent;
+}
+
+.hb-color-btn:hover,
+.hb-color-btn:active {
+  background: inherit;
+}
+
+/* ============================
+   Popup Select (Excel Style)
+============================ */
+#hb-font-family,
+#hb-font-size,
+#hb-line-height {
+  display: none;
+}
+
+/* popup container */
+#hb-popup {
+  padding: 4px 0;
+  border: none;
+  box-shadow: none;
+  background: #FFFFFF;
+}
+
+/* popup items */
+#hb-popup .hb-btn {
+  all: unset;
+  display: block;
+
+  padding: 3px 8px;
+  line-height: 1.25;
+  font-size: 13px;
+
+  cursor: pointer;
+  color: #2B2B2B;
+}
+
+#hb-popup .hb-btn:hover {
+  background: #EAF2FF;
+  color: #3558A8;
+}
+
+/* ============================
    Mobile Optimization
 ============================ */
 @media (max-width: 600px) {
@@ -145,7 +188,7 @@
   #hb-toolbar-basic,
   #hb-toolbar-advanced {
     padding: 6px 8px;
-    gap: 4px;
+    gap: 6px;
   }
 
   .hb-btn {
@@ -156,53 +199,4 @@
   .hb-btn.icon {
     font-size: 17px;
   }
-}
-/* popup 사용 — select UI 숨김 */
-#hb-font-family,
-#hb-font-size,
-#hb-line-height {
-  display: none;
-}
-/* popup 컨테이너 */
-#hb-popup {
-  padding: 4px 0;
-  border: none;
-  box-shadow: none;
-  background: #fff;
-}
-/* popup 리스트 항목 */
-#hb-popup .hb-btn {
-  all: unset;
-  display: block;
-
-  padding: 3px 8px;
-  line-height: 1.25;
-  font-size: 13px;
-
-  cursor: pointer;
-  color: #2b2b2b;
-}
-
-#hb-popup .hb-btn:hover {
-  background: #EAF2FF;
-  color: #3558A8;
-}
-/* ============================
-   한글·엑셀식 Toolbar 고정
-============================ */
-
-/* BASIC 툴바 */
-#hb-toolbar-basic {
-  position: sticky;
-  top: 0;
-  z-index: 300;
-  background: #FFFFFF;
-}
-
-/* ADVANCED 툴바 */
-#hb-toolbar-advanced {
-  position: sticky;
-  top: 34px;          /* BASIC 높이만큼 */
-  z-index: 300;
-  background: #FFFFFF;
 }
