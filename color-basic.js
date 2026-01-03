@@ -101,6 +101,47 @@ function sortColors256(colors) {
     return c1.h - c2.h;
   });
 }
+  /* =======================
+   🔧 GRAY ROWS (상단 2줄)
+======================= */
+function buildGrayRowBlack() {
+  const row = [];
+  for (let i = 0; i < 16; i++) {
+    const v = Math.round((200 * i) / 15); // 0 → 200
+    row.push(`rgb(${v},${v},${v})`);
+  }
+  return row;
+}
+
+function buildGrayRowDark() {
+  const row = [];
+  for (let i = 0; i < 16; i++) {
+    const v = Math.round(60 + ((200 - 60) * i) / 15); // 60 → 200
+    row.push(`rgb(${v},${v},${v})`);
+  }
+  return row;
+}
+
+/* =======================
+   🔧 COLOR SORT (아래 14줄)
+======================= */
+function sortColorsForGrid(colors) {
+  const buckets = Array.from({ length: 14 }, () => []);
+
+  colors.forEach(c => {
+    const [r, g, b] = c.match(/\d+/g).map(Number);
+    if (r === g && g === b) return; // 회색 제외
+
+    const { h, l } = rgbToHsl(r, g, b);
+    const row = Math.min(13, Math.floor(l * 14));
+    buckets[row].push({ c, h });
+  });
+
+  return buckets.flatMap(row =>
+    row.sort((a, b) => a.h - b.h).map(v => v.c)
+  );
+}
+ 
   /* ======================================================
      외부 진입점
   ====================================================== */
