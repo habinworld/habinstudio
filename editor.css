@@ -1,7 +1,7 @@
 /* ---------------------------------------------------
-   ✒️ editor.css v9 — FINAL STABLE EDITION
+   ✒️ editor.css v10 — FINAL CLEAN EDITION
    Ha-Bin Studio • Excel-based UI Model
-   ※ editor.html과 100% ID·CLASS 통일 (완전 고정)
+   ※ 구조 / 색상 / 역할 정리 완료
 ---------------------------------------------------- */
 
 /* ============================
@@ -10,14 +10,13 @@
 .hb-editor-container {
   max-width: 850px;
   margin: 30px auto;
-  padding: 0 20px 40px 20px;
-
+  padding: 0 20px 40px;
   font-family: 'Noto Sans KR', sans-serif;
-  color: #2b2b2b;
+  color: #2B2B2B;
 }
 
 /* ============================
-   상단 영역 (공지 + 버튼 4개)
+   상단 영역
 ============================ */
 .hb-top-line {
   display: flex;
@@ -26,13 +25,13 @@
   margin-bottom: 6px;
 }
 
-/* 공지 체크박스 */
+/* 공지 체크 */
 .hb-notice-line {
   display: flex;
   align-items: center;
   gap: 6px;
   font-size: 15px;
-  flex-shrink: 0; 
+  flex-shrink: 0;
 }
 
 #hb-notice {
@@ -41,80 +40,55 @@
 }
 
 /* ============================
-   상단 버튼 4개 (최종 안정판)
+   상단 버튼 그룹
 ============================ */
-
-/* 버튼 묶음 flex */
 .hb-top-buttons {
   display: flex;
   gap: 8px;
   margin-left: auto;
-  flex-wrap: nowrap; 
+  flex-wrap: nowrap;
 }
 
-/* ============================
-   탑 버튼 4개 (엑셀형 명령 버튼)
-============================ */
 .hb-top-btn {
   height: 32px;
   line-height: 32px;
-  padding: 0 12px;      /* ⭐ 세로 padding 제거 */
-
+  padding: 0 12px;
   font-size: 15px;
   background: #3558A8;
   color: #FFFFFF;
-
   border: none;
   border-radius: 6px;
   cursor: pointer;
-
   white-space: nowrap;
-  flex-shrink: 0;
 }
 
-/* 개별 색상 (ID 기반 오버라이드) */
-#hb-btn-cancel {
-  background: #8A8A8A;
-}
-
-#hb-btn-save {
-  background: #264789;
-}
-
-#hb-btn-update {
-  background: #2E8B57;
-}
-
-#hb-btn-delete {
-  background: #D9534F;
-}
+/* 버튼 색상 역할 */
+#hb-btn-cancel { background: #8A8A8A; }
+#hb-btn-save   { background: #264789; }
+#hb-btn-update { background: #2E8B57; }
+#hb-btn-delete { background: #D9534F; }
 
 /* ============================
-   제목 입력창 (기본 + 포커스)
+   제목 입력
 ============================ */
 #hb-title {
   width: 100%;
   padding: 12px 14px;
   margin-bottom: 14px;
-
   font-size: 20px;
   font-weight: 600;
 
-  /* 🎯 기본 2중 테두리 구조 */
-  border: 2px solid #3558A8;                     /* 바깥 테두리 – 하빈 은남색 */
-  box-shadow: 0 0 0 3px rgba(91,182,200,0.3);    /* 안쪽 은청빛 링 */
-
+  border: 2px solid #3558A8;
+  box-shadow: 0 0 0 3px rgba(91,182,200,0.3);
   border-radius: 8px;
 }
 
 #hb-title:focus {
-  outline: none; /* 브라우저 기본 파란 테두리 제거 */
-
+  outline: none;
   box-shadow:
-    0 0 0 3px rgba(91,182,200,0.3),              /* 기존 은청빛 링 유지 */
-    0 0 10px rgba(180,120,255,0.6),              /* ✨ 근접 보라빛 glow */
-    0 0 20px rgba(200,150,255,0.4);              /* ✨ 바깥으로 퍼지는 보라빛 오라 */
-
+    0 0 0 3px rgba(91,182,200,0.3),
+    0 0 10px rgba(180,120,255,0.6),
+    0 0 20px rgba(200,150,255,0.4);
   transition: box-shadow 0.25s ease-out;
 }
 
@@ -124,33 +98,35 @@
 #hb-editor {
   width: 100%;
   min-height: 500px;
-  max-height: 70vh;          /* 본문만 스크롤 */
-
+  max-height: 70vh;
   padding: 20px;
   background: #FFFFFF;
 
-  /* 🎯 2중 테두리 */
-  border: 2px solid #3558A8;                 
+  border: 2px solid #3558A8;
   box-shadow: 0 0 0 3px rgba(91,182,200,0.3);
   border-radius: 10px;
 
-  /* 문서 타이포 */
   font-size: 17px;
-  line-height: 1.75;
+  line-height: 1.6;
 
-  /* 스크롤 정책 */
-  overflow-y: auto;          /* 세로만 */
-  overflow-x: hidden;        /* 가로 봉인 */
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: auto;
 }
 
-/* 포커스 시 */
 #hb-editor:focus {
-  outline: 2px solid rgba(53, 88, 168, 0.35);
+  outline: none;
 }
-
 
 /* ============================
-   하단 버튼 (목록 / 메인)
+   줄간격 프리셋
+============================ */
+.lh-tight  { line-height: 1.2; }
+.lh-normal { line-height: 2.0; }
+.lh-wide   { line-height: 3.0; }
+
+/* ============================
+   하단 버튼
 ============================ */
 .hb-bottom-buttons {
   margin-top: 20px;
@@ -159,11 +135,10 @@
   gap: 10px;
 }
 
-/* editor.html 기준과 통일 */
 .hb-btn-bottom {
   padding: 6px 12px;
   background: #3558A8;
-  color: white;
+  color: #FFFFFF;
   border-radius: 6px;
   text-decoration: none;
   font-size: 15px;
@@ -175,29 +150,47 @@
 
 /* ============================
    팝업 영역 (색상 / 이미지)
-   ※ editor.html ID 기준으로 완전 통일
 ============================ */
-
-/* FIXED — ID 명칭을 100% editor.html과 동일하게 수정 */
 #hb-popup-color-basic,
 #hb-popup-color-advanced,
 #hb-popup-image {
   position: absolute;
   display: none;
   z-index: 1000;
-  background: #fff;
-  border: 1px solid #AAA; /* 팝업 테두리 */
-  border-radius: 6px;
-  padding: 6px;
+  background: #FFFFFF;
+
+  border: 1px solid #8F8F8F; /* 기본 2단계 진한 회색 */
+  border-radius: 8px;
+  padding: 8px;
+
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
+
+/* 팝업 호버 – 핑크 포인트 */
+#hb-popup-color-basic:hover,
+#hb-popup-color-advanced:hover,
+#hb-popup-image:hover {
+  border-color: #FF69B4;
+  box-shadow: 0 0 0 2px rgba(255,105,180,0.18);
+}
+
 /* ============================
-   모바일 최적화 (엑셀형 · 규격 고정)
+   이미지 input 숨김
+============================ */
+#hb-image-input {
+  position: fixed;
+  left: -9999px;
+  top: 0;
+}
+
+/* ============================
+   모바일 최적화
 ============================ */
 @media (max-width: 600px) {
 
   .hb-editor-container {
-    padding: 0 14px 40px 14px;
+    padding: 0 14px 40px;
   }
 
   #hb-title {
@@ -210,14 +203,11 @@
     font-size: 16px;
   }
 
-  /* 상단 버튼: 배치만 조정, 규격은 고정 */
   .hb-top-buttons {
-    display: flex;
-    flex-wrap: nowrap;   /* ⭐ 봉인 */
     gap: 6px;
+    flex-wrap: nowrap;
   }
 
-  /* 하단 버튼만 모바일 친화 */
   .hb-bottom-buttons {
     justify-content: center;
   }
@@ -227,29 +217,6 @@
     padding: 5px 10px;
   }
 }
-/* image input — speed fix (FINAL) */
-#hb-image-input {
-  position: fixed;
-  left: -9999px;
-  top: 0;
-}
-#hb-editor {
-  scroll-behavior: auto;
-}
-/* ===============================
-   📏 Document Line-height Gravity
-   (Ha-Bin Studio · Document Model)
-================================ */
-
-/* 문서 기본 줄간격 */
-#hb-editor {
-  line-height: 1.6;
-}
-
-/* 문단 예외 상태 */
-.lh-tight  { line-height: 1.2; }
-.lh-normal { line-height: 2.0; }
-.lh-wide   { line-height: 3.0; }
 
 
 
