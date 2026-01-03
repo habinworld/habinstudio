@@ -314,7 +314,7 @@ window.ColorAdvancedEngine = (function () {
     const panel = document.createElement("div");
     panel.style.display = "flex";
     panel.style.alignItems = "center";
-    panel.style.gap = "8px";
+    panel.style.gap = "15px";
 
     function makeChip(label, color) {
       const wrap = document.createElement("div");
