@@ -203,7 +203,7 @@ const COLORS_256 = [
     grid.style.rowGap = "0px";    // 세로는 제거
     grid.style.justifyContent = "center";
 
-    const colors = buildStandard256();
+    const colors = COLORS_256;
      
     colors.forEach((c) => {
   const cell = document.createElement("div");
