@@ -40,28 +40,7 @@ window.ColorBasicEngine = (function () {
     "#7A003C","#A8004F","#D40063","#FF2E7E","#FF6FA6","#FF9FC5"
   ];
 
-  /* ======================================================
-     STANDARD : 256색 (Excel Color Cube)
-  ====================================================== */
-  function buildColors256() {
-  const list = [];
-  const steps = [0, 51, 102, 153, 204, 255];
-
-  // 1) 216 color cube
-  for (let g of steps)
-    for (let r of steps)
-      for (let b of steps)
-        list.push(`rgb(${r},${g},${b})`);
-
-  // 2) 40 grayscale
-  for (let i = 0; i < 40; i++) {
-    const v = Math.round((255 * i) / 39);
-    list.push(`rgb(${v},${v},${v})`);
-  }
-
-  return list; // 정확히 256
-}
-/* ======================================================  
+  /* ======================================================  
            STANDARD 256 팔레트
   ====================================================== */
 function buildStandard256() {
