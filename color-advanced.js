@@ -226,19 +226,7 @@ window.ColorAdvancedEngine = (function () {
       el.style.color = "#333";
       return el;
     }
-
-    const modelLabel = makeLabel("색 모델(D):");
-    const modelSelect = document.createElement("select");
-    modelSelect.disabled = true;
-    modelSelect.style.height = "26px";
-    modelSelect.style.border = "1px solid #CCC";
-    modelSelect.style.borderRadius = "6px";
-    modelSelect.style.padding = "0 6px";
-    const opt = document.createElement("option");
-    opt.value = "RGB";
-    opt.textContent = "RGB";
-    modelSelect.appendChild(opt);
-
+    
     function makeNumRow(initial, onChange) {
       const input = document.createElement("input");
       input.type = "number";
@@ -287,9 +275,6 @@ window.ColorAdvancedEngine = (function () {
       previewRGBA = rgbaStr(state.r, state.g, state.b);
       cur.chip.style.background = previewRGBA;
     });
-
-    form.appendChild(modelLabel);
-    form.appendChild(modelSelect);
 
     form.appendChild(rLabel);
     form.appendChild(rInput);
