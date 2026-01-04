@@ -210,7 +210,7 @@ const COLORS_256 = [
   cell.style.width = "16px";
   cell.style.height = "13px";
   cell.style.background = c;
-  cell.style.border = "1px solid #E0E0E0";
+  cell.style.border = "1px solid #D0D0D0";
   cell.style.cursor = "pointer";
 
   cell.onclick = () => {
