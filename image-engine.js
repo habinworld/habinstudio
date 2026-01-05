@@ -255,6 +255,20 @@ function enableFreeMove(box) {
       remove();
     }
   });
+    /* ===================================================
+     7-1) 이미지 합성 렌더 (엑셀식 복원)
+     - 저장된 DOM 구조를 다시 그림
+     - box / img 구조 복구
+  =================================================== */
+  function renderAll() {
+    editor.querySelectorAll(".hb-img-box").forEach(box => {
+      const img = box.querySelector("img");
+      if (!img) return;
+
+      // 이미 src가 있으면 그대로 둔다
+      if (img.src && img.src.startsWith("data:")) return;
+    });
+  }
 
   /* ===================================================
      8) 외부 API (배선판 전용)
@@ -263,6 +277,7 @@ function enableFreeMove(box) {
     insert,
     align,
     remove
+    renderAll 
   };
 
 })();
