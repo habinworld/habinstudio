@@ -112,8 +112,7 @@
     posts = posts.filter(post => post.id !== POST_ID);
 
     localStorage.setItem("habin_posts", JSON.stringify(posts));
-    alert("삭제 완료");
-    location.href = "list.html";
+   location.href = "list.html";
   }
     /* ============================
      CANCEL — 취소
