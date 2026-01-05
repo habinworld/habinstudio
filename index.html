@@ -131,6 +131,8 @@
     <h1>Ha-Bin Studio</h1>
     <p>지금은 테스트 중입니다.</p>
   </div>
+   <!-- 🌱 현재 전시 (실제 글 1개) -->
+<div id="current-exhibit" class="habin-grid"></div>
 <!-- 🌈 Ha-Bin Studio — 공식 5×4 그리드 -->
   <div class="habin-grid">
     <div class="grid-item">1</div>
@@ -253,8 +255,27 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 </script>
+ <script>
+  const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+  const exhibit = document.getElementById("current-exhibit");
+
+  posts.length > 0 && (() => {
+    const p = posts[posts.length - 1]; // 가장 최근 글 1개
+
+    const item = document.createElement("div");
+    item.className = "grid-item";
+    item.textContent = p.title;
+
+    item.onclick = () => {
+      location.href = `post.html?mode=view&id=${p.id}`;
+    };
+
+    exhibit.appendChild(item);
+  })();
+</script>
 </body>
 </html>
+
 
 
 
