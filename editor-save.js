@@ -45,22 +45,17 @@
 ============================ */
 function updatePost() {
   const id = window.POST_ID;
-
   const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-
-  const titleEl  = document.getElementById("hb-title");
-  const editorEl = document.getElementById("hb-editor");
 
   const nextPosts =
     id &&
-    titleEl &&
-    editorEl &&
     posts.map(post =>
       post.id === id
         ? {
             ...post,
-            title: titleEl.value.trim(),
-            content: editorEl.innerHTML,
+            title: document.getElementById("hb-title")?.value.trim(),
+            content: document.getElementById("hb-editor")?.innerHTML,
+            isNotice: document.getElementById("hb-notice")?.checked === true,
             date: new Date().toISOString()
           }
         : post
@@ -72,7 +67,6 @@ function updatePost() {
   nextPosts &&
     (location.href = `post.html?mode=view&id=${id}`);
 }
-
 
   /* ============================
      DELETE — 삭제
