@@ -73,10 +73,7 @@ function collectData() {
 function updatePost() {
   const id = window.POST_ID;
   const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-  content: normalizeContent(
-  document.getElementById("hb-editor")?.innerHTML || ""
-),
-
+  
   const nextPosts =
     id &&
     posts.map(post =>
@@ -84,9 +81,7 @@ function updatePost() {
         ? {
             ...post,
             title: document.getElementById("hb-title")?.value.trim(),
-            content: normalizeContent(
-              contentRoot ? contentRoot.innerHTML : ""
-            ),
+            content: normalizeContent( document.getElementById("hb-editor")?.innerHTML || "" ),
             isNotice: document.getElementById("hb-notice")?.checked === true,
             date: new Date().toISOString()
           }
