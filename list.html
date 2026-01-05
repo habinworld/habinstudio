@@ -156,23 +156,7 @@ posts = [...noticePosts, ...normalPosts];
 const itemsPerPage = 10;
 let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
 currentPage = parseInt(currentPage);
-/* ===============================
-   📅 날짜 표시 전용 포맷 함수
-================================ */
-function formatDate(dateStr) {
-  if (!dateStr) return "";
 
-  const d = new Date(dateStr);
-  if (isNaN(d)) return dateStr;
-
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, "0"); // ⭐ 01~12
-  const dd = String(d.getDate()).padStart(2, "0");      // ⭐ 01~31
-  const hh = String(d.getHours()).padStart(2, "0");
-  const min = String(d.getMinutes()).padStart(2, "0");
-
-  return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
-}
 /* 📌 목록 출력 */
 function renderList() {
   const start = (currentPage - 1) * itemsPerPage;
