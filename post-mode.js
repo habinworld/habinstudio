@@ -66,7 +66,8 @@ btnCancel &&
   post && (
   editor.innerHTML = post.content || "",
   window.ImageEngine && ImageEngine.renderAll(),
-  noticeBox && (noticeBox.checked = post.isNotice === true)
+  noticeBox && (noticeBox.style.display = "inline-block",  
+    noticeBox.checked = post.isNotice === true)
 );
 }
   /* ============================
