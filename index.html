@@ -255,45 +255,43 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 </script>
+ 
  <script>
-   const exhibit = document.getElementById("current-exhibit");
+  document.addEventListener("DOMContentLoaded", function () {
 
-  posts.length > 0 && (() => {
-    const p = posts[posts.length - 1]; // 최신 글 1개
+  const exhibit = document.getElementById("current-exhibit");
+  if (!exhibit) return;
 
-    // 본문에서 HTML 제거 + 2줄 분량 텍스트
-    const textOnly = (p.content || "")
-      .replace(/<[^>]*>/g, "")
-      .trim();
+  if (!posts || posts.length === 0) return;
 
-    const previewText = textOnly.slice(0, 80); // 2줄 고정 분량
+  const p = posts[posts.length - 1];
 
-    const item = document.createElement("div");
-    item.className = "grid-item";
+  const textOnly = (p.content || "")
+    .replace(/<[^>]*>/g, "")
+    .trim();
 
-    item.innerHTML = `
-      <div class="card-title">${p.title}</div>
+  const previewText = textOnly.slice(0, 80);
 
-      ${
-        p.thumbnail
-          ? `<img src="${p.thumbnail}" class="card-thumb">`
-          : `<div class="card-preview">${previewText}${textOnly.length > 80 ? "…" : ""}</div>`
-      }
+  const item = document.createElement("div");
+  item.className = "grid-item";
 
-      <div class="card-meta">
-        ${p.writer || "하빈"} · ${formatDate(p.date)}
-      </div>
-    `;
+  item.innerHTML = `
+    <div class="card-title">${p.title}</div>
+    <div class="card-preview">${previewText}…</div>
+    <div class="card-meta">${p.writer || "하빈"} · ${formatDate(p.date)}</div>
+  `;
 
-    item.onclick = () => {
-      location.href = \`post.html?mode=view&id=\${p.id}\`;
-    };
+  item.onclick = () => {
+    location.href = "post.html?mode=view&id=" + p.id;
+  };
 
-    exhibit.appendChild(item);
-  })();
+  exhibit.appendChild(item);
+
+});
 </script>
 </body>
 </html>
+
 
 
 
