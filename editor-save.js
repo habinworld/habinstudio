@@ -119,7 +119,7 @@ function updatePost() {
   ============================ */
   btnSave &&
 btnSave.addEventListener("click", () => {
-  window.POST_ID ? updatePost() : saveNew();
+  window.POST_MODE === "edit" ? updatePost() : saveNew();
 });
 
 
