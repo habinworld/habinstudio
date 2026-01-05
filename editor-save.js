@@ -117,7 +117,7 @@
      버튼 연결 (최종 판단)
   ============================ */
   btnSave && btnSave.addEventListener("click", () => {
-    Number.isInteger(POST_ID) ? updatePost() : saveNew();
+    window.POST_MODE === "edit" ? updatePost() : saveNew();
   });
 
   btnDelete && btnDelete.addEventListener("click", deletePost);
