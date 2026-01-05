@@ -4,12 +4,7 @@
 ---------------------------------------------------- */
 
 (function () {
-
-  /* ============================
-     🧭 Step 0 — URL에서 글 ID 확정 (단일 진실)
-  ============================ */
-  const params = new URLSearchParams(location.search);
-  const POST_ID = Number(params.get("id")); // 없으면 NaN
+ const POST_ID = window.POST_ID;
 
   /* ============================
      DOM 요소
