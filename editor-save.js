@@ -94,7 +94,7 @@
 
     localStorage.setItem("habin_posts", JSON.stringify(nextPosts));
     alert("저장 완료");
-    location.href = `post.html?mode=view&id=${POST_ID}`;
+    location.href = "list.html";
   }
 
   /* ============================
