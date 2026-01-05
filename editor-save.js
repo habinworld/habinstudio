@@ -81,7 +81,9 @@ function updatePost() {
         ? {
             ...post,
             title: document.getElementById("hb-title")?.value.trim(),
-            content: document.getElementById("hb-editor")?.innerHTML,
+            content: normalizeContent(
+            document.getElementById("hb-editor")?.innerHTML || ""
+            ),
             isNotice: document.getElementById("hb-notice")?.checked === true,
             date: new Date().toISOString()
           }
