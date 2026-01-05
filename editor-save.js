@@ -68,12 +68,13 @@ function collectData() {
     location.href = "list.html";
   }
 
-   /* ============================
+  /* ============================
    UPDATE — 기존 글 수정 (헌법 준수)
 ============================ */
 function updatePost() {
   const id = window.POST_ID;
   const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+  const contentRoot = document.querySelector("[data-hb-paragraph]");
 
   const nextPosts =
     id &&
@@ -82,10 +83,8 @@ function updatePost() {
         ? {
             ...post,
             title: document.getElementById("hb-title")?.value.trim(),
-            const contentRoot = document.querySelector("[data-hb-paragraph]");
-
             content: normalizeContent(
-            contentRoot ? contentRoot.innerHTML : ""
+              contentRoot ? contentRoot.innerHTML : ""
             ),
             isNotice: document.getElementById("hb-notice")?.checked === true,
             date: new Date().toISOString()
@@ -99,7 +98,6 @@ function updatePost() {
   nextPosts &&
     (location.href = `post.html?mode=view&id=${id}`);
 }
-
   /* ============================
      DELETE — 삭제
   ============================ */
