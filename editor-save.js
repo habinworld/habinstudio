@@ -40,7 +40,9 @@
 function collectData() {
   const titleEl  = document.getElementById("hb-title");
   const noticeEl = document.getElementById("hb-notice");
-  const contentRoot = document.querySelector("[data-hb-paragraph]");
+  content: normalizeContent(
+  document.getElementById("hb-editor").innerHTML
+),
 
   return {
     id: Date.now(),
@@ -74,7 +76,9 @@ function collectData() {
 function updatePost() {
   const id = window.POST_ID;
   const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-  const contentRoot = document.querySelector("[data-hb-paragraph]");
+  content: normalizeContent(
+  document.getElementById("hb-editor")?.innerHTML || ""
+),
 
   const nextPosts =
     id &&
