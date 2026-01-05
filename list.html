@@ -139,7 +139,10 @@
   <div id="pagination" class="pagination"></div>
 
 </div>
-
+<!-- ===============================
+     📅 날짜 포맷 공용 유틸
+================================ -->
+<script src="date-utils.js"></script>
 <script>
 /* 🗂 localStorage에서 글 목록 로드 */
 let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
@@ -157,12 +160,6 @@ const itemsPerPage = 10;
 let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
 currentPage = parseInt(currentPage);
 
-<!-- ===============================
-     📅 날짜 포맷 공용 유틸
-================================ -->
-<script src="date-utils.js"></script>
-
-<script>
 /* 📌 목록 출력 */
 function renderList() {
   const start = (currentPage - 1) * itemsPerPage;
