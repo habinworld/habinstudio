@@ -9,6 +9,27 @@
   const btnUpdate = document.getElementById("hb-btn-update");
   const btnDelete = document.getElementById("hb-btn-delete");
 
+     function normalizeContent(html) {
+    const temp = document.createElement("div");
+    temp.innerHTML = html;
+
+    // 1️⃣ 실제 이미지 제거 (엑셀 핵심)
+    temp.querySelectorAll("img").forEach(img => img.remove());
+
+    // 2️⃣ 이미지 박스에 placeholder 보장
+    temp.querySelectorAll(".hb-img-box[data-img-id]").forEach(box => {
+      if (!box.querySelector(".hb-img-ph")) {
+        const ph = document.createElement("span");
+        ph.className = "hb-img-ph";
+        ph.setAttribute("contenteditable", "false");
+        ph.textContent = "[이미지]";
+        box.appendChild(ph);
+      }
+    });
+
+    return temp.innerHTML;
+  }
+
   /* ============================
      데이터 수집 (엑셀: 한 행)
   ============================ */
