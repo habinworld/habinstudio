@@ -65,7 +65,8 @@ if (!editor.querySelector("[data-hb-paragraph]")) {
     if (editor.innerHTML.trim() === "" || editor.innerHTML === "<br>") {
       editor.innerHTML = "<div data-hb-paragraph>&nbsp;</div>";
     }
-   
+   // 🔒 Step 3 — 이미지 합성 렌더 (엑셀식, 딱 1회)
+     window.ImageEngine && ImageEngine.renderAll && ImageEngine.renderAll();
 })();
 
   /* =================================================
