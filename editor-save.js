@@ -1,37 +1,42 @@
 /* ---------------------------------------------------
    editor-save.js
-   Ha-Bin Studio — Save / Update Engine
+   Ha-Bin Studio — Save / Update Engine (CLEAN STABLE)
 ---------------------------------------------------- */
 
 (function () {
- /* ============================
-   🧭 Step 0 — URL에서 글 ID 확정
-============================ */
-const params = new URLSearchParams(location.search);
-window.POST_ID = Number(params.get("id"));  
 
-  const btnSave   = document.getElementById("hb-btn-save");
-  const btnUpdate = document.getElementById("hb-btn-update");
-  const btnDelete = document.getElementById("hb-btn-delete");
-/* ============================
-     🔒 Step 1 — 저장 전 정규화 (엑셀식)
-     - img 제거
-     - data-img-id만 유지
+  /* ============================
+     🧭 Step 0 — URL에서 글 ID 확정 (단일 진실)
   ============================ */
-     function normalizeContent(html) {
+  const params = new URLSearchParams(location.search);
+  const POST_ID = Number(params.get("id")); // 없으면 NaN
+
+  /* ============================
+     DOM 요소
+  ============================ */
+  const btnSave   = document.getElementById("hb-btn-save");
+  const btnDelete = document.getElementById("hb-btn-delete");
+  const editorEl  = document.getElementById("hb-editor");
+  const titleEl   = document.getElementById("hb-title");
+  const noticeEl  = document.getElementById("hb-notice");
+
+  /* ============================
+     🔒 Step 1 — 저장 전 정규화
+  ============================ */
+  function normalizeContent(html) {
     const temp = document.createElement("div");
     temp.innerHTML = html;
 
-    // 1️⃣ 실제 이미지 제거 (엑셀 핵심)
+    // 실제 img 제거
     temp.querySelectorAll("img").forEach(img => img.remove());
 
-    // 2️⃣ 이미지 박스에 placeholder 보장
+    // 이미지 박스 placeholder 보장
     temp.querySelectorAll(".hb-img-box[data-img-id]").forEach(box => {
       if (!box.querySelector(".hb-img-ph")) {
         const ph = document.createElement("span");
         ph.className = "hb-img-ph";
-        ph.setAttribute("contenteditable", "false");
         ph.textContent = "[이미지]";
+        ph.setAttribute("contenteditable", "false");
         box.appendChild(ph);
       }
     });
@@ -40,32 +45,25 @@ window.POST_ID = Number(params.get("id"));
   }
 
   /* ============================
-     데이터 수집 (엑셀: 한 행)
+     데이터 수집 (새 글 전용)
   ============================ */
-function collectData() {
-  const titleEl  = document.getElementById("hb-title");
-  const noticeEl = document.getElementById("hb-notice");
-  
-  return {
-    id: Date.now(),
-    title: (titleEl && titleEl.value.trim()) || "제목 없음",
-    writer: "하빈",
-    content: normalizeContent(
-  document.getElementById("hb-editor").innerHTML
-),
-    date: new Date().toISOString(),
-    isNotice: noticeEl ? noticeEl.checked : false
-  };
-}
+  function collectNewData() {
+    return {
+      id: Date.now(),
+      title: titleEl?.value.trim() || "제목 없음",
+      writer: "하빈",
+      content: normalizeContent(editorEl?.innerHTML || ""),
+      date: new Date().toISOString(),
+      isNotice: noticeEl?.checked === true
+    };
+  }
 
   /* ============================
      SAVE — 새 글
   ============================ */
   function saveNew() {
     const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-    const data = collectData();
-
-    posts.push(data);
+    posts.push(collectNewData());
     localStorage.setItem("habin_posts", JSON.stringify(posts));
 
     alert("저장 완료");
@@ -73,53 +71,60 @@ function collectData() {
   }
 
   /* ============================
-   UPDATE — 기존 글 수정 (헌법 준수)
-============================ */
-function updatePost() {
-  const id = window.POST_ID;
-  const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-  
-  const nextPosts =
-    id &&
-    posts.map(post =>
-      post.id === id
+     UPDATE — 기존 글 수정
+  ============================ */
+  function updatePost() {
+    if (!Number.isInteger(POST_ID)) {
+      alert("수정 실패: 글 ID 없음");
+      return;
+    }
+
+    const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+
+    const nextPosts = posts.map(post =>
+      post.id === POST_ID
         ? {
             ...post,
-            title: document.getElementById("hb-title")?.value.trim(),
-            content: normalizeContent( document.getElementById("hb-editor")?.innerHTML || "" ),
-            isNotice: document.getElementById("hb-notice")?.checked === true, 
-         }
+            title: titleEl?.value.trim() || post.title,
+            content: normalizeContent(editorEl?.innerHTML || post.content),
+            isNotice: noticeEl?.checked === true
+          }
         : post
     );
 
-  nextPosts &&
     localStorage.setItem("habin_posts", JSON.stringify(nextPosts));
-  nextPosts && alert("저장 완료");
-  nextPosts &&
-    (location.href = `post.html?mode=view&id=${id}`);
-}
+    alert("저장 완료");
+    location.href = `post.html?mode=view&id=${POST_ID}`;
+  }
+
   /* ============================
      DELETE — 삭제
   ============================ */
   function deletePost() {
-  const id = window.POST_ID;
+    if (!Number.isInteger(POST_ID)) {
+      alert("삭제 실패: 글 ID 없음");
+      return;
+    }
 
     if (!confirm("정말 삭제할까요?")) return;
 
     let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-    posts = posts.filter(post => post.id !== id);
+    posts = posts.filter(post => post.id !== POST_ID);
 
     localStorage.setItem("habin_posts", JSON.stringify(posts));
+    alert("삭제 완료");
     location.href = "list.html";
   }
 
   /* ============================
-     버튼 연결
+     버튼 연결 (최종 판단)
   ============================ */
   btnSave && btnSave.addEventListener("click", () => {
-  const id = Number(window.POST_ID);
-  (Number.isInteger(id) && id > 0) ? updatePost() : saveNew();
-});
+    Number.isInteger(POST_ID) ? updatePost() : saveNew();
+  });
+
+  btnDelete && btnDelete.addEventListener("click", deletePost);
 
 })();
+
 
