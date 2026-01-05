@@ -4,6 +4,11 @@
 ---------------------------------------------------- */
 
 (function () {
+ /* ============================
+   🧭 Step 0 — URL에서 글 ID 확정
+============================ */
+const params = new URLSearchParams(location.search);
+window.POST_ID = Number(params.get("id"));  
 
   const btnSave   = document.getElementById("hb-btn-save");
   const btnUpdate = document.getElementById("hb-btn-update");
