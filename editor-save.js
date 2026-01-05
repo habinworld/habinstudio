@@ -45,8 +45,10 @@
     id: Date.now(),
     title: (titleEl && titleEl.value.trim()) || "제목 없음",
     writer: "하빈",
-    content: normalizeContent(
-  document.getElementById("hb-editor").innerHTML
+    const contentRoot = document.querySelector("[data-hb-paragraph]");
+
+content: normalizeContent(
+  contentRoot ? contentRoot.innerHTML : ""
 ),
     date: new Date().toISOString(),
     isNotice: noticeEl ? noticeEl.checked : false
