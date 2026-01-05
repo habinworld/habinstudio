@@ -12,16 +12,17 @@
   /* ============================
      데이터 수집 (엑셀: 한 행)
   ============================ */
-  function collectData() {
-  const titleEl = document.getElementById("hb-title");
-  const title = titleEl && titleEl.value.trim();
+ function collectData() {
+  const titleEl  = document.getElementById("hb-title");
+  const noticeEl = document.getElementById("hb-notice");
 
   return {
     id: Date.now(),
-    title: title || "제목 없음",
-    writer: "하빈", 
+    title: (titleEl && titleEl.value.trim()) || "제목 없음",
+    writer: "하빈",
     content: document.getElementById("hb-editor").innerHTML,
-    date: new Date().toISOString()
+    date: new Date().toISOString(),
+    isNotice: noticeEl ? noticeEl.checked : false
   };
 }
 
