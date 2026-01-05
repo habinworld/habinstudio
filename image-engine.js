@@ -67,17 +67,18 @@ const img = document.createElement("img");
 img.draggable = false;
 img.addEventListener("dragstart", e => e.preventDefault());
 
+img.style.display = "block";
+img.style.maxWidth = "100%";
+img.style.height = "auto";
+
+// ⭐⭐ 핵심 1: 먼저 DOM에 넣는다
+box.appendChild(img);
+
 const reader = new FileReader();
 
+// ⭐⭐ 핵심 2: src만 나중에 채운다
 reader.onload = () => {
-  img.src = reader.result;     // ⭐ base64
-  img.decoding = "async";
-  img.loading = "eager";
-  img.style.display = "block";
-  img.style.maxWidth = "100%";
-  img.style.height = "auto";
-
-  box.appendChild(img);
+  img.src = reader.result; // base64
 };
 
 reader.readAsDataURL(file);
