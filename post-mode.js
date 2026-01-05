@@ -58,13 +58,7 @@ btnCancel &&
     editor.contentEditable = "true";
     title.readOnly = false;
    // 🔥 공지 체크 상태 복원 (핵심)
-  const noticeBox = document.getElementById("hb-notice");
-const post =
-  window.HABIN_POSTS &&
-  window.HABIN_POSTS.find(p => p.id === window.POST_ID);
-
-noticeBox && post && (noticeBox.checked = post.isNotice === true);
-  }
+  window.POST_MODE==="edit"&&window.POST_ID&&document.getElementById("hb-notice")&&(window.HABIN_POSTS=window.HABIN_POSTS||JSON.parse(localStorage.getItem("habin_posts")||"[]"))&&window.HABIN_POSTS.find(p=>p.id===window.POST_ID)&&(document.getElementById("hb-notice").checked=window.HABIN_POSTS.find(p=>p.id===window.POST_ID).isNotice===true);
 
   /* ============================
      VIEW — 보기
