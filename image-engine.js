@@ -87,19 +87,23 @@ reader.readAsDataURL(file);
      2) 커서 위치 삽입
   =================================================== */
   function insertNodeAtCursor(node) {
-    const sel = window.getSelection();
-    if (!sel || !sel.rangeCount) {
-      editor.appendChild(node);
-      return;
-    }
-    const range = sel.getRangeAt(0);
-    range.collapse(false);
-    range.insertNode(node);
-    range.setStartAfter(node);
-    range.collapse(true);
-    sel.removeAllRanges();
-    sel.addRange(range);
+  const sel = window.getSelection();
+
+  // 🔒 커서가 없거나, editor 밖에 있으면 editor 끝에 강제 삽입
+  if (!sel || !sel.rangeCount || !editor.contains(sel.anchorNode)) {
+    editor.appendChild(node);
+    editor.focus();
+    return;
   }
+
+  const range = sel.getRangeAt(0);
+  range.collapse(false);
+  range.insertNode(node);
+  range.setStartAfter(node);
+  range.collapse(true);
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
 
   /* ===================================================
      3) 선택 / 해제
