@@ -112,11 +112,10 @@ function updatePost() {
   /* ============================
      버튼 연결
   ============================ */
-  btnSave && btnSave.addEventListener("click", () => { window.POST_ID ? updatePost() : saveNew(); });
-
-  if (btnDelete) {
-    btnDelete.addEventListener("click", deletePost);
-  }
+  btnSave && btnSave.addEventListener("click", () => {
+  const id = Number(window.POST_ID);
+  (Number.isInteger(id) && id > 0) ? updatePost() : saveNew();
+});
 
 })();
 
