@@ -63,9 +63,7 @@ btnCancel &&
   const noticeBox = document.getElementById("hb-notice");
 
   noticeBox && post && (noticeBox.checked = post.isNotice === true);
-  // 📄 글 내용 로드
-  post && (editor.innerHTML = post.content);
-
+  
   // 🔒 Step 3 — 이미지 합성 렌더 (엑셀식)
   window.ImageEngine && ImageEngine.renderAll && ImageEngine.renderAll();   
 }
@@ -76,11 +74,8 @@ btnCancel &&
   function modeView() {
     editor.contentEditable = "false";
     title.readOnly = true;
-    
-  // 📄 글 내용 로드
-  post && (editor.innerHTML = post.content);
-
-  // 🔒 Step 3 — 이미지 합성 렌더 (엑셀식)
+   
+   // 🔒 Step 3 — 이미지 합성 렌더 (엑셀식)
   window.ImageEngine && ImageEngine.renderAll && ImageEngine.renderAll(); 
   }
 
