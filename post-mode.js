@@ -55,10 +55,14 @@ btnCancel &&
      EDIT — 수정
   ============================ */
   function modeEdit() {
-    editor.contentEditable = "true";
-    title.readOnly = false;
-   // 🔥 공지 체크 상태 복원 (핵심)
-  window.POST_ID&&document.getElementById("hb-notice")&&(window.HABIN_POSTS=window.HABIN_POSTS||JSON.parse(localStorage.getItem("habin_posts")||"[]"))&&window.HABIN_POSTS.find(p=>p.id===window.POST_ID)&&(document.getElementById("hb-notice").checked=window.HABIN_POSTS.find(p=>p.id===window.POST_ID).isNotice===true);
+  editor.contentEditable = "true";
+  title.readOnly = false;
+
+  const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+  const post = posts.find(p => p.id === window.POST_ID);
+  const noticeBox = document.getElementById("hb-notice");
+
+  noticeBox && post && (noticeBox.checked = post.isNotice === true);
 }
 
   /* ============================
