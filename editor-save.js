@@ -82,9 +82,8 @@ function updatePost() {
             ...post,
             title: document.getElementById("hb-title")?.value.trim(),
             content: normalizeContent( document.getElementById("hb-editor")?.innerHTML || "" ),
-            isNotice: document.getElementById("hb-notice")?.checked === true,
-            date: new Date().toISOString()
-          }
+            isNotice: document.getElementById("hb-notice")?.checked === true, 
+         }
         : post
     );
 
