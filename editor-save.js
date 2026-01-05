@@ -8,7 +8,11 @@
   const btnSave   = document.getElementById("hb-btn-save");
   const btnUpdate = document.getElementById("hb-btn-update");
   const btnDelete = document.getElementById("hb-btn-delete");
-
+/* ============================
+     🔒 Step 1 — 저장 전 정규화 (엑셀식)
+     - img 제거
+     - data-img-id만 유지
+  ============================ */
      function normalizeContent(html) {
     const temp = document.createElement("div");
     temp.innerHTML = html;
