@@ -852,3 +852,46 @@ body.night .secret-toggle {
   color: #ffffff !important;
   opacity: 1 !important;
 }
+/* 🌱 메인 전시 카드 */
+.grid-item {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* 제목 */
+.card-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: #2b2b2b;
+  line-height: 1.3;
+}
+
+/* 본문 미리보기 (2줄 고정) */
+.card-preview {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;   /* ✅ 2줄 고정 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 이미지 썸네일 */
+.card-thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* 작성자 · 날짜 */
+.card-meta {
+  margin-top: auto;
+  font-size: 12px;
+  color: #888;
+  text-align: right;
+}
