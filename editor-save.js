@@ -40,17 +40,14 @@
 function collectData() {
   const titleEl  = document.getElementById("hb-title");
   const noticeEl = document.getElementById("hb-notice");
-  content: normalizeContent(
-  document.getElementById("hb-editor").innerHTML
-),
-
+  
   return {
     id: Date.now(),
     title: (titleEl && titleEl.value.trim()) || "제목 없음",
     writer: "하빈",
     content: normalizeContent(
-      contentRoot ? contentRoot.innerHTML : ""
-    ),
+  document.getElementById("hb-editor").innerHTML
+),
     date: new Date().toISOString(),
     isNotice: noticeEl ? noticeEl.checked : false
   };
