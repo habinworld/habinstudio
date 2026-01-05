@@ -83,8 +83,10 @@ function updatePost() {
         ? {
             ...post,
             title: document.getElementById("hb-title")?.value.trim(),
+            const contentRoot = document.querySelector("[data-hb-paragraph]");
+
             content: normalizeContent(
-            document.getElementById("hb-editor")?.innerHTML || ""
+            contentRoot ? contentRoot.innerHTML : ""
             ),
             isNotice: document.getElementById("hb-notice")?.checked === true,
             date: new Date().toISOString()
