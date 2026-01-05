@@ -37,19 +37,18 @@
   /* ============================
      데이터 수집 (엑셀: 한 행)
   ============================ */
- function collectData() {
+function collectData() {
   const titleEl  = document.getElementById("hb-title");
   const noticeEl = document.getElementById("hb-notice");
+  const contentRoot = document.querySelector("[data-hb-paragraph]");
 
   return {
     id: Date.now(),
     title: (titleEl && titleEl.value.trim()) || "제목 없음",
     writer: "하빈",
-    const contentRoot = document.querySelector("[data-hb-paragraph]");
-
-content: normalizeContent(
-  contentRoot ? contentRoot.innerHTML : ""
-),
+    content: normalizeContent(
+      contentRoot ? contentRoot.innerHTML : ""
+    ),
     date: new Date().toISOString(),
     isNotice: noticeEl ? noticeEl.checked : false
   };
