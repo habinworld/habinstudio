@@ -21,9 +21,9 @@ body {
   overflow-x: hidden;
   overflow-y: hidden;
 }
-/* -------- 겨울 낮 배경 (밝은 남보라 버전) -------- */
+/* -------- 겨울 낮 배경  -------- */
 body.winter-day {
-  --bgmain: #0060E0;   /* ← 여기 색만 바꾸면 된다 */
+  --bgmain: #3388FF;   /* ← 여기 색만 바꾸면 된다 */
   background: var(--bgmain);
 }
 /* -------- 계절 입자 캔버스 -------- */
