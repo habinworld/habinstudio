@@ -112,7 +112,10 @@
 <body>
 
 <script src="secret-gate.js"></script>
-
+<!-- ===============================
+     📅 날짜 포맷 공용 유틸
+================================ -->
+<script src="date-utils.js"></script>
 <div class="page-container">
 
   <h1 class="page-title">📚 한글 게시판</h1>
@@ -139,10 +142,7 @@
   <div id="pagination" class="pagination"></div>
 
 </div>
-<!-- ===============================
-     📅 날짜 포맷 공용 유틸
-================================ -->
-<script src="date-utils.js"></script>
+
 <script>
 /* 🗂 localStorage에서 글 목록 로드 */
 let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
