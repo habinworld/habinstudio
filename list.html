@@ -157,6 +157,12 @@ const itemsPerPage = 10;
 let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
 currentPage = parseInt(currentPage);
 
+<!-- ===============================
+     📅 날짜 포맷 공용 유틸
+================================ -->
+<script src="date-utils.js"></script>
+
+<script>
 /* 📌 목록 출력 */
 function renderList() {
   const start = (currentPage - 1) * itemsPerPage;
@@ -176,13 +182,18 @@ function renderList() {
     tr.innerHTML = `
       <td>${posts.length - (start + idx)}</td>
       <td>${p.writer}</td>
-      <td><a href="post.html?mode=view&id=${p.id}" class="title-link">${p.isNotice ? "📌 " : ""}${p.title}</a></td>
+      <td>
+        <a href="post.html?mode=view&id=${p.id}" class="title-link">
+          ${p.isNotice ? "📌 " : ""}${p.title}
+        </a>
+      </td>
       <td>${formatDate(p.date)}</td>
     `;
     if (p.isNotice) tr.classList.add("notice-row");
     tbody.appendChild(tr);
   });
 }
+</script>
 
 /* 📌 페이지네이션 */
 function renderPagination() {
