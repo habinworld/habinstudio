@@ -44,7 +44,7 @@ window.EditorLoad = (function () {
     document.getElementById("hb-editor").innerHTML = post.content;
 
     const noticeBox = document.getElementById("hb-notice");
-    if (noticeBox) noticeBox.checked = post.notice ? true : false;
+    if (noticeBox) noticeBox.checked = post.isNotice === true;
   }
 
   return {
