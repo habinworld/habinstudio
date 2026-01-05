@@ -57,6 +57,12 @@ btnCancel &&
   function modeEdit() {
     editor.contentEditable = "true";
     title.readOnly = false;
+   // 🔥 공지 체크 상태 복원 (핵심)
+  const noticeBox = document.getElementById("hb-notice");
+  const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+  const post  = posts.find(p => p.id === window.POST_ID);
+
+  noticeBox && post && (noticeBox.checked = post.isNotice === true);  
   }
 
   /* ============================
