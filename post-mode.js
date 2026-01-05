@@ -16,7 +16,7 @@
 // 🔒 전역 모드 공개 (저장 엔진에서 사용)
   window.POST_MODE = mode;
   // 요소 참조
-  const editor = document.getElementById("hb-editor");
+  const editor = document.querySelector("[data-hb-paragraph]");
   const title  = document.getElementById("hb-title");
 
   const btnSave   = document.getElementById("hb-btn-save");
