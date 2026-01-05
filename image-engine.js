@@ -276,7 +276,7 @@ function enableFreeMove(box) {
   return {
     insert,
     align,
-    remove
+    remove,
     renderAll 
   };
 
