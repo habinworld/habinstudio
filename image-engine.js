@@ -19,7 +19,7 @@ window.ImageEngine = (function () {
   /* ===================================================
      0) 내부 상태 (ImageEngine만 소유)
   =================================================== */
-  const editor = document.getElementById("hb-editor");
+  const editor = document.querySelector("[data-hb-paragraph]");
   let currentBox = null;
 
   const HANDLES = ["n","s","e","w","ne","nw","se","sw"];
