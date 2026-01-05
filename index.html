@@ -256,8 +256,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </script>
  <script>
-  const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-  const exhibit = document.getElementById("current-exhibit");
+   const exhibit = document.getElementById("current-exhibit");
 
   posts.length > 0 && (() => {
     const p = posts[posts.length - 1]; // 가장 최근 글 1개
@@ -275,6 +274,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
 
 
 
