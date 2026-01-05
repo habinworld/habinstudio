@@ -102,8 +102,7 @@ function updatePost() {
      DELETE — 삭제
   ============================ */
   function deletePost() {
-    const params = new URLSearchParams(location.search);
-    const id = Number(params.get("id"));
+  const id = window.POST_ID;
 
     if (!confirm("정말 삭제할까요?")) return;
 
