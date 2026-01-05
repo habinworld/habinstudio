@@ -68,7 +68,7 @@ btnCancel &&
   window.ImageEngine && ImageEngine.renderAll(),
   noticeBox && (noticeBox.checked = post.isNotice === true)
 );
-
+}
   /* ============================
      VIEW — 보기
   ============================ */
