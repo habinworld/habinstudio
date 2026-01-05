@@ -75,15 +75,13 @@ box.appendChild(img);
 
 const reader = new FileReader();
 
-// 🔒 이미지 로딩 중 플래그 (저장 잠금용)
-box.setAttribute("data-img-loading", "1");
-
+// ⭐⭐ 핵심 2: src만 나중에 채운다
 reader.onload = () => {
   img.src = reader.result; // base64
-  box.removeAttribute("data-img-loading"); // ✅ 로딩 완료
 };
 
 reader.readAsDataURL(file);
+
 
   /* ===================================================
      2) 커서 위치 삽입
