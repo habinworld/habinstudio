@@ -64,12 +64,13 @@
   function saveNew() {
     const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
     posts.push(collectNewData());
-    localStorage.setItem("habin_posts", JSON.stringify(posts));
-
-    alert("저장 완료");
-    location.href = "list.html";
-  }
-
+     
+    localStorage.setItem("habin_posts", JSON.stringify(nextPosts));
+    setTimeout(() => {
+  alert("저장 완료");
+  location.href = "list.html";
+}, 0);
+}
   /* ============================
      UPDATE — 기존 글 수정
   ============================ */
@@ -93,8 +94,10 @@
     );
 
     localStorage.setItem("habin_posts", JSON.stringify(nextPosts));
-    alert("저장 완료");
-    location.href = "list.html";
+    setTimeout(() => {
+  alert("저장 완료");
+  location.href = "list.html";
+}, 0);
   }
 
   /* ============================
