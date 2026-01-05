@@ -64,8 +64,11 @@ btnCancel &&
   const noticeBox = document.getElementById("hb-notice");
 
   // 👉 EDIT 1줄 흐름 (본문 → 이미지 → 공지)
-  post && (editor.innerHTML = post.content || "", ImageEngine.renderAll(), noticeBox && (noticeBox.checked = post.isNotice === true));
-}
+  post && (
+  editor.innerHTML = post.content || "",
+  window.ImageEngine && ImageEngine.renderAll(),
+  noticeBox && (noticeBox.checked = post.isNotice === true)
+);
 
   /* ============================
      VIEW — 보기
