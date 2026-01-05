@@ -35,7 +35,6 @@ window.ImageEngine = (function () {
     // ① 박스 먼저 삽입 (체감 0ms)
     const box = document.createElement("div");
     box.className = "hb-img-box align-center";
-    box.contentEditable = "false"; // ★ 여기 (추가)
     addResizeHandles(box);
 
     box.addEventListener("click", e => {
