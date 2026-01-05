@@ -117,13 +117,7 @@
     localStorage.setItem("habin_posts", JSON.stringify(posts));
    location.href = "list.html";
   }
-    /* ============================
-     CANCEL — 취소
-  ============================ */
-  document.getElementById("hb-btn-cancel")
-  ?.addEventListener("click", () => {
-    location.href = "list.html";
-  });
+    
   /* ============================
      버튼 연결 (최종 판단)
   ============================ */
