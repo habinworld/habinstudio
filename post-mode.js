@@ -62,10 +62,7 @@ btnCancel &&
   const post = posts.find(p => p.id === window.POST_ID);
   const noticeBox = document.getElementById("hb-notice");
 
-  noticeBox && post && (noticeBox.checked = post.isNotice === true);
-  
-  // 🔒 Step 3 — 이미지 합성 렌더 (엑셀식)
-  window.ImageEngine && ImageEngine.renderAll && ImageEngine.renderAll();   
+  noticeBox && post && (noticeBox.checked = post.isNotice === true);  
 }
 
   /* ============================
@@ -74,9 +71,6 @@ btnCancel &&
   function modeView() {
     editor.contentEditable = "false";
     title.readOnly = true;
-   
-   // 🔒 Step 3 — 이미지 합성 렌더 (엑셀식)
-  window.ImageEngine && ImageEngine.renderAll && ImageEngine.renderAll(); 
   }
 
   /* ============================
