@@ -65,7 +65,7 @@
     const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
     posts.push(collectNewData());
      
-    localStorage.setItem("habin_posts", JSON.stringify(nextPosts));
+    localStorage.setItem("habin_posts", JSON.stringify(posts));
     setTimeout(() => {
   alert("저장 완료");
   location.href = "list.html";
