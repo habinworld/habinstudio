@@ -62,7 +62,8 @@ btnCancel &&
   const post = posts.find(p => p.id === window.POST_ID);
   const noticeBox = document.getElementById("hb-notice");
 
-  noticeBox && post && (noticeBox.checked = post.isNotice === true);  
+  // 👉 EDIT 1줄 흐름 (본문 → 이미지 → 공지)
+  post && (editor.innerHTML = post.content || "", ImageEngine.renderAll(), noticeBox && (noticeBox.checked = post.isNotice === true));
 }
 
   /* ============================
