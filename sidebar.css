@@ -384,5 +384,21 @@ body.night #sidebar-menu a:hover {
   color: #BFDBFE !important;
   border-color: #60A5FA !important;
 }
+body.night .notice-title {
+  color: #BBD7FF;                 /* 더 밝은 은청 */
+  font-weight: 600;
+  text-shadow:
+    0 0 4px  rgba(187,215,255,0.9),
+    0 0 10px rgba(147,197,253,0.7),
+    0 0 18px rgba(96,165,250,0.55);
+}
 
+body.night .notice-title {
+  animation: glowPulse 3.2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%,100% { text-shadow: 0 0 4px rgba(187,215,255,0.7), 0 0 10px rgba(147,197,253,0.5); }
+  50%     { text-shadow: 0 0 6px rgba(187,215,255,1),   0 0 16px rgba(147,197,253,0.8); }
+}
 
