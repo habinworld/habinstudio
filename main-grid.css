@@ -1,5 +1,5 @@
 /* 🌱 메인 전시 카드 */
-.grid-item {
+.main-grid.grid-item {
   padding: 12px;
   display: flex;
   flex-direction: column;
