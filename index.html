@@ -276,10 +276,13 @@ document.addEventListener("DOMContentLoaded", () => {
   item.className = "grid-item";
 
   item.innerHTML = `
-    <div class="card-title">${p.title}</div>
-    <div class="card-preview">${previewText}…</div>
-    <div class="card-meta">${p.writer || "하빈"} · ${formatDate(p.date)}</div>
-  `;
+  <div class="card-title">${p.title}</div>
+  <div class="card-preview">${previewText}…</div>
+  <div class="card-meta">
+    <span class="card-writer">${p.writer || "하빈"}</span>
+    <span class="card-date">${formatDate(p.date)}</span>
+  </div>
+`;
 
   item.onclick = () => {
     location.href = "post.html?mode=view&id=" + p.id;
@@ -291,6 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 </body>
 </html>
+
 
 
 
