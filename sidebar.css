@@ -30,9 +30,12 @@
   transition: 0.3s ease;
   box-shadow: 0 2px 6px rgba(0,0,0,0.06); 
 }
-.logo-off { border-color: #FF8C00 !important; }
-.logo-moon { border-color: #3A67C9 !important; }
-.logo-gold { border-color: #DAA520 !important; }
+.logo-off { border-color: #FF8C00 !important; 
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06) !important; }
+.logo-moon { border-color: #3A67C9 !important;
+  box-shadow: 0 0 12px rgba(92,142,219,0.55) !important; }
+.logo-gold { border-color: #DAA520 !important; 
+  box-shadow: 0 0 12px rgba(218,165,32,0.55) !important; }
 
 /* ----------------------------------------
    👤 프로필 블록 (Poetic Profile)
