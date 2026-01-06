@@ -2,7 +2,7 @@
    🧭 Ha-Bin Studio — sidebar.css
    사이드바 전용 스타일 (구조 고정)
 -------------------------------------------------- */
-/*---- A.사이드바 뼈대---- */
+/*---- 사이드바 뼈대---- */
 #sidebar {
   width: 260px;
   background: #FFF4C9;
@@ -18,7 +18,7 @@
 #sidebar::-webkit-scrollbar-thumb { background: #D5D5D5; }
 .logo-block { text-align: center; margin: 0 auto 40px; }
 
-/*---- B. 로고 영역----*/
+/*---- 로고 영역----*/
 .logo-block { text-align: center; margin: 0 auto 40px; }
 #main-logo {
   width: 210px;
@@ -32,7 +32,6 @@
 .logo-moon { border-color: #3A67C9 !important; }
 .logo-gold { border-color: #DAA520 !important; }
 
-/* C. 프로필 / 문패 */
 /* ----------------------------------------
    👤 프로필 블록 (Poetic Profile)
 ---------------------------------------- */
@@ -97,7 +96,85 @@ body.night .badge {
   border-color: #3A67C9 !important;
   color: #E5E7EB !important;
 }
-/* D. 날짜 / 시계 */
+/* ----------------------------------------
+   📅 날짜 / 시간
+---------------------------------------- */
+
+#datetime-box {
+  margin: 15px 0;
+  font-size: 15px;
+  text-align: center;
+  padding: 8px 0;
+}
+
+#current-datetime {
+  font-weight: 600;
+  color: #FF8C00 !important;
+}
+
+/* Night Mode — 날짜/시간 */
+body.night #current-datetime {
+  color: #93C5FD !important;
+}
+/* ----------------------------------------
+   ⏰ 아날로그 시계
+---------------------------------------- */
+/*--- 시계 본체 --- */
+#clock-box {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0 25px;
+}
+#clock {
+  width: 100px;
+  height: 100px;
+  border: 2px solid #3A67C9;
+  border-radius: 50%;
+  position: relative;
+}
+/* 안쪽 원 */
+#clock::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+  border-radius: 50%;
+  border: 1px solid #8FA8E6;
+  box-sizing: border-box;
+}
+/* 바늘 비율 */
+.hand {
+  width: 2px;
+  background: #1B1E45;
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+}
+/* 시침 */
+.hand.hour {
+  height: 28px;   /* ~28% */
+}
+
+/* 분침 */
+.hand.minute {
+  height: 38px;   /* ~38% */
+}
+
+/* 초침 */
+.hand.second {
+  height: 44px;   /* ~44% */
+  width: 1px;
+  background: #FF0000 !important;
+}
+/* 여백 미세 조정 */
+#clock-box {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0 22px;
+}
 
 /* E. 날씨 */
 
