@@ -151,8 +151,8 @@ body.night #current-datetime {
 }
 
 #clock {
-  width: 100px;
-  height: 100px;
+  width: 140px;
+  height: 140px;
   border: 2px solid #3A67C9;
   border-radius: 50%;
   position: relative;
@@ -164,8 +164,8 @@ body.night #current-datetime {
   position: absolute;
   top: 6px;
   left: 6px;
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
   border-radius: 50%;
   border: 1px solid #8FA8E6;
   box-sizing: border-box;
@@ -183,17 +183,17 @@ body.night #current-datetime {
 
 /* 시침 */
 .hand.hour {
-  height: 28px;
+  height: 40px;
 }
 
 /* 분침 */
 .hand.minute {
-  height: 38px;
+  height: 49px;
 }
 
 /* 초침 */
 .hand.second {
-  height: 44px;
+  height: 54px;
   width: 1px;
   background: #FF0000 !important;
 }
@@ -384,21 +384,3 @@ body.night #sidebar-menu a:hover {
   color: #BFDBFE !important;
   border-color: #60A5FA !important;
 }
-body.night .notice-title {
-  color: #BBD7FF;                 /* 더 밝은 은청 */
-  font-weight: 600;
-  text-shadow:
-    0 0 4px  rgba(187,215,255,0.9),
-    0 0 10px rgba(147,197,253,0.7),
-    0 0 18px rgba(96,165,250,0.55);
-}
-
-body.night .notice-title {
-  animation: glowPulse 3.2s ease-in-out infinite;
-}
-
-@keyframes glowPulse {
-  0%,100% { text-shadow: 0 0 4px rgba(187,215,255,0.7), 0 0 10px rgba(147,197,253,0.5); }
-  50%     { text-shadow: 0 0 6px rgba(187,215,255,1),   0 0 16px rgba(147,197,253,0.8); }
-}
-
