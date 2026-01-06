@@ -68,21 +68,23 @@ function applyThemeByTime() {
   const body = document.body;
   const logo = document.getElementById('main-logo');
 
-  if (!logo) return;
-
   if (hour >= 20 || hour < 6) {
     // 🌙 night-mode
     body.classList.add('night');
 
-    logo.classList.remove('logo-off', 'logo-gold');
-    logo.classList.add('logo-moon'); // moonlight glow
+    if (logo) {
+      logo.classList.remove('logo-off', 'logo-gold');
+      logo.classList.add('logo-moon'); // moonlight glow
+    }
 
   } else {
     // ☀ daytime
     body.classList.remove('night');
 
-    logo.classList.remove('logo-gold', 'logo-moon');
-    logo.classList.add('logo-off'); // orange OFF mode
+    if (logo) {
+      logo.classList.remove('logo-gold', 'logo-moon');
+      logo.classList.add('logo-off'); // orange OFF mode
+    }
   }
 }
 
