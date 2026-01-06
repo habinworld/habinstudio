@@ -13,6 +13,24 @@
   gap: 8px;
   cursor: pointer;
 }
+/* 🌱 메인 전시 카드 – 외형 */
+.main-grid .grid-item {
+  background: #F7F9FF;
+  border: 1px solid #DCE3F5;
+  border-radius: 12px;
+
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  transition: background 0.2s ease, 
+              border-color 0.2s ease, 
+              transform 0.2s ease;
+}
+
+/* 🌿 hover 효과 */
+.main-grid .grid-item:hover {
+  background: #EEF4FF;
+  border-color: #3558A8;
+  transform: translateY(-3px);
+}
 
 /* 제목 */
 .card-title {
