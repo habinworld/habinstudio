@@ -895,10 +895,14 @@ body.night .secret-toggle {
 .card-meta {
   margin-top: auto;
   font-size: 12px;
-  color: #888;
-
   display: flex;
-  justify-content: space-between; /* ⬅ 핵심 */
+  justify-content: space-between;
+}
+
+/* 작성자 / 날짜 공통 컬러 */
+.card-writer,
+.card-date {
+  color: #5BB6C8; /* 은은한 청록 */
 }
 
 .card-writer {
