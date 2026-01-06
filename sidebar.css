@@ -2,6 +2,12 @@
    🧭 Ha-Bin Studio — sidebar.css
    사이드바 전용 스타일 (구조 고정)
 -------------------------------------------------- */
+/* ---- 사이드바 컨테이너 (자리) ---- */
+#sidebar-container {
+  width: 260px;
+  flex-shrink: 0;
+}
+
 /*---- 사이드바 뼈대---- */
 #sidebar {
   width: 260px;
@@ -377,8 +383,5 @@ body.night #sidebar-menu a:hover {
   color: #BFDBFE !important;
   border-color: #60A5FA !important;
 }
-#content {
-  flex: 1;
-  width: auto;   /* ← calc 지워도 됨 */
-}
+
 
