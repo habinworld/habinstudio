@@ -2,7 +2,7 @@
    🧭 Ha-Bin Studio — sidebar.css
    사이드바 전용 스타일 (구조 고정)
 -------------------------------------------------- */
-/* A.사이드바 뼈대 */
+/*---- A.사이드바 뼈대---- */
 #sidebar {
   width: 260px;
   background: #FFF4C9;
@@ -18,7 +18,7 @@
 #sidebar::-webkit-scrollbar-thumb { background: #D5D5D5; }
 .logo-block { text-align: center; margin: 0 auto 40px; }
 
-/* B. 로고 영역*/
+/*---- B. 로고 영역----*/
 .logo-block { text-align: center; margin: 0 auto 40px; }
 #main-logo {
   width: 210px;
@@ -33,7 +33,70 @@
 .logo-gold { border-color: #DAA520 !important; }
 
 /* C. 프로필 / 문패 */
+/* ----------------------------------------
+   👤 프로필 블록 (Poetic Profile)
+---------------------------------------- */
+.poetic-block {
+  width: calc(100% - 16px);
+  margin: 0 auto 35px;
+  background: #AFFFF5;
+  border: 1.5px solid rgba(53,88,168,0.55);
+  padding: 10px 6px 10px;
+  border-radius: 14px;
+  text-align: center;
+  box-shadow:
+    0 0 6px rgba(53,88,168,0.35),
+    0 0 12px rgba(53,88,168,0.20);
+  transition: 0.25s ease;
+}
+.poetic-block h2 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 700;
+}
+.poetic-block p {
+  font-size: 14.5px;
+  line-height: 1.7;
+}
 
+/* Night Mode — 프로필 블록 */
+body.night .poetic-block {
+  background: rgba(30, 41, 59, 0.6) !important;
+  border-color: rgba(255,255,255,0.10) !important;
+}
+
+/* ----------------------------------------
+   🏷 대문 인장 (Studio Badge)
+---------------------------------------- */
+.badge {
+  font-family: 'HCR Batang','Batang',serif;
+  text-align: center;
+  margin: 0 auto 40px;
+  padding: 10px 16px;
+  width: fit-content;
+  background: #FFEBA0;
+  border: 1.5px solid #3558A8;
+  border-radius: 10px;
+  line-height: 1.9;
+  color: #5C8EDB;
+  font-size: 13px;
+}
+.badge .brand-bold {
+  font-weight: 900;
+  -webkit-text-stroke: 0.3px #3558A8;
+  text-shadow: 0.6px 0.8px 1.5px rgba(53,88,168,0.35);
+}
+.badge .fl {
+  color: #FF69B4;
+  font-weight: 900;
+}
+
+/* Night Mode — 문패 */
+body.night .badge {
+  background: rgba(30, 41, 59, 0.4) !important;
+  border-color: #3A67C9 !important;
+  color: #E5E7EB !important;
+}
 /* D. 날짜 / 시계 */
 
 /* E. 날씨 */
