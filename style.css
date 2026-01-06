@@ -55,16 +55,20 @@ body.winter-day {
 
 /* -------- 메인 영역 -------- */
 #content {
+  #content {
   flex: 1;
-  width: calc(100vw - 260px); 
-  padding: 0 0 120px;  /* 푸터 공간 */
+  min-width: 0; 
+  padding: 0 0 120px;
   overflow-y: auto;
   position: relative;
   z-index: 100;
-  height: calc(100vh - 0px);
-  min-height:0 !important;
+  height: auto;
+  min-height: 100vh;
 }
-
+/* -------- 본문 실제 콘텐츠는 전부 가로 100% -------- */
+#content > * {
+  width: 100%;
+}
 /* -------- 탑메뉴 (PC 절대 1줄 + 버튼폭 균등화) -------- */
 .top-menu {
   display: flex;
