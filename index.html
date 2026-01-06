@@ -144,9 +144,20 @@ noticeList.innerHTML = notices.map((n, i) => `
   </div>
 `).join("");
 </script>
+<script>
+fetch("sidebar.html")
+  .then(res => res.text())
+  .then(html => {
+    document.getElementById("sidebar-container").innerHTML = html;
 
+    // 사이드바 전용 초기화
+    if (typeof startWeather === "function") startWeather();
+    if (typeof updateClock === "function") updateClock();
+  });
+</script>
  </body>
 </html>
+
 
 
 
