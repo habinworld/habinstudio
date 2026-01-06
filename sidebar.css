@@ -12,6 +12,17 @@
   overflow-y: auto;
   z-index: 2000;
 }
+/* Night Mode — 사이드바 */
+body.night #sidebar {
+  background: rgba(15, 23, 42, 0.96) !important;
+  border-right-color: #1E3A8A !important;
+  color: #E5E7EB !important;
+}
+/* Night Mode — 사이드바 내부 텍스트 */
+body.night #sidebar * {
+  color: #E5E7EB !important;
+}
+
 /* 사이드바 스크롤바 */
 #sidebar::-webkit-scrollbar { width: 8px; }
 #sidebar::-webkit-scrollbar-track { background: #F3F3F3; }
