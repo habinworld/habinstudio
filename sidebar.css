@@ -119,32 +119,38 @@ body.night #current-datetime {
 /* ----------------------------------------
    ⏰ 아날로그 시계
 ---------------------------------------- */
-/*--- 시계 본체 --- */
+/* ----------------------------------------
+   ⏰ 아날로그 시계
+---------------------------------------- */
+
 #clock-box {
   display: flex;
   justify-content: center;
   margin: 15px 0 25px;
 }
+
 #clock {
-  width: 100px;
-  height: 100px;
+  width: 140px;
+  height: 140px;
   border: 2px solid #3A67C9;
   border-radius: 50%;
   position: relative;
 }
+
 /* 안쪽 원 */
 #clock::after {
   content: "";
   position: absolute;
-  top: 5px;
-  left: 5px;
-  width: calc(100% - 10px);
-  height: calc(100% - 10px);
+  top: 6px;
+  left: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
   border-radius: 50%;
   border: 1px solid #8FA8E6;
   box-sizing: border-box;
 }
-/* 바늘 비율 */
+
+/* 공통 침 */
 .hand {
   width: 2px;
   background: #1B1E45;
@@ -153,21 +159,35 @@ body.night #current-datetime {
   left: 50%;
   transform-origin: bottom center;
 }
+
 /* 시침 */
 .hand.hour {
-  height: 28px;   /* ~28% */
+  height: 40px;
 }
 
 /* 분침 */
 .hand.minute {
-  height: 38px;   /* ~38% */
+  height: 49px;
 }
 
 /* 초침 */
 .hand.second {
-  height: 44px;   /* ~44% */
+  height: 54px;
   width: 1px;
   background: #FF0000 !important;
+}
+
+/* Night Mode — 시계 */
+body.night #clock {
+  border-color: #1E3A8A !important;
+}
+
+body.night .hand {
+  background: #CBD5E1 !important;
+}
+
+body.night .hand.second {
+  background: #60A5FA !important;
 }
 /* 여백 미세 조정 */
 #clock-box {
