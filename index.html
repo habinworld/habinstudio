@@ -159,8 +159,29 @@ fetch("sidebar.html")
     if (typeof updateClock === "function") updateClock();
   });
 </script>
+ <script>
+window.initSidebarOnly = function () {
+  // ⏰ 시계
+  if (typeof updateClock === "function") updateClock();
+
+  // 🌦 날씨
+  if (typeof startWeather === "function") startWeather();
+
+  // 🔐 관리자 토글
+  const toggle = document.getElementById("secret-toggle");
+  const box = document.getElementById("secret-box");
+
+  if (toggle && box) {
+    toggle.onclick = () => {
+      box.style.display = box.style.display === "block" ? "none" : "block";
+    };
+  }
+};
+</script>
+
  </body>
 </html>
+
 
 
 
