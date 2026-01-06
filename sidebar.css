@@ -17,7 +17,7 @@
   padding: 10px;
   height: calc(100vh - 70px);
   overflow-y: auto;
-  z-index: 2000;
+  z-index: 9999;
 }
 /* Night Mode — 사이드바 */
 body.night #sidebar {
