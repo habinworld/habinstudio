@@ -15,11 +15,17 @@ body {
   background: var(--bgmain, #FFFDF8);
   color: #2b2b2b;
 
-  /* ✔ 레이아웃 유지 — 절대 삭제 금지 */
+   /* 전역 환경만 담당 */
+  margin: 0;
+  overflow-x: hidden;
+}
+/* ===============================
+   🔥 Layout Root (PC 기준)
+================================ */
+
+#layout {
   display: flex;
   min-height: 100vh;
-  overflow-x: hidden;
-  overflow-y: hidden;
 }
 /* -------- 겨울 낮 배경  -------- */
 body.winter-day {
