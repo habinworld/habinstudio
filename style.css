@@ -269,9 +269,14 @@ body.winter-day {
 ---------------------------------------------------- */
 
 /* 본문 */
+body.night {
+  background: linear-gradient(180deg, #020617 0%, #0A0F24 100%);
+  color: #E5E7EB;
+}
+
 body.night #content {
-  background: inherit !important;
-  box-shadow: none !important;
+  color: #E5E7EB;
+};
 }
 
 /* top-banner */
