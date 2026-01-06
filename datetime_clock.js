@@ -1,8 +1,10 @@
 /* -----------------------------------------------------
-   🌞 Ha-Bin Studio — datetime_clock.js (완전 정상판)
+   🌞 Ha-Bin Studio — datetime_clock.js (fetch 대응 정식판)
 ----------------------------------------------------- */
 
-document.addEventListener("DOMContentLoaded", () => {
+(function () {
+  let dateTimer = null;
+  let clockTimer = null;
 
   /* 날짜 + 시간 */
   function updateDateTime() {
@@ -30,34 +32,39 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   }
 
-  updateDateTime();
-  setInterval(updateDateTime, 1000);
-
-
   /* 아날로그 시계 */
-  const hourHand = document.querySelector(".hand.hour");
-  const minuteHand = document.querySelector(".hand.minute");
-  const secondHand = document.querySelector(".hand.second");
-
   function updateClock() {
-    const now = new Date();
+    const hourHand = document.querySelector(".hand.hour");
+    const minuteHand = document.querySelector(".hand.minute");
+    const secondHand = document.querySelector(".hand.second");
+    if (!hourHand || !minuteHand || !secondHand) return;
 
+    const now = new Date();
     const seconds = now.getSeconds();
     const minutes = now.getMinutes();
     const hours   = now.getHours();
 
-    const secDeg  = seconds * 6;
-    const minDeg  = minutes * 6 + seconds * 0.1;
-    const hourDeg = (hours % 12) * 30 + minutes * 0.5;
-
-    if (secondHand)
-      secondHand.style.transform = `rotate(${secDeg}deg)`;
-    if (minuteHand)
-      minuteHand.style.transform = `rotate(${minDeg}deg)`;
-    if (hourHand)
-      hourHand.style.transform   = `rotate(${hourDeg}deg)`;
+    secondHand.style.transform = `rotate(${seconds * 6}deg)`;
+    minuteHand.style.transform =
+      `rotate(${minutes * 6 + seconds * 0.1}deg)`;
+    hourHand.style.transform =
+      `rotate(${(hours % 12) * 30 + minutes * 0.5}deg)`;
   }
-   setInterval(updateClock, 1000);
-});
 
+  /* ⭐ 명시적 시작 함수 */
+  function startDateTimeClock() {
+    if (!dateTimer) {
+      updateDateTime();
+      dateTimer = setInterval(updateDateTime, 1000);
+    }
+
+    if (!clockTimer) {
+      updateClock();
+      clockTimer = setInterval(updateClock, 1000);
+    }
+  }
+
+  // 전역에 노출 (fetch 이후 호출용)
+  window.startDateTimeClock = startDateTimeClock;
+})();
 
