@@ -119,9 +119,6 @@ body.night #current-datetime {
 /* ----------------------------------------
    ⏰ 아날로그 시계
 ---------------------------------------- */
-/* ----------------------------------------
-   ⏰ 아날로그 시계
----------------------------------------- */
 
 #clock-box {
   display: flex;
@@ -196,11 +193,172 @@ body.night .hand.second {
   margin: 12px 0 22px;
 }
 
-/* E. 날씨 */
+/* ----------------------------------------
+   🌦 날씨 영역
+---------------------------------------- */
 
-/* F. 시크릿 게이트 */
+#weather-area {
+  font-size: 15px;
+  text-align: center;
+  margin-top: 2px;
+  margin-bottom: 40px;
+  color: #000;
+}
 
-/* G. 접이식 메뉴 */
+#weather-location {
+  font-weight: 600;
+  color: #000;
+}
+
+#weather-box {
+  font-weight: 600;
+  color: #000;
+}
+
+/* Night Mode — 날씨 */
+body.night #weather-area,
+body.night #weather-location,
+body.night #weather-box {
+  color: #E5E7EB !important;
+}
+
+/* ----------------------------------------
+   🔐 관리자 모드 — 비밀의 문
+---------------------------------------- */
+
+.secret-toggle {
+  font-family: 'HCR Batang','Batang',serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #C0C0C0;
+  font-style: italic;
+  text-align: center;
+  cursor: default !important;
+  margin-top: 25px;
+  margin-bottom: 6px;
+  transition: 0.25s ease;
+}
+
+.secret-toggle:hover {
+  color: #5C8EDB;
+}
+
+.secret-box {
+  display: none;
+  width: 90%;
+  margin: 10px auto 0;
+  padding: 14px 12px;
+  background: #F4FAFF;
+  border: 1.5px solid #3558A8;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.secret-box input {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  border-radius: 6px;
+  border: 1px solid #A2C0E6;
+  background: #FFFFFF !important;
+  font-size: 14px;
+  color: #1B1E45 !important;
+  caret-color: #3558A8 !important;
+  outline: none;
+  transition: 0.25s ease;
+}
+
+.secret-box input:focus {
+  border-color: #5C8EDB;
+  box-shadow: 0 0 4px rgba(92,142,219,0.4);
+}
+
+.secret-box button {
+  width: 100%;
+  padding: 8px 10px;
+  background: #5C8EDB;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.secret-box button:hover {
+  background: #3558A8;
+}
+
+#secret-msg {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Night Mode — 비밀문 */
+body.night .secret-box {
+  background: #0F172A !important;
+  border-color: #334155 !important;
+}
+
+body.night .secret-toggle {
+  color: #9CA3AF !important;
+}
+
+
+/* ----------------------------------------
+   📂 접이식 메뉴
+---------------------------------------- */
+
+#menu-toggle {
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 4px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.menu-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.menu-row a {
+  width: 48%;
+  padding: 4px 0;
+  background: #FFF4C9;
+  border: 1px solid #E5E7EB;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  transition: 0.2s;
+}
+
+.menu-row a:hover {
+  background: #F0F4FF;
+  border-color: #3558A8;
+  color: #3558A8;
+}
+
+/* Night Mode — 메뉴 */
+body.night #sidebar-menu a {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #E2E8F0 !important;
+}
+
+body.night #sidebar-menu a:hover {
+  background: #334155 !important;
+  color: #BFDBFE !important;
+  border-color: #60A5FA !important;
+}
 
 /* Night Mode 중 사이드바 관련 */ 
 
