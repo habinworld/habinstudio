@@ -15,6 +15,8 @@
   backdrop-filter: blur(2px);
   border-right: 2px solid #3A67C9;
   padding: 10px;
+  position: sticky;
+  top: 0; 
   height: 100vh;
   overflow-y: auto;
   z-index: 2000;
