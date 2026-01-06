@@ -1,3 +1,10 @@
+/* 🌈 메인 전시 그리드 (부모) */
+.main-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* PC 5열 */
+  gap: 16px;
+  padding: 20px 25px;
+}
 /* 🌱 메인 전시 카드 */
 .main-grid .grid-item {
   padding: 12px;
