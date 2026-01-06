@@ -16,7 +16,6 @@
 #sidebar::-webkit-scrollbar { width: 8px; }
 #sidebar::-webkit-scrollbar-track { background: #F3F3F3; }
 #sidebar::-webkit-scrollbar-thumb { background: #D5D5D5; }
-.logo-block { text-align: center; margin: 0 auto 40px; }
 
 /*---- 로고 영역----*/
 .logo-block { text-align: center; margin: 0 auto 40px; }
