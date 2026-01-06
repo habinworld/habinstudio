@@ -2,7 +2,7 @@
    🧭 Ha-Bin Studio — sidebar.css
    사이드바 전용 스타일 (구조 고정)
 -------------------------------------------------- */
-A. 사이드바 뼈대
+/* A.사이드바 뼈대 */
 #sidebar {
   width: 260px;
   background: #FFF4C9;
@@ -18,6 +18,8 @@ A. 사이드바 뼈대
 #sidebar::-webkit-scrollbar-thumb { background: #D5D5D5; }
 .logo-block { text-align: center; margin: 0 auto 40px; }
 
+/*B. 로고 영역*/
+.logo-block { text-align: center; margin: 0 auto 40px; }
 #main-logo {
   width: 210px;
   border-radius: 10px;
@@ -26,7 +28,6 @@ A. 사이드바 뼈대
   background: #FFF4C9;
   transition: 0.3s ease;
 }
-
 .logo-off { border-color: #FF8C00 !important; }
 .logo-moon { border-color: #3A67C9 !important; }
 .logo-gold { border-color: #DAA520 !important; }
