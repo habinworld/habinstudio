@@ -42,7 +42,7 @@
 ---------------------------------------- */
 .poetic-block {
   width: calc(100% - 16px);
-  margin: 0 auto 35px;
+  margin: 0 auto 40px;
   background: #AFFFF5;
   border: 1.5px solid rgba(53,88,168,0.55);
   padding: 10px 6px 10px;
@@ -51,6 +51,7 @@
   box-shadow:
     0 0 6px rgba(53,88,168,0.35),
     0 0 12px rgba(53,88,168,0.20);
+  margin-bottom: 35px; 
   transition: 0.25s ease;
 }
 .poetic-block h2 {
