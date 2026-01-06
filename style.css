@@ -66,7 +66,23 @@ body.winter-day {
   height: auto;
   min-height: 100vh;
 }
+/* ===============================
+   🔥 Content Width Rule (PC 기준)
+   #content는 캔버스
+   실제 콘텐츠만 중앙 기준 적용
+================================ */
 
+/* 공지 제외한 기본 콘텐츠 폭 */
+#content > .top-banner,
+#content > .top-menu,
+#content > .post-table,
+#content > .editor-wrap,
+#content > .view-wrap,
+#content > .list-wrap {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
 /* -------- 탑메뉴 (PC 절대 1줄 + 버튼폭 균등화) -------- */
 .top-menu {
   display: flex;
