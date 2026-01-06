@@ -127,8 +127,8 @@ body.night #current-datetime {
 }
 
 #clock {
-  width: 140px;
-  height: 140px;
+  width: 100px;
+  height: 100px;
   border: 2px solid #3A67C9;
   border-radius: 50%;
   position: relative;
@@ -140,8 +140,8 @@ body.night #current-datetime {
   position: absolute;
   top: 6px;
   left: 6px;
-  width: calc(100% - 12px);
-  height: calc(100% - 12px);
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
   border-radius: 50%;
   border: 1px solid #8FA8E6;
   box-sizing: border-box;
@@ -159,17 +159,17 @@ body.night #current-datetime {
 
 /* 시침 */
 .hand.hour {
-  height: 40px;
+  height: 28px;
 }
 
 /* 분침 */
 .hand.minute {
-  height: 49px;
+  height: 38px;
 }
 
 /* 초침 */
 .hand.second {
-  height: 54px;
+  height: 44px;
   width: 1px;
   background: #FF0000 !important;
 }
@@ -360,5 +360,4 @@ body.night #sidebar-menu a:hover {
   border-color: #60A5FA !important;
 }
 
-/* Night Mode 중 사이드바 관련 */ 
 
