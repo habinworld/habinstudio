@@ -253,12 +253,6 @@ body.winter-day {
    body.night가 붙었을 때 전체 Moonlight 테마 적용
 ---------------------------------------------------- */
 
-/* 전체 배경 */
-body.night {
-  background: linear-gradient(180deg, #020617 0%, #0A0F24 100%) !important;
-  color: #E5E7EB !important;
-}
-
 
 /* 본문 */
 body.night #content {
