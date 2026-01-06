@@ -776,50 +776,7 @@ body.night .secret-box {
 body.night .secret-toggle {
   color: #9CA3AF !important;
 }
-/* --------------------------------------------------
-   🌈 Ha-Bin Studio — 공식 5×4 그리드 (PC 5열 / 모바일 2열)
--------------------------------------------------- */
 
-.habin-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);   /* PC: 5열 */
-  gap: 16px;
-  padding: 20px 25px;
-}
-
-.grid-item {
-  background: #F7F9FF;
-  border: 1px solid #DCE3F5;
-  border-radius: 12px;
-  padding: 100px 0;
-  text-align: center;
-  font-size: 18px;
-  font-weight: 700;
-  color: #3558A8;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  transition: 0.2s;
-}
-
-/* 호버 */
-.grid-item:hover {
-  background: #EEF4FF;
-  border-color: #3558A8;
-  transform: translateY(-3px);
-}
-
-/* 모바일: 2열 전환 */
-@media (max-width: 480px) {
-  .habin-grid {
-    grid-template-columns: repeat(2, 1fr); /* 모바일 2열 */
-    gap: 14px;
-    padding: 15px;
-  }
-
-  .grid-item {
-    padding: 20px 0;
-    font-size: 16px;
-  }
-}
 #clock {
   position: relative !important;
 }
@@ -852,63 +809,4 @@ body.night .secret-toggle {
   color: #ffffff !important;
   opacity: 1 !important;
 }
-/* 🌱 메인 전시 카드 */
-.grid-item {
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  cursor: pointer;
-}
 
-/* 제목: 굵게 유지 + 크기 줄임 + 왼쪽 정렬 */
-.card-title {
-  font-weight: 600;      /* 굵게 유지 */
-  font-size: 14px;       /* 크기 줄임 */
-  color: #2b2b2b;
-  line-height: 1.3;
-  text-align: left;
-}
-
-/* 본문 미리보기 (4줄 고정, 굵기 없음) */
-.card-preview {
-  font-size: 13px;
-  font-weight: 400;      /* 굵게 ❌ */
-  color: #555;
-  line-height: 1.4;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 4; /* ✅ 4줄 */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* 이미지 썸네일 */
-.card-thumb {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
-/* 작성자 · 날짜 (좌 / 우 분리) */
-.card-meta {
-  margin-top: auto;
-  font-size: 12px;
-  display: flex;
-  justify-content: space-between;
-}
-
-/* 작성자 / 날짜 공통 컬러 */
-.card-writer,
-.card-date {
-  color: #5BB6C8; /* 은은한 청록 */
-}
-
-.card-writer {
-  text-align: left;
-}
-
-.card-date {
-  text-align: right;
-}
