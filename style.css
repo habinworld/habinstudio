@@ -64,10 +64,7 @@ body.winter-day {
   z-index: 100;
   height: auto;
   min-height: 100vh;
-}
-/* -------- 본문 실제 콘텐츠는 전부 가로 100% -------- */
-#content > * {
-  width: 100%;
+
 }
 /* -------- 탑메뉴 (PC 절대 1줄 + 버튼폭 균등화) -------- */
 .top-menu {
