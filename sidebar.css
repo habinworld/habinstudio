@@ -240,6 +240,7 @@ body.night #weather-box {
   font-style: italic;
   text-align: center;
   cursor: default !important;
+  text-decoration: none;   
   margin-top: 25px;
   margin-bottom: 6px;
   transition: 0.25s ease;
