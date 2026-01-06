@@ -253,12 +253,10 @@ body.winter-day {
    body.night가 붙었을 때 전체 Moonlight 테마 적용
 ---------------------------------------------------- */
 
-
 /* 본문 */
 body.night #content {
-  background: rgba(3, 10, 25, 0.85) !important;
-  color: #E5E7EB !important;
-  box-shadow: inset 0 0 40px rgba(0,0,0,0.45) !important;
+  background: inherit !important;
+  box-shadow: none !important;
 }
 
 /* top-banner */
