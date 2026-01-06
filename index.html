@@ -201,9 +201,15 @@ function initSidebarOnly() {
   }
 }
 </script>
-
+<!-- 🌱 메인 전시 초기화 (여기에!) -->
+<script>
+  if (typeof initMainGrid === "function") {
+    initMainGrid();
+  }
+</script>
  </body>
 </html>
+
 
 
 
