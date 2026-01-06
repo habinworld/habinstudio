@@ -55,7 +55,6 @@ body.winter-day {
 
 /* -------- 메인 영역 -------- */
 #content {
-  #content {
   flex: 1;
   min-width: 0; 
   padding: 0 0 120px;
