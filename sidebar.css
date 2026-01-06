@@ -377,5 +377,8 @@ body.night #sidebar-menu a:hover {
   color: #BFDBFE !important;
   border-color: #60A5FA !important;
 }
-
+#content {
+  flex: 1;
+  width: auto;   /* ← calc 지워도 됨 */
+}
 
