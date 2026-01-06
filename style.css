@@ -35,14 +35,6 @@ body {
   flex-shrink: 0;   /* 절대 줄어들지 않음 */
 }
 
-/* ===============================
-   Content Slot (Layout only)
-================================ */
-#content {
-  flex: 1;          /* 남은 영역 전부 */
-  min-width: 0;     /* flex 폭 붕괴 방지 */
-  overflow-y: auto; /* 본문 스크롤 */
-}
 
 /* -------- 겨울 낮 배경  -------- */
 body.winter-day {
