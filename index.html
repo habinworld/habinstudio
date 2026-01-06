@@ -153,7 +153,7 @@ fetch("sidebar.html")
   .then(res => res.text())
   .then(html => {
     document.getElementById("sidebar-container").innerHTML = html;
-
+    window.initSidebarOnly?.();
     // 사이드바 전용 초기화
     if (typeof startWeather === "function") startWeather();
     if (typeof updateClock === "function") updateClock();
@@ -181,6 +181,7 @@ window.initSidebarOnly = function () {
 
  </body>
 </html>
+
 
 
 
