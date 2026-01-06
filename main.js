@@ -3,19 +3,6 @@
 ----------------------------------------------------- */
 
 /* --------------------------------------------
-  📌 1) 모바일 드로어 열기/닫기
---------------------------------------------- */
-const drawerBtn = document.getElementById('drawer-btn');
-const drawer = document.getElementById('drawer');
-const sidebar = document.getElementById('sidebar');
-
-if (drawerBtn) {
-  drawerBtn.addEventListener('click', () => {
-    drawer.style.left = drawer.style.left === '0px' ? '-70%' : '0px';
-  });
-}
-
-/* --------------------------------------------
   📌 2) 접이식 메뉴 (사이드바 메뉴)
 --------------------------------------------- */
 const menuToggle = document.getElementById('menu-toggle');
