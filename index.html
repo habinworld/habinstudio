@@ -148,39 +148,61 @@ noticeList.innerHTML = notices.map((n, i) => `
   </div>
 `).join("");
 </script>
+
+ 
 <script>
 fetch("sidebar.html")
   .then(res => res.text())
   .then(html => {
-    document.getElementById("sidebar-container").innerHTML = html;
-    window.initSidebarOnly?.();
-    // 사이드바 전용 초기화
-    if (typeof startWeather === "function") startWeather();
-    if (typeof updateClock === "function") updateClock();
+    const container = document.getElementById("sidebar-container");
+    if (!container) return;
+
+    /* 1️⃣ 사이드바 DOM 삽입 */
+    container.innerHTML = html;
+
+    /* 2️⃣ 사이드바 전용 기능 초기화 */
+    initSidebarOnly();
   });
-</script>
- <script>
-window.initSidebarOnly = function () {
-  // ⏰ 시계
-  if (typeof updateClock === "function") updateClock();
 
-  // 🌦 날씨
-  if (typeof startWeather === "function") startWeather();
+function initSidebarOnly() {
 
-  // 🔐 관리자 토글
+  /* ⏰ 날짜 / 시계 */
+  if (typeof updateClock === "function") {
+    updateClock();
+  }
+
+  /* 🌦 날씨 */
+  if (typeof startWeather === "function") {
+    startWeather();
+  }
+
+  /* 🔐 관리자 토글 */
   const toggle = document.getElementById("secret-toggle");
   const box = document.getElementById("secret-box");
 
   if (toggle && box) {
     toggle.onclick = () => {
-      box.style.display = box.style.display === "block" ? "none" : "block";
+      box.style.display =
+        box.style.display === "block" ? "none" : "block";
     };
   }
-};
+
+  /* 📂 접이식 메뉴 */
+  const menuToggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("sidebar-menu");
+
+  if (menuToggle && menu) {
+    menuToggle.onclick = () => {
+      menu.style.display =
+        menu.style.display === "block" ? "none" : "block";
+    };
+  }
+}
 </script>
 
  </body>
 </html>
+
 
 
 
