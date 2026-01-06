@@ -15,9 +15,9 @@
   backdrop-filter: blur(2px);
   border-right: 2px solid #3A67C9;
   padding: 10px;
-  height: calc(100vh - 70px);
+  height: 100vh;
   overflow-y: auto;
-  z-index: 9999;
+  z-index: 2000;
 }
 /* Night Mode — 사이드바 */
 body.night #sidebar {
