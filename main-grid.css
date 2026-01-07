@@ -71,9 +71,9 @@
 }
 /* 🌤 전시 영역 바닥 레이어 */
 .grid-floor{
-  margin-top: 24px;        /* 리스트/테이블과 간격 */
-  padding: 8px 0;          /* 숨 쉬는 여백 */
-  background: #FFF9E8;     /* 아주 연한 웜톤 */
+  margin-top: 24px;
+  padding: 10px 0;
+  background: #FFFDF8;
   border-radius: 16px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
