@@ -197,39 +197,6 @@
   top: 0;
 }
 
-/* ============================
-   모바일 최적화
-============================ */
-@media (max-width: 600px) {
-
-  .hb-editor-container {
-    padding: 0 14px 40px;
-  }
-
-  #hb-title {
-    font-size: 18px;
-    padding: 10px;
-  }
-
-  #hb-editor {
-    padding: 16px;
-    font-size: 16px;
-  }
-
-  .hb-top-buttons {
-    gap: 6px;
-    flex-wrap: nowrap;
-  }
-
-  .hb-bottom-buttons {
-    justify-content: center;
-  }
-
-  .hb-btn-bottom {
-    font-size: 14px;
-    padding: 5px 10px;
-  }
-}
 
 
 
