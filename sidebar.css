@@ -12,11 +12,7 @@
 /*---- 사이드바 뼈대---- */
 #sidebar {
   width: 260px;
-  background: linear-gradient(
-  180deg,
-  rgba(255, 236, 180, 0.94) 0%,
-  rgba(255, 232, 170, 0.92) 100%
-);
+  background: rgba(255, 232, 170, 0.92);
   backdrop-filter: blur(2px);
   border-right: 2px solid #3A67C9;
   padding: 10px;
