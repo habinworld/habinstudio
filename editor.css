@@ -157,11 +157,11 @@
 .hb-bottom-buttons {
   display: flex;
   gap: 10px;
-  margin-left: 50px; 
+  margin-left: 60px; 
 }
 
 .hb-btn-bottom {
-  padding: 6px 12px;
+  padding: 4px 10px;
   background: #3558A8;
   color: #FFFFFF;
   border-radius: 6px;
