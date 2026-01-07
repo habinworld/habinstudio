@@ -76,8 +76,6 @@
   line-height: 1.7;
 }
 
-
-
 /* ----------------------------------------
    🏷 대문 인장 (Studio Badge)
 ---------------------------------------- */
@@ -104,12 +102,6 @@
   font-weight: 900;
 }
 
-/* Night Mode — 문패 */
-body.night .badge {
-  background: rgba(30, 41, 59, 0.4) !important;
-  border-color: #3A67C9 !important;
-  color: #E5E7EB !important;
-}
 /* ----------------------------------------
    📅 날짜 / 시간
 ---------------------------------------- */
@@ -126,10 +118,7 @@ body.night .badge {
   color: #FF8C00 !important;
 }
 
-/* Night Mode — 날짜/시간 */
-body.night #current-datetime {
-  color: #93C5FD !important;
-}
+
 /* ----------------------------------------
    ⏰ 아날로그 시계
 ---------------------------------------- */
@@ -170,35 +159,19 @@ body.night #current-datetime {
   left: 50%;
   transform-origin: bottom center;
 }
-
 /* 시침 */
 .hand.hour {
   height: 40px;
 }
-
 /* 분침 */
 .hand.minute {
   height: 49px;
 }
-
 /* 초침 */
 .hand.second {
   height: 54px;
   width: 1px;
   background: #FF0000 !important;
-}
-
-/* Night Mode — 시계 */
-body.night #clock {
-  border-color: #1E3A8A !important;
-}
-
-body.night .hand {
-  background: #CBD5E1 !important;
-}
-
-body.night .hand.second {
-  background: #60A5FA !important;
 }
 /* 여백 미세 조정 */
 #clock-box {
@@ -228,14 +201,6 @@ body.night .hand.second {
   font-weight: 600;
   color: #000;
 }
-
-/* Night Mode — 날씨 */
-body.night #weather-area,
-body.night #weather-location,
-body.night #weather-box {
-  color: #E5E7EB !important;
-}
-
 /* ----------------------------------------
    🔐 관리자 모드 — 비밀의 문
 ---------------------------------------- */
@@ -312,17 +277,6 @@ body.night #weather-box {
   font-weight: 600;
 }
 
-/* Night Mode — 비밀문 */
-body.night .secret-box {
-  background: #0F172A !important;
-  border-color: #334155 !important;
-}
-
-body.night .secret-toggle {
-  color: #9CA3AF !important;
-}
-
-
 /* ----------------------------------------
    📂 접이식 메뉴
 ---------------------------------------- */
@@ -361,30 +315,67 @@ body.night .secret-toggle {
   border-color: #3558A8;
   color: #3558A8;
 }
-/* Night Mode — 사이드바 */
+
+/* ===============================
+   🌙 Night Mode (ONE BLOCK)
+================================ */
+/*  사이드바 */
 body.night #sidebar {
   background: rgba(15, 23, 42, 0.96) ;
   border-right-color: #1E3A8A ;
   color: #E5E7EB ;
 }
-/* Night Mode — 사이드바 내부 텍스트 */
+/* 사이드바 내부 텍스트 */
 body.night #sidebar * {
   color: #E5E7EB ;
 }
-/* Night Mode — 프로필 블록 */
+/* 프로필 블록 */
 body.night .poetic-block {
-  background: rgba(30, 41, 59, 0.6) !important;
-  border-color: rgba(255,255,255,0.10) !important;
+  background: rgba(30, 41, 59, 0.6) ;
+  border-color: rgba(255,255,255,0.10) ;
 }
-/* Night Mode — 메뉴 */
+/* 메뉴 */
 body.night #sidebar-menu a {
   background: #1E293B ;
   border-color: #334155 ;
   color: #E2E8F0 ;
 }
-
 body.night #sidebar-menu a:hover {
   background: #334155 ;
   color: #BFDBFE ;
   border-color: #60A5FA ;
+}
+/*  대문인장/문패 */
+body.night .badge {
+  background: rgba(30, 41, 59, 0.4) ;
+  border-color: #3A67C9 ;
+  color: #E5E7EB ;
+}
+/* 날짜/시간 */
+body.night #current-datetime {
+  color: #93C5FD ;
+}
+/* 시계 */
+body.night #clock {
+  border-color: #1E3A8A ;
+}
+body.night .hand {
+  background: #CBD5E1 ;
+}
+body.night .hand.second {
+  background: #60A5FA ;
+}
+/* 날씨 */
+body.night #weather-area,
+body.night #weather-location,
+body.night #weather-box {
+  color: #E5E7EB ;
+}
+/* 비밀문 */
+body.night .secret-box {
+  background: #0F172A ;
+  border-color: #334155 ;
+}
+body.night .secret-toggle {
+  color: #9CA3AF ;
 }
