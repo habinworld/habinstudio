@@ -106,7 +106,7 @@ body.winter  { --bgmain: #3388FF; }
 
 .top-menu a {
   flex: 0 0 10%;
-  padding: 10px 0;
+  padding: 6px 0;
   min-width: 0;
    
   background: #FFFFFF;
