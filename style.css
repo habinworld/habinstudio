@@ -162,11 +162,10 @@ body.winter  { --bgmain: #3388FF; }
 
 .footer-inner { line-height: 1.8; }
 .footer-line1, .footer-line2 { margin: 2px 0; }
-
+.footer-line2 em { font-style: italic; }
 .ft-sub    { font-size: 15px;color: #FFFFFF; font-weight: 600; }
 .ft-star   { font-size: 15px;color: #DAA520; font-weight: 700; }
-
-.ft-hidden { color: #C0C0C0; font-style: italic; }
+.ft-hidden { color: #C0C0C0;font-size: 15px; font-style: italic;margin-left: 6px;opacity: 0.9; }
 
 /* ===============================
    Content Scrollbar
