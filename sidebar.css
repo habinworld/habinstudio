@@ -23,16 +23,6 @@
   overflow-y: auto;
   z-index: 2000;
 }
-/* Night Mode — 사이드바 */
-body.night #sidebar {
-  background: rgba(15, 23, 42, 0.96) !important;
-  border-right-color: #1E3A8A !important;
-  color: #E5E7EB !important;
-}
-/* Night Mode — 사이드바 내부 텍스트 */
-body.night #sidebar * {
-  color: #E5E7EB !important;
-}
 
 /* 사이드바 스크롤바 */
 #sidebar::-webkit-scrollbar { width: 8px; }
@@ -86,11 +76,7 @@ body.night #sidebar * {
   line-height: 1.7;
 }
 
-/* Night Mode — 프로필 블록 */
-body.night .poetic-block {
-  background: rgba(30, 41, 59, 0.6) !important;
-  border-color: rgba(255,255,255,0.10) !important;
-}
+
 
 /* ----------------------------------------
    🏷 대문 인장 (Studio Badge)
@@ -375,16 +361,30 @@ body.night .secret-toggle {
   border-color: #3558A8;
   color: #3558A8;
 }
-
+/* Night Mode — 사이드바 */
+body.night #sidebar {
+  background: rgba(15, 23, 42, 0.96) ;
+  border-right-color: #1E3A8A ;
+  color: #E5E7EB ;
+}
+/* Night Mode — 사이드바 내부 텍스트 */
+body.night #sidebar * {
+  color: #E5E7EB ;
+}
+/* Night Mode — 프로필 블록 */
+body.night .poetic-block {
+  background: rgba(30, 41, 59, 0.6) !important;
+  border-color: rgba(255,255,255,0.10) !important;
+}
 /* Night Mode — 메뉴 */
 body.night #sidebar-menu a {
-  background: #1E293B !important;
-  border-color: #334155 !important;
-  color: #E2E8F0 !important;
+  background: #1E293B ;
+  border-color: #334155 ;
+  color: #E2E8F0 ;
 }
 
 body.night #sidebar-menu a:hover {
-  background: #334155 !important;
-  color: #BFDBFE !important;
-  border-color: #60A5FA !important;
+  background: #334155 ;
+  color: #BFDBFE ;
+  border-color: #60A5FA ;
 }
