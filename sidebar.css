@@ -329,6 +329,12 @@ body.night #sidebar {
 body.night #sidebar * {
   color: #E5E7EB ;
 }
+/* 메인 로고 */
+body.night #main-logo {
+  background: #0F172A;
+  border-color: #3A67C9;
+  box-shadow: 0 0 14px rgba(92,142,219,0.55);
+}
 /* 프로필 블록 */
 body.night .poetic-block {
   background: rgba(30, 41, 59, 0.6) ;
