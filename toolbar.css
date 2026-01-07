@@ -35,8 +35,8 @@
    Common Button Style
 ============================ */
 .hb-btn {
-  height: 30px;
-  line-height: 30px; 
+  height: 28px;
+  line-height: 28px; 
   padding: 0 8px;
 
   display: inline-flex;
