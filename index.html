@@ -83,7 +83,26 @@
 </footer>
 
 <!-- 🔷 JS 모듈 -->
-<script src="particles.js"></script>  
+<script src="particles.js"></script> 
+ <script>
+  // 🌱 4계절 판단 (index 전담)
+  function getSeason(m) {
+    if (m >= 3 && m <= 5) return 'spring';
+    if (m >= 6 && m <= 8) return 'summer';
+    if (m >= 9 && m <= 11) return 'autumn';
+    return 'winter';
+  }
+
+  const season = getSeason(new Date().getMonth() + 1);
+
+  // 🎨 계절 클래스 (CSS 전용)
+  document.body.classList.add(season);
+
+  // 🍃 계절 효과 (particles)
+  if (typeof startParticles === "function") {
+    startParticles(season);
+  }
+</script>  
 <!--<script src="main.js"></script>-->
 <script src="weather.js"></script>
 <script src="datetime_clock.js"></script> 
@@ -192,6 +211,7 @@ function initSidebarOnly() {
 </script>
  </body>
 </html>
+
 
 
 
