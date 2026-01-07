@@ -4,6 +4,7 @@
   grid-template-columns: repeat(5, 1fr); /* PC 5열 */
   gap: 16px;
   padding: 20px 25px;
+  margin-top: 24px;
 }
 /* 🌱 메인 전시 카드 */
 .main-grid .grid-item {
