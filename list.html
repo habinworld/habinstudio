@@ -216,6 +216,11 @@ renderPagination();
 
 </script>
 <script src="main-grid.js"></script>
+ <!-- 🌱 메인 전시 초기화 (여기에!) -->
+<script>
+  if (typeof initMainGrid === "function") {
+    initMainGrid();
+  } 
 </body>
 </html>
 
