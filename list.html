@@ -140,9 +140,14 @@
 
   <div id="pagination" class="pagination"></div>
 
-</div>
+  <div
+  class="post-grid"
+  data-grid-type="latest"
+  data-limit="1"
+></div>
 
-<script>
+</div>
+ <script>
 /* 🗂 localStorage에서 글 목록 로드 */
 let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
@@ -213,11 +218,7 @@ renderList();
 renderPagination();
 
 </script>
-<div
-  class="post-grid"
-  data-grid-type="latest"
-  data-limit="1"
-></div>
+
 </body>
 </html>
 
