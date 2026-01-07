@@ -69,8 +69,10 @@
 .card-date {
   text-align: right;
 }
-@media (max-width: 480px) {
-  .main-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+/* 🌤 전시 영역 바닥 레이어 */
+.grid-floor{
+  margin-top: 24px;        /* 리스트/테이블과 간격 */
+  padding: 8px 0;          /* 숨 쉬는 여백 */
+  background: #FFFDF8;     /* 아주 연한 웜톤 */
+  border-radius: 16px;
 }
