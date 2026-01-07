@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* PC 5열 */
   gap: 16px;
-  padding: 20px 25px;
+  padding: 0;
   margin-top: 24px;
 }
 /* 🌱 메인 전시 카드 */
@@ -72,7 +72,7 @@
 /* 🌤 전시 영역 바닥 레이어 */
 .grid-floor{
   margin-top: 24px;
-  padding: 10px 0;
+  padding: 20px 25px;
   background: #FFFDF8;
   border-radius: 16px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.06);
