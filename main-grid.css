@@ -75,4 +75,5 @@
   padding: 8px 0;          /* 숨 쉬는 여백 */
   background: #FFFDF8;     /* 아주 연한 웜톤 */
   border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.04);
 }
