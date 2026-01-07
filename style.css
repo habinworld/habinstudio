@@ -36,10 +36,34 @@ body {
 }
 
 
-/* -------- 겨울 낮 배경  -------- */
-body.winter-day {
-  --bgmain: #3388FF;   /* ← 여기 색만 바꾸면 된다 */
-  background: var(--bgmain);
+/* ===============================
+   🌱 Seasonal Theme (CSS only)
+   표현 전담 – 계절은 여기서만 보인다
+================================ */
+
+/* 🌸 봄 */
+body.spring {
+  --bgmain: #EAF6FF;
+}
+
+/* 🌿 여름 */
+body.summer {
+  --bgmain: #E6FFF2;
+}
+
+/* 🍂 가을 */
+body.autumn {
+  --bgmain: #FFF4E0;
+}
+
+/* ❄ 겨울 */
+body.winter {
+  --bgmain: #3388FF;
+}
+
+/* 공통 적용 */
+body {
+  background: var(--bgmain, #FFFDF8);
 }
 /* -------- 계절 입자 캔버스 -------- */
 #season-canvas {
