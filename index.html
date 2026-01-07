@@ -98,6 +98,14 @@
     startParticles(season);
   }
 </script>  
+<script>
+  const hour = new Date().getHours();
+  document.body.classList.toggle('night', (hour >= 20 || hour < 6));
+</script> 
+  setInterval(() => {
+  const h = new Date().getHours();
+  document.body.classList.toggle('night', (h >= 20 || h < 6));
+}, 60000); 
 <script src="weather.js"></script>
 <script src="datetime_clock.js"></script> 
 <script src="main-grid.js"></script> 
@@ -205,6 +213,7 @@ function initSidebarOnly() {
 </script>
  </body>
 </html>
+
 
 
 
