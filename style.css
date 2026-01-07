@@ -1,9 +1,11 @@
 /* -----------------------------------------------------
-   🌙✨ Ha-Bin Studio — style.css (완전 결계판 v2 복구본)
-   2025.11.29 — 햇살결계 + 사이드바 안정판 + 푸터 안정판
+   🌿 Ha-Bin Studio — style.css (CLEAN BASE)2026.01.07
+   역할: 전역 / 레이아웃 / 계절 / Night Mode / 메인 UI
 ----------------------------------------------------- */
 
-/* 기본 세팅 */
+/* ===============================
+   Reset & Base
+================================ */
 * {
   margin: 0;
   padding: 0;
@@ -13,110 +15,113 @@
 body {
   font-family: 'Noto Sans KR', sans-serif;
   background: var(--bgmain, #FFFDF8);
-  color: #2b2b2b;
-
-   /* 전역 환경만 담당 */
-  margin: 0;
+  color: var(--text-main, #2b2b2b);
   overflow-x: hidden;
 }
-/* ===============================
-   🔥 Layout Root (PC 기준)
-================================ */
 
+/* ===============================
+   Layout
+================================ */
 #layout {
   display: flex;
   min-height: 100vh;
 }
-/* ===============================
-   Sidebar Slot (Layout only)
-================================ */
-#sidebar-container {
-  width: 260px;     /* 사이드바 자리 */
-  flex-shrink: 0;   /* 절대 줄어들지 않음 */
-}
 
+/* 사이드바 자리만 확보 (스타일 없음) */
+#sidebar-container {
+  width: 260px;
+  flex-shrink: 0;
+}
 
 /* ===============================
    🌱 Seasonal Theme (CSS only)
-   표현 전담 – 계절은 여기서만 보인다
+   계절 표현은 여기서만
 ================================ */
+body.spring  { --bgmain: #EAF6FF; }
+body.summer  { --bgmain: #E6FFF2; }
+body.autumn  { --bgmain: #FFF4E0; }
+body.winter  { --bgmain: #3388FF; }
 
-/* 🌸 봄 */
-body.spring {
-  --bgmain: #EAF6FF;
-}
-
-/* 🌿 여름 */
-body.summer {
-  --bgmain: #E6FFF2;
-}
-
-/* 🍂 가을 */
-body.autumn {
-  --bgmain: #FFF4E0;
-}
-
-/* ❄ 겨울 */
-body.winter {
-  --bgmain: #3388FF;
-}
-
-/* 공통 적용 */
-body {
-  background: var(--bgmain, #FFFDF8);
-}
-/* -------- 계절 입자 캔버스 -------- */
+/* ===============================
+   Season Particles Canvas
+================================ */
 #season-canvas {
   position: fixed;
   top: 0; 
-  left: 0;
+  left: 0; 
   width: 100%; 
-  height: 100%;
+  height: 100%; 
   pointer-events: none;
   z-index: 0;
 }
 
-
-/* -------- 메인 영역 -------- */
+/* ===============================
+   Main Content
+================================ */
 #content {
   flex: 1;
-  min-width: 0; 
-  padding: 0 0 120px;
+  min-width: 0;
+  padding:0 0 120px;
   position: relative;
   z-index: 100;
-  height: auto;
+  height: auto; 
   min-height: 100vh;
-
 }
-/* -------- 탑메뉴 (PC 절대 1줄 + 버튼폭 균등화) -------- */
+
+/* ===============================
+   Top Banner
+================================ */
+.top-banner {
+  width: 100%;
+  height: 85px;
+  background: #26214F;
+  color: #FFFFFF;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-family: 'HCR Batang','Batang',serif;
+  font-size: 25px;
+  font-weight: 700;
+  border-radius: 0;
+  margin-bottom: 20px;
+  padding: 0;  
+  box-shadow: none; 
+  border: none; 
+}
+
+/* ===============================
+   Top Menu
+================================ */
 .top-menu {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: nowrap; 
   justify-content: space-between;
   gap: 8px;
+  padding: 0 30px;
   margin-bottom: 30px;
-  width: 100%;
-  padding: 0 30px;  /* ⭐ 좌우 여백 추가 */ 
+  width: 100%;  
 }
 
 .top-menu a {
-  flex: 0 0 10%;            /* 🔥 버튼폭 완전 동일화 */
-  min-width: 0;
-
+  flex: 0 0 10%;
   padding: 10px 0;
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  min-width: 0;
+   
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
   border-radius: 8px;
+
   font-size: 16px;
-  font-weight: 600; 
-  text-decoration: none;
+  font-weight: 600;
   color: #333;
+  text-decoration: none;
 
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-
   transition: 0.25s;
 }
 
@@ -126,149 +131,46 @@ body {
   color: #3558A8;
 }
 
+/* 파스텔 컬러 */
+.top-menu a:nth-child(1){ background:#F8C4C4;border-color:rgba(255,182,193,0.55); }
+.top-menu a:nth-child(2){ background:#FFC871;border-color:rgba(255,224,130,0.55); }
+.top-menu a:nth-child(3){ background:#FFE08A;border-color:rgba(144,238,144,0.55); }
+.top-menu a:nth-child(4){ background:#A6FCA6;border-color:rgba(92,142,219,0.55); }
+.top-menu a:nth-child(5){ background:#C9E1FF;border-color:rgba(186,160,255,0.55); }
+.top-menu a:nth-child(6){ background:#A9BEEF;border-color:rgba(135,206,235,0.55); }
+.top-menu a:nth-child(7){ background:#D7C4FF;border-color:rgba(210,180,80,0.75); }
+.top-menu a:nth-child(8){ background:#F5D686;border-color:rgba(250,240,230,0.7); }
 
-/* --------------------------------------------------
-   🌞 하빈 스튜디오 · 햇살결계 푸터 v3 (안정판)
--------------------------------------------------- */
-
+/* ===============================
+   Footer
+================================ */
 #habin-footer {
   position: fixed;
   bottom: 0;
-  left: 260px;   /* 사이드바 만큼 오른쪽으로 이동 */
+  left: 260px;
   width: calc(100% - 260px);
+
   background: #1B1E45;
+  color: #FFFFFF;
   border-top: 1px solid rgba(0,0,0,0.1);
   text-align: center;
   padding: 6px 0 8px;
   z-index: 9999;
+
   font-family: 'HCR Batang','Batang',serif;
 }
 
-.footer-inner {
-  line-height: 1.8;
-}
+.footer-inner { line-height: 1.8; }
+.footer-line1, .footer-line2 { margin: 2px 0; }
 
-.footer-line1,
-.footer-line2 {
-  margin: 2px 0;
-}
+.ft-sub    { font-size: 15px;color: #FFFFFF; font-weight: 600; }
+.ft-star   { font-size: 15px;color: #DAA520; font-weight: 700; }
 
-/* 저작권 문구 */
-.ft-sub {
-  color: #FFFFFF !important;
-  font-weight: 600;
-  font-size: 15px;
-}
+.ft-hidden { color: #C0C0C0; font-style: italic; }
 
-/* 골드 라인 */
-.ft-star {
-  color: #DAA520;
-  font-weight: 700;
-  font-size: 15px;
-}
-
-.footer-line2 em {
-  font-style: italic;
-}
-
-/* 은회색 문장 */
-.ft-hidden {
-  color: #C0C0C0 !important;
-  font-size: 15px !important;
-  font-style: italic !important;
-  margin-left: 6px;
-  opacity: 0.9;
-}
-.top-banner {
-  width: 100%;
-  background: #26214F; /* 보라빛 네이비 추천 */
-  color: #FFFFFF;
-  height: 85px; /* ← 세로폭 넓힘 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'HCR Batang','Batang',serif;
-  font-size: 25px;
-  font-weight: 700;
-  border-radius: 0;
-  margin-bottom: 20px;
-  padding: 0;           /* 여백 제거 → 푸터와 완전 동일한 느낌 */
-  box-shadow: none;     /* 미세 그림자 제거 → 색 차이 방지 */
-  border: none;         /* 테두리 제거 → 푸터와 동일 */
-} 
-
-
-/* 🌈 무지개 파스텔 7색 + 골드 (탑메뉴 버튼 색상) */
-.top-menu a:nth-child(1){
-  background:#F8C4C4;  /* 레드 파스텔 */
-  border-color:rgba(255,182,193,0.55);
-}
-
-.top-menu a:nth-child(2){
-  background:#FFC871;  /* 오렌지 파스텔 */
-  border-color:rgba(255,224,130,0.55);
-}
-
-.top-menu a:nth-child(3){
-  background:#FFE08A;  /* 옐로우 파스텔 */
-  border-color:rgba(144,238,144,0.55);
-}
-
-.top-menu a:nth-child(4){
-  background:#A6FCA6;  /* 그린 파스텔 */
-  border-color:rgba(92,142,219,0.55);
-}
-
-.top-menu a:nth-child(5){
-  background:#C9E1FF;  /* 블루 파스텔 */
-  border-color:rgba(186,160,255,0.55);
-}
-
-.top-menu a:nth-child(6){
-  background:#A9BEEF;  /* 남색 파스텔 */
-  border-color:rgba(135,206,235,0.55);
-}
-
-.top-menu a:nth-child(7){
-  background:#D7C4FF;  /* 퍼플 파스텔 */
-  border-color:rgba(210,180,80,0.75);
-}
-
-.top-menu a:nth-child(8){
-  background:#F5D686;  /* 골드 파스텔 */
-  border-color:rgba(250,240,230,0.7);
-}
-/* --------------------------------------------------
-   📚 Ha-Bin Studio — 게시판 테이블 안정화 (list.html)
---------------------------------------------------- */
-
-.post-table {
-  width: 100%;
-  table-layout: fixed;
-  border-collapse: collapse;
-}
-
-.post-table th,
-.post-table td {
-  padding: 10px 12px;
-  white-space: nowrap;
-}
-#notice-wrapper {
-  width: 50%;
-  margin: 0 auto;
-  padding: 0 10px;
-}
-/* 게시판 상단 3버튼 정중앙 고정 */
-.top-buttons .btn {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  height: 35px !important;
-  line-height: 1 !important;
-}
-/* --------------------------------------------------
-   🌿 본문 스크롤바 — 바깥 / 자연 (GREEN)
--------------------------------------------------- */
+/* ===============================
+   Content Scrollbar
+================================ */
 #content::-webkit-scrollbar {
   width: 8px;
 }
@@ -281,76 +183,32 @@ body {
 #content::-webkit-scrollbar-thumb {
   background: #BFE3C7;
   border-radius: 10px;
-  border: 2px solid #E6F2EC;
 }
 
-#content::-webkit-scrollbar-thumb:hover {
-  background: #9FD4B2;
-}
-/* ----------------------------------------------------
-   🌙 Ha-Bin Studio — Night Mode (class="night")
-   body.night가 붙었을 때 전체 Moonlight 테마 적용
----------------------------------------------------- */
-
-/* 본문 */
+/* ===============================
+   🌙 Night Mode (ONE BLOCK)
+================================ */
 body.night {
-  background: linear-gradient(180deg, #020617 0%, #0A0F24 100%);
-  color: #E5E7EB;
+  --bgmain: linear-gradient(180deg, #020617 0%, #0A0F24 100%);
+  --text-main: #E5E7EB;
 }
 
-body.night #content {
-  color: #E5E7EB;
-}
-
-/* top-banner */
 body.night .top-banner {
-  background: #1E1A3A !important;
-  color: #E5E7EB !important;
+  background: #1E1A3A;
 }
 
-/* 탑메뉴 */
 body.night .top-menu a {
-  background: #1E293B !important;
-  border-color: #334155 !important;
-  color: #E2E8F0 !important;
+  background: #1E293B;
+  border-color: #334155;
+  color: #E2E8F0;
 }
+
 body.night .top-menu a:hover {
-  background: #334155 !important;
-  color: #BFDBFE !important;
-  border-color: #60A5FA !important;
+  background: #334155;
+  color: #BFDBFE;
 }
 
-/* 푸터 */
 body.night #habin-footer {
-  background: #0F172A !important;
-  color: #E2E8F0 !important;
-}
-body.night #habin-footer .ft-sub {
-  color: #E2E8F0 !important;
-}
-body.night #habin-footer .ft-hidden {
-  color: #94A3B8 !important;
-}
-
-/* ===========================================================
-   🔥 툴바 버튼 글자색 완전 복구 패치 (v3 · Final)
-   body 전역 color 덮어쓰기 문제 100% 해결판
-=========================================================== */
-
-#toolbar, 
-#toolbar * {
-  color: #ffffff !important;
-  fill: #ffffff !important;
-}
-
-/* select는 흰색이면 안 보이므로 따로 예외 처리 */
-#toolbar .hb-select {
-  color: #2b2b2b !important;
-}
-
-/* 버튼 아이콘 대비 강화 */
-#toolbar .hb-btn {
-  color: #ffffff !important;
-  opacity: 1 !important;
+  background: #0F172A;
 }
 
