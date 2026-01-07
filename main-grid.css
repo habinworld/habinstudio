@@ -57,6 +57,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 12px;
+  font-weight: 500;
   color: #5bb6c8; /* 청록 */
 }
 
