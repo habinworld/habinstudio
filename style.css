@@ -182,8 +182,11 @@ body.winter  { --bgmain: #3388FF; }
 #content::-webkit-scrollbar-thumb {
   background: #BFE3C7;
   border-radius: 10px;
+  border: 2px solid #E6F2EC; 
 }
-
+#content::-webkit-scrollbar-thumb:hover {
+  background: #9FD4B2;
+}
 /* ===============================
    🌙 Night Mode (ONE BLOCK)
 ================================ */
