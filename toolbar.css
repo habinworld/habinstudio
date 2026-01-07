@@ -177,23 +177,3 @@
   color: #3558A8;
 }
 
-/* ============================
-   Mobile Optimization
-============================ */
-@media (max-width: 600px) {
-
-  #hb-toolbar-basic,
-  #hb-toolbar-advanced {
-    padding: 6px 8px;
-    gap: 6px;
-  }
-
-  .hb-btn {
-    height: 30px;
-    font-size: 13px;
-  }
-
-  .hb-btn.icon {
-    font-size: 17px;
-  }
-}
