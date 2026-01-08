@@ -129,7 +129,90 @@
 <script src="secret-toggle.js"></script>
 <script src="toolbar.js"></script> 
 <script src="date-utils.js"></script>
- 
+   
+<script>
+/* ===== 메인 한글게시판 JS 전체 ===== */
+let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+
+/* 공지 + 일반글 정렬 */
+const noticePosts = posts.filter(p => p.isNotice)
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
+const normalPosts = posts.filter(p => !p.isNotice)
+  .sort((a, b) => new Date(b.date) - new Date(a.date));
+posts = [...noticePosts, ...normalPosts];
+
+const itemsPerPage = 5;
+let currentPage = new URLSearchParams(location.search).get("page") || 1;
+currentPage = parseInt(currentPage, 10);
+if (!currentPage || currentPage < 1) currentPage = 1;
+
+function getCurrentPagePosts() {
+  const start = (currentPage - 1) * itemsPerPage;
+  return posts.slice(start, start + itemsPerPage);
+}
+
+/* 테이블 */
+function renderList() {
+  const tbody = document.getElementById("main-post-list");
+  const pagePosts = getCurrentPagePosts();
+  tbody.innerHTML = "";
+
+  if (pagePosts.length === 0) {
+    tbody.innerHTML =
+      `<tr><td colspan="4" class="empty">작성된 글이 없습니다.</td></tr>`;
+    return;
+  }
+
+  pagePosts.forEach((p, idx) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
+      <td>${p.writer || "하빈"}</td>
+      <td>
+        <a href="post.html?mode=view&id=${p.id}" class="title-link">
+          ${p.isNotice ? "📌 " : ""}${p.title}
+        </a>
+      </td>
+      <td>${formatDate(p.date)}</td>
+    `;
+    if (p.isNotice) tr.classList.add("notice-row");
+    tbody.appendChild(tr);
+  });
+}
+
+/* 페이지네이션 */
+function renderPagination() {
+  const totalPages = Math.ceil(posts.length / itemsPerPage);
+  const pag = document.getElementById("pagination");
+  pag.innerHTML = "";
+  if (totalPages <= 1) return;
+
+  if (currentPage > 1)
+    pag.innerHTML +=
+      `<a href="?page=${currentPage - 1}" class="page-btn">이전</a>`;
+
+  for (let i = 1; i <= totalPages; i++) {
+    pag.innerHTML +=
+      `<a href="?page=${i}" class="page-btn ${i === currentPage ? "active" : ""}">${i}</a>`;
+  }
+
+  if (currentPage < totalPages)
+    pag.innerHTML +=
+      `<a href="?page=${currentPage + 1}" class="page-btn">다음</a>`;
+}
+
+/* 그리드 */
+function renderGrid() {
+  if (typeof renderMainGrid === "function") {
+    renderMainGrid(getCurrentPagePosts());
+  }
+}
+
+renderList();
+renderPagination();
+renderGrid();
+</script>
+
 <!-- 🔔 공지글 5개만 메인에 표시 (촘촘 버전) -->
 <script>
 let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
@@ -225,6 +308,7 @@ function initSidebarOnly() {
 </script>
  </body>
 </html>
+
 
 
 
