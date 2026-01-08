@@ -291,11 +291,6 @@ body.night #habin-footer .ft-hidden {
   background: transparent;
 }
 
-/* 📌 공지글 (흰노랑 → 은은한 달빛) */
-.notice-row {
-  background: rgba(255, 235, 150, 0.12);
-}
-
 /* 비어있을 때 */
 .empty {
   text-align: center;
