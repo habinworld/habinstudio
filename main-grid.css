@@ -1,14 +1,13 @@
 /* 🌈 메인 전시 그리드 (부모 / 공용 배치 엔진) */
 .main-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* PC 5열 */
+  grid-template-columns: repeat(5, 1fr);
   gap: 16px;
   margin-top: 24px;
-  padding: 0; /* 기본은 0 (페이지별로 분기) */
+  padding: 0;
 }
 
-/* 🌱 메인 전시 카드 */
-.main-grid .grid-item {
+.grid-item {
   padding: 12px;
   display: flex;
   flex-direction: column;
@@ -16,26 +15,6 @@
   cursor: pointer;
 }
 
-/* 🌱 메인 전시 카드 – 외형 */
-.main-grid .grid-item {
-  background: #F7F9FF;
-  border: 1px solid #DCE3F5;
-  border-radius: 12px;
-
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-  transition: background 0.2s ease, 
-              border-color 0.2s ease, 
-              transform 0.2s ease;
-}
-
-/* 🌿 hover 효과 */
-.main-grid .grid-item:hover {
-  background: #EEF4FF;
-  border-color: #3558A8;
-  transform: translateY(-3px);
-}
-
-/* 제목 */
 .card-title {
   font-weight: 600;
   font-size: 14px;
@@ -44,7 +23,6 @@
   text-align: left;
 }
 
-/* 본문 미리보기 */
 .card-preview {
   font-size: 13px;
   color: #555;
@@ -55,65 +33,16 @@
   overflow: hidden;
 }
 
-/* 작성자 · 날짜 줄 */
 .card-meta {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   color: #5bb6c8; /* 청록 */
 }
-
 .card-writer {
   text-align: left;
 }
-
 .card-date {
   text-align: right;
-}
-
-/* 🌤 전시 영역 바닥 레이어 (리스트 전용) */
-.list-page .grid-floor{
-  margin-top: 24px;
-  padding: 20px 25px;
-  background: #FFFDF8;
-  border-radius: 16px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-}
-
-/* 🏝 메인 페이지 전용 여백 */
-.main-page .main-grid{
-  padding: 20px 25px;
-}
-/* ===============================
-   🌙 Night Mode — 메인 페이지 그리드만
-================================ */
-
-/* 메인 페이지 그리드 카드 */
-body.night.main-page .main-grid .grid-item {
-  background: #0F172A;            /* 어두운 네이비 */
-  border-color: #334155;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-}
-
-/* hover */
-body.night.main-page .main-grid .grid-item:hover {
-  background: #1E293B;
-  border-color: #60A5FA;
-  transform: translateY(-3px);
-}
-
-/* 제목 */
-body.night.main-page .main-grid .card-title {
-  color: #E5E7EB;
-}
-
-/* 본문 미리보기 */
-body.night.main-page .main-grid .card-preview {
-  color: #CBD5E1;
-}
-
-/* 작성자 / 날짜 */
-body.night.main-page .main-grid .card-meta {
-  color: #7DD3FC; /* 밤에 어울리는 은청 */
 }
