@@ -188,10 +188,10 @@
 
     posts = [...noticePosts, ...normalPosts];
 
-    const itemsPerPage = 12;
+    const itemsPerPage = 8;
 
     let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
-    currentPage = parseInt(currentPage, 12);
+    currentPage = parseInt(currentPage, 8);
     if (!currentPage || currentPage < 1) currentPage = 1;
 
     /* 📌 현재 페이지 글 추출 (단일 진실) */
