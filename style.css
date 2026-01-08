@@ -316,5 +316,8 @@ body.night #habin-footer .ft-hidden {
       font-weight: 600;
       text-decoration: none;
     }
-
+    .page-btn.active {
+      background: #3558A8;
+      color: #fff;
+      border-color: #3558A8;
    
