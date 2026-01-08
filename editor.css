@@ -97,7 +97,7 @@
 #hb-editor {
   width: 100%;
   min-height: 700px;
-  max-height: 700vh;
+  height: 700px;
   padding: 20px;
   background: #FFFFFF;
 
