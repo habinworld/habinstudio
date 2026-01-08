@@ -296,11 +296,6 @@ body.night #habin-footer .ft-hidden {
   background: rgba(255, 235, 150, 0.12);
 }
 
-/* 🔥 hover 흰색 제거 + 문라이트 반응 */
-.post-table tbody tr:hover {
-  background: rgba(180, 200, 255, 0.08);
-}
-
 /* 비어있을 때 */
 .empty {
   text-align: center;
