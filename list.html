@@ -1,232 +1,270 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>하빈 스튜디오 · 게시판 목록</title>
-   
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="main-grid.css">
-<style>
-/* 전체 레이아웃 */
-.page-container {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>하빈 스튜디오 · 게시판 목록</title>
 
-/* --------------------- 상단 버튼 3개 --------------------- */
-.top-buttons {
-  text-align: right;
-  margin: 12px 0 12px 0;
-}
+  <!-- 공통 스타일 -->
+  <link rel="stylesheet" href="style.css">
 
-.top-buttons .btn {
-  display: inline-flex;     /* 중앙 정렬을 위한 flex */
-  align-items: center;      /* 세로 중앙 */
-  justify-content: center;  /* 가로 중앙 */ 
-  padding: 6px 12px;
-  background: #3558A8;   /* 은남색 */
-  color: #FFFFFF;        /* 흰 글자 */
-  border-radius: 6px;
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: none;
-  margin-left: 6px;
-}
+  <!-- ✅ 카드뷰(그리드) 스타일 -->
+  <link rel="stylesheet" href="main-grid.css">
 
-.top-buttons .btn:hover {
-  opacity: 0.92;
-}
+  <style>
+    /* 전체 레이아웃 */
+    .page-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-/* --------------------- 테이블 --------------------- */
-.post-table {
-  width: 100%;
-  border-collapse: collapse;
-  border-top: 2px solid #333;
-  margin-top: 10px;
-}
+    /* --------------------- 상단 버튼 3개--------------------- */
+    .top-buttons {
+      text-align: right;
+      margin: 12px 0;
+    }
 
-.post-table th {
-  text-align: center;
-  padding: 12px 0;
-  border-bottom: 2px solid #ddd;
-  font-size: 15px;
-  color: #333;
-  background: #fafafa;
-}
+    .top-buttons .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;           /* ✅ 하빈 버튼 규격 */
+      background: #3558A8;         /* ✅ 은남색 */
+      color: #FFFFFF;
+      border-radius: 6px;
+      font-size: 15px;             /* ✅ 15px */
+      font-weight: 600;
+      text-decoration: none;
+      margin-left: 6px;
+    }
 
-/* 하빈 요구: 행간 절반, 밑줄 제거 */
-.post-table td {
-  padding: 6px 10px;
-  border-bottom: none;
-  font-size: 14px;
-  color: #444;
-}
+    .top-buttons .btn:hover { opacity: 0.92; }
 
-/* 번호 + 작성자 중앙 정렬 */
-.post-table td:nth-child(1),
-.post-table td:nth-child(2) {
-  text-align: center;
-}
+    /* --------------------- 테이블 --------------------- */
+    .post-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-top: 2px solid #333;
+      margin-top: 10px;
+    }
 
-/* 날짜 오른쪽 정렬 */
-.post-table td:nth-child(4) {
-  text-align: right;
-  color: #777;
-  font-size: 14px;
-}
+    .post-table th {
+      text-align: center;
+      padding: 12px 0;
+      border-bottom: 2px solid #ddd;
+      font-size: 15px;
+      color: #333;
+      background: #fafafa;
+    }
 
-/* 제목 스타일 */
-.title-link {
-  display: block;
-  text-align: left;
-  font-weight: 600;
-  color: #2b2b2b;
-  transition: 0.2s;
-}
+    .post-table td {
+      padding: 6px 10px;
+      border-bottom: none;
+      font-size: 14px;
+      color: #444;
+    }
 
-.title-link:hover {
-  color: #3558A8;
-}
-/* 제목 링크 기본 밑줄 완전 제거 */
-.post-table a,
-.post-table a:visited,
-.post-table a:focus,
-.post-table a:hover {
-  text-decoration: none !important;
-}
+    .post-table td:nth-child(1),
+    .post-table td:nth-child(2) {
+      text-align: center;
+    }
 
-/* 공지 강조 */
-.notice-row {
-  background: #FFF8D1 !important;
-}
+    .post-table td:nth-child(4) {
+      text-align: right;
+      color: #777;
+      font-size: 14px;
+    }
 
-/* 마우스 hover */
-.post-table tbody tr:hover {
-  background: #f2f6ff;
-}
-</style>
+    .title-link {
+      display: block;
+      font-weight: 600;
+      color: #2b2b2b;
+      transition: 0.2s;
+    }
 
+    .title-link:hover { color: #3558A8; }
+
+    .post-table a,
+    .post-table a:visited,
+    .post-table a:hover {
+      text-decoration: none !important;
+    }
+
+    .notice-row { background: #FFF8D1 !important; }
+
+    .post-table tbody tr:hover { background: #f2f6ff; }
+
+    .empty {
+      text-align: center;
+      padding: 18px 0;
+      color: #777;
+    }
+
+    /* --------------------- 페이지네이션 --------------------- */
+    .pagination {
+      margin: 18px 0 8px;
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .page-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: #fff;
+      border: 1px solid #d0d7ea;
+      color: #3558A8;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .page-btn.active {
+      background: #3558A8;
+      color: #fff;
+      border-color: #3558A8;
+    }
+
+    /* --------------------- 카드뷰 영역 --------------------- */
+    .grid-floor {
+      margin-top: 28px;
+    }
+  </style>
 </head>
 
 <body class="list-page">
 
-<!-- ===============================
-     📅 날짜 포맷 공용 유틸
-================================ -->
-<script src="date-utils.js"></script>
-<div class="page-container">
+  <!-- 날짜 유틸 -->
+  <script src="date-utils.js"></script>
 
-  <h1 class="page-title">📚 한글 게시판</h1>
+  <div class="page-container">
+    <h1 class="page-title">📚 한글 게시판</h1>
 
-  <!-- ⭐ 상단 버튼 3개 -->
-  <div class="top-buttons">
-    <a href="post.html?mode=new" class="btn">글쓰기</a>
-    <a href="list.html" class="btn">목록</a>
-    <a href="index.html" class="btn">메인</a>
-      </div>
+    <div class="top-buttons">
+      <a href="post.html?mode=new" class="btn">글쓰기</a>
+      <a href="list.html" class="btn">목록</a>
+      <a href="index.html" class="btn">메인</a>
+    </div>
 
-  <table class="post-table">
-    <thead>
-      <tr>
-        <th style="width:60px;">번호</th>
-        <th style="width:120px;">작성자</th>
-        <th>제목</th>
-        <th style="width:150px;">날짜</th>
-      </tr>
-    </thead>
-    <tbody id="post-list"></tbody>
-  </table>
+    <!-- ===================== 테이블 ===================== -->
+    <table class="post-table">
+      <thead>
+        <tr>
+          <th style="width:60px;">번호</th>
+          <th style="width:120px;">작성자</th>
+          <th>제목</th>
+          <th style="width:150px;">날짜</th>
+        </tr>
+      </thead>
+      <tbody id="post-list"></tbody>
+    </table>
 
-  <div id="pagination" class="pagination"></div>
-  
- <!-- 🧩 테스트용 그리드 -->
-  <div class="grid-floor">
-  <div id="current-exhibit" class="main-grid"></div>
-</div>
+    <!-- ===================== 페이지네이션 ===================== -->
+    <div id="pagination" class="pagination"></div>
 
-</div>
- <script>
-/* 🗂 localStorage에서 글 목록 로드 */
-let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+    <!-- ===================== 카드뷰(그리드) ===================== -->
+    <div class="grid-floor">
+      <div id="current-exhibit" class="main-grid"></div>
+    </div>
+  </div>
 
-/* 🔔 공지 + 일반글 분리 */
-const noticePosts = posts.filter(p => p.isNotice)
-  .sort((a,b)=> new Date(b.date)-new Date(a.date));
+  <!-- 카드뷰 엔진 -->
+  <script src="main-grid.js"></script>
 
-const normalPosts = posts.filter(p => !p.isNotice)
-  .sort((a,b)=> new Date(b.date)-new Date(a.date));
+  <script>
+    /* 🗂 localStorage에서 글 목록 로드 */
+    let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
-posts = [...noticePosts, ...normalPosts];
+    /* 🔔 공지 + 일반글 분리 (공지 우선) */
+    const noticePosts = posts.filter(p => p.isNotice)
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-const itemsPerPage = 10;
-let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
-currentPage = parseInt(currentPage);
+    const normalPosts = posts.filter(p => !p.isNotice)
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-/* 📌 목록 출력 */
-function renderList() {
-  const start = (currentPage - 1) * itemsPerPage;
-  const pagePosts = posts.slice(start, start + itemsPerPage);
+    posts = [...noticePosts, ...normalPosts];
 
-  const tbody = document.getElementById("post-list");
-  tbody.innerHTML = "";
+    const itemsPerPage = 10;
 
-  if (pagePosts.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="4" class="empty">작성된 글이 없습니다.</td></tr>`;
-    return;
-  }
+    let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
+    currentPage = parseInt(currentPage, 10);
+    if (!currentPage || currentPage < 1) currentPage = 1;
 
-  pagePosts.forEach((p, idx) => {
-    const tr = document.createElement("tr");
+    /* 📌 현재 페이지 글 추출 (단일 진실) */
+    function getCurrentPagePosts() {
+      const start = (currentPage - 1) * itemsPerPage;
+      return posts.slice(start, start + itemsPerPage);
+    }
 
-    tr.innerHTML = `
-      <td>${posts.length - (start + idx)}</td>
-      <td>${p.writer}</td>
-      <td>
-        <a href="post.html?mode=view&id=${p.id}" class="title-link">
-          ${p.isNotice ? "📌 " : ""}${p.title}
-        </a>
-      </td>
-      <td>${formatDate(p.date)}</td>
-    `;
-    if (p.isNotice) tr.classList.add("notice-row");
-    tbody.appendChild(tr);
-  });
-}
+    /* 📌 테이블 렌더 */
+    function renderList() {
+      const pagePosts = getCurrentPagePosts();
+      const tbody = document.getElementById("post-list");
+      tbody.innerHTML = "";
 
-/* 📌 페이지네이션 */
-function renderPagination() {
-  const totalPages = Math.ceil(posts.length / itemsPerPage);
-  const pag = document.getElementById("pagination");
-  pag.innerHTML = "";
+      if (pagePosts.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="empty">작성된 글이 없습니다.</td></tr>`;
+        return;
+      }
 
-  if (totalPages <= 1) return;
+      pagePosts.forEach((p, idx) => {
+        const tr = document.createElement("tr");
 
-  if (currentPage > 1)
-    pag.innerHTML += `<a href="?page=${currentPage - 1}" class="page-btn">이전</a>`;
+        tr.innerHTML = `
+          <td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
+          <td>${p.writer || "하빈"}</td>
+          <td>
+            <a href="post.html?mode=view&id=${p.id}" class="title-link">
+              ${p.isNotice ? "📌 " : ""}${p.title}
+            </a>
+          </td>
+          <td>${formatDate(p.date)}</td>
+        `;
 
-  for (let i = 1; i <= totalPages; i++) {
-    pag.innerHTML += `<a href="?page=${i}" class="page-btn ${i === currentPage ? "active" : ""}">${i}</a>`;
-  }
+        if (p.isNotice) tr.classList.add("notice-row");
+        tbody.appendChild(tr);
+      });
+    }
 
-  if (currentPage < totalPages)
-    pag.innerHTML += `<a href="?page=${currentPage + 1}" class="page-btn">다음</a>`;
-}
+    /* 📌 페이지네이션 */
+    function renderPagination() {
+      const totalPages = Math.ceil(posts.length / itemsPerPage);
+      const pag = document.getElementById("pagination");
+      pag.innerHTML = "";
 
-renderList();
-renderPagination();
+      if (totalPages <= 1) return;
 
-</script>
-<script src="main-grid.js"></script>
- <!-- 🌱 메인 전시 초기화 (여기에!) -->
-<script>
-  if (typeof initMainGrid === "function") {
-    initMainGrid();
-  } 
+      if (currentPage > 1) {
+        pag.innerHTML += `<a href="?page=${currentPage - 1}" class="page-btn">이전</a>`;
+      }
+
+      for (let i = 1; i <= totalPages; i++) {
+        pag.innerHTML += `<a href="?page=${i}" class="page-btn ${i === currentPage ? "active" : ""}">${i}</a>`;
+      }
+
+      if (currentPage < totalPages) {
+        pag.innerHTML += `<a href="?page=${currentPage + 1}" class="page-btn">다음</a>`;
+      }
+    }
+
+    /* 📌 카드뷰 렌더 (판단은 리스트, 출력만 그리드) */
+    function renderGrid() {
+      if (typeof renderMainGrid === "function") {
+        renderMainGrid(getCurrentPagePosts());
+      }
+    }
+
+    renderList();
+    renderPagination();
+    renderGrid();
+  </script>
+
 </body>
 </html>
 
+  
 
 
 
