@@ -221,4 +221,9 @@ body.night #habin-footer {
 body.night #habin-footer .ft-hidden {
   color: #94A3B8;
 }   
-
+.main-board-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0 12px;
+}
