@@ -144,9 +144,9 @@ const normalPosts = posts.filter(p => !p.isNotice)
   .sort((a, b) => new Date(b.date) - new Date(a.date));
 posts = [...noticePosts, ...normalPosts];
 
-const itemsPerPage = 5;
+const itemsPerPage = 8;
 let currentPage = new URLSearchParams(location.search).get("page") || 1;
-currentPage = parseInt(currentPage, 10);
+currentPage = parseInt(currentPage, 8);
 if (!currentPage || currentPage < 1) currentPage = 1;
 
 function getCurrentPagePosts() {
@@ -311,6 +311,7 @@ function initSidebarOnly() {
 </script>
  </body>
 </html>
+
 
 
 
