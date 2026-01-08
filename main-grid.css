@@ -7,42 +7,90 @@
   padding: 0;
 }
 
+/* ===============================
+   카드 전체
+================================ */
 .grid-item {
-  padding: 12px;
+  padding: 14px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  min-height: 190px;              /* ✅ 세로 체급 확보 */
+  background: #ffffff;
+
+  border: 1px solid #d0d7ea;      /* ✅ 사각 테두리 */
+  border-radius: 8px;
+
   cursor: pointer;
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
 }
 
+/* ===============================
+   Hover 효과
+================================ */
+.grid-item:hover {
+  transform: translateY(-4px);    /* 살짝 뜨기 */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  border-color: #3558A8;          /* 은남색 */
+}
+
+/* ===============================
+   제목
+================================ */
 .card-title {
   font-weight: 600;
   font-size: 14px;
   color: #2b2b2b;
-  line-height: 1.3;
+  line-height: 1.35;
   text-align: left;
-}
 
-.card-preview {
-  font-size: 13px;
-  color: #555;
-  line-height: 1.4;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 2;          /* 제목 2줄 제한 */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
+/* ===============================
+   미리보기 (남은 공간 채우기)
+================================ */
+.card-preview {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.45;
+
+  margin-top: 2px;
+  margin-bottom: auto;            /* ✅ 세로 안정 핵심 */
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;          /* 메인에선 3줄이 안정 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ===============================
+   하단 메타
+================================ */
 .card-meta {
   display: flex;
   justify-content: space-between;
   font-size: 12px;
   font-weight: 600;
   color: #5bb6c8; /* 청록 */
+  margin-top: 10px;
 }
+
 .card-writer {
   text-align: left;
 }
+
 .card-date {
   text-align: right;
 }
+
+
+
