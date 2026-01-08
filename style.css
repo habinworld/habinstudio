@@ -241,8 +241,7 @@ body.night #habin-footer .ft-hidden {
   border-collapse: collapse;
   border-top: 1px solid rgba(255,255,255,0.15);
   margin-top: 10px;
-  background: transparent;
-}
+  }
 
 .post-table th {
   text-align: center;
@@ -250,7 +249,6 @@ body.night #habin-footer .ft-hidden {
   border-bottom: 1px solid rgba(255,255,255,0.15);
   font-size: 15px;
   color: #ddd;
-  background: transparent; /* ← 흰색 제거 */
 }
 
 .post-table td {
@@ -258,8 +256,7 @@ body.night #habin-footer .ft-hidden {
   border-bottom: none;
   font-size: 14px;
   color: #ccc;
-  background: transparent;
-}
+  }
 
 .post-table td:nth-child(1),
 .post-table td:nth-child(2) {
@@ -323,7 +320,6 @@ body.night #habin-footer .ft-hidden {
 .page-btn {
   padding: 6px 12px;
   border-radius: 6px;
-  background: rgba(255,255,255,0.08); /* ← 흰색 제거 */
   border: 1px solid rgba(255,255,255,0.25);
   color: #cdd9ff;
   font-size: 15px;
