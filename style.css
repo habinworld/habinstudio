@@ -235,3 +235,90 @@ body.night #habin-footer .ft-hidden {
 #notice-section {
   margin-bottom: 60px;
 }
+ /* --------------------- 테이블 --------------------- */
+    .post-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-top: 2px solid #333;
+      margin-top: 10px;
+    }
+
+    .post-table th {
+      text-align: center;
+      padding: 12px 0;
+      border-bottom: 2px solid #ddd;
+      font-size: 15px;
+      color: #333;
+      background: #fafafa;
+    }
+
+    .post-table td {
+      padding: 6px 10px;
+      border-bottom: none;
+      font-size: 14px;
+      color: #444;
+    }
+
+    .post-table td:nth-child(1),
+    .post-table td:nth-child(2) {
+      text-align: center;
+    }
+
+    .post-table td:nth-child(4) {
+      text-align: right;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .title-link {
+      display: block;
+      text-align: left;
+      font-weight: 600;
+      color: #2b2b2b;
+      transition: 0.2s;
+    }
+
+    .title-link:hover { color: #3558A8; }
+
+    .post-table a,
+    .post-table a:visited,
+    .post-table a:focus,
+    .post-table a:hover {
+      text-decoration: none ;
+    }
+
+    .notice-row { background: #FFF8D1; }
+
+    .post-table tbody tr:hover { background: #f2f6ff; }
+
+    .empty {
+      text-align: center;
+      padding: 18px 0;
+      color: #777;
+    }
+
+    /* --------------------- 페이지네이션 --------------------- */
+    .pagination {
+      margin: 18px 0 8px;
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .page-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      background: #fff;
+      border: 1px solid #d0d7ea;
+      color: #3558A8;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .page-btn.active {
+      background: #3558A8;
+      color: #fff;
+      border-color: #3558A8;
+    }
