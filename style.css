@@ -236,88 +236,103 @@ body.night #habin-footer .ft-hidden {
   margin-bottom: 60px;
 }
  /* --------------------- 테이블 --------------------- */
-    .post-table {
-      width: 100%;
-      border-collapse: collapse;
-      border-top: 2px solid #333;
-      margin-top: 10px;
-    }
+.post-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  margin-top: 10px;
+  background: transparent;
+}
 
-    .post-table th {
-      text-align: center;
-      padding: 12px 0;
-      border-bottom: 2px solid #ddd;
-      font-size: 15px;
-      color: #333;
-      background: #fafafa;
-    }
+.post-table th {
+  text-align: center;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  font-size: 15px;
+  color: #ddd;
+  background: transparent; /* ← 흰색 제거 */
+}
 
-    .post-table td {
-      padding: 6px 10px;
-      border-bottom: none;
-      font-size: 14px;
-      color: #444;
-    }
+.post-table td {
+  padding: 6px 10px;
+  border-bottom: none;
+  font-size: 14px;
+  color: #ccc;
+  background: transparent;
+}
 
-    .post-table td:nth-child(1),
-    .post-table td:nth-child(2) {
-      text-align: center;
-    }
+.post-table td:nth-child(1),
+.post-table td:nth-child(2) {
+  text-align: center;
+}
 
-    .post-table td:nth-child(4) {
-      text-align: right;
-      color: #777;
-      font-size: 14px;
-    }
+.post-table td:nth-child(4) {
+  text-align: right;
+  color: #aaa;
+  font-size: 14px;
+}
 
-    .title-link {
-      display: block;
-      text-align: left;
-      font-weight: 600;
-      color: #2b2b2b;
-      transition: 0.2s;
-    }
+/* 제목 링크 */
+.title-link {
+  display: block;
+  text-align: left;
+  font-weight: 600;
+  color: #e6ebff;
+  transition: color 0.2s;
+}
 
-    .title-link:hover { color: #3558A8; }
+.title-link:hover {
+  color: #7aa2ff;
+}
 
-    .post-table a,
-    .post-table a:visited,
-    .post-table a:focus,
-    .post-table a:hover {
-      text-decoration: none ;
-    }
+/* 링크 배경 완전 제거 */
+.post-table a,
+.post-table a:visited,
+.post-table a:focus,
+.post-table a:hover {
+  text-decoration: none;
+  background: transparent;
+}
 
-    .notice-row { background: #FFF8D1; }
+/* 📌 공지글 (흰노랑 → 은은한 달빛) */
+.notice-row {
+  background: rgba(255, 235, 150, 0.12);
+}
 
-    .post-table tbody tr:hover { background: #f2f6ff; }
+/* 🔥 hover 흰색 제거 + 문라이트 반응 */
+.post-table tbody tr:hover {
+  background: rgba(180, 200, 255, 0.08);
+}
 
-    .empty {
-      text-align: center;
-      padding: 18px 0;
-      color: #777;
-    }
+/* 비어있을 때 */
+.empty {
+  text-align: center;
+  padding: 18px 0;
+  color: #999;
+}
 
-    /* --------------------- 페이지네이션 --------------------- */
-    .pagination {
-      margin: 18px 0 8px;
-      display: flex;
-      gap: 6px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+/* --------------------- 페이지네이션 --------------------- */
+.pagination {
+  margin: 18px 0 8px;
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
 
-    .page-btn {
-      padding: 6px 12px;
-      border-radius: 6px;
-      background: #fff;
-      border: 1px solid #d0d7ea;
-      color: #3558A8;
-      font-size: 15px;
-      font-weight: 600;
-      text-decoration: none;
-    }
-    .page-btn.active {
-      background: #3558A8;
-      color: #fff;
-      border-color: #3558A8;
-   
+.page-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.08); /* ← 흰색 제거 */
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #cdd9ff;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.page-btn.active {
+  background: #3558A8;
+  color: #fff;
+  border-color: #3558A8;
+}
