@@ -1,7 +1,7 @@
 /* 🌈 메인 전시 그리드 (부모 / 공용 배치 엔진) */
 .main-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-top: 24px;
   padding: 0;
