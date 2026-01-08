@@ -4,7 +4,6 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-top: 24px;
-  background: #FFF4C9;   /* 전시 존 바닥 */
   border-radius: 12px;
   padding: 0;
 }
@@ -19,7 +18,7 @@
   gap: 8px;
 
   min-height: 190px;              /* ✅ 세로 체급 확보 */
-  background: #F7F9FC;
+  background: #FFF4C9;
 
   border: 1px solid #7E8FB8;      /* ✅ 사각 테두리 */
   border-radius: 8px;
