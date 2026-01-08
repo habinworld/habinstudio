@@ -227,3 +227,8 @@ body.night #habin-footer .ft-hidden {
   justify-content: space-between;
   margin: 20px 0 12px;
 }
+.content-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-bottom: 60px;
+}
