@@ -216,9 +216,9 @@ renderGrid();
 
 <!-- 🔔 공지글 5개만 메인에 표시 (촘촘 버전) -->
 <script>
-let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+let noticePostsAll = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
-let notices = posts
+let notices = noticePostsAll
   .filter(p => p.isNotice)
   .sort((a, b) => new Date(b.date) - new Date(a.date))
   .slice(0, 5);
@@ -309,6 +309,7 @@ function initSidebarOnly() {
 </script>
  </body>
 </html>
+
 
 
 
