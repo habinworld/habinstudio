@@ -68,7 +68,7 @@
   margin-bottom: auto;            /* ✅ 세로 안정 핵심 */
 
   display: -webkit-box;
-  -webkit-line-clamp: 4;          /* 메인에선 3줄이 안정 */
+  -webkit-line-clamp: 6;          /* 메인에선 3줄이 안정 */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
