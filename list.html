@@ -159,6 +159,7 @@
     <table class="post-table">
       <thead>
         <tr>
+          <th class="admin-only" style="width:120px;">관리</th> <!-- ✅ 맨 앞 -->
           <th style="width:60px;">번호</th>
           <th style="width:120px;">작성자</th>
           <th>제목</th>
@@ -220,6 +221,20 @@
         const tr = document.createElement("tr");
 
         tr.innerHTML = `
+          <!-- ✅ 관리자 열 (번호 왼쪽) -->
+       <td class="admin-only" style="text-align:center; white-space:nowrap;">
+       <input type="checkbox"
+        ${p.isMain ? "checked" : ""}
+        onchange="toggleMain(${idx})"> M
+
+       <input type="checkbox"
+        ${p.isNotice ? "checked" : ""}
+        onchange="toggleNotice(${idx})"> N
+
+       <button onclick="moveUp(${idx})">▲</button>
+      <button onclick="moveDown(${idx})">▼</button>
+      </td>
+          <!-- 번호 -->
           <td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
           <td>${p.writer || "하빈"}</td>
           <td>
