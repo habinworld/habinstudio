@@ -187,6 +187,8 @@
   <script src="main-grid.js"></script>
 
   <script>
+    /* 🔐 관리자 상태 읽기 (리스트 전용) */
+     window.IS_ADMIN = localStorage.getItem("habin_admin") === "true";
     /* 🗂 localStorage에서 글 목록 로드 */
     let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
