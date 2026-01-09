@@ -322,3 +322,7 @@ body.night #habin-footer .ft-hidden {
   color: #fff;
   border-color: #3558A8;
 }
+.main-board-header h2 {
+  font-size: 25px;
+  font-weight: 600; 
+}
