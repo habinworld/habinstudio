@@ -133,16 +133,14 @@
       color: #fff;
       border-color: #3558A8;
     }
-    .admin-only {
-     display: none;
-     }
+       
     /* --------------------- 카드뷰 영역 --------------------- */
     .grid-floor {
       margin-top: 28px;
     }
     /* 관리자 전용 컬럼 기본 숨김 */
   .admin-only {
-    display: none;
+    display: none; }
   </style>
 </head>
 
@@ -226,12 +224,7 @@
 
       pagePosts.forEach((p, idx) => {
         const tr = document.createElement("tr");
-        /* 관리자 모드일 때만 관리 열 표시 */
-    if (window.IS_ADMIN === true) {
-       document.querySelectorAll(".admin-only").forEach(el => {
-       el.style.display = "";
-    });
-  }
+      
         tr.innerHTML = `
           <!-- ✅ 관리자 열 (번호 왼쪽) -->
        <td class="admin-only" style="text-align:center; white-space:nowrap;">
@@ -261,7 +254,12 @@
         tbody.appendChild(tr);
       });
     }
-
+       /* 관리자 모드일 때만 관리 열 표시 */
+    if (window.IS_ADMIN === true) {
+       document.querySelectorAll(".admin-only").forEach(el => {
+       el.style.display = "";
+    });
+  }
     /* 📌 페이지네이션 */
     function renderPagination() {
       const totalPages = Math.ceil(posts.length / itemsPerPage);
