@@ -292,18 +292,7 @@ function initSidebarOnly() {
     startWeather();
   }
 
-  /* 🔐 관리자 토글 */
-  const toggle = document.getElementById("secret-toggle");
-  const box = document.getElementById("secret-box");
-
-  if (toggle && box) {
-    toggle.onclick = () => {
-      box.style.display =
-        box.style.display === "block" ? "none" : "block";
-    };
-  }
-
-  /* 📂 접이식 메뉴 */
+   /* 📂 접이식 메뉴 */
   const menuToggle = document.getElementById("menu-toggle");
   const menu = document.getElementById("sidebar-menu");
 
@@ -313,12 +302,23 @@ function initSidebarOnly() {
         menu.style.display === "block" ? "none" : "block";
     };
   }
+ 
+  /* 🔐 비밀문 (여기서 호출만!) */
+  if (typeof initSecretToggle === "function") {
+    initSecretToggle();
+  }
+  if (typeof initSecretGate === "function") {
+    initSecretGate();
+  }
 }
+}
+ 
 </script>
 
 </script>
  </body>
 </html>
+
 
 
 
