@@ -1,6 +1,6 @@
 /* -----------------------------------------------------
    🔐 Ha-Bin Studio — secret-gate.js
-   비밀의 문 (관리자 키)
+   비밀의 문 (관리자 키) 2026.01.09
 ----------------------------------------------------- */
 function initSecretGate() {
   const input = document.getElementById("secret-input");
