@@ -187,6 +187,7 @@
   <script>
     /* 🔐 관리자 상태 읽기 (리스트 전용) */
      window.IS_ADMIN = localStorage.getItem("habin_admin") === "true";
+    document.body.classList.toggle("is-admin", window.IS_ADMIN);
     /* 🗂 localStorage에서 글 목록 로드 */
     let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
@@ -253,13 +254,7 @@
         if (p.isNotice) tr.classList.add("notice-row");
         tbody.appendChild(tr);
       });
-      /* 관리자 모드일 때만 관리 열 표시 */
-      if (window.IS_ADMIN === true) {
-       document.querySelectorAll(".admin-only").forEach(el => {
-       el.style.display = "";
-    });
-  }
-  }
+    }
       
     /* 📌 페이지네이션 */
     function renderPagination() {
