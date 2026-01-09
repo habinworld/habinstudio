@@ -253,9 +253,8 @@
         if (p.isNotice) tr.classList.add("notice-row");
         tbody.appendChild(tr);
       });
-    }
-       /* 관리자 모드일 때만 관리 열 표시 */
-    if (window.IS_ADMIN === true) {
+      /* 관리자 모드일 때만 관리 열 표시 */
+      if (window.IS_ADMIN === true) {
        document.querySelectorAll(".admin-only").forEach(el => {
        el.style.display = "";
     });
