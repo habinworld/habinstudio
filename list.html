@@ -226,7 +226,12 @@
 
       pagePosts.forEach((p, idx) => {
         const tr = document.createElement("tr");
-
+        /* 관리자 모드일 때만 관리 열 표시 */
+    if (window.IS_ADMIN === true) {
+       document.querySelectorAll(".admin-only").forEach(el => {
+       el.style.display = "";
+    });
+  }
         tr.innerHTML = `
           <!-- ✅ 관리자 열 (번호 왼쪽) -->
        <td class="admin-only" style="text-align:center; white-space:nowrap;">
@@ -288,12 +293,7 @@
     renderList();
     renderPagination();
     renderGrid();
-    /* 관리자 모드일 때만 관리 열 표시 */
-    if (window.IS_ADMIN === true) {
-       document.querySelectorAll(".admin-only").forEach(el => {
-       el.style.display = "";
-    });
-  }
+   
   </script>
 
 </body>
