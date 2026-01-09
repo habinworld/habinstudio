@@ -225,7 +225,9 @@ body.night #habin-footer .ft-hidden {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 20px 0 12px;
+  margin: 20px 0 12px; 
+  font-size: 25px;
+  font-weight: 600;  
 }
 .content-inner {
   max-width: 900px;
@@ -322,7 +324,10 @@ body.night #habin-footer .ft-hidden {
   color: #fff;
   border-color: #3558A8;
 }
-.main-board-header h2 {
-  font-size: 25px;
-  font-weight: 600; 
+.main-page .post-table {
+  border-top: 2px solid rgba(255,255,255,0.5);
+}
+
+.main-page .post-table th {
+  border-bottom: 2px solid rgba(255,255,255,0.35);
 }
