@@ -12,8 +12,11 @@
   const AUTOSAVE_INTERVAL = 10000; 
 
   /* 🌍 세계 기반 키 (핵심) */
-  const BASE_KEY  = window.HABIN_STORAGE_KEY || "habin_posts";
-  const DRAFT_KEY = BASE_KEY + "_autosave_draft";
+  function getDraftKey() {
+  const base = window.HABIN_STORAGE_KEY || "habin_posts";
+  const id   = window.POST_ID ?? "new";
+  return `${base}_autosave_draft_${id}`;
+}
 
   function initAutoSave() {
     const titleEl  = document.getElementById("hb-title");
@@ -31,6 +34,7 @@
       ) return;
 
       // 자동저장
+       const DRAFT_KEY = getDraftKey();
       localStorage.setItem(
         DRAFT_KEY,
         JSON.stringify({
