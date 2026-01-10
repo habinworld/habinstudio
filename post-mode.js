@@ -23,13 +23,13 @@
 
   const btnSave   = document.getElementById("hb-btn-save");
   const btnUpdate = document.getElementById("hb-btn-update");
-   btnUpdate &&
+  btnUpdate &&
   btnUpdate.addEventListener("click", () => {
-    window.POST_ID &&
-      (const postPage =
-  STORAGE_KEY === "habin_posts_en" ? "post.en.html" : "post.html";
+  if (!window.POST_ID) return;
+   const postPage =
+    STORAGE_KEY === "habin_posts_en" ? "post.en.html" : "post.html";
    location.href = `${postPage}?mode=edit&id=${window.POST_ID}`;
-  });
+});
   const btnDelete = document.getElementById("hb-btn-delete");
   const btnCancel = document.getElementById("hb-btn-cancel");
 btnCancel &&
