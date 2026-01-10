@@ -20,8 +20,7 @@
   // 요소 참조
   const editor = document.getElementById("hb-editor");
   const title  = document.getElementById("hb-title");
-
-  const btnSave   = document.getElementById("hb-btn-save");
+ // const btnSave   = document.getElementById("hb-btn-save");----삭제예정
   const btnUpdate = document.getElementById("hb-btn-update");
   btnUpdate &&
   btnUpdate.addEventListener("click", () => {
