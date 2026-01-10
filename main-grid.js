@@ -48,7 +48,11 @@ function renderMainGrid(postList) {
 
     /* 5️⃣ 클릭 → 글 보기 */
     item.onclick = () => {
-      location.href = "post.html?mode=view&id=" + p.id;
+  const postPage =
+    window.HABIN_STORAGE_KEY === "habin_posts_en"
+      ? "post.en.html"
+      : "post.html";
+      location.href = `${postPage}?mode=view&id=${p.id}`;
     };
 
     /* 6️⃣ 그리드에 추가 */
