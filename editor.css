@@ -24,20 +24,6 @@
   margin-bottom: 6px;
 }
 
-/* 공지 체크 */
-.hb-notice-line {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 15px;
-  flex-shrink: 0;
-}
-
-#hb-notice {
-  width: 18px;
-  height: 18px;
-}
-
 /* ============================
    상단 버튼 그룹
 ============================ */
@@ -157,7 +143,7 @@
 .hb-bottom-buttons {
   display: flex;
   gap: 10px;
-  margin-left: 60px; 
+  margin-left: auto; 
 }
 
 .hb-btn-bottom {
