@@ -63,9 +63,7 @@ posts.push(collectNewData());
     localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
     setTimeout(() => {
   alert("저장 완료");
-  location.href = STORAGE_KEY === "habin_posts_en"
-    ? "list.en.html"
-    : "list.html";
+  location.href = window.HABIN_LIST_PAGE;
 }, 0);
 }
   /* ============================
@@ -93,7 +91,7 @@ posts.push(collectNewData());
     localStorage.setItem(STORAGE_KEY, JSON.stringify(nextPosts));
     setTimeout(() => {
   alert("저장 완료");
-  location.href = STORAGE_KEY === "habin_posts_en" ? "list.en.html" : "list.html";
+  location.href = window.HABIN_LIST_PAGE;
 }, 0);
   }
 
@@ -112,7 +110,7 @@ posts.push(collectNewData());
      posts = posts.filter(post => post.id !== POST_ID);
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-    location.href = STORAGE_KEY === "habin_posts_en" ? "list.en.html" : "list.html";
+    location.href = window.HABIN_LIST_PAGE;
   }
     
   /* ============================
