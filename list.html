@@ -159,7 +159,22 @@
     renderList();
     renderPagination();
     renderGrid();
-   
+   /*----글 위래 이동  ▲ ▼ ----*/
+   function moveUp(i) {
+  if (i <= 0) return;
+
+  [posts[i], posts[i - 1]] = [posts[i - 1], posts[i]];
+  localStorage.setItem("habin_posts", JSON.stringify(posts));
+  location.reload();
+}
+
+function moveDown(i) {
+  if (i >= posts.length - 1) return;
+
+  [posts[i], posts[i + 1]] = [posts[i + 1], posts[i]];
+  localStorage.setItem("habin_posts", JSON.stringify(posts));
+  location.reload();
+}
   </script>
 
 </body>
