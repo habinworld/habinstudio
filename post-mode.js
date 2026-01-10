@@ -63,7 +63,7 @@ btnCancel &&
   editor.contentEditable = "true";
   title.readOnly = false;
 
-  const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+  const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
   const post = posts.find(p => p.id === window.POST_ID);
   const noticeBox = document.getElementById("hb-notice");
 
