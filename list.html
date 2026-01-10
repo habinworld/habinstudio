@@ -187,7 +187,8 @@ if (!posts[i].isNotice && i === posts.length - 1) return;
 function toggleNotice(i) {
   posts[i].isNotice = !posts[i].isNotice;
   localStorage.setItem("habin_posts", JSON.stringify(posts));
-  location.reload();   
+  location.reload();  
+  }
   </script>
 
 </body>
