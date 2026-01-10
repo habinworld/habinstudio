@@ -6,6 +6,8 @@
 
 (function () {
   const params = new URLSearchParams(location.search);
+  const STORAGE_KEY = window.HABIN_STORAGE_KEY || "habin_posts";
+   
  // 🔑 현재 글 ID (존재 / 비존재, if 없음)
   window.POST_ID = Number(params.get("id")) || null;
   // mode 규칙
@@ -24,7 +26,9 @@
    btnUpdate &&
   btnUpdate.addEventListener("click", () => {
     window.POST_ID &&
-      (location.href = `post.html?mode=edit&id=${window.POST_ID}`);
+      (const postPage =
+  STORAGE_KEY === "habin_posts_en" ? "post.en.html" : "post.html";
+   location.href = `${postPage}?mode=edit&id=${window.POST_ID}`;
   });
   const btnDelete = document.getElementById("hb-btn-delete");
   const btnCancel = document.getElementById("hb-btn-cancel");
