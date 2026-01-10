@@ -60,16 +60,7 @@
     document.body.classList.toggle("is-admin", window.IS_ADMIN);
     /* 🗂 localStorage에서 글 목록 로드 */
     let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-
-    /* 🔔 공지 + 일반글 분리 (공지 우선) */
-    const noticePosts = posts.filter(p => p.isNotice)
-      .sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    const normalPosts = posts.filter(p => !p.isNotice)
-      .sort((a, b) => new Date(b.date) - new Date(a.date));
-
-       const itemsPerPage = 8;
-
+         const itemsPerPage = 8;
     let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
     currentPage = parseInt(currentPage, 8);
     if (!currentPage || currentPage < 1) currentPage = 1;
