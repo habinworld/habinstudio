@@ -60,7 +60,7 @@
    // document.body.classList.toggle("is-admin", window.IS_ADMIN);       //
  
     /* 🗂 localStorage에서 글 목록 로드 */
-    let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+    let posts = JSON.parse(localStorage.getItem("habin_posts_en") || "[]");
          const itemsPerPage = 8;
     let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
     currentPage = parseInt(currentPage, 8);
