@@ -143,8 +143,7 @@
 .hb-bottom-buttons {
   display: flex;
   gap: 10px;
-  margin-left: auto;
-  padding-left: 1px; 
+  margin-left: 10; 
   }
 
 .hb-btn-bottom {
