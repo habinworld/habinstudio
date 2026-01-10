@@ -50,6 +50,7 @@
     }, AUTOSAVE_INTERVAL);
 
     /* 🔄 최초 로드 시 초안 복구 */
+    const DRAFT_KEY = getDraftKey(); 
     const saved = localStorage.getItem(DRAFT_KEY);
     if (saved && !titleEl.value && !editorEl.innerText.trim()) {
       try {
