@@ -10,139 +10,8 @@
 
   <!-- ✅ 카드뷰(그리드) 스타일 -->
   <link rel="stylesheet" href="main-grid.css">
-
-  <style>
-    /* 전체 레이아웃 */
-    .page-container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    /* --------------------- 페이지 타이틀--------------------- */
-    .page-title {
-     font-size: 25px;
-     font-weight: 700;
-     margin: 0 0 12px 0;
-     }    
-    /* --------------------- 상단 버튼 3개--------------------- */
-    .top-buttons {
-      text-align: right;
-      margin: 12px 0;
-    }
-
-    .top-buttons .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6px 12px;           /* ✅ 하빈 버튼 규격 */
-      background: #3558A8;         /* ✅ 은남색 */
-      color: #FFFFFF;
-      border-radius: 6px;
-      font-size: 15px;             /* ✅ 15px */
-      font-weight: 600;
-      text-decoration: none;
-      margin-left: 6px;
-    }
-
-    .top-buttons .btn:hover { opacity: 0.92; }
-
-    /* --------------------- 테이블 --------------------- */
-    .post-table {
-      width: 100%;
-      border-collapse: collapse;
-      border-top: 2px solid #333;
-      margin-top: 10px;
-    }
-
-    .post-table th {
-      text-align: center;
-      padding: 12px 0;
-      border-bottom: 2px solid #ddd;
-      font-size: 15px;
-      color: #333;
-      background: #fafafa;
-    }
-
-    .post-table td {
-      padding: 6px 10px;
-      border-bottom: none;
-      font-size: 14px;
-      color: #444;
-    }
-
-    .post-table td:nth-child(1),
-    .post-table td:nth-child(2),
-    .post-table td:nth-child(3){
-      text-align: center;
-     }
-
-    .post-table td:nth-child(4) {
-      text-align: right;
-      color: #777;
-      font-size: 14px;
-    }
-
-    .title-link {
-      display: block;
-      text-align: left;
-      font-weight: 600;
-      color: #2b2b2b;
-      transition: 0.2s;
-    }
-
-    .title-link:hover { color: #3558A8; }
-
-    .post-table a,
-    .post-table a:visited,
-    .post-table a:focus,
-    .post-table a:hover {
-      text-decoration: none ;
-    }
-
-    .notice-row { background: #FFF8D1; }
-
-    .post-table tbody tr:hover { background: #f2f6ff; }
-
-    .empty {
-      text-align: center;
-      padding: 18px 0;
-      color: #777;
-    }
-
-    /* --------------------- 페이지네이션 --------------------- */
-    .pagination {
-      margin: 18px 0 8px;
-      display: flex;
-      gap: 6px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .page-btn {
-      padding: 6px 12px;
-      border-radius: 6px;
-      background: #fff;
-      border: 1px solid #d0d7ea;
-      color: #3558A8;
-      font-size: 15px;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .page-btn.active {
-      background: #3558A8;
-      color: #fff;
-      border-color: #3558A8;
-    }
-       
-    /* --------------------- 카드뷰 영역 --------------------- */
-    .grid-floor {
-      margin-top: 28px;
-    }
-    /* 관리자 전용 컬럼 기본 숨김 */
-  .admin-only { display: none; }
-   body.is-admin .admin-only { display: table-cell; }
-  </style>
+  <link rel="stylesheet" href="list.css"> 
+ 
 </head>
 
 <body class="list-page">
@@ -228,20 +97,22 @@
         const tr = document.createElement("tr");
       
         tr.innerHTML = `
-          <!-- ✅ 관리자 열 (번호 왼쪽) -->
-       <td class="admin-only" style="text-align:center; white-space:nowrap;">
-       <input type="checkbox"
-        ${p.isMain ? "checked" : ""}
-        onchange="toggleMain(${idx})"> M
+         <!-- ✅ 관리자 열 (번호 왼쪽) -->
+<td class="admin-only admin-actions" style="text-align:center; white-space:nowrap;">
+  <button title="공지"
+          onclick="toggleNotice(${idx})">📌</button>
 
-       <input type="checkbox"
-        ${p.isNotice ? "checked" : ""}
-        onchange="toggleNotice(${idx})"> N
+  <button title="위로 이동"
+          onclick="moveUp(${idx})">▲</button>
 
-       <button onclick="moveUp(${idx})">▲</button>
-      <button onclick="moveDown(${idx})">▼</button>
-      </td>
-          <!-- 번호 -->
+  <button title="아래로 이동"
+          onclick="moveDown(${idx})">▼</button>
+
+  <button title="삭제"
+          class="btn-del"
+          onclick="deletePost(${idx})">DEL</button>
+</td>
+          <!-- ✅리스트 배열....번호/작성자/제목/날짜 -->
           <td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
           <td>${p.writer || "하빈"}</td>
           <td>
