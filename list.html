@@ -164,12 +164,10 @@ if (posts[i].isNotice && i === 0) return;
 
 // 일반글: 공지 영역 바로 아래면 불가
 if (!posts[i].isNotice && i === noticeEnd + 1) return;
-     
-  if (i <= 0) return;
-
-  [posts[i], posts[i - 1]] = [posts[i - 1], posts[i]];
-  localStorage.setItem("habin_posts", JSON.stringify(posts));
-  location.reload();
+   
+   [posts[i], posts[i - 1]] = [posts[i - 1], posts[i]];
+   localStorage.setItem("habin_posts", JSON.stringify(posts));
+   location.reload();
 }
 
 function moveDown(i) {
@@ -180,9 +178,7 @@ if (posts[i].isNotice && i === noticeEnd) return;
 
 // 일반글: 맨 마지막이면 불가
 if (!posts[i].isNotice && i === posts.length - 1) return;
-  
-  if (i >= posts.length - 1) return;
-
+    
   [posts[i], posts[i + 1]] = [posts[i + 1], posts[i]];
   localStorage.setItem("habin_posts", JSON.stringify(posts));
   location.reload();
