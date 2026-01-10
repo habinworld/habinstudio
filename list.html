@@ -183,6 +183,11 @@ if (!posts[i].isNotice && i === posts.length - 1) return;
   localStorage.setItem("habin_posts", JSON.stringify(posts));
   location.reload();
 }
+ /*----공지 토글 (realIndex 기준)----*/
+function toggleNotice(i) {
+  posts[i].isNotice = !posts[i].isNotice;
+  localStorage.setItem("habin_posts", JSON.stringify(posts));
+  location.reload();   
   </script>
 
 </body>
