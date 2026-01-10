@@ -60,10 +60,12 @@ const STORAGE_KEY = window.HABIN_STORAGE_KEY || "habin_posts";
     const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 posts.push(collectNewData());
      
-    localStorage.setItem("habin_posts", JSON.stringify(posts));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
     setTimeout(() => {
   alert("저장 완료");
-  location.href = "list.html";
+  location.href = STORAGE_KEY === "habin_posts_en"
+    ? "list.en.html"
+    : "list.html";
 }, 0);
 }
   /* ============================
@@ -75,7 +77,7 @@ posts.push(collectNewData());
       return;
     }
 
-    const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+    const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 
     const nextPosts = posts.map(post =>
       post.id === POST_ID
@@ -88,10 +90,10 @@ posts.push(collectNewData());
         : post
     );
 
-    localStorage.setItem("habin_posts", JSON.stringify(nextPosts));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(nextPosts));
     setTimeout(() => {
   alert("저장 완료");
-  location.href = "list.html";
+  location.href = STORAGE_KEY === "habin_posts_en" ? "list.en.html" : "list.html";
 }, 0);
   }
 
@@ -106,11 +108,11 @@ posts.push(collectNewData());
 
     if (!confirm("정말 삭제할까요?")) return;
 
-    let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-    posts = posts.filter(post => post.id !== POST_ID);
+    let posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+     posts = posts.filter(post => post.id !== POST_ID);
 
-    localStorage.setItem("habin_posts", JSON.stringify(posts));
-   location.href = "list.html";
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+    location.href = STORAGE_KEY === "habin_posts_en" ? "list.en.html" : "list.html";
   }
     
   /* ============================
