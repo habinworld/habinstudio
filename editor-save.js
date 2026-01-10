@@ -5,7 +5,7 @@
 
 (function () {
  const POST_ID = window.POST_ID;
-const STORAGE_KEY = window.HABIN_STORAGE_KEY || "habin_posts";
+ const STORAGE_KEY = window.HABIN_STORAGE_KEY;
   /* ============================
      DOM 요소
   ============================ */
