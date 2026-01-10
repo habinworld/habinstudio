@@ -119,7 +119,7 @@ body.is-admin .admin-only{
   background: #fff;
   color: #3558A8;
   cursor: pointer;
-  margin: 0 1px;
+  margin: 0 0.5px;
 }
 
 .admin-actions button:hover{
