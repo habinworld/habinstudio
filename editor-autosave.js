@@ -1,26 +1,36 @@
 /* ======================================================
-   editor-autosave.js / 2026.01.08
+   editor-autosave.js / 2026.01.10
+   Ha-Bin Studio — Auto Save Engine (WORLD SAFE)
+   - 한글/영어 세계 분리
+   - 10초 자동저장
+   - 저장될 때마다 /자동저장/ 알림
+   - 속도 영향 없음
 ====================================================== */
 (function () {
 
-  const AUTOSAVE_INTERVAL = 5000; // 5초
+  /* ⏱ 자동저장 주기 */
+  const AUTOSAVE_INTERVAL = 10000; 
+
+  /* 🌍 세계 기반 키 (핵심) */
   const BASE_KEY  = window.HABIN_STORAGE_KEY || "habin_posts";
   const DRAFT_KEY = BASE_KEY + "_autosave_draft";
-  const ALERT_KEY = BASE_KEY + "_autosave_alerted";
 
   function initAutoSave() {
-    const titleEl = document.getElementById("hb-title");
+    const titleEl  = document.getElementById("hb-title");
     const editorEl = document.getElementById("hb-editor");
 
-    // 아직 editor DOM이 없으면 대기
+    // editor DOM 아직 없으면 대기
     if (!titleEl || !editorEl) return false;
 
-    let alerted = localStorage.getItem(ALERT_KEY) === "1";
-
-    // 🔁 5초 자동저장
+    /* 🔁 자동저장 루프 */
     setInterval(() => {
-      if (!titleEl.value && !editorEl.innerHTML) return;
+      // 사람이 보기 기준으로 내용 없으면 저장 안 함
+      if (
+        !titleEl.value.trim() &&
+        !editorEl.innerText.trim()
+      ) return;
 
+      // 자동저장
       localStorage.setItem(
         DRAFT_KEY,
         JSON.stringify({
@@ -30,17 +40,14 @@
         })
       );
 
-      // 🔔 자동저장 알림 (딱 1번만)
-      if (!alerted) {
-        alerted = true;
-        localStorage.setItem(ALERT_KEY, "1");
-        showAutoSaveNotice();
-      }
+      // 🔔 그냥 매번 알림
+      showAutoSaveNotice();
+
     }, AUTOSAVE_INTERVAL);
 
-    // 🔄 최초 로드 시 복구
+    /* 🔄 최초 로드 시 초안 복구 */
     const saved = localStorage.getItem(DRAFT_KEY);
-    if (saved && !titleEl.value && !editorEl.innerHTML) {
+    if (saved && !titleEl.value && !editorEl.innerText.trim()) {
       try {
         const d = JSON.parse(saved);
         titleEl.value = d.title || "";
@@ -51,12 +58,12 @@
     return true;
   }
 
-  // ⏳ editor가 생성될 때까지 대기
+  /* ⏳ editor 생성될 때까지 대기 */
   const wait = setInterval(() => {
     if (initAutoSave()) clearInterval(wait);
   }, 300);
 
-  // 🔔 알림 UI
+  /* 🔔 자동저장 알림 UI */
   function showAutoSaveNotice() {
     const notice = document.createElement("div");
     notice.textContent = "/자동저장/";
@@ -72,6 +79,7 @@
       z-index: 9999;
       opacity: 0;
       transition: opacity .3s;
+      pointer-events: none;
     `;
     document.body.appendChild(notice);
 
@@ -86,3 +94,4 @@
   }
 
 })();
+
