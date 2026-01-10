@@ -33,8 +33,7 @@
   const btnCancel = document.getElementById("hb-btn-cancel");
 btnCancel &&
   btnCancel.addEventListener("click", () => {
-    location.href =
-  STORAGE_KEY === "habin_posts_en" ? "list.en.html" : "list.html";
+    location.href = window.HABIN_LIST_PAGE;
   });
   const toolbarBasic    = document.getElementById("hb-toolbar-basic");
   const toolbarAdvanced = document.getElementById("hb-toolbar-advanced");
