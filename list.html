@@ -56,8 +56,8 @@
 
   <script>
     /* 🔐 관리자 상태 읽기 (리스트 전용) ---아래 2줄로 중단, 시작처리 */
-    window.IS_ADMIN = localStorage.getItem("habin_admin") === "true";
-    document.body.classList.toggle("is-admin", window.IS_ADMIN);       
+   // window.IS_ADMIN = localStorage.getItem("habin_admin") === "true";  // 
+   // document.body.classList.toggle("is-admin", window.IS_ADMIN);       //
  
     /* 🗂 localStorage에서 글 목록 로드 */
     let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
