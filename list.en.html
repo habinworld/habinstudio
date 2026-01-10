@@ -167,7 +167,7 @@ if (posts[i].isNotice && i === 0) return;
 if (!posts[i].isNotice && i === noticeEnd + 1) return;
    
    [posts[i], posts[i - 1]] = [posts[i - 1], posts[i]];
-   localStorage.setItem("habin_posts", JSON.stringify(posts));
+   localStorage.setItem("habin_posts_en", JSON.stringify(posts));
    location.reload();
 }
 
@@ -181,13 +181,13 @@ if (posts[i].isNotice && i === noticeEnd) return;
 if (!posts[i].isNotice && i === posts.length - 1) return;
     
   [posts[i], posts[i + 1]] = [posts[i + 1], posts[i]];
-  localStorage.setItem("habin_posts", JSON.stringify(posts));
+  localStorage.setItem("habin_posts_en", JSON.stringify(posts));
   location.reload();
 }
  /*----공지 토글 (realIndex 기준)----*/
 function toggleNotice(i) {
   posts[i].isNotice = !posts[i].isNotice;
-  localStorage.setItem("habin_posts", JSON.stringify(posts));
+  localStorage.setItem("habin_posts_en", JSON.stringify(posts));
   location.reload();  
   }
   </script>
