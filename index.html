@@ -223,7 +223,6 @@ let noticePostsAll = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
 let notices = noticePostsAll
   .filter(p => p.isNotice)
-  .sort((a, b) => new Date(b.date) - new Date(a.date))
   .slice(0, 5);
 
 const noticeSection = document.getElementById("notice-section");
@@ -309,6 +308,7 @@ function initSidebarOnly() {
 
  </body>
 </html>
+
 
 
 
