@@ -95,7 +95,7 @@
 
       pagePosts.forEach((p, idx) => {
         const tr = document.createElement("tr");
-      
+      const realIndex = (currentPage - 1) * itemsPerPage + idx;
         tr.innerHTML = `
          <!-- ✅ 관리자 열 (번호 왼쪽) -->
 <td class="admin-only admin-actions" style="text-align:center; white-space:nowrap;">
@@ -103,14 +103,14 @@
           onclick="toggleNotice(${idx})">📌</button>
 
   <button title="위로 이동"
-          onclick="moveUp(${idx})">▲</button>
+          onclick="moveUp(${realIndex})">▲</button>
 
   <button title="아래로 이동"
-          onclick="moveDown(${idx})">▼</button>
+          onclick="moveDown(${realIndex})">▼</button>
 
   <button title="삭제"
           class="btn-del"
-          onclick="deletePost(${idx})">DEL</button>
+          onclick="deletePost(${realIndex})">DEL</button>
 </td>
           <!-- ✅리스트 배열....번호/작성자/제목/날짜 -->
           <td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
