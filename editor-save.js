@@ -5,7 +5,7 @@
 
 (function () {
  const POST_ID = window.POST_ID;
-
+const STORAGE_KEY = window.HABIN_STORAGE_KEY || "habin_posts";
   /* ============================
      DOM 요소
   ============================ */
@@ -57,8 +57,8 @@
      SAVE — 새 글
   ============================ */
   function saveNew() {
-    const posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-    posts.push(collectNewData());
+    const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+posts.push(collectNewData());
      
     localStorage.setItem("habin_posts", JSON.stringify(posts));
     setTimeout(() => {
