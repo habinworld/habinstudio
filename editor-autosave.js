@@ -4,8 +4,9 @@
 (function () {
 
   const AUTOSAVE_INTERVAL = 5000; // 5초
-  const DRAFT_KEY = "habin_autosave_draft";
-  const ALERT_KEY = "habin_autosave_alerted";
+  const BASE_KEY  = window.HABIN_STORAGE_KEY || "habin_posts";
+  const DRAFT_KEY = BASE_KEY + "_autosave_draft";
+  const ALERT_KEY = BASE_KEY + "_autosave_alerted";
 
   function initAutoSave() {
     const titleEl = document.getElementById("hb-title");
