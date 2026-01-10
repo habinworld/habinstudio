@@ -67,7 +67,9 @@
    // document.body.classList.toggle("is-admin", window.IS_ADMIN);       //
  
     /* 🗂 localStorage에서 글 목록 로드 */
-    let posts = JSON.parse(localStorage.getItem("habin_posts_en") || "[]");
+    let posts = JSON.parse(
+  localStorage.getItem(window.HABIN_STORAGE_KEY) || "[]"
+);
          const itemsPerPage = 8;
     let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
     currentPage = parseInt(currentPage, 8);
@@ -174,7 +176,10 @@ if (posts[i].isNotice && i === 0) return;
 if (!posts[i].isNotice && i === noticeEnd + 1) return;
    
    [posts[i], posts[i - 1]] = [posts[i - 1], posts[i]];
-   localStorage.setItem("habin_posts_en", JSON.stringify(posts));
+   localStorage.setItem(
+  window.HABIN_STORAGE_KEY,
+  JSON.stringify(posts)
+);
    location.reload();
 }
 
@@ -188,13 +193,19 @@ if (posts[i].isNotice && i === noticeEnd) return;
 if (!posts[i].isNotice && i === posts.length - 1) return;
     
   [posts[i], posts[i + 1]] = [posts[i + 1], posts[i]];
-  localStorage.setItem("habin_posts_en", JSON.stringify(posts));
+  localStorage.setItem(
+  window.HABIN_STORAGE_KEY,
+  JSON.stringify(posts)
+);
   location.reload();
 }
  /*----공지 토글 (realIndex 기준)----*/
 function toggleNotice(i) {
   posts[i].isNotice = !posts[i].isNotice;
-  localStorage.setItem("habin_posts_en", JSON.stringify(posts));
+  localStorage.setItem(
+  window.HABIN_STORAGE_KEY,
+  JSON.stringify(posts)
+);
   location.reload();  
   }
   </script>
