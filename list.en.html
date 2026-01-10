@@ -1,1 +1,310 @@
+<!doctype html>
+<html lang="kor">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
+<title>하빈 스튜디오 · 낮엔 정원, 밤엔 천문대</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="sidebar.css"> 
+<link rel="stylesheet" href="toolbar.css">
+<link rel="stylesheet" href="editor.css">
+<link rel="stylesheet" href="main-grid.css">
+
+ <style>
+    .main-page .main-board-header h2 {
+      font-size: 25px;
+      font-weight: 700;
+      margin: 0;
+    }
+  </style>
+ </head>
+<body class="main-page">
+<!-- 🔷 계절 입자 배경 -->
+<canvas id="season-canvas"></canvas>
+ 
+ <!-- 🔥 레이아웃 전담 래퍼 -->
+  <div id="layout">
+
+<div id="sidebar-container"></div>
+ 
+<!-- 🔷 메인 콘텐츠 -->
+  <main id="content">
+ <!-- 🔷 대문 인사 박스 -->
+  <div class="top-banner">
+    Ha-Bin Studio : 무인도에 나만의 마을을 짓다
+  </div>
+    
+   <!-- 🔷 탑메뉴 -->
+  <div class="top-menu">
+    <a href="list.html">📚 한글게시판</a>
+    <a href="#english">🌐 영어게시판</a>
+    <a href="#question">❓ 질문의 공간</a>
+    <a href="#forge">🔥⚒️ 대장간</a>
+    <a href="#gallery">🖼️ 갤러리</a>
+    <a href="#video">▶️ 동영상</a>
+    <a href="#notice">📢 공지사항</a>
+    <a href="#etc">🐢🚀 기타</a>
+  </div>
+   
+  <!-- ✅ 본문 시작 -->
+  <div class="content-inner"> 
+<div id="notice-section" style="margin-left:0; margin-top:25px; display:none;">
+  <h3 style="margin-left:10px; margin-bottom:10px; font-size:18px; font-weight:700; color:#9A3412;">
+    📢 공지사항
+    <span style="font-size:16px; color:#FACC15; margin-left:6px;">
+      (관리자 habinstudio@naver.com)
+    </span>
+  </h3>
+    <div id="notice-list"></div>
+  </div>
+ 
+   <!-- 리스트목록을 메인에 출력 -->
+   <div class="main-board-header">
+  <h2>/ 한글게시판 /</h2>
+  <a href="list.html" class="btn">전체보기</a>
+</div> 
+<table class="post-table">
+  <thead>
+    <tr>
+      <th style="width:60px;">번호</th>
+      <th style="width:120px;">작성자</th>
+      <th>제목</th>
+      <th style="width:150px;">날짜</th>
+    </tr>
+  </thead>
+  <tbody id="main-post-list"></tbody>
+</table>
+  <div id="pagination" class="pagination"></div> 
+  <div class="grid-floor">
+  <div id="current-exhibit" class="main-grid"></div>
+</div>
+ </div>
+  <!-- ✅ 본문 끝 -->
+   
+  </main>
+
+<!-- 🌞 푸터 -->
+<footer id="habin-footer">
+  <div class="footer-inner">
+
+    <div class="footer-line1">
+      <span class="ft-sub">© 2025 Ha-Bin Studio · All rights reserved.</span>
+      <span class="ft-sub">무단 전재·복제·배포 금지.</span>
+      <span class="ft-sub">Unauthorized reproduction or redistribution prohibited.</span>
+    </div>
+
+    <div class="footer-line2">
+      <span class="ft-star">✦</span>
+      <span class="ft-star">On my own</span>
+      <span class="ft-star">✦</span>
+      <span class="ft-star"><em>빛은 내 이름을 알고 있다.</em></span>
+      <span class="ft-star">“The light knows my name.”</span>
+      <span class="ft-hidden">Writing resonates in the mind.</span>
+    </div>
+
+  </div>
+</footer>
+
+<!-- 🔷 JS 모듈 -->
+<script src="particles.js"></script> 
+ <script>
+  // 🌱 4계절 판단 (index 전담)
+  function getSeason(m) {
+    if (m >= 3 && m <= 5) return 'spring';
+    if (m >= 6 && m <= 8) return 'summer';
+    if (m >= 9 && m <= 11) return 'autumn';
+    return 'winter';
+  }
+
+  const season = getSeason(new Date().getMonth() + 1);
+
+  // 🎨 계절 클래스 (CSS 전용)
+  document.body.classList.add(season);
+
+  // 🍃 계절 효과 (particles)
+  if (typeof startParticles === "function") {
+    startParticles(season);
+  }
+</script>  
+<script>
+  const hour = new Date().getHours();
+  document.body.classList.toggle('night', (hour >= 18 || hour < 6));
+</script> 
+ 
+<script src="weather.js"></script>
+<script src="datetime_clock.js"></script> 
+<script src="secret-gate.js"></script>  
+<script src="secret-toggle.js"></script>
+<script src="toolbar.js"></script> 
+<script src="date-utils.js"></script>
+<script src="main-grid.js"></script>   
+   
+<script>
+/* ===== 메인 한글게시판 JS 전체 ===== */
+let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+
+const itemsPerPage = 8;
+let currentPage = new URLSearchParams(location.search).get("page") || 1;
+currentPage = parseInt(currentPage, 8);
+if (!currentPage || currentPage < 1) currentPage = 1;
+
+function getCurrentPagePosts() {
+  const start = (currentPage - 1) * itemsPerPage;
+  return posts.slice(start, start + itemsPerPage);
+}
+
+/* 테이블 */
+function renderList() {
+  const tbody = document.getElementById("main-post-list");
+  const pagePosts = getCurrentPagePosts();
+  tbody.innerHTML = "";
+
+  if (pagePosts.length === 0) {
+    tbody.innerHTML =
+      `<tr><td colspan="4" class="empty">작성된 글이 없습니다.</td></tr>`;
+    return;
+  }
+
+  pagePosts.forEach((p, idx) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
+      <td>${p.writer || "하빈"}</td>
+      <td>
+        <a href="post.html?mode=view&id=${p.id}" class="title-link">
+          ${p.isNotice ? "📌 " : ""}${p.title}
+        </a>
+      </td>
+      <td>${formatDate(p.date)}</td>
+    `;
+    if (p.isNotice) tr.classList.add("notice-row");
+    tbody.appendChild(tr);
+  });
+}
+
+/* 페이지네이션 */
+function renderPagination() {
+  const totalPages = Math.ceil(posts.length / itemsPerPage);
+  const pag = document.getElementById("pagination");
+  pag.innerHTML = "";
+  if (totalPages <= 1) return;
+
+  if (currentPage > 1)
+    pag.innerHTML +=
+      `<a href="?page=${currentPage - 1}" class="page-btn">이전</a>`;
+
+  for (let i = 1; i <= totalPages; i++) {
+    pag.innerHTML +=
+      `<a href="?page=${i}" class="page-btn ${i === currentPage ? "active" : ""}">${i}</a>`;
+  }
+
+  if (currentPage < totalPages)
+    pag.innerHTML +=
+      `<a href="?page=${currentPage + 1}" class="page-btn">다음</a>`;
+}
+
+/* 그리드 */
+function renderGrid() {
+  if (typeof renderMainGrid === "function") {
+    renderMainGrid(getCurrentPagePosts());
+  }
+}
+
+renderList();
+renderPagination();
+renderGrid();
+</script>
+
+<!-- 🔔 공지글 5개만 메인에 표시 (촘촘 버전) -->
+<script>
+let noticePostsAll = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+
+let notices = noticePostsAll
+  .filter(p => p.isNotice)
+  .slice(0, 5);
+
+const noticeSection = document.getElementById("notice-section");
+const noticeList = document.getElementById("notice-list");
+
+if (notices.length > 0) {
+  noticeSection.style.display = "block";
+}
+
+noticeList.innerHTML = notices.map((n, i) => `
+  <div style="
+    padding: 4px 0;
+    font-size: 14px;
+    display:flex;
+    align-items:center;
+    cursor:pointer;
+  " onclick="location.href='post.html?mode=view&id=${n.id}'">
+
+    <span style="width:45px; text-align:center; color:#444;">
+      ${notices.length - i}
+    </span>
+
+     <span style="flex:1; font-weight:600; color:#444;">
+      ${n.title}
+    </span>
+
+    <span style="margin-left:auto; white-space:nowrap; color:#444;">
+  ${formatDate(n.date)}
+</span>
+
+  </div>
+`).join("");
+</script>
+
+ 
+<script>
+fetch("sidebar.html")
+  .then(res => res.text())
+  .then(html => {
+    const container = document.getElementById("sidebar-container");
+    if (!container) return;
+
+    /* 1️⃣ 사이드바 DOM 삽입 */
+    container.innerHTML = html;
+
+    /* 2️⃣ 사이드바 전용 기능 초기화 */
+    initSidebarOnly();
+  });
+
+function initSidebarOnly() {
+
+  /* ⏰ 날짜 / 시계 */
+  if (typeof startDateTimeClock === "function") {
+    startDateTimeClock();
+  }
+
+  /* 🌦 날씨 */
+  if (typeof startWeather === "function") {
+    startWeather();
+  }
+
+   /* 📂 접이식 메뉴 */
+  const menuToggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("sidebar-menu");
+
+  if (menuToggle && menu) {
+    menuToggle.onclick = () => {
+      menu.style.display =
+        menu.style.display === "block" ? "none" : "block";
+    };
+  }
+ 
+  /* 🔐 비밀문 (여기서 호출만!) */
+  if (typeof initSecretToggle === "function") {
+    initSecretToggle();
+  }
+  if (typeof initSecretGate === "function") {
+    initSecretGate();
+  }
+}
+</script>
+
+
+ </body>
+</html>
