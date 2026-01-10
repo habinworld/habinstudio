@@ -157,6 +157,13 @@
     renderList();
     renderPagination();
     renderGrid();
+    
+/* ===============================
+   📌 공지 영역 경계 계산 (여기에!)
+================================ */
+function getNoticeEndIndex() {
+  return posts.findLastIndex(p => p.isNotice);
+}
    /*----글 위래 이동  ▲ ▼ ----*/
    function moveUp(i) {
   if (i <= 0) return;
