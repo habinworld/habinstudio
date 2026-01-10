@@ -79,21 +79,27 @@ btnCancel &&
      VIEW — 보기
   ============================ */
   function modeView() {
-    const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    const post = posts.find(p => p.id === window.POST_ID);
-    post && (title.value = post.title || ""); 
-    editor.contentEditable = "false";
-    title.readOnly = true;
-  }
+  const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  const post = posts.find(p => p.id === window.POST_ID);
+
+  post && (
+    title.value = post.title || "",
+    editor.innerHTML = post.content || "",
+    window.ImageEngine && ImageEngine.renderAll()
+  );
+
+  editor.contentEditable = "false";
+  title.readOnly = true;
+}
 
   /* ============================
      MODE SWITCH
   ============================ */
   resetUI();
 
- mode === "new"  && modeNew();
-mode === "edit" && modeEdit();
-mode === "view" && modeView();
+  mode === "new"  && modeNew();
+  mode === "edit" && modeEdit();
+  mode === "view" && modeView();
 
 })();
 
