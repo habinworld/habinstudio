@@ -220,7 +220,21 @@ body.night #habin-footer {
 }  
 body.night #habin-footer .ft-hidden {
   color: #94A3B8;
-}   
+}  
+body.night .grid-item {
+  background: rgba(15, 23, 42, 0.92);
+  border-color: rgba(120,150,255,0.35);
+  color: #E5E7EB;
+}
+
+body.night .grid-item:hover {
+  border-color: #60A5FA;
+  box-shadow: 0 10px 26px rgba(80,120,255,0.25);
+}
+
+body.night .card-title { color:#F8FAFC; }
+body.night .card-preview { color:#CBD5E1; }
+body.night .card-meta { color:#9FB2FF; }
 .main-board-header {
   display: flex;
   align-items: center;
