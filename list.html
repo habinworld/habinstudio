@@ -234,18 +234,7 @@ function toggleNotice(i) {
   localStorage.setItem("habin_posts", JSON.stringify(posts));
   location.reload();  
   }
-  /* ===============================
-     📌 board 유지 링크 자동 보정 (추가)
-  =============================== */
-  (function () {
-    const board =
-      new URLSearchParams(location.search).get("board") || "kr";
-
-    document.querySelectorAll("[data-board-link]").forEach(el => {
-      el.href = el.dataset.boardLink + "?board=" + board;
-    });
-  })();
-  
+ 
   </script>
 
 </body>
