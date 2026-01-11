@@ -92,7 +92,7 @@ posts.push(collectNewData());
     localStorage.setItem(STORAGE_KEY, JSON.stringify(nextPosts));
     setTimeout(() => {
   alert("저장 완료");
-  location.href = window.HABIN_LIST_PAGE;
+  location.href = window.HABIN_LIST_PAGE + "?board=" + window.CURRENT_BOARD;
 }, 0);
   }
 
@@ -111,7 +111,7 @@ posts.push(collectNewData());
      posts = posts.filter(post => post.id !== POST_ID);
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-    location.href = window.HABIN_LIST_PAGE;
+    location.href = window.HABIN_LIST_PAGE + "?board=" + window.CURRENT_BOARD;
   }
     
   /* ============================
