@@ -82,11 +82,11 @@ btnCancel &&
   const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
   const post = posts.find(p => p.id === window.POST_ID);
 
-  post && (
-    title.value = post.title || "",
-    editor.innerHTML = post.content || "",
-    window.ImageEngine && ImageEngine.renderAll()
-  );
+  if (!post) return;
+
+  title.value = post.title || "";
+  editor.innerHTML = post.content || "";
+  window.ImageEngine && ImageEngine.renderAll();
 
   editor.contentEditable = "false";
   title.readOnly = true;
