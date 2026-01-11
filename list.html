@@ -64,7 +64,7 @@
    // window.IS_ADMIN = localStorage.getItem("habin_admin") === "true";  // 
    // document.body.classList.toggle("is-admin", window.IS_ADMIN);       //
 
-* 🧷 보드 결정 (URL → 기본값) */
+/* 🧷 보드 결정 (URL → 기본값) */
 const urlBoard = new URLSearchParams(location.search).get("board");
 const CURRENT_BOARD = urlBoard || window.HABIN_BOARD;
 
