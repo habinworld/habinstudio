@@ -239,9 +239,7 @@ function toggleNotice(i) {
   =============================== */
   (function () {
     const board =
-      new URLSearchParams(location.search).get("board")
-      || window.HABIN_BOARD
-      || "kr";
+      new URLSearchParams(location.search).get("board") || "kr";
 
     document.querySelectorAll("[data-board-link]").forEach(el => {
       el.href = el.dataset.boardLink + "?board=" + board;
