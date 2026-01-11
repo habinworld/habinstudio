@@ -90,10 +90,10 @@
   new URLSearchParams(location.search).get("board") || "kr";
 
 /* 🧷 PINSET — 공용 글쓰기 링크 보정 (10개 게시판 공통) */
-const btnNew = ddocument.getElementById("btn-new-post").setAttribute(
+document.getElementById("btn-new-post").setAttribute(
   "href",
-  "post.html?mode=new&board=" + window.CURRENT_BOARD);
-}
+  "post.html?mode=new&board=" + window.CURRENT_BOARD
+);
   
 /* 🧷 PINSET — 목록 링크 board 유지 (공용) */
 const btnList = document.getElementById("btn-list");
