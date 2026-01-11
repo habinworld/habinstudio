@@ -15,6 +15,8 @@
     const b = new URLSearchParams(location.search).get("board");
     return (!b || b === "undefined") ? "kr" : b;
   };  
+   /* 🔴 전역 보드 고정 (필수) */
+  window.CURRENT_BOARD = window.getBoardFromURL(); 
 </script>
   <!-- 공통 스타일 -->
   <link rel="stylesheet" href="style.css">
