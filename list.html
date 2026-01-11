@@ -60,8 +60,7 @@
   
   <script>
 (function () {
-  const board =
-    new URLSearchParams(location.search).get("board") || "kr";
+  const board = window.CURRENT_BOARD;
 
   const titleMap = {
     kr: "📚 한글 게시판",
