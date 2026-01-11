@@ -34,11 +34,9 @@ btnUpdate.addEventListener("click", () => {
 });
   const btnDelete = document.getElementById("hb-btn-delete");
   const btnCancel = document.getElementById("hb-btn-cancel");
+const btnCancel = document.getElementById("hb-btn-cancel");
 btnCancel &&
   btnCancel.addEventListener("click", () => {
-    const board =
-      new URLSearchParams(location.search).get("board") || "kr";
-
     location.href = window.HABIN_LIST_PAGE + "?board=" + board;
   });
   const toolbarBasic    = document.getElementById("hb-toolbar-basic");
