@@ -14,11 +14,10 @@
   /* 🌍 세계 기반 키 (핵심) */
   function getDraftKey() {
   const base = window.HABIN_STORAGE_KEY || "habin_posts";
-  const board = getBoardFromURL();   // 단일진실  
+  const board = getBoardFromURL();   // 단일 진실
   const id   = window.POST_ID ?? "new";
-  return `${base}_autosave_draft_${id}`;
+  return `${base}_autosave_draft_${board}_${id}`;
 }
-
   function initAutoSave() {
     const titleEl  = document.getElementById("hb-title");
     const editorEl = document.getElementById("hb-editor");
