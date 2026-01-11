@@ -45,6 +45,7 @@
   function collectNewData() {
     return {
       id: Date.now(),
+      board: window.CURRENT_BOARD,   // 🧷 이 한 줄 
       title: titleEl?.value.trim() || "제목 없음",
       writer: "하빈",
       content: normalizeContent(editorEl?.innerHTML || ""),
