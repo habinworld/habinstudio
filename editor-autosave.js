@@ -1,19 +1,20 @@
 /* ======================================================
-   editor-autosave.js / 2026.01.10
+   editor-autosave.js / 2026.01.11
    Ha-Bin Studio — Auto Save Engine (WORLD SAFE)
    - 한글/영어 세계 분리
-   - 10초 자동저장
+   - 5분마다 자동저장
    - 저장될 때마다 /자동저장/ 알림
    - 속도 영향 없음
 ====================================================== */
 (function () {
 
   /* ⏱ 자동저장 주기 */
-  const AUTOSAVE_INTERVAL = 10000; 
+  const AUTOSAVE_INTERVAL = 300000; // 5분
 
   /* 🌍 세계 기반 키 (핵심) */
   function getDraftKey() {
   const base = window.HABIN_STORAGE_KEY || "habin_posts";
+  const board = window.CURRENT_BOARD || "kr";   // 🧷 추가   
   const id   = window.POST_ID ?? "new";
   return `${base}_autosave_draft_${id}`;
 }
