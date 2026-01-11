@@ -3,13 +3,13 @@
    Ha-Bin Studio — Post Mode Switch
    mode: new | edit | view
 ---------------------------------------------------- */
-
 (function () {
   const params = new URLSearchParams(location.search);
   const STORAGE_KEY = window.HABIN_STORAGE_KEY;
 
   // 🧷 BOARD 결정 (단일 진실)
-  window.CURRENT_BOARD = urlBoard || window.CURRENT_BOARD || "kr";
+  const urlBoard = params.get("board");
+  window.CURRENT_BOARD = urlBoard || "kr";
    
  // 🔑 현재 글 ID (존재 / 비존재, if 없음)
   window.POST_ID = Number(params.get("id")) || null;
