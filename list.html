@@ -97,15 +97,13 @@ if (btnNew) {
   btnNew.href =
     "post.html?mode=new&board=" + window.CURRENT_BOARD;
 }
-</script>
-  <script>
+  
 /* 🧷 PINSET — 목록 링크 board 유지 (공용) */
 const btnList = document.getElementById("btn-list");
 if (btnList) {
   btnList.href =
     "list.html?board=" + window.CURRENT_BOARD;
 }
-</script>
 /* 🗂 localStorage에서 글 목록 로드 (전체) */
 const allPosts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
