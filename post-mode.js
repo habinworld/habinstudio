@@ -8,8 +8,8 @@
   const STORAGE_KEY = window.HABIN_STORAGE_KEY;
 
   // 🧷 BOARD 결정 (단일 진실)
-  const urlBoard = params.get("board");
-  window.CURRENT_BOARD = urlBoard || "kr";
+  const board =
+  new URLSearchParams(location.search).get("board") || "kr";
    
  // 🔑 현재 글 ID (존재 / 비존재, if 없음)
   window.POST_ID = Number(params.get("id")) || null;
