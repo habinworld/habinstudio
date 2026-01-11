@@ -31,13 +31,13 @@ btnUpdate.addEventListener("click", () => {
   if (!window.POST_ID) return;
 
   location.href =
-    `post.html?mode=edit&id=${window.POST_ID}&board=${window.CURRENT_BOARD}`;
+   `post.html?mode=edit&id=${window.POST_ID}&board=${window.CURRENT_BOARD}`;
 });
   const btnDelete = document.getElementById("hb-btn-delete");
   const btnCancel = document.getElementById("hb-btn-cancel");
 btnCancel &&
   btnCancel.addEventListener("click", () => {
-    location.href = window.HABIN_LIST_PAGE;
+    location.href = window.HABIN_LIST_PAGE + "?board=" + window.CURRENT_BOARD;
   });
   const toolbarBasic    = document.getElementById("hb-toolbar-basic");
   const toolbarAdvanced = document.getElementById("hb-toolbar-advanced");
