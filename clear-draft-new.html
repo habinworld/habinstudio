@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Clear Draft</title>
+</head>
+<body>
+<script>
+(function () {
+  const key = Object.keys(localStorage)
+    .find(k => k.includes("_autosave_draft_new"));
+  if (key) {
+    localStorage.removeItem(key);
+    alert("초안 1개 삭제 완료");
+  } else {
+    alert("삭제할 초안 없음");
+  }
+})();
+</script>
+</body>
+</html>
