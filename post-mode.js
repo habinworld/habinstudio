@@ -66,15 +66,11 @@ btnCancel &&
 
   const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
   const post = posts.find(p => p.id === window.POST_ID);
-  const noticeBox = document.getElementById("hb-notice");
-
-  // 👉 EDIT 1줄 흐름 (본문 → 이미지 → 공지)
+ 
+  // 👉 EDIT 1줄 흐름 (본문 → 이미지)
   post && (
   editor.innerHTML = post.content || "",
   window.ImageEngine && ImageEngine.renderAll(),
-  noticeBox && (noticeBox.style.display = "inline-block",  
-    noticeBox.checked = post.isNotice === true)
-);
 }
   /* ============================
      VIEW — 보기
