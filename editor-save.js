@@ -1,5 +1,5 @@
 /* ---------------------------------------------------
-   editor-save.js
+   editor-save.js / 2026.01.11
    Ha-Bin Studio — Save / Update Engine (CLEAN STABLE)
 ---------------------------------------------------- */
 
