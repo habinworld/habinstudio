@@ -47,8 +47,8 @@ function renderMainGrid(postList) {
     `;
 
     /* 5️⃣ 클릭 → 글 보기 (list와 100% 동일 규칙) */
-item.onclick = () => {
-  location.href =
+    item.onclick = () => {
+    location.href =
     `post.html?mode=view&id=${p.id}&board=${window.CURRENT_BOARD}`;
 };
 
