@@ -132,8 +132,8 @@
 (function () {
   const board =
     new URLSearchParams(location.search).get("board")
-    || window.HABIN_BOARD
-    || "kr";
+  || window.CURRENT_BOARD
+  || "kr";
 
   const btn = document.getElementById("btn-back-list");
   btn && (btn.href = "list.html?board=" + board);
