@@ -36,7 +36,10 @@ btnUpdate.addEventListener("click", () => {
   const btnCancel = document.getElementById("hb-btn-cancel");
 btnCancel &&
   btnCancel.addEventListener("click", () => {
-    location.href = window.HABIN_LIST_PAGE + "?board=" + window.CURRENT_BOARD;
+    const board =
+      new URLSearchParams(location.search).get("board") || "kr";
+
+    location.href = window.HABIN_LIST_PAGE + "?board=" + board;
   });
   const toolbarBasic    = document.getElementById("hb-toolbar-basic");
   const toolbarAdvanced = document.getElementById("hb-toolbar-advanced");
