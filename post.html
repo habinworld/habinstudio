@@ -8,16 +8,14 @@
   window.HABIN_STORAGE_KEY = "habin_posts"; 
   window.HABIN_LIST_PAGE = "list.html";
   window.HABIN_POST_PAGE = "post.html";
-  /* ===============================
-     🧷 BOARD 단일 진실 헬퍼
-     - null 차단
-     - "undefined" 문자열 차단
-  =============================== */
+  /* ===========================================================
+     🧷 BOARD 단일 진실 헬퍼 - null 차단- "undefined" 문자열 차단
+  ============================================================== */
   window.getBoardFromURL = function () {
     const b = new URLSearchParams(location.search).get("board");
     return (!b || b === "undefined") ? "kr" : b;
   }; 
-  /* 🔴🔴🔴 이 줄이 빠져 있었다 🔴🔴🔴 */
+  /* 🔴 전역 보드 고정 (필수) */
   window.CURRENT_BOARD = window.getBoardFromURL(); 
 </script>
   <!-- =============================
