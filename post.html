@@ -8,6 +8,15 @@
   window.HABIN_STORAGE_KEY = "habin_posts"; 
   window.HABIN_LIST_PAGE = "list.html";
   window.HABIN_POST_PAGE = "post.html";
+  /* ===============================
+     🧷 BOARD 단일 진실 헬퍼
+     - null 차단
+     - "undefined" 문자열 차단
+  =============================== */
+  window.getBoardFromURL = function () {
+    const b = new URLSearchParams(location.search).get("board");
+    return (!b || b === "undefined") ? "kr" : b;
+  }; 
 </script>
   <!-- =============================
        CSS 모듈 (Final Stable)
