@@ -128,27 +128,26 @@ let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
         tbody.appendChild(tr);
       });
     }
-      
-    /* 📌 페이지네이션 */
+   /* 📌 페이지네이션 */   
     function renderPagination() {
-      const totalPages = Math.ceil(posts.length / itemsPerPage);
-      const pag = document.getElementById("pagination");
-      pag.innerHTML = "";
+  const totalPages = Math.ceil(posts.length / itemsPerPage);
+  const pag = document.getElementById("pagination");
+  pag.innerHTML = "";
 
-      if (totalPages <= 1) return;
+  if (totalPages <= 1) return;
 
-      if (currentPage > 1) {
-        pag.innerHTML += `<a href="?page=${currentPage - 1}" class="page-btn">이전</a>`;
-      }
+  if (currentPage > 1) {
+    pag.innerHTML += `<a href="?board=${CURRENT_BOARD}&page=${currentPage - 1}" class="page-btn">이전</a>`;
+  }
 
-      for (let i = 1; i <= totalPages; i++) {
-        pag.innerHTML += `<a href="?page=${i}" class="page-btn ${i === currentPage ? "active" : ""}">${i}</a>`;
-      }
+  for (let i = 1; i <= totalPages; i++) {
+    pag.innerHTML += `<a href="?board=${CURRENT_BOARD}&page=${i}" class="page-btn ${i === currentPage ? "active" : ""}">${i}</a>`;
+  }
 
-      if (currentPage < totalPages) {
-        pag.innerHTML += `<a href="?page=${currentPage + 1}" class="page-btn">다음</a>`;
-      }
-    }
+  if (currentPage < totalPages) {
+    pag.innerHTML += `<a href="?board=${CURRENT_BOARD}&page=${currentPage + 1}" class="page-btn">다음</a>`;
+  }
+}
 
     /* 📌 카드뷰 렌더 (판단은 리스트, 출력만 그리드) */
     function renderGrid() {
