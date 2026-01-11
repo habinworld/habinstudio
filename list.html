@@ -210,9 +210,16 @@ let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
 function getNoticeEndIndex() {
   return posts.findLastIndex(p => p.isNotice);
 }
-   /*----글 위래 이동  ▲ ▼ ----*/
+   /*----글 위래(공용) 이동 ▲ ▼ ----*/
    function moveUp(i) {
-   const noticeEnd = getNoticeEndIndex();
+  const postId = posts[i].id;           // 현재 보드에서 클릭한 글
+  const idx = findIndexById(postId);    // 전체(allPosts) 기준 위치
+  if (idx <= 0) return;
+
+  [allPosts[idx], allPosts[idx - 1]] = [allPosts[idx - 1], allPosts[idx]];
+  saveAllPosts();
+  location.reload();
+}
 
 // 공지: 공지 영역 맨 위면 불가
 if (posts[i].isNotice && i === 0) return;
