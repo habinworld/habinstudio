@@ -61,9 +61,7 @@
   <script>
 (function () {
   const board =
-    new URLSearchParams(location.search).get("board")
-    || window.HABIN_BOARD
-    || "kr";
+    new URLSearchParams(location.search).get("board") || "kr";
 
   const titleMap = {
     kr: "📚 한글 게시판",
