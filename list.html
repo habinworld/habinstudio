@@ -63,13 +63,19 @@
     /* 🔐 관리자 상태 읽기 (리스트 전용) ---아래 2줄로 중단, 시작처리 */
    // window.IS_ADMIN = localStorage.getItem("habin_admin") === "true";  // 
    // document.body.classList.toggle("is-admin", window.IS_ADMIN);       //
- 
-    /* 🗂 localStorage에서 글 목록 로드 */
-    let posts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-         const itemsPerPage = 8;
-    let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
-    currentPage = parseInt(currentPage, 8);
-    if (!currentPage || currentPage < 1) currentPage = 1;
+
+* 🧷 보드 결정 (URL → 기본값) */
+const urlBoard = new URLSearchParams(location.search).get("board");
+const CURRENT_BOARD = urlBoard || window.HABIN_BOARD;
+
+/* 🗂 localStorage에서 글 목록 로드 (전체) */
+const allPosts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+
+/* 🗂 현재 보드 글만 추출 (안전 필터) */
+const posts = allPosts.filter(p => (p.board || "kr") === CURRENT_BOARD);
+
+const itemsPerPage = 8;
+let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
 
     /* 📌 현재 페이지 글 추출 (단일 진실) */
     function getCurrentPagePosts() {
