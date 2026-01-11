@@ -59,10 +59,14 @@
   <script src="main-grid.js"></script>
   
   <script>
-(function () {
-  const board = window.CURRENT_BOARD;
+    /* 🔴🧷 보드 결정 (URL → 기본값) */
+  window.CURRENT_BOARD =
+  new URLSearchParams(location.search).get("board") || "kr";
+  /* 🔴 제목 세팅 */
+    (function () {
+     const board = window.CURRENT_BOARD;
 
-  const titleMap = {
+    const titleMap = {
     kr: "📚 한글 게시판",
     en: "🌐 English Board",
     forge: "🔥⚒️ 대장간",
@@ -83,10 +87,6 @@
     /* 🔐 관리자 상태 읽기 (리스트 전용) ---아래 2줄로 중단, 시작처리 */
    // window.IS_ADMIN = localStorage.getItem("habin_admin") === "true";  // 
    // document.body.classList.toggle("is-admin", window.IS_ADMIN);       //
-
-/* 🧷 보드 결정 (URL → 기본값) */
-  window.CURRENT_BOARD =
-  new URLSearchParams(location.search).get("board") || "kr";
 
 /* 🧷 PINSET — 공용 글쓰기 링크 보정 (10개 게시판 공통) */
 document.getElementById("btn-new-post").setAttribute(
