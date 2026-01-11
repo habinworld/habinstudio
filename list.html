@@ -58,7 +58,27 @@
 
   <!-- 카드뷰 엔진 -->
   <script src="main-grid.js"></script>
+  /* 🧭 게시판 제목 자동 변경 */
+  <script>
+(function () {
+  const board =
+    new URLSearchParams(location.search).get("board")
+    || window.HABIN_BOARD
+    || "kr";
 
+  const titleMap = {
+    kr: "📚 한글 게시판",
+    en: "🌐 English Board",
+    forge: "🔥⚒️ 대장간",
+    qna: "❓ 질문의 공간"
+  };
+
+  const titleEl = document.getElementById("board-title");
+  if (titleEl && titleMap[board]) {
+    titleEl.textContent = titleMap[board];
+  }
+})();
+</script>
   <script>
     /* 🔐 관리자 상태 읽기 (리스트 전용) ---아래 2줄로 중단, 시작처리 */
    // window.IS_ADMIN = localStorage.getItem("habin_admin") === "true";  // 
