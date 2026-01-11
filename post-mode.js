@@ -66,11 +66,11 @@ btnCancel &&
 
   const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
   const post = posts.find(p => p.id === window.POST_ID);
- 
-  // 👉 EDIT 1줄 흐름 (본문 → 이미지)
-  post && (
-  editor.innerHTML = post.content || "",
-  window.ImageEngine && ImageEngine.renderAll(),
+
+  if (!post) return;
+
+  editor.innerHTML = post.content || "";
+  window.ImageEngine && ImageEngine.renderAll();
 }
   /* ============================
      VIEW — 보기
