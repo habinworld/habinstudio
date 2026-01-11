@@ -168,7 +168,7 @@ let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
           <td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
           <td>${p.writer || "하빈"}</td>
           <td>
-            <a href="post.html?mode=view&id=${p.id}&board=${window.CURRENT_BOARD}"
+            <a href="post.html?mode=view&id=${p.id}&board=${getBoardFromURL()}"
               class="title-link">
               ${p.isNotice ? "📌 " : ""}${p.title}
             </a>
