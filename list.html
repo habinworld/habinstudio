@@ -263,7 +263,18 @@ function toggleNotice(i) {
   saveAllPosts();
   location.reload();
 }
- 
+ /*----글 삭제 DEL (공용)----*/
+function deletePost(i) {
+  const postId = posts[i].id;        // 현재 보드에서 선택한 글
+  const idx = findIndexById(postId); // 전체(allPosts) 기준 위치
+  if (idx === -1) return;
+
+  if (!confirm("정말 삭제하시겠습니까?")) return;
+
+  allPosts.splice(idx, 1);           // 전체 배열에서 삭제
+  saveAllPosts();                    // ❗ posts 저장 금지
+  location.reload();
+}
   </script>
 
 </body>
