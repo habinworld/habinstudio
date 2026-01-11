@@ -232,8 +232,16 @@ if (!posts[i].isNotice && i === noticeEnd + 1) return;
    location.reload();
 }
 
+/*----글 아래로 이동 ▼ (공용)----*/
 function moveDown(i) {
-const noticeEnd = getNoticeEndIndex();
+  const postId = posts[i].id;           // 현재 보드에서 클릭한 글
+  const idx = findIndexById(postId);    // 전체(allPosts) 기준 위치
+  if (idx === -1 || idx >= allPosts.length - 1) return;
+
+  [allPosts[idx], allPosts[idx + 1]] = [allPosts[idx + 1], allPosts[idx]];
+  saveAllPosts();
+  location.reload();
+}
 
 // 공지: 공지 영역 맨 아래면 불가
 if (posts[i].isNotice && i === noticeEnd) return;
