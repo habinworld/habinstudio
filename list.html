@@ -96,16 +96,17 @@
    // document.body.classList.toggle("is-admin", window.IS_ADMIN);       //
 
 /* 🧷 PINSET — 공용 글쓰기 링크 보정 (10개 게시판 공통) */
+    const board = getBoardFromURL();
 document.getElementById("btn-new-post").setAttribute(
   "href",
-  "post.html?mode=new&board=" + window.CURRENT_BOARD
+  "post.html?mode=new&board=" + board
 );
   
 /* 🧷 PINSET — 목록 링크 board 유지 (공용) */
 const btnList = document.getElementById("btn-list");
 if (btnList) {
   btnList.href =
-    "list.html?board=" + window.CURRENT_BOARD;
+    "list.html?board=" + board;
 }
    
 /* 🗂 localStorage에서 글 목록 로드 (전체) */
