@@ -14,7 +14,7 @@
   /* 🌍 세계 기반 키 (핵심) */
   function getDraftKey() {
   const base = window.HABIN_STORAGE_KEY || "habin_posts";
-  const board = getBoardFromURL();   // 🧷 추가   
+  const board = getBoardFromURL();   // 단일진실  
   const id   = window.POST_ID ?? "new";
   return `${base}_autosave_draft_${id}`;
 }
