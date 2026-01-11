@@ -17,6 +17,8 @@
     const b = new URLSearchParams(location.search).get("board");
     return (!b || b === "undefined") ? "kr" : b;
   }; 
+  /* 🔴🔴🔴 이 줄이 빠져 있었다 🔴🔴🔴 */
+  window.CURRENT_BOARD = window.getBoardFromURL(); 
 </script>
   <!-- =============================
        CSS 모듈 (Final Stable)
