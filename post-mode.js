@@ -24,14 +24,14 @@
   // 요소 참조
   const editor = document.getElementById("hb-editor");
   const title  = document.getElementById("hb-title");
- // const btnSave   = document.getElementById("hb-btn-save");----삭제예정
-  const btnUpdate = document.getElementById("hb-btn-update");
-  btnUpdate &&
-  btnUpdate.addEventListener("click", () => {
+   
+ const btnUpdate = document.getElementById("hb-btn-update");
+btnUpdate &&
+btnUpdate.addEventListener("click", () => {
   if (!window.POST_ID) return;
-   const postPage =
-    STORAGE_KEY === "habin_posts_en" ? "post.en.html" : "post.html";
-   location.href = `${postPage}?mode=edit&id=${window.POST_ID}`;
+
+  location.href =
+    `post.html?mode=edit&id=${window.POST_ID}&board=${window.CURRENT_BOARD}`;
 });
   const btnDelete = document.getElementById("hb-btn-delete");
   const btnCancel = document.getElementById("hb-btn-cancel");
