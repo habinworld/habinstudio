@@ -64,7 +64,7 @@ posts.push(collectNewData());
     localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
     setTimeout(() => {
   alert("저장 완료");
-  location.href = window.HABIN_LIST_PAGE;
+  location.href = window.HABIN_LIST_PAGE + "?board=" + window.CURRENT_BOARD;
 }, 0);
 }
   /* ============================
