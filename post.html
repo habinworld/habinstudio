@@ -126,7 +126,20 @@
   }
 </script>  
 <script src="editor-autosave.js"></script> 
-  
+<script>
+/* ===============================
+   📌 목록 버튼 board 유지 (post.html)
+=============================== */
+(function () {
+  const board =
+    new URLSearchParams(location.search).get("board")
+    || window.HABIN_BOARD
+    || "kr";
+
+  const btn = document.getElementById("btn-back-list");
+  btn && (btn.href = "list.html?board=" + board);
+})();
+</script>  
 </body>
 </html>
 
