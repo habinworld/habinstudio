@@ -90,7 +90,22 @@
 /* 🧷 보드 결정 (URL → 기본값) */
   window.CURRENT_BOARD =
   new URLSearchParams(location.search).get("board") || "kr";
-
+<script>
+/* 🧷 PINSET — 공용 글쓰기 링크 보정 (10개 게시판 공통) */
+const btnNew = document.getElementById("btn-new-post");
+if (btnNew) {
+  btnNew.href =
+    "post.html?mode=new&board=" + window.CURRENT_BOARD;
+}
+</script>
+  <script>
+/* 🧷 PINSET — 목록 링크 board 유지 (공용) */
+const btnList = document.getElementById("btn-list");
+if (btnList) {
+  btnList.href =
+    "list.html?board=" + window.CURRENT_BOARD;
+}
+</script>
 /* 🗂 localStorage에서 글 목록 로드 (전체) */
 const allPosts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
