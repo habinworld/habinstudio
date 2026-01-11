@@ -4,8 +4,9 @@
 ---------------------------------------------------- */
 
 (function () {
- const POST_ID = window.POST_ID;
- const STORAGE_KEY = window.HABIN_STORAGE_KEY;
+  const POST_ID = window.POST_ID;
+  const STORAGE_KEY = window.HABIN_STORAGE_KEY;
+  const CURRENT_BOARD = getBoardFromURL();  
   /* ============================
      DOM 요소
   ============================ */
