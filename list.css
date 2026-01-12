@@ -159,7 +159,22 @@ body.is-admin .admin-only{
       color: #fff;
       border-color: #3558A8;
     }
+ .pagination a {
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #9fb0d9;
+  color: #3558A8;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+}
 
+.pagination a.active {
+  background: #3558A8;
+  color: #fff;
+  border-color: #3558A8;
+}
   /* ----카드뷰 영역 --- */
     .grid-floor {
       margin-top: 28px;
