@@ -147,8 +147,7 @@ body.is-admin .admin-only{
   cursor: pointer;
   margin: 0 0.2px;
   vertical-align: middle;
-  width: auto;
-  min-width: 20px;  /* 🔑 가로폭 제한 */ 
+  width: 20px;  /* 🔑 가로폭 제한 */ 
 }
 
 .admin-actions select:hover {
