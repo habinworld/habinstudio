@@ -202,8 +202,9 @@ function renderPagination() {
   }
 
   if (currentPage < totalPages) {
-    pag.innerHTML += `<a href="?board=${CURRENT_BOARD}&page=${i}" class="page-btn ${i === currentPage ? "active" : ""}">${i}</a>`;
-  }
+  pag.innerHTML +=
+    `<a href="?board=${CURRENT_BOARD}&page=${currentPage + 1}" class="page-btn">다음</a>`;
+}
 }
 
 /* ===============================
