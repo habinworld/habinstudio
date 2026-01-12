@@ -99,9 +99,9 @@ document.body.classList.toggle("is-admin", window.IS_ADMIN);
    🔗 TOP LINKS
 =============================== */
 document.getElementById("btn-new-post").href =
-  "post.html?mode=new&board=" + board;
+  "post.html?mode=new&board=" + CURRENT_BOARD;
 const btnList =document.getElementById("btn-list");
- if (btnList) {btnList.href= "list.html?board=" + board;}
+ if (btnList) {btnList.href= "list.html?board=" + CURRENT_BOARD;}
 
 /* ===============================
    📦 LOAD DATA
