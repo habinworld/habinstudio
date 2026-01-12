@@ -74,7 +74,7 @@ body.winter  { --bgmain: #FF6FA6; }
 .top-banner {
   width: 100%;
   height: 85px;
-  background: #2F2D63 /* 원래는 #26214F */
+  background: #2F2D63; /* 원래는 #26214F */
   color: #FFFFFF;
 
   display: flex;
