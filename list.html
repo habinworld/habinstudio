@@ -4,73 +4,424 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>하빈 스튜디오 · 게시판 목록</title>
-  <script>
-  window.HABIN_STORAGE_KEY = "habin_posts"; 
-  window.HABIN_LIST_PAGE = "list.html";
-  window.HABIN_POST_PAGE = "post.html";
-  /* ===============================
-     🧷 BOARD 단일 진실 헬퍼 (undefined 차단)
-  =============================== */
-  window.getBoardFromURL = function () {
-    const b = new URLSearchParams(location.search).get("board");
-    return (!b || b === "undefined") ? "kr" : b;
-  };  
-   /* 🔴 전역 보드 고정 (필수) */
-  window.CURRENT_BOARD = window.getBoardFromURL(); 
-</script>
-  <!-- 공통 스타일 -->
-  <link rel="stylesheet" href="style.css">
 
-  <!-- ✅ 카드뷰(그리드) 스타일 -->
+  <!-- ===============================
+       GLOBAL CONSTANTS + BOARD HELPER
+  =============================== -->
+  <script>
+    window.HABIN_STORAGE_KEY = "habin_posts";
+    window.HABIN_LIST_PAGE   = "list.html";
+    window.HABIN_POST_PAGE   = "post.html";
+
+    /* 🧷 BOARD 단일 진실 */
+    window.getBoardFromURL = function () {
+      const b = new URLSearchParams(location.search).get("board");
+      return (!b || b === "undefined") ? "kr" : b;
+    };
+
+    window.CURRENT_BOARD = window.getBoardFromURL();
+  </script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="list.css">
   <link rel="stylesheet" href="main-grid.css">
-  <link rel="stylesheet" href="list.css"> 
- 
 </head>
 
 <body class="list-page">
 
-  <!-- 날짜 유틸 -->
-  <script src="date-utils.js"></script>
+<script src="date-utils.js"></script>
 
-  <div class="page-container">
-    <h1 class="page-title" id="board-title">📚 한글 게시판</h1>
+<div class="page-container">
 
-    <div class="top-buttons">
-     <a id="btn-new-post" class="btn">글쓰기</a>
-      <a id="btn-list" class="btn">목록</a>
-      <a href="index.html" class="btn">메인</a>
-    </div>
+  <h1 class="page-title" id="board-title"></h1>
 
-    <!-- ===================== 테이블 ===================== -->
-    <table class="post-table">
-      <thead>
-        <tr>
-          <th class="admin-only" style="width:120px;">관리</th> <!-- ✅ 맨 앞 -->
-          <th style="width:60px;">번호</th>
-          <th style="width:120px;">작성자</th>
-          <th>제목</th>
-          <th style="width:150px;">날짜</th>
-        </tr>
-      </thead>
-      <tbody id="post-list"></tbody>
-    </table>
-
-    <!-- ===================== 페이지네이션 ===================== -->
-    <div id="pagination" class="pagination"></div>
-
-    <!-- ===================== 카드뷰(그리드) ===================== -->
-    <div class="grid-floor">
-      <div id="current-exhibit" class="main-grid"></div>
-    </div>
+  <div class="top-buttons">
+    <a id="btn-new-post" class="btn">글쓰기</a>
+    <a id="btn-list" class="btn">목록</a>
+    <a href="index.html" class="btn">메인</a>
   </div>
 
-  <!-- 카드뷰 엔진 -->
-  <script src="main-grid.js"></script>
-  
-  <script>
-    /* 🔴🧷 보드 결정 (URL → 기본값) */
-  window.CURRENT_BOARD =
-  new URLSearchParams(location.search).get("board") || "kr";
+  <!-- ===================== TABLE ===================== -->
+  <table class="post-table">
+    <thead>
+      <tr>
+        <th class="admin-only" style="width:160px;">관리</th>
+        <th style="width:60px;">번호</th>
+        <th style="width:120px;">작성자</th>
+        <th>제목</th>
+        <th style="width:150px;">날짜</th>
+      </tr>
+    </thead>
+    <tbody id="post-list"></tbody>
+  </table>
+
+  <div id="pagination" class="pagination"></div>
+
+  <!-- ===================== GRID ===================== -->
+  <div class="grid-floor">
+    <div id="current-exhibit" class="main-grid"></div>
+  </div>
+
+</div>
+
+<script src="main-grid.js"></script>
+
+<script>
+/* ===============================
+   🔐 ADMIN MODE
+=============================== */
+window.IS_ADMIN = localStorage.getItem("habin_admin") === "true";
+document.body.classList.toggle("is-admin", window.IS_ADMIN);
+
+/* ===============================
+   🔗 TOP LINKS
+=============================== */
+const board = getBoardFromURL();
+document.getElementById("btn-new-post").href =
+  "post.html?mode=new&board=" + board;
+
+document.getElementById("btn-list").href =
+  "list.html?board=" + board;
+
+/* ===============================
+   📦 LOAD DATA
+=============================== */
+const allPosts = JSON.parse(localStorage.getItem(HABIN_STORAGE_KEY) || "[]");
+const posts = allPosts.filter(p => (p.board || "kr") === CURRENT_BOARD);
+window.posts = posts; // 관리자 액션용
+
+/* ===============================
+   🔧 HELPERS
+=============================== */
+function saveAllPosts() {
+  localStorage.setItem(HABIN_STORAGE_KEY, JSON.stringify(allPosts));
+}
+function findIndexById(id) {
+  return allPosts.findIndex(p => p.id === id);
+}
+
+/* ===============================
+   📄 PAGINATION
+=============================== */
+const itemsPerPage = 8;
+let currentPage = Number(new URLSearchParams(location.search).get("page")) || 1;
+
+function getCurrentPagePosts() {
+  const start = (currentPage - 1) * itemsPerPage;
+  return posts.slice(start, start + itemsPerPage);
+}
+
+/* ===============================
+   🧾 RENDER LIST
+=============================== */
+function renderList() {
+  const tbody = document.getElementById("post-list");
+  tbody.innerHTML = "";
+
+  const pagePosts = getCurrentPagePosts();
+  if (!pagePosts.length) {
+    tbody.innerHTML =
+      `<tr><td colspan="5" class="empty">작성된 글이 없습니다.</td></tr>`;
+    return;
+  }
+
+  pagePosts.forEach((p, idx) => {
+    const realIndex = (currentPage - 1) * itemsPerPage + idx;
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+<td class="admin-only admin-actions">
+  <select onchange="moveBoard(${realIndex}, this.value)">
+    <option value="">이동</option>
+    <option value="kr">한글</option>
+    <option value="en">English</option>
+    <option value="forge">대장간</option>
+    <option value="studio">✨ Studio</option>
+    <option value="etc">기타</option>
+  </select>
+</td>
+
+<td>${posts.length - realIndex}</td>
+<td>${p.writer || "하빈"}</td>
+<td>
+  <a class="title-link"
+     href="post.html?mode=view&id=${p.id}&board=${board}">
+     ${p.isNotice ? "📌 " : ""}${p.title}
+  </a>
+</td>
+<td>${formatDate(p.date)}</td>
+`;
+
+    if (p.isNotice) tr.classList.add("notice-row");
+    tbody.appendChild(tr);
+  });
+}
+
+/* ===============================
+   🔁 PAGINATION UI
+=============================== */
+function renderPagination() {
+  const pag = document.getElementById("pagination");
+  pag.innerHTML = "";
+
+  const totalPages = Math.ceil(posts.length / itemsPerPage);
+  if (totalPages <= 1) return;
+
+  if (currentPage > 1) {
+    pag.innerHTML += `<a href="?board=${board}&page=${currentPage-1}">이전</a>`;
+  }
+
+  for (let i = 1; i <= totalPages; i++) {
+    pag.innerHTML +=
+      `<a href="?board=${board}&page=${i}"
+        class="${i === currentPage ? "active" : ""}">${i}</a>`;
+  }
+
+  if (currentPage < totalPages) {
+    pag.innerHTML += `<a href="?board=${board}&page=${currentPage+1}">다음</a>`;
+  }
+}
+
+/* ===============================
+   🧱 GRID
+=============================== */
+function renderGrid() {
+  window.renderMainGrid &&
+  renderMainGrid(getCurrentPagePosts());
+}
+
+/* ===============================
+   🔁 BOARD MOVE (ADMIN)
+=============================== */
+function moveBoard(i, targetBoard) {
+  if (!targetBoard) return;
+  const postId = posts[i].id;
+  const idx = findIndexById(postId);
+  if (idx === -1) return;
+
+  allPosts[idx].board = targetBoard;
+  saveAllPosts();
+  location.reload();
+}
+
+/* ===============================
+   🚀 INIT
+=============================== */
+renderList();
+renderPagination();
+renderGrid();
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /* 🔴 제목 세팅 */
     (function () {
      const board = window.CURRENT_BOARD;
@@ -92,183 +443,7 @@
   }
 })();
 </script>
-  <script>
-    /* 🔐 관리자 상태 읽기 (리스트 전용) ---아래 2줄로 중단, 시작처리 */
-   window.IS_ADMIN = localStorage.getItem("habin_admin") === "true";   
-   document.body.classList.toggle("is-admin", window.IS_ADMIN);       
-
-/* 🧷 PINSET — 공용 글쓰기 링크 보정 (10개 게시판 공통) */
-    const board = getBoardFromURL();
-document.getElementById("btn-new-post").setAttribute(
-  "href",
-  "post.html?mode=new&board=" + board
-);
-  
-/* 🧷 PINSET — 목록 링크 board 유지 (공용) */
-const btnList = document.getElementById("btn-list");
-if (btnList) {
-  btnList.href =
-    "list.html?board=" + board;
-}
-   
-/* 🗂 localStorage에서 글 목록 로드 (전체) */
-const allPosts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-
-/* 🗂 현재 보드 글만 추출 (안전 필터) */
-const posts = allPosts.filter(p => (p.board || "kr") === CURRENT_BOARD);
-    
-/* ===============================
-   🔧 공용 저장 헬퍼 (SINGLE SOURCE OF TRUTH)
-================================ */
-function saveAllPosts() {
-  localStorage.setItem("habin_posts", JSON.stringify(allPosts));
-}
-
-function findIndexById(id) {
-  return allPosts.findIndex(p => p.id === id);
-}
-const itemsPerPage = 8;
-let currentPage = new URLSearchParams(window.location.search).get("page") || 1;
-
-    /* 📌 현재 페이지 글 추출 (단일 진실) */
-    function getCurrentPagePosts() {
-      const start = (currentPage - 1) * itemsPerPage;
-      return posts.slice(start, start + itemsPerPage);
-    }
-
-    /* 📌 테이블 렌더 */
-    function renderList() {
-      const pagePosts = getCurrentPagePosts();
-      const tbody = document.getElementById("post-list");
-      tbody.innerHTML = "";
-
-      if (pagePosts.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="empty">작성된 글이 없습니다.</td></tr>`;
-        return;
-      }
-
-      pagePosts.forEach((p, idx) => {
-        const tr = document.createElement("tr");
-      const realIndex = (currentPage - 1) * itemsPerPage + idx;
-        tr.innerHTML = `
-         <!-- ✅ 관리자 열 (번호 왼쪽) -->
-<td class="admin-only admin-actions" style="text-align:center; white-space:nowrap;">
-  <button title="공지"
-          onclick="toggleNotice(${realIndex})">📌</button>
-
-  <button title="위로 이동"
-          onclick="moveUp(${realIndex})">▲</button>
-
-  <button title="아래로 이동"
-          onclick="moveDown(${realIndex})">▼</button>
-
-  <button title="삭제"
-          class="btn-del"
-          onclick="deletePost(${realIndex})">DEL</button>
-</td>
-          <!-- ✅리스트 배열....번호/작성자/제목/날짜 -->
-          <td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
-          <td>${p.writer || "하빈"}</td>
-          <td>
-            <a href="post.html?mode=view&id=${p.id}&board=${getBoardFromURL()}"
-              class="title-link">
-              ${p.isNotice ? "📌 " : ""}${p.title}
-            </a>
-          </td>
-          <td>${formatDate(p.date)}</td>
-        `;
-
-        if (p.isNotice) tr.classList.add("notice-row");
-        tbody.appendChild(tr);
-      });
-    }
-   /* 📌 페이지네이션 */   
-    function renderPagination() {
-  const totalPages = Math.ceil(posts.length / itemsPerPage);
-  const pag = document.getElementById("pagination");
-  pag.innerHTML = "";
-
-  if (totalPages <= 1) return;
-
-  if (currentPage > 1) {
-    pag.innerHTML += `<a href="?board=${CURRENT_BOARD}&page=${currentPage - 1}" class="page-btn">이전</a>`;
-  }
-
-  for (let i = 1; i <= totalPages; i++) {
-    pag.innerHTML += `<a href="?board=${CURRENT_BOARD}&page=${i}" class="page-btn ${i === currentPage ? "active" : ""}">${i}</a>`;
-  }
-
-  if (currentPage < totalPages) {
-    pag.innerHTML += `<a href="?board=${CURRENT_BOARD}&page=${currentPage + 1}" class="page-btn">다음</a>`;
-  }
-}
-
-    /* 📌 카드뷰 렌더 (판단은 리스트, 출력만 그리드) */
-    function renderGrid() {
-      if (typeof renderMainGrid === "function") {
-        renderMainGrid(getCurrentPagePosts());
-      }
-    }
-
-    renderList();
-    renderPagination();
-    renderGrid();
-    
-/* ===============================
-   📌 공지 영역 경계 계산 (여기에!)
-================================ */
-function getNoticeEndIndex() {
-  return posts.findLastIndex(p => p.isNotice);
-}
-   /*----글 위래(공용) 이동 ▲ ▼ ----*/
-   function moveUp(i) {
-  const postId = posts[i].id;           // 현재 보드에서 클릭한 글
-  const idx = findIndexById(postId);    // 전체(allPosts) 기준 위치
-  if (idx <= 0) return;
-
-  [allPosts[idx], allPosts[idx - 1]] = [allPosts[idx - 1], allPosts[idx]];
-  saveAllPosts();
-  location.reload();
-}
-
-/*----글 아래로 이동 ▼ (공용)----*/
-function moveDown(i) {
-  const postId = posts[i].id;           // 현재 보드에서 클릭한 글
-  const idx = findIndexById(postId);    // 전체(allPosts) 기준 위치
-  if (idx === -1 || idx >= allPosts.length - 1) return;
-
-  [allPosts[idx], allPosts[idx + 1]] = [allPosts[idx + 1], allPosts[idx]];
-  saveAllPosts();
-  location.reload();
-}
-
-/*----공지 토글 📌 (공용)----*/
-function toggleNotice(i) {
-  const postId = posts[i].id;        // 현재 보드 글
-  const idx = findIndexById(postId); // 전체 기준 위치
-  if (idx === -1) return;
-
-  allPosts[idx].isNotice = !allPosts[idx].isNotice;
-  saveAllPosts();
-  location.reload();
-}
- /*----글 삭제 DEL (공용)----*/
-function deletePost(i) {
-  const postId = posts[i].id;        // 현재 보드에서 선택한 글
-  const idx = findIndexById(postId); // 전체(allPosts) 기준 위치
-  if (idx === -1) return;
-
-  if (!confirm("정말 삭제하시겠습니까?")) return;
-
-  allPosts.splice(idx, 1);           // 전체 배열에서 삭제
-  saveAllPosts();                    // ❗ posts 저장 금지
-  location.reload();
-}
-  </script>
-
-</body>
-</html>
-
+ 
   
 
 
