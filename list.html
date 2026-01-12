@@ -195,7 +195,7 @@ function renderPagination() {
   if (totalPages <= 1) return;
 
   if (currentPage > 1) {
-    pag.innerHTML += `<a href="?board=${board}&page=${currentPage-1}">이전</a>`;
+    pag.innerHTML += `<a href="?board=${CURRENT_BOARD}&page=${currentPage - 1}" class="page-btn">이전</a>`;
   }
 
   for (let i = 1; i <= totalPages; i++) {
