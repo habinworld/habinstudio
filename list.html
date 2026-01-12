@@ -73,8 +73,33 @@
 =============================== */
 window.IS_ADMIN = localStorage.getItem("habin_admin") === "true";
 document.body.classList.toggle("is-admin", window.IS_ADMIN);
+ /*  보드 결정 (URL → 기본값) */
+  window.CURRENT_BOARD =
+  new URLSearchParams(location.search).get("board") || "kr";
+  /* 제목 세팅 */
+    (function () {
+     const board = window.CURRENT_BOARD;
+     (function () {
+     const board = window.CURRENT_BOARD;
 
-/* ===============================
+    const titleMap = {
+    kr: "📚 한글 게시판",
+    en: "🌐 English Board",
+    forge: "🔥⚒️ 대장간",
+    qna: "❓ 질문의 공간",
+    gallery: "🖼️ 갤러리",
+    video: "▶️ 동영상",
+    notice: "📢 공지사항",
+    etc: "🐢🚀 기타"
+  };
+
+  const titleEl = document.getElementById("board-title");
+  if (titleEl && titleMap[board]) {
+    titleEl.textContent = titleMap[board];
+  }
+})(); 
+      
+  /* ===============================
    🔗 TOP LINKS
 =============================== */
 const board = getBoardFromURL();
@@ -215,29 +240,6 @@ renderGrid();
 
 </body>
 </html>
-
-
-/* 🔴 제목 세팅 */
-    (function () {
-     const board = window.CURRENT_BOARD;
-
-    const titleMap = {
-    kr: "📚 한글 게시판",
-    en: "🌐 English Board",
-    forge: "🔥⚒️ 대장간",
-    qna: "❓ 질문의 공간",
-    gallery: "🖼️ 갤러리",
-    video: "▶️ 동영상",
-    notice: "📢 공지사항",
-    etc: "🐢🚀 기타"
-  };
-
-  const titleEl = document.getElementById("board-title");
-  if (titleEl && titleMap[board]) {
-    titleEl.textContent = titleMap[board];
-  }
-})();
-</script>
 
 
 
