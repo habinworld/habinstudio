@@ -148,9 +148,10 @@ function renderList() {
   pagePosts.forEach((p, idx) => {
     const realIndex = (currentPage - 1) * itemsPerPage + idx;
     const tr = document.createElement("tr");
-
-    tr.innerHTML = `
-<td class="admin-only admin-actions">
+    
+tr.innerHTML = `
+<td class="admin-only admin-actions" style="text-align:center; white-space:nowrap;">
+  <!------------ 📦 게시판 이동--------- -->
   <select onchange="moveBoard(${realIndex}, this.value)">
     <option value="">이동</option>
     <option value="kr">한글</option>
@@ -159,6 +160,19 @@ function renderList() {
     <option value="studio">✨ Studio</option>
     <option value="etc">기타</option>
   </select>
+   <!-- 📌 공지 -->
+  <button title="공지"
+          onclick="toggleNotice(${realIndex})">📌</button>
+  <!-- ▲ 위 -->
+  <button title="위로 이동"
+          onclick="moveUp(${realIndex})">▲</button>
+  <!-- ▼ 아래 -->
+  <button title="아래로 이동"
+          onclick="moveDown(${realIndex})">▼</button>
+  <!-- 🗑 삭제 -->
+  <button title="삭제"
+          class="btn-del"
+          onclick="deletePost(${realIndex})">DEL</button>
 </td>
 <!-- ✅리스트 배열....번호/작성자/제목/날짜 -->
 <td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
