@@ -172,7 +172,7 @@ function renderList() {
 <td>${p.writer || "하빈"}</td>
 <td>
   <a class="title-link"
-     href="post.html?mode=view&id=${p.id}&board=${board}">
+     href="post.html?mode=view&id=${p.id}&board=${getBoardFromURL()}">
      ${p.isNotice ? "📌 " : ""}${p.title}
   </a>
 </td>
@@ -205,7 +205,7 @@ function renderPagination() {
   }
 
   if (currentPage < totalPages) {
-    pag.innerHTML += `<a href="?board=${board}&page=${currentPage+1}">다음</a>`;
+    pag.innerHTML += `<a href="?board=${CURRENT_BOARD}&page=${currentPage + 1}" class="page-btn">다음</a>`;
   }
 }
 
