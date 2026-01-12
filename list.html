@@ -192,9 +192,9 @@ function renderPagination() {
   }
 
   for (let i = 1; i <= totalPages; i++) {
-    pag.innerHTML +=
-      `<a href="?board=${board}&page=${i}"
-        class="${i === currentPage ? "active" : ""}">${i}</a>`;
+  pag.innerHTML +=
+    `<a href="?board=${CURRENT_BOARD}&page=${i}"
+      class="${i === currentPage ? "active" : ""}">${i}</a>`;
   }
 
   if (currentPage < totalPages) {
