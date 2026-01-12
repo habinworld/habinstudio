@@ -41,41 +41,51 @@ function toggleNotice(i) {
 /* ===============================
    ▲ 위로 이동
 ================================ */
-function moveUp(i) {
-  if (!window.IS_ADMIN) return;
+function moveUp(index) {
+  if (index <= 0) return;
 
-  const postId = posts[i]?.id;
-  if (!postId) return;
+  const a = posts[index].id;
+  const b = posts[index - 1].id;
 
-  const idx = findIndexById(postId);
-  if (idx <= 0) return;
+  const ia = allPosts.findIndex(p => p.id === a);
+  const ib = allPosts.findIndex(p => p.id === b);
 
-  [allPosts[idx - 1], allPosts[idx]] =
-    [allPosts[idx], allPosts[idx - 1]];
+  if (ia === -1 || ib === -1) return;
 
+  // ✅ 데이터만 교체
+  [allPosts[ia], allPosts[ib]] = [allPosts[ib], allPosts[ia]];
+
+  // ✅ 저장
   saveAllPosts();
-  location.reload();
+
+  // ✅ 화면만 다시 그림 (핵심)
+  renderList();
+  renderPagination();
+  renderGrid();
 }
 
 /* ===============================
    ▼ 아래로 이동
 ================================ */
-function moveDown(i) {
-  if (!window.IS_ADMIN) return;
+function moveDown(index) {
+  if (index >= posts.length - 1) return;
 
-  const postId = posts[i]?.id;
-  if (!postId) return;
+  const a = posts[index].id;
+  const b = posts[index + 1].id;
 
-  const idx = findIndexById(postId);
-  if (idx === -1 || idx >= allPosts.length - 1) return;
+  const ia = allPosts.findIndex(p => p.id === a);
+  const ib = allPosts.findIndex(p => p.id === b);
 
-  [allPosts[idx], allPosts[idx + 1]] =
-    [allPosts[idx + 1], allPosts[idx]];
+  if (ia === -1 || ib === -1) return;
+
+  [allPosts[ia], allPosts[ib]] = [allPosts[ib], allPosts[ia]];
 
   saveAllPosts();
-  location.reload();
-}
 
+  renderList();
+  renderPagination();
+  renderGrid();
+}
 /* ===============================
    🗑 글 삭제
 ================================ */
