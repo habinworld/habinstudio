@@ -40,7 +40,7 @@ body {
 body.spring  { --bgmain: #EAF6FF; }
 body.summer  { --bgmain: #E6FFF2; }
 body.autumn  { --bgmain: #FFF4E0; }
-body.winter  { --bgmain: #3388FF; }
+body.winter  { --bgmain: #E81A6F; }
 
 /* ===============================
    Season Particles Canvas
