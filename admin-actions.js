@@ -3,6 +3,20 @@
    - postId 기준
    - board 값만 변경
 ================================================== */
+<select
+  onchange="movePostToBoard(${p.id}, this.value)"
+>
+  <option value="">이동</option>
+  <option value="kr">📚 한글</option>
+  <option value="en">🌐 English</option>
+  <option value="studio">✨ Studio</option>
+  <option value="forge">🔥 대장간</option>
+  <option value="qna">❓ 질문</option>
+</select>
+
+
+
+
 function movePostToBoard(postId, targetBoard) {
   if (!postId || !targetBoard) return;
 
