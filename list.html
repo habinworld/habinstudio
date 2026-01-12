@@ -73,6 +73,7 @@
 =============================== */
 window.IS_ADMIN = localStorage.getItem("habin_admin") === "true";
 document.body.classList.toggle("is-admin", window.IS_ADMIN);
+  
  /*  보드 결정 (URL → 기본값) */
   window.CURRENT_BOARD =
   new URLSearchParams(location.search).get("board") || "kr";
