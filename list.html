@@ -187,8 +187,8 @@ function renderPagination() {
    🧱 GRID
 =============================== */
 function renderGrid() {
-  window.renderMainGrid &&
-  renderMainGrid(getCurrentPagePosts());
+  if (typeof renderMainGrid === "function") {
+        renderMainGrid(getCurrentPagePosts());
 }
 
 /* ===============================
