@@ -174,8 +174,8 @@ tr.innerHTML = `
           class="btn-del"
           onclick="deletePost(${realIndex})">DEL</button>
 </td>
-<!-- ✅리스트 배열....번호/작성자/제목/날짜 -->
-<td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
+<!---------리스트배열  ✅ 번호/작성자/제목/날짜 --------------->
+  <td>${(currentPage - 1) * itemsPerPage + idx + 1}</td>
 <td>${p.writer || "하빈"}</td>
 <td>
   <a class="title-link"
