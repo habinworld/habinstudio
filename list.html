@@ -87,7 +87,7 @@ const btnList =document.getElementById("btn-list");
 /* ===============================
    📦 LOAD DATA
 =============================== */
-const allPosts = JSON.parse(localStorage.getItem(HABIN_STORAGE_KEY) || "[]");
+const allPosts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 const posts = allPosts.filter(p => (p.board || "kr") === CURRENT_BOARD);
 window.posts = posts; // 관리자 액션용
 
@@ -95,7 +95,7 @@ window.posts = posts; // 관리자 액션용
    🔧 HELPERS
 =============================== */
 function saveAllPosts() {
-  localStorage.setItem(HABIN_STORAGE_KEY, JSON.stringify(allPosts));
+  localStorage.setItem("habin_posts", JSON.stringify(allPosts));
 }
 function findIndexById(id) {
   return allPosts.findIndex(p => p.id === id);
