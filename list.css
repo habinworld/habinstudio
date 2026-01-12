@@ -135,7 +135,23 @@ body.is-admin .admin-only{
   background: #d93025;
   color: #fff;
 }
+/* 관리자 액션 - 이동 select */
+.admin-actions select {
+  padding: 2px 4px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid #9fb0d9;
+  background: #fff;
+  color: #3558A8;
+  cursor: pointer;
+  margin: 0 0.2px;
+  vertical-align: middle;
+}
 
+.admin-actions select:hover {
+  background: #f2f6ff;
+}
 /* ---페이지네이션--- */
 .pagination{
   margin: 18px 0 8px;
