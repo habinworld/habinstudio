@@ -94,8 +94,8 @@
 </script>
   <script>
     /* 🔐 관리자 상태 읽기 (리스트 전용) ---아래 2줄로 중단, 시작처리 */
-   // window.IS_ADMIN = localStorage.getItem("habin_admin") === "true";  // 
-   // document.body.classList.toggle("is-admin", window.IS_ADMIN);       //
+   window.IS_ADMIN = localStorage.getItem("habin_admin") === "true";   
+   document.body.classList.toggle("is-admin", window.IS_ADMIN);       
 
 /* 🧷 PINSET — 공용 글쓰기 링크 보정 (10개 게시판 공통) */
     const board = getBoardFromURL();
