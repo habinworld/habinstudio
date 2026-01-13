@@ -1,1 +1,91 @@
+/* =====================================================
+   main_preview.css
+   역할: 메인 프리뷰 엔진 전용 스타일
+   (Table + Pagination + Grid + Night)
+===================================================== */
+
+.content-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-bottom: 60px;
+}
+
+.main-board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0 12px;
+}
+
+/* --------------------- Table --------------------- */
+.post-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.post-table th {
+  text-align: center;
+  padding: 12px 0;
+  font-size: 15px;
+}
+
+.post-table td {
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+.post-table td:nth-child(1),
+.post-table td:nth-child(2) {
+  text-align: center;
+}
+
+.post-table td:nth-child(4) {
+  text-align: right;
+  font-size: 14px;
+}
+
+.title-link {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.empty {
+  text-align: center;
+  padding: 18px 0;
+}
+
+/* --------------------- Pagination --------------------- */
+.pagination {
+  margin: 18px 0 8px;
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.page-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* --------------------- Grid --------------------- */
+.grid-item {
+  border-radius: 12px;
+  transition: .25s;
+}
+
+/* --------------------- Night Mode --------------------- */
+body.night .post-table th,
+body.night .post-table td {
+  color: #CBD5E1;
+}
+
+body.night .title-link { color:#E5E7EB; }
+body.night .grid-item {
+  background: rgba(15,23,42,.92);
+  border-color: rgba(120,150,255,.35);
+}
 
