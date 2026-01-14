@@ -124,6 +124,8 @@ if (noticeSection && noticeList && notices.length > 0) {
     .map(n => `
      <div class="notice-item"
      onclick="location.href='post.html?mode=view&id=${n.id}'">
+  <span class="notice-no">${idx + 1}</span>
+  <span class="notice-writer">관리자</span>
   <span class="notice-title">📌 ${n.title}</span>
   <span class="notice-date">${formatDate(n.date)}</span>
 </div>
