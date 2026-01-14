@@ -124,7 +124,7 @@
       </div>
     `).join("");
   }
-})();
+
   /* ▶ 실행 */
   renderTable();
   renderPagination();
