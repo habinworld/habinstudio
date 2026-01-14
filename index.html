@@ -57,13 +57,14 @@
 </div>
  
    <!-- 게시판헤더/리스트목록을 메인에 출력 -->
-   <div class="main-board-header">
+<div class="board-wrap">
+  <div class="main-board-header">
   <h2>/ 한글게시판 /</h2>
   <a href=a href="list.html?board=kr" class="btn">전체보기</a>
-</div> 
- <!-- 🧾 테이블 -->  
-<table class="post-table">
-  <thead>
+  </div> 
+  <!-- 🧾 테이블 -->  
+  <table class="post-table">
+   <thead>
     <tr>
       <th style="width:60px;">번호</th>
       <th style="width:120px;">작성자</th>
@@ -72,9 +73,10 @@
     </tr>
   </thead>
   <tbody id="main-post-list"></tbody>
-</table>
+  </table>
   <!-- 📄 페이지네이션 --> 
   <div id="pagination" class="pagination"></div> 
+</div>  
    <!-- 🧱 그리드 -->
   <div class="grid-floor">
   <div id="current-exhibit" class="main-grid"></div>
@@ -191,6 +193,7 @@ function initSidebarOnly() {
 
  </body>
 </html>
+
 
 
 
