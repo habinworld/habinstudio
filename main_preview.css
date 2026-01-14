@@ -13,7 +13,27 @@
 #notice-section {
  margin-bottom: 60px;  
  } 
-    
+ /* 공지 한 줄 레이아웃 */
+.notice-item {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+/* 제목 */
+.notice-title {
+  font-weight: 600;
+  color: #e5e7eb;
+}
+
+/* 날짜 → 오른쪽 끝 */
+.notice-date {
+  margin-left: auto;   /* ⭐ 핵심 */
+  font-size: 13px;
+  color: #94a3b8;
+  white-space: nowrap;
+}   
 .main-board-header { 
   width: 100%;
   max-width: 900px;
