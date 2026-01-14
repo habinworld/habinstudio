@@ -9,7 +9,13 @@
   margin: 0 auto;
   padding-bottom: 60px;
 }
-
+/* 공지 */
+#notice-section {
+ margin-bottom: 60px;  
+  border: 1px solid #facc15;
+  padding: 10px;
+  background: #fffdf0;
+   
 .main-board-header {
   display: flex;
   justify-content: space-between;
@@ -76,11 +82,7 @@
   border-radius: 12px;
   transition: .25s;
 }
-/* 공지 */
-#notice-section {
-  border: 1px solid #facc15;
-  padding: 10px;
-  background: #fffdf0;
+
 }
 /* --------------------- Night Mode --------------------- */
 body.night .post-table th,
