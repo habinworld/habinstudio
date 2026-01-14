@@ -76,7 +76,12 @@
   border-radius: 12px;
   transition: .25s;
 }
-
+/* 공지 */
+#notice-section {
+  border: 1px solid #facc15;
+  padding: 10px;
+  background: #fffdf0;
+}
 /* --------------------- Night Mode --------------------- */
 body.night .post-table th,
 body.night .post-table td {
