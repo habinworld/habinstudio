@@ -116,6 +116,11 @@
 }
 
 /* --------------------- Grid --------------------- */
+.main-grid {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
 .grid-item {
   border-radius: 12px;
   transition: .25s;
