@@ -122,13 +122,11 @@ if (noticeSection && noticeList && notices.length > 0) {
 
   noticeList.innerHTML = notices
     .map(n => `
-      <div style="padding:4px 0; cursor:pointer;"
-           onclick="location.href='post.html?mode=view&id=${n.id}'">
-        <span class="notice-title">📌 ${n.title}</span>
-        <span style="margin-left:6px; font-size:13px;">
-          ${formatDate(n.date)}
-        </span>
-      </div>
+     <div class="notice-item"
+     onclick="location.href='post.html?mode=view&id=${n.id}'">
+  <span class="notice-title">📌 ${n.title}</span>
+  <span class="notice-date">${formatDate(n.date)}</span>
+</div>
     `)
     .join("");
 }
