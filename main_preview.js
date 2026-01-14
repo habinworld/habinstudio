@@ -3,99 +3,112 @@
    - 메인 프리뷰 엔진 (Table + Grid = 1세트)
    - index에서는 이 엔진을 "호출만" 한다
    ===================================================== */
-
-/* 🔑 단일 진실 */
-const STORAGE_KEY = "habin_posts";
-
-/* 📌 메인 프리뷰 엔트리 */
-function renderMainPreview(config = {}) {
-  const {
-    board = "kr",
-    limit = 8,
-    tableTargetId = "main-post-list",
-    gridTargetId  = "current-exhibit"
-  } = config;
-
-  const posts = loadPostsByBoard(board);
-  const pagePosts = posts.slice(0, limit);
-
-  renderPreviewTable(pagePosts, tableTargetId, posts.length);
-  renderPreviewGrid(pagePosts, gridTargetId);
-}
-
-/* =====================================================
-   데이터 영역
-   ===================================================== */
-
-function loadPostsByBoard(board) {
-  const all = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-  return all
-    .filter(p => p.board === board)
-    .sort((a, b) => new Date(b.date) - new Date(a.date));
-}
-
-/* =====================================================
-   Table (리스트 프리뷰)
-   ===================================================== */
-
-function renderPreviewTable(posts, targetId, totalCount) {
-  const tbody = document.getElementById(targetId);
-  if (!tbody) return;
-
-  tbody.innerHTML = "";
-
-  if (posts.length === 0) {
-    tbody.innerHTML =
-      `<tr><td colspan="4" class="empty">작성된 글이 없습니다.</td></tr>`;
+(() => {
+  /* 🔒 단일진실: 보드 읽기만 */
+  const BOARD = window.CURRENT_BOARD;
+  if (!BOARD) {
+    console.error("CURRENT_BOARD is not defined");
     return;
   }
 
-  posts.forEach((p, idx) => {
-    const tr = document.createElement("tr");
+  const ITEMS_PER_PAGE = 8;
 
-    tr.innerHTML = `
-      <td>${totalCount - idx}</td>
-      <td>${p.writer || "하빈"}</td>
-      <td>
-        <a href="post.html?mode=view&id=${p.id}" class="title-link">
-          ${p.isNotice ? "📌 " : ""}${p.title}
-        </a>
-      </td>
-      <td>${formatDateSafe(p.date)}</td>
-    `;
+  /* 📦 원본 저장소 */
+  const allPosts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
-    if (p.isNotice) tr.classList.add("notice-row");
-    tbody.appendChild(tr);
-  });
-}
+  /* 🖥 화면 출력용 파생 데이터 */
+  const posts = allPosts
+    .filter(p => p.board === BOARD)
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-/* =====================================================
-   Grid (비주얼 프리뷰)
-   ===================================================== */
+  /* 📄 페이지 상태 */
+  let currentPage = parseInt(
+    new URLSearchParams(location.search).get("page"),
+    10
+  );
+  if (!currentPage || currentPage < 1) currentPage = 1;
 
-function renderPreviewGrid(posts, targetId) {
-  if (typeof renderMainGrid !== "function") return;
+  const totalPages = Math.ceil(posts.length / ITEMS_PER_PAGE);
 
-  const container = document.getElementById(targetId);
-  if (!container) return;
-
-  renderMainGrid(posts);
-}
-
-/* =====================================================
-   Utils
-   ===================================================== */
-
-function formatDateSafe(date) {
-  if (typeof formatDate === "function") {
-    return formatDate(date);
+  function getPagePosts() {
+    const start = (currentPage - 1) * ITEMS_PER_PAGE;
+    return posts.slice(start, start + ITEMS_PER_PAGE);
   }
-  const d = new Date(date);
-  return isNaN(d) ? "" : d.toISOString().slice(0, 10);
-}
 
-/* =====================================================
-   EXPORT (전역)
-   ===================================================== */
-window.renderMainPreview = renderMainPreview;
+  /* =========================
+     🧾 테이블 렌더
+  ========================= */
+  function renderTable() {
+    const tbody = document.getElementById("main-post-list");
+    if (!tbody) return;
+
+    const pagePosts = getPagePosts();
+    tbody.innerHTML = "";
+
+    if (pagePosts.length === 0) {
+      tbody.innerHTML =
+        `<tr><td colspan="4">작성된 글이 없습니다.</td></tr>`;
+      return;
+    }
+
+    pagePosts.forEach((p, idx) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${(currentPage - 1) * ITEMS_PER_PAGE + idx + 1}</td>
+        <td>${p.writer || "하빈"}</td>
+        <td>
+          <a href="post.html?mode=view&id=${p.id}" class="title-link">
+            ${p.isNotice ? "📌 " : ""}${p.title}
+          </a>
+        </td>
+        <td>${formatDate(p.date)}</td>
+      `;
+      if (p.isNotice) tr.classList.add("notice-row");
+      tbody.appendChild(tr);
+    });
+  }
+
+  /* =========================
+     📄 페이지네이션 렌더
+  ========================= */
+  function renderPagination() {
+    const pag = document.getElementById("pagination");
+    if (!pag || totalPages <= 1) return;
+
+    pag.innerHTML = "";
+
+    if (currentPage > 1) {
+      pag.innerHTML +=
+        `<a href="?page=${currentPage - 1}" class="page-btn">이전</a>`;
+    }
+
+    for (let i = 1; i <= totalPages; i++) {
+      pag.innerHTML +=
+        `<a href="?page=${i}" class="page-btn ${i === currentPage ? "active" : ""}">
+          ${i}
+        </a>`;
+    }
+
+    if (currentPage < totalPages) {
+      pag.innerHTML +=
+        `<a href="?page=${currentPage + 1}" class="page-btn">다음</a>`;
+    }
+  }
+
+  /* =========================
+     🧱 그리드 렌더
+  ========================= */
+  function renderGrid() {
+    if (typeof renderMainGrid === "function") {
+      renderMainGrid(getPagePosts());
+    }
+  }
+
+  /* ▶ 실행 */
+  renderTable();
+  renderPagination();
+  renderGrid();
+})();
+
+
 
