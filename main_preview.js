@@ -103,27 +103,35 @@
       renderMainGrid(getPagePosts());
     }
   }
-/* 📢 공지 */
-  const notices = allPosts
-    .filter(p => p.board === PREVIEW_BOARD && p.isNotice)
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
-    .slice(0, NOTICE_LIMIT);
+/* =========================
+   📢 공지 렌더 (메인 프리뷰)
+========================= */
 
-  const noticeSection = document.getElementById("notice-section");
-  const noticeList = document.getElementById("notice-list");
+const NOTICE_LIMIT = 5;
 
-  if (noticeSection && noticeList && notices.length > 0) {
-    noticeSection.style.display = "block";
-    noticeList.innerHTML = notices.map(n => `
+const notices = allPosts
+  .filter(p => p.board === BOARD && p.isNotice)
+  .sort((a, b) => new Date(b.date) - new Date(a.date))
+  .slice(0, NOTICE_LIMIT);
+
+const noticeSection = document.getElementById("notice-section");
+const noticeList = document.getElementById("notice-list");
+
+if (noticeSection && noticeList && notices.length > 0) {
+  noticeSection.style.display = "block";
+
+  noticeList.innerHTML = notices
+    .map(n => `
       <div style="padding:4px 0; cursor:pointer;"
-        onclick="location.href='post.html?mode=view&id=${n.id}'">
+           onclick="location.href='post.html?mode=view&id=${n.id}'">
         <strong>📌 ${n.title}</strong>
         <span style="margin-left:6px; font-size:13px;">
           ${formatDate(n.date)}
         </span>
       </div>
-    `).join("");
-  }
+    `)
+    .join("");
+}
 
   /* ▶ 실행 */
   renderTable();
