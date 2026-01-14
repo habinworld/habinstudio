@@ -14,8 +14,7 @@
  margin-bottom: 60px;  
  } 
     
-.main-board-header {
-   max-width: 900px;  
+.main-board-header { 
   display: flex;
   justify-content: space-between;
   align-items: center;
