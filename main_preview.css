@@ -12,8 +12,7 @@
 /* 공지 */
 #notice-section {
  margin-bottom: 60px;  
-  border: 1px solid #facc15;
-  padding: 10px;
+ } 
     
 .main-board-header {
   display: flex;
