@@ -54,7 +54,7 @@
     pagePosts.forEach((p, idx) => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td>${(currentPage - 1) * ITEMS_PER_PAGE + idx + 1}</td>
+        <td>${(currentPage - 1) * itemsPerPage + idx + 1}</td>
         <td>${p.writer || "하빈"}</td>
         <td>
           <a href="post.html?mode=view&id=${p.id}" class="title-link">
