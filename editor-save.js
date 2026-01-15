@@ -67,8 +67,6 @@ function hasContent() {
   if (!hasContent()) {
     alert("내용을 입력하세요.");
     return;
-  } 
-   function saveNew() {
     const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 posts.push(collectNewData());
      
