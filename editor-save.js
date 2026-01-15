@@ -64,18 +64,20 @@ function hasContent() {
   /* ============================
      SAVE — 새 글
   ============================ */
-  function saveNew() {
+ function saveNew() {
   if (!hasContent()) {
     alert("내용을 입력하세요.");
     return;
-    const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-posts.push(collectNewData());
-     
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-    setTimeout(() => {
-  alert("저장 완료");
-  location.href = window.HABIN_LIST_PAGE + "?board=" + window.CURRENT_BOARD;
-}, 0);
+  }
+
+  const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  posts.push(collectNewData());
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+  setTimeout(() => {
+    alert("저장 완료");
+    location.href = window.HABIN_LIST_PAGE + "?board=" + window.CURRENT_BOARD;
+  }, 0);
 }
   /* ============================
      UPDATE — 기존 글 수정
