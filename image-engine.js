@@ -43,8 +43,12 @@ window.ImageEngine = (function () {
       e.stopPropagation();
       selectBox(box);
     });
-
-    insertNodeAtCursor(box);
+// ✅ 여기부터 새로 추가
+    const paragraph = document.createElement("div");
+  paragraph.setAttribute("data-hb-paragraph", "");
+  paragraph.appendChild(box);
+  insertNodeAtCursor(paragraph);
+ // ✅ 여기까지    
     selectBox(box);
        // ⭐ ①-1: FREE 이동 연결
 enableFreeMove(box);
