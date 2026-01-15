@@ -52,7 +52,8 @@
     /* 🔄 최초 로드 시 초안 복구 */
     const DRAFT_KEY = getDraftKey(); 
     const saved = localStorage.getItem(DRAFT_KEY);
-    if (saved && !titleEl.value && !editorEl.innerText.trim()) {
+    if (window.POST_MODE !== "new" &&
+       saved && !titleEl.value && !editorEl.innerText.trim()) {
       try {
         const d = JSON.parse(saved);
         titleEl.value = d.title || "";
