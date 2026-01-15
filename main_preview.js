@@ -108,8 +108,9 @@
 
 const NOTICE_LIMIT = 5;
 
-const notices = posts
-  .filter(p => p.isNotice)
+const notices = allPosts
+  .filter(p => p.isNotice === true)
+  .sort((a, b) => new Date(b.date) - new Date(a.date))
   .slice(0, NOTICE_LIMIT);
 
 const noticeSection = document.getElementById("notice-section");
