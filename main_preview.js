@@ -19,8 +19,7 @@
   /* 🖥 화면 출력용 파생 데이터 */
   const posts = allPosts
     .filter(p => p.board === BOARD)
-    .sort((a, b) => new Date(b.date) - new Date(a.date));
-
+    
   /* 📄 페이지 상태 */
   let currentPage = parseInt(
     new URLSearchParams(location.search).get("page"),
