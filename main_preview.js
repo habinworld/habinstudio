@@ -11,7 +11,7 @@
     return;
   }
 
-  const ITEMS_PER_PAGE = 8;
+  const itemsPerPage = 8;
 
   /* 📦 원본 저장소 */
   const allPosts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
