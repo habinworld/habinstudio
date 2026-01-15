@@ -23,10 +23,7 @@
     const temp = document.createElement("div");
     temp.innerHTML = html;
 
-    // 실제 img 제거
-    temp.querySelectorAll("img").forEach(img => img.remove());
-
-    // 이미지 박스 placeholder 보장
+   // 이미지 박스 placeholder 보장
     temp.querySelectorAll(".hb-img-box[data-img-id]").forEach(box => {
       if (!box.querySelector(".hb-img-ph")) {
         const ph = document.createElement("span");
