@@ -41,10 +41,11 @@
    - 텍스트 OR 이미지 중 하나라도 있으면 true
 ============================ */
 function hasContent() {
-  const hasText  = editorEl.innerText.trim().length > 0;
-  const hasImage = editorEl.querySelector("img") !== null;
+  const hasText = editorEl.innerText.trim().length > 0;
+  const hasImage = editorEl.querySelector(".hb-img-box") !== null;
   return hasText || hasImage;
 }
+
   /* ============================
      데이터 수집 (새 글 전용)
   ============================ */
