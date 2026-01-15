@@ -36,7 +36,15 @@
 
     return temp.innerHTML;
   }
-
+  /* ============================
+   ✅ 콘텐츠 존재 판단 (추가 위치 = 여기)
+   - 텍스트 OR 이미지 중 하나라도 있으면 true
+============================ */
+function hasContent() {
+  const hasText  = editorEl.innerText.trim().length > 0;
+  const hasImage = editorEl.querySelector("img") !== null;
+  return hasText || hasImage;
+}
   /* ============================
      데이터 수집 (새 글 전용)
   ============================ */
@@ -56,6 +64,11 @@
      SAVE — 새 글
   ============================ */
   function saveNew() {
+  if (!hasContent()) {
+    alert("내용을 입력하세요.");
+    return;
+  } 
+   function saveNew() {
     const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 posts.push(collectNewData());
      
@@ -69,12 +82,15 @@ posts.push(collectNewData());
      UPDATE — 기존 글 수정
   ============================ */
   function updatePost() {
-    if (!Number.isInteger(POST_ID)) {
-      alert("수정 실패: 글 ID 없음");
-      return;
-    }
-
-    const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  if (!Number.isInteger(POST_ID)) {
+    alert("수정 실패: 글 ID 없음");
+    return;
+  }
+  if (!hasContent()) {
+    alert("내용을 입력하세요.");
+    return;
+  }   
+      const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 
     const nextPosts = posts.map(post =>
       post.id === POST_ID
