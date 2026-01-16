@@ -121,6 +121,8 @@ function hasContent() {
      버튼 연결 (최종 판단)
   ============================ */
   btnSave && btnSave.addEventListener("click", () => {
+      // 🔎 [핀셋 디버그] 저장 직전 editor 상태 확인
+  alert("EDITOR HTML LENGTH = " + (editorEl?.innerHTML.length || 0));
     window.POST_MODE === "edit" ? updatePost() : saveNew();
   });
 
