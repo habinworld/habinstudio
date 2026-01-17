@@ -257,14 +257,26 @@ function enableFreeMove(box) {
      - box / img 구조 복구
   =================================================== */
   function renderAll() {
-    editor.querySelectorAll(".hb-img-box").forEach(box => {
-      const img = box.querySelector("img");
-      if (!img) return;
+  editor.querySelectorAll(".hb-img-box").forEach(box => {
+    const id = box.dataset.imgId;
+    if (!id) return;
 
-      // 이미 src가 있으면 그대로 둔다
-      if (img.src && img.src.startsWith("data:")) return;
+    let img = box.querySelector("img");
+    if (!img) {
+      img = document.createElement("img");
+      img.draggable = false;
+      img.addEventListener("dragstart", e => e.preventDefault());
+      img.style.display = "block";
+      img.style.maxWidth = "100%";
+      img.style.height = "auto";
+      box.appendChild(img);
+    }
+
+    ImageStore.load(id).then(src => {
+      if (src) img.src = src;
     });
-  }
+  });
+}
 
   /* ===================================================
      8) 외부 API (배선판 전용)
