@@ -114,8 +114,9 @@ function insert(file) {
    3-1) DROP 차단 (이미지 복사 방지)
 =================================================== */
 editor.addEventListener("drop", e => {
-  if (!e.target.closest(".hb-img-box")) return;
-  e.preventDefault();
+  if (e.target.closest(".hb-img-box")) {
+    e.preventDefault();
+  }
 });
   /* ===================================================
      4) 정렬
