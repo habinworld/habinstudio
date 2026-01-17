@@ -67,6 +67,7 @@ function hasContent() {
       title: titleEl?.value.trim() || "제목 없음",
       writer: "하빈",
       content: normalizeContent(editorEl?.innerHTML || ""),
+      images: collectImageIds(), 
       date: new Date().toISOString(),
       isNotice: noticeEl?.checked === true
     };
