@@ -13,65 +13,62 @@ window.ImageEngine = (function () {
   const HANDLES = ["n","s","e","w","ne","nw","se","sw"];
 
   if (!editor) return {}; // DOM 안전장치
+ /* ===================================================
+   1) 이미지 삽입 — BULLET
+=================================================== */
+function insert(file) {
+  if (!file) return;
 
-  /* ===================================================
-     1) 이미지 삽입 — BULLET
-  =================================================== */
-  function insert(file) {
-    if (!file) return;
-   ImageStore.save(file, (id) => {            // ⭐ 1  
-  // 🔒 삽입 전 editor 강제 활성화 (view/blur 상태 대응)
-  editor.contentEditable = "true";
-  editor.focus();
-    // ① 박스 먼저 삽입 (체감 0ms)
+  ImageStore.save(file, (id) => {   // ⭐ ImageStore 저장 시작
+
+    // 🔒 editor 활성화
+    editor.contentEditable = "true";
+    editor.focus();
+
+    // ① 이미지 박스 생성
     const box = document.createElement("div");
     box.className = "hb-img-box align-center";
-    box.dataset.imgId = id;                // ⭐ 2 (핵심)  
+    box.dataset.imgId = id;         // ⭐ 핵심: 이미지 ID
     addResizeHandles(box);
 
     box.addEventListener("click", e => {
       e.stopPropagation();
       selectBox(box);
     });
-// ✅ 여기부터 새로 추가
+
+    // ② 문단에 삽입
     const paragraph = document.createElement("div");
-  paragraph.setAttribute("data-hb-paragraph", "");
-  paragraph.appendChild(box);
-  insertNodeAtCursor(paragraph);
- // ✅ 여기까지    
+    paragraph.setAttribute("data-hb-paragraph", "");
+    paragraph.appendChild(box);
+    insertNodeAtCursor(paragraph);
+
     selectBox(box);
-       // ⭐ ①-1: FREE 이동 연결
-enableFreeMove(box);
+    enableFreeMove(box);
 
-// ⭐ FLOW ↔ FREE 전환 (더블클릭)
-box.addEventListener("dblclick", e => {
-  e.stopPropagation();
+    // ③ FLOW ↔ FREE 전환
+    box.addEventListener("dblclick", e => {
+      e.stopPropagation();
+      const isFree = box.classList.toggle("free");
+      if (!isFree) {
+        box.style.left = "";
+        box.style.top  = "";
+      }
+    });
 
-  const isFree = box.classList.toggle("free");
+    // ④ 이미지 표시 (ImageStore에서 로드)
+    const img = document.createElement("img");
+    img.draggable = false;
+    img.addEventListener("dragstart", e => e.preventDefault());
+    img.style.display = "block";
+    img.style.maxWidth = "100%";
+    img.style.height = "auto";
 
-  // FREE → FLOW 복귀 시 좌표 정리
-  if (!isFree) {
-    box.style.left = "";
-    box.style.top  = "";
-  }
-});
+    box.appendChild(img);
 
-    // ② 이미지 비동기 로딩(base64)
-const img = document.createElement("img");
+    const src = ImageStore.load(id);
+    if (src) img.src = src;
 
-img.draggable = false;
-img.addEventListener("dragstart", e => e.preventDefault());
-
-img.style.display = "block";
-img.style.maxWidth = "100%";
-img.style.height = "auto";
-
-// ⭐⭐ 핵심 1: 먼저 DOM에 넣는다
-box.appendChild(img);
-// ⭐⭐ src는 저장소에서
-const src = ImageStore.load(id);    
-if (src) img.src = src;   
- });     
+  }); // ⭐ ImageStore.save 종료
 }
   /* ===================================================
      2) 커서 위치 삽입
