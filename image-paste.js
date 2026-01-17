@@ -11,7 +11,6 @@
       const item = items[i];
       if (item.type && item.type.startsWith("image/")) {
         e.preventDefault();
-        ImageEngine.insert(file);
         const file = item.getAsFile();
         file && window.ImageEngine && ImageEngine.insert(file);
         return;
