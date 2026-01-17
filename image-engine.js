@@ -3,6 +3,7 @@
    -정렬 (L / C / R) / 전방위 리사이즈 (8방향)- 삭제 (툴바 DEL + Delete / Backspace)
    원칙: 상태 저장 ❌ / 판단 ❌ EditorCore / Toolbar 개입 ❌ - 존재 / 비존재 ✔
 --------------------------------------------------------------------------------- */
+console.log("🔥 ImageEngine loaded");
 window.ImageEngine = (function () {
   /* ===================================================
      0) 내부 상태 (ImageEngine만 소유)
@@ -17,6 +18,7 @@ window.ImageEngine = (function () {
    1) 이미지 삽입 — BULLET
 =================================================== */
 function insert(file) {
+   console.log("🔥 insert called", file);
   if (!file) return;
 
   ImageStore.save(file, (id) => {   // ⭐ ImageStore 저장 시작
