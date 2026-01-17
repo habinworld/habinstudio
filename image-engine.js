@@ -31,12 +31,14 @@ window.ImageEngine = (function () {
   =================================================== */
   function insert(file) {
     if (!file) return;
+   ImageStore.save(file, (id) => {            // ⭐ 1  
   // 🔒 삽입 전 editor 강제 활성화 (view/blur 상태 대응)
   editor.contentEditable = "true";
   editor.focus();
     // ① 박스 먼저 삽입 (체감 0ms)
     const box = document.createElement("div");
     box.className = "hb-img-box align-center";
+    box.dataset.imgId = id;                // ⭐ 2 (핵심)  
     addResizeHandles(box);
 
     box.addEventListener("click", e => {
