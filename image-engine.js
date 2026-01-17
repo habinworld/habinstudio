@@ -70,11 +70,9 @@ img.style.height = "auto";
 box.appendChild(img);
 // ⭐⭐ src는 저장소에서
 const src = ImageStore.load(id);    
-if (src) img.src = src;       
-const reader = new FileReader();
-reader.readAsDataURL(file);
+if (src) img.src = src;   
+ });     
 }
-
   /* ===================================================
      2) 커서 위치 삽입
   =================================================== */
