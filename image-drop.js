@@ -17,6 +17,7 @@
     if (!files || !files.length) return;
 
     const file = files[0];
+    ImageEngine.insert(file); 
     file && window.ImageEngine && ImageEngine.insert(file);
   });
 })();
