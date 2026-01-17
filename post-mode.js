@@ -40,6 +40,30 @@ btnCancel &&
   });
   const toolbarBasic    = document.getElementById("hb-toolbar-basic");
   const toolbarAdvanced = document.getElementById("hb-toolbar-advanced");
+  /* ============================
+   🖼 VIEW 이미지 렌더
+============================ */
+function renderImagesInView(post) {
+  if (!post.images || !post.images.length) return;
+
+  const boxes = document.querySelectorAll(".hb-img-box[data-img-id]");
+
+  boxes.forEach(box => {
+    const id = box.dataset.imgId;
+    if (!id) return;
+
+    const src = ImageStore.load(id);
+    if (!src) return;
+
+    const img = document.createElement("img");
+    img.src = src;
+    img.style.maxWidth = "100%";
+    img.style.display = "block";
+
+    box.innerHTML = "";
+    box.appendChild(img);
+  });
+} 
 
   /* ============================
      공통 초기화 (엑셀 기본값)
@@ -70,6 +94,7 @@ btnCancel &&
   if (!post) return;
 
   editor.innerHTML = post.content || "";
+  restoreImagesInEditor(post);   
   window.ImageEngine && ImageEngine.renderAll();
 }
   /* ============================
@@ -83,12 +108,26 @@ btnCancel &&
 
   title.value = post.title || "";
   editor.innerHTML = post.content || "";
+  renderImagesInView(post);
   window.ImageEngine && ImageEngine.renderAll();
 
   editor.contentEditable = "false";
   title.readOnly = true;
 }
+/* ============================
+   🖼 EDIT 이미지 복원
+============================ */
+function restoreImagesInEditor(post) {
+  if (!post.images || !post.images.length) return;
 
+  post.images.forEach(id => {
+    const src = ImageStore.load(id);
+    if (!src) return;
+
+    ImageEngine.insertFromStore(id, src);
+  });
+}
+   
   /* ============================
      MODE SWITCH
   ============================ */
