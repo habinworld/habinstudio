@@ -115,10 +115,12 @@ function restoreImagesInEditor(post) {
   if (!post.images || !post.images.length) return;
 
   post.images.forEach(id => {
-    const src = ImageStore.load(id);
-    if (!src) return;
+    ImageStore.load(id).then(src => {
+      if (!src) return;
 
-    ImageEngine.insertFromStore(id, src);
+      // insertFromStore를 쓸 거면 "Promise 이후"에 넣어야 함
+      window.ImageEngine && ImageEngine.insertFromStore && ImageEngine.insertFromStore(id, src);
+    });
   });
 }
    
