@@ -31,9 +31,12 @@ if (!editor || !title) {
 if (!editor.querySelector("[data-hb-paragraph]")) {
   const paragraph = document.createElement("div");
   paragraph.setAttribute("data-hb-paragraph", "");
-  paragraph.innerHTML = "&nbsp;";   // ✅ br 금지
+
+  // 🔥 절대 &nbsp; 넣지 말 것
+  paragraph.innerHTML = "";
   editor.appendChild(paragraph);
 }
+
   
   /* =================================================
         3) id 기반 초기 로딩 (존재 / 비존재)
