@@ -10,22 +10,23 @@ window.ImageStore = (function () {
     localStorage.setItem(KEY, JSON.stringify(store));
   }
 
-  function save(file) {
+  function save(file, callback) {
     const store = loadAll();
     const id = "img_" + Date.now();
 
     const reader = new FileReader();
     reader.onload = () => {
       store[id] = {
-        data: reader.result, // ⚠️ 테스트용 base64 (나중에 제거)
+        data: reader.result,
         createdAt: Date.now()
       };
       saveAll(store);
-      console.log("✅ 이미지 저장 성공:", id);
+      console.log("✅ 이미지 저장 완료:", id);
+
+      // 🔑 저장 끝난 다음에 알려줌
+      callback(id);
     };
     reader.readAsDataURL(file);
-
-    return id;
   }
 
   function load(id) {
