@@ -41,7 +41,7 @@ btnCancel &&
   const toolbarBasic    = document.getElementById("hb-toolbar-basic");
   const toolbarAdvanced = document.getElementById("hb-toolbar-advanced");
  /* ============================
-   🖼 VIEW 이미지 렌더 (단순/확정판)
+   🖼 VIEW 이미지 렌더 (1단계: 무조건 보이게)
 ============================ */
 function renderImagesInView(post) {
   if (!post.images || !post.images.length) return;
