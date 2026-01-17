@@ -58,19 +58,21 @@ function insert(file) {
     });
 
     // ④ 이미지 표시 (ImageStore에서 로드)
-    const img = document.createElement("img");
-    img.draggable = false;
-    img.addEventListener("dragstart", e => e.preventDefault());
-    img.style.display = "block";
-    img.style.maxWidth = "100%";
-    img.style.height = "auto";
+const img = document.createElement("img");
+img.draggable = false;
+img.addEventListener("dragstart", e => e.preventDefault());
+img.style.display = "block";
+img.style.maxWidth = "100%";
+img.style.height = "auto";
 
-    box.appendChild(img);
+box.appendChild(img);
 
-    ImageStore.load(id).then(src => {
+ImageStore.load(id).then(src => {
   if (src) img.src = src;
-  }); // ⭐ ImageStore.save 종료
-}
+});
+
+// ⭐ ImageStore.save 콜백 닫기
+}); 
   /* ===================================================
      2) 커서 위치 삽입
   =================================================== */
