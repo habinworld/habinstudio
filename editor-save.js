@@ -33,6 +33,10 @@
         box.appendChild(ph);
       }
     });
+// 🔥 핵심: img 태그 제거
+  temp.querySelectorAll(".hb-img-box img").forEach(img => {
+    img.remove();
+  });
 
     return temp.innerHTML;
   }
@@ -67,7 +71,7 @@ function hasContent() {
       title: titleEl?.value.trim() || "제목 없음",
       writer: "하빈",
       content: normalizeContent(editorEl?.innerHTML || ""),
-      images: collectImageIds(), 
+      images: collectImageIds(),  // ← 🔥 이 줄 추가
       date: new Date().toISOString(),
       isNotice: noticeEl?.checked === true
     };
@@ -102,6 +106,7 @@ function hasContent() {
             ...post,
             title: titleEl?.value.trim() || post.title,
             content: normalizeContent(editorEl?.innerHTML || post.content),
+            images: collectImageIds(),   // ← 🔥 이 줄 추가
             isNotice: noticeEl?.checked === true
           }
         : post
