@@ -82,12 +82,6 @@ img.style.height = "auto";
 box.appendChild(img);
 
 const reader = new FileReader();
-
-// ⭐⭐ 핵심 2: src만 나중에 채운다
-reader.onload = () => {
-  img.src = reader.result; // base64
-};
-
 reader.readAsDataURL(file);
 }
 
