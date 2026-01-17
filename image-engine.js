@@ -80,7 +80,9 @@ img.style.height = "auto";
 
 // ⭐⭐ 핵심 1: 먼저 DOM에 넣는다
 box.appendChild(img);
-
+// ⭐⭐ src는 저장소에서
+const src = ImageStore.load(id);    
+if (src) img.src = src;       
 const reader = new FileReader();
 reader.readAsDataURL(file);
 }
