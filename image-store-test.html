@@ -1,0 +1,17 @@
+<input type="file" id="imgTest">
+<button id="saveImg">이미지 저장 테스트</button>
+<img id="preview" style="max-width:200px;">
+
+document.getElementById("saveImg").onclick = () => {
+  const file = document.getElementById("imgTest").files[0];
+  if (!file) return alert("이미지 선택");
+
+  const id = ImageStore.save(file);
+  console.log("저장 요청 ID:", id);
+
+  // 1초 뒤 다시 불러와 보기
+  setTimeout(() => {
+    const img = document.getElementById("preview");
+    img.src = ImageStore.load(id);
+  }, 1000);
+};
