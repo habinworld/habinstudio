@@ -1,12 +1,12 @@
-/* =====================================================
-   image-store.js
-   IndexedDB 기반 ImageStore (FINAL CLEAN)
-   -----------------------------------------------------
+/* ==================================================================
+   image-store.js / ImageStore = 이미지 단일진실 / 저장소: IndexedDB
+   -------------------------------------------------2026.01.18
    외부 계약 (절대 불변)
    - ImageStore.save(file, cb)
    - ImageStore.load(id) -> Promise<string|null>
    - ImageStore.remove(id)
-===================================================== */
+====================================================================== */
+
 window.ImageStore = (function () {
 
   const DB_NAME = "habin_image_db";
@@ -15,7 +15,7 @@ window.ImageStore = (function () {
 
   let db = null;
 
-  /* DB 열기 */
+  /* DB 열기 (단일 진실) */
   function openDB() {
     if (db) return Promise.resolve(db);
 
@@ -38,9 +38,10 @@ window.ImageStore = (function () {
     });
   }
 
-  /* 저장 */
+  /* 이미지 저장 */
   function save(file, callback) {
     if (!file) return;
+
     const id = "img_" + Date.now();
 
     openDB().then(db => {
@@ -49,15 +50,17 @@ window.ImageStore = (function () {
 
       store.put({
         id,
-        blob: file,       // Blob 그대로
+        blob: file,            // Blob 그대로
         createdAt: Date.now()
       });
 
-      tx.oncomplete = () => callback && callback(id);
+      tx.oncomplete = () => {
+        if (callback) callback(id);
+      };
     });
   }
 
-  /* 로드 */
+  /* 이미지 로드 */
   function load(id) {
     if (!id) return Promise.resolve(null);
 
@@ -77,9 +80,10 @@ window.ImageStore = (function () {
     });
   }
 
-  /* 삭제 */
+  /* 이미지 삭제 */
   function remove(id) {
     if (!id) return;
+
     openDB().then(db => {
       const tx = db.transaction(STORE_NAME, "readwrite");
       tx.objectStore(STORE_NAME).delete(id);
