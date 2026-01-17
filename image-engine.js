@@ -65,9 +65,8 @@ function insert(file) {
 
     box.appendChild(img);
 
-    const src = ImageStore.load(id);
-    if (src) img.src = src;
-
+    ImageStore.load(id).then(src => {
+  if (src) img.src = src;
   }); // ⭐ ImageStore.save 종료
 }
   /* ===================================================
