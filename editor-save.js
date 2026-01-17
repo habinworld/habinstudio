@@ -1,8 +1,7 @@
 /* ---------------------------------------------------
-   editor-save.js / 2026.01.11
+   editor-save.js / 2026.01.18
    Ha-Bin Studio — Save / Update Engine (CLEAN STABLE)
 ---------------------------------------------------- */
-
 (function () {
   const POST_ID = window.POST_ID;
   const STORAGE_KEY = window.HABIN_STORAGE_KEY;
@@ -15,31 +14,23 @@
   const editorEl  = document.getElementById("hb-editor");
   const titleEl   = document.getElementById("hb-title");
   const noticeEl  = document.getElementById("hb-notice");
+/* ============================
+   🔒 Step 1 — 저장 전 정규화 (FINAL)
+   - 이미지 placeholder ❌
+   - img 태그 ❌
+   - 이미지 실체 = ImageStore
+============================ */
+function normalizeContent(html) {
+  const temp = document.createElement("div");
+  temp.innerHTML = html;
 
-  /* ============================
-     🔒 Step 1 — 저장 전 정규화
-  ============================ */
-  function normalizeContent(html) {
-    const temp = document.createElement("div");
-    temp.innerHTML = html;
-
-   // 이미지 박스 placeholder 보장
-    temp.querySelectorAll(".hb-img-box[data-img-id]").forEach(box => {
-      if (!box.querySelector(".hb-img-ph")) {
-        const ph = document.createElement("span");
-        ph.className = "hb-img-ph";
-        ph.textContent = "[이미지]";
-        ph.setAttribute("contenteditable", "false");
-        box.appendChild(ph);
-      }
-    });
-// 🔥 핵심: img 태그 제거
+  // 🔥 img 태그 제거 (이미지는 ImageStore에만 존재)
   temp.querySelectorAll(".hb-img-box img").forEach(img => {
     img.remove();
   });
 
-    return temp.innerHTML;
-  }
+  return temp.innerHTML;
+}
   /* ============================
    ✅ 콘텐츠 존재 판단 (추가 위치 = 여기)
    - 텍스트 OR 이미지 중 하나라도 있으면 true
