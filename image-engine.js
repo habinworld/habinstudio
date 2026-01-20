@@ -264,6 +264,10 @@ if (box.dataset.w && box.dataset.h) {
   box.style.width  = box.dataset.w + "px";
   box.style.height = box.dataset.h + "px";
 } 
+  // 🔑 리사이즈 핸들 복원 (EDIT 핵심)
+    if (!box.querySelector(".hb-resize-handle")) {
+      addResizeHandles(box);
+    }   
     let img = box.querySelector("img");
     if (!img) {
       img = document.createElement("img");
