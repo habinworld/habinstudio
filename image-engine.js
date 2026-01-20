@@ -185,6 +185,8 @@ editor.addEventListener("drop", e => {
 
       box.style.width  = Math.max(40, w) + "px";
       box.style.height = Math.max(40, h) + "px";
+      box.dataset.w = Math.max(40, w);
+      box.dataset.h = Math.max(40, h); 
     }
 
     function stop() {
