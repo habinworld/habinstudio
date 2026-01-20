@@ -162,7 +162,7 @@ editor.addEventListener("drop", e => {
     const img = box.querySelector("img");
     if (!img) return;
 
-    const rect = img.getBoundingClientRect();
+    const rect = box.getBoundingClientRect();
     const startX = e.clientX;
     const startY = e.clientY;
     const startW = rect.width;
