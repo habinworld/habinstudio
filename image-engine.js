@@ -264,8 +264,8 @@ function enableFreeMove(box) {
       img.draggable = false;
       img.addEventListener("dragstart", e => e.preventDefault());
       img.style.display = "block";
-      img.style.maxWidth = "100%";
-      img.style.height = "auto";
+      img.style.width  = "100%";
+      img.style.height = "100%";
       box.appendChild(img);
     }
 
