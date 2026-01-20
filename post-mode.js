@@ -70,7 +70,6 @@ btnCancel &&
   if (!post) return;
 
   editor.innerHTML = post.content || "";
-  restoreImagesInEditor(post);   
   window.ImageEngine && ImageEngine.renderAll();
 }
   /* ============================
