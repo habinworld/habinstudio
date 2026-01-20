@@ -40,26 +40,7 @@ btnCancel &&
   });
   const toolbarBasic    = document.getElementById("hb-toolbar-basic");
   const toolbarAdvanced = document.getElementById("hb-toolbar-advanced");
- /* ============================
-   🖼 VIEW 이미지 렌더 
-============================ */
-function renderImagesInView(post) {
-  if (!post.images || !post.images.length) return;
-
-  post.images.forEach(id => {
-    ImageStore.load(id).then(src => {
-      if (!src) return;
-
-      const img = document.createElement("img");
-      img.src = src;
-      img.style.maxWidth = "100%";
-      img.style.display = "block";
-      img.style.margin = "12px 0";
-
-      editor.appendChild(img);
-    });
-  });
-}
+ 
   /* ============================
      공통 초기화 (엑셀 기본값)
   ============================ */
