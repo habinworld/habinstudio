@@ -85,7 +85,7 @@ btnCancel &&
   title.value = post.title || "";
   editor.innerHTML = post.content || "";
   // 🔥 이 줄이 핵심
-  renderImagesInView(post);
+  window.ImageEngine && ImageEngine.renderAll();
   editor.contentEditable = "false";
   title.readOnly = true;
 }
