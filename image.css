@@ -10,6 +10,7 @@
   width: fit-content;
   max-width: 100%;
   margin: 14px auto;
+  pointer-events: none; 
 }
 
 /* 정렬 */
