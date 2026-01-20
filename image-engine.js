@@ -183,8 +183,8 @@ editor.addEventListener("drop", e => {
 
       ev.shiftKey && (h = w / ratio);
 
-      img.style.width  = Math.max(40, w) + "px";
-      img.style.height = Math.max(40, h) + "px";
+      box.style.width  = Math.max(40, w) + "px";
+      box.style.height = Math.max(40, h) + "px";
     }
 
     function stop() {
