@@ -255,6 +255,11 @@ function enableFreeMove(box) {
      - 저장된 DOM 구조를 다시 그림
      - box / img 구조 복구
   =================================================== */
+  // 🔒 box 크기 복원 (핵심)
+if (box.dataset.w && box.dataset.h) {
+  box.style.width  = box.dataset.w + "px";
+  box.style.height = box.dataset.h + "px";
+} 
   function renderAll() {
   editor.querySelectorAll(".hb-img-box").forEach(box => {
     const id = box.dataset.imgId;
