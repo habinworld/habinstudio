@@ -29,9 +29,7 @@
 .hb-img-box.hb-img-selected::after{
   opacity:1;
 }
-.hb-img-box img{
-  pointer-events: none;
-}
+
 /* + 모양 리사이즈 핸들 */
 .hb-resize-handle{
   position:absolute;
