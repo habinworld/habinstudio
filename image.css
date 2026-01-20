@@ -10,8 +10,7 @@
   width: fit-content;
   max-width: 100%;
   margin: 14px auto;
-  pointer-events: none; 
-}
+  }
 
 /* 정렬 */
 .hb-img-box.align-left   { margin-left:0;    margin-right:auto; }
@@ -30,7 +29,9 @@
 .hb-img-box.hb-img-selected::after{
   opacity:1;
 }
-
+.hb-img-box img{
+  pointer-events: none;
+}
 /* + 모양 리사이즈 핸들 */
 .hb-resize-handle{
   position:absolute;
