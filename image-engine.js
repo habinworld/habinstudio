@@ -267,7 +267,12 @@ if (box.dataset.w && box.dataset.h) {
   // 🔑 리사이즈 핸들 복원 (EDIT 핵심)
     if (!box.querySelector(".hb-resize-handle")) {
       addResizeHandles(box);
-    }   
+    }
+     // 🔑 EDIT에서 box 선택 가능하게 클릭 이벤트 복구
+  box.addEventListener("click", e => {
+  e.stopPropagation();
+  selectBox(box);
+});
     let img = box.querySelector("img");
     if (!img) {
       img = document.createElement("img");
