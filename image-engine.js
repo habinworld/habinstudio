@@ -226,8 +226,8 @@ function enableFreeMove(box) {
       document.removeEventListener("mouseup", up);
     }
 
-    document.addEventListener("mousemove", move);
-    document.addEventListener("mouseup", up);
+    window.addEventListener("mousemove", move, true);
+    window.addEventListener("mouseup", up, true);
   });
 }
  
