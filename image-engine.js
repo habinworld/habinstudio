@@ -273,7 +273,7 @@ if (box.dataset.w && box.dataset.h) {
   box.addEventListener("click", e => {
   e.stopPropagation();
   selectBox(box);
-};
+});
     let img = box.querySelector("img");
     if (!img) {
       img = document.createElement("img");
