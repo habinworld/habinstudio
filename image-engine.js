@@ -265,9 +265,8 @@ if (box.dataset.w && box.dataset.h) {
   box.style.height = box.dataset.h + "px";
 } 
   // 🔑 리사이즈 핸들 복원 (EDIT 핵심)
-    if (!box.querySelector(".hb-resize-handle")) {
-  addResizeHandles(box);
-}
+    box.querySelectorAll(".hb-resize-handle").forEach(h => h.remove());
+addResizeHandles(box);
     
      // 🔑 EDIT에서 box 선택 가능하게 클릭 이벤트 복구
   box.addEventListener("click", e => {
