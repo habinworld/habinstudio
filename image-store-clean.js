@@ -1,16 +1,29 @@
 /* ============================================================
-   image-store-clean.js / 2026.01.31
-   ImageStore GC Engine — 유령 이미지 정리 전용
-   관리자 모드에서만 사용
+   image-store-clean.js ///// 2026.01.31
+   - 유령 이미지(Ghost) 정리 엔진
+   - 관리자 화면에서만 실행
+   - ImageStore 외부 계약(save/load/remove) 변경 없음
 ============================================================ */
-
 window.ImageStoreClean = (function () {
+
+  const DB_NAME = "habin_image_db";
+  const STORE_NAME = "images";
+  const DB_VERSION = 1;
+
+  function openDB() {
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open(DB_NAME, DB_VERSION);
+      req.onsuccess = e => resolve(e.target.result);
+      req.onerror = () => reject(req.error);
+      req.onupgradeneeded = () => {}; // 이미 image-store.js에서 생성함
+    });
+  }
 
   function collectUsedImageIdsFromPosts(allPosts) {
     const used = new Set();
 
     allPosts.forEach(p => {
-      const html = p.content || "";
+      const html = p?.content || "";
       if (!html) return;
 
       const temp = document.createElement("div");
@@ -26,35 +39,35 @@ window.ImageStoreClean = (function () {
   }
 
   async function listAllIds() {
-    const db = await indexedDB.open("habin_image_db");
+    const db = await openDB();
     return new Promise((resolve, reject) => {
-      const req = indexedDB.open("habin_image_db");
-
-      req.onsuccess = e => {
-        const _db = e.target.result;
-        const tx = _db.transaction("images", "readonly");
-        const store = tx.objectStore("images");
-        const keysReq = store.getAllKeys();
-
-        keysReq.onsuccess = () => resolve(keysReq.result || []);
-        keysReq.onerror = () => reject(keysReq.error);
-      };
+      const tx = db.transaction(STORE_NAME, "readonly");
+      const store = tx.objectStore(STORE_NAME);
+      const req = store.getAllKeys();
+      req.onsuccess = () => resolve(req.result || []);
+      req.onerror = () => reject(req.error);
     });
   }
 
-  async function runGC({ dryRun = true } = {}) {
-    const allPosts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
+  async function deleteMany(ids) {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE_NAME, "readwrite");
+      const store = tx.objectStore(STORE_NAME);
 
+      ids.forEach(id => store.delete(id));
+
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = () => reject(tx.error);
+    });
+  }
+
+  async function scanGhosts() {
+    const allPosts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
     const usedIds = collectUsedImageIdsFromPosts(allPosts);
-    const allIds  = await listAllIds();
+    const allIds = await listAllIds();
 
     const ghostIds = allIds.filter(id => !usedIds.has(String(id)));
-
-    if (!dryRun) {
-      for (const id of ghostIds) {
-        await ImageStore.remove(id);
-      }
-    }
 
     return {
       usedCount: usedIds.size,
@@ -64,7 +77,17 @@ window.ImageStoreClean = (function () {
     };
   }
 
-  return { runGC };
+  async function run({ dryRun = true } = {}) {
+    const r = await scanGhosts();
+    if (!dryRun && r.ghostIds.length) {
+      await deleteMany(r.ghostIds);
+      // 삭제 후 재스캔해서 결과 확정
+      return await scanGhosts();
+    }
+    return r;
+  }
+
+  return { run };
 
 })();
 
