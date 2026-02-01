@@ -110,7 +110,7 @@
 const NOTICE_LIMIT = 5;
 
 const notices = allPosts
-  .filter(p => p.isNotice === true)
+  .filter(p => (p.board) === BOARD && p.isNotice === true)
   .sort((a, b) => new Date(b.date) - new Date(a.date))
   .slice(0, NOTICE_LIMIT);
 
