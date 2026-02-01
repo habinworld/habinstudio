@@ -267,6 +267,23 @@ if (box.dataset.w && box.dataset.h) {
   // 🔑 리사이즈 핸들 복원 (EDIT 핵심)
     box.querySelectorAll(".hb-resize-handle").forEach(h => h.remove());
 addResizeHandles(box);
+
+     // 🔑 FREE ↔ FLOW 전환 + FREE 이동 배선 (EDIT 재진입 필수)
+if (!box.dataset.hbFreeWired) {
+  box.addEventListener("dblclick", e => {
+    e.stopPropagation();
+    const isFree = box.classList.toggle("free");
+    if (isFree) {
+      box.style.position = "absolute";
+    } else {
+      box.style.position = "";
+      box.style.left = "";
+      box.style.top  = "";
+    }
+  });
+  enableFreeMove(box);
+  box.dataset.hbFreeWired = "1";
+}
     
      // 🔑 EDIT에서 box 선택 가능하게 클릭 이벤트 복구
   box.addEventListener("click", e => {
