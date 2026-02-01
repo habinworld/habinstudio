@@ -108,6 +108,8 @@ const btnList =document.getElementById("btn-list");
 =============================== */
 const allPosts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 const posts = allPosts.filter(p => (p.board || "kr") === CURRENT_BOARD);
+// 🔥 최신 글이 위로 오도록 순서 뒤집기 (게시판 기본 규칙)
+posts.reverse();  
 window.posts = posts; // 관리자 액션용
 
 /* ===============================
