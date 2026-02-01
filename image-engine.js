@@ -185,7 +185,6 @@ editor.addEventListener("drop", e => {
 
       box.style.width  = Math.max(40, w) + "px";
       box.style.height = Math.max(40, h) + "px";
-      console.log("RESIZE MOVE", dir, box.style.width, box.style.height); 
       box.dataset.w = Math.max(40, w);
       box.dataset.h = Math.max(40, h); 
     }
