@@ -40,27 +40,24 @@ function renderMainGrid(postList) {
 
    
    // ✅ 존재/비존재 단일 규칙
-item.innerHTML = thumbId
-  ? `
-      <div class="grid-thumb" data-img-id="${thumbId}"></div>
-      <div class="card-title">
-        ${p.isNotice ? "📌 " : ""}${p.title || ""}
-      </div>
-    `
-  : `
-      <div class="card-title">
-        ${p.isNotice ? "📌 " : ""}${p.title || ""}
-      </div>
+item.innerHTML = `
+  ${thumbId ? `<div class="grid-thumb" data-img-id="${thumbId}"></div>` : ``}
 
-      <div class="card-preview">
-        ${previewText}${textOnly.length > 120 ? "…" : ""}
-      </div>
+  <div class="card-title">
+    ${p.isNotice ? "📌 " : ""}${p.title || ""}
+  </div>
 
-      <div class="card-meta">
-        <span class="card-writer">${p.writer || "하빈"}</span>
-        <span class="card-date">${onlyDate}</span>
-      </div>
-    `;
+  ${!thumbId ? `
+    <div class="card-preview">
+      ${previewText}${textOnly.length > 120 ? "…" : ""}
+    </div>
+  ` : ``}
+
+  <div class="card-meta">
+    <span class="card-writer">${p.writer || "하빈"}</span>
+    <span class="card-date">${onlyDate}</span>
+  </div>
+`;
     /* 5️⃣ 클릭 → 글 보기 (list와 100% 동일 규칙) */
     item.onclick = () => {
     location.href =
