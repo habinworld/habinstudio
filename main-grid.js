@@ -65,5 +65,17 @@ function renderMainGrid(postList) {
  /* 7️⃣ 썸네일 이미지 로딩 */
 renderGridThumbs();  
 }
+/* 🖼 그리드 썸네일 로더 */
+async function renderGridThumbs(){
+  const boxes = document.querySelectorAll(".grid-thumb[data-img-id]");
+  for(const box of boxes){
+    const id = box.dataset.imgId;
+    if(!id) continue;
 
+    const src = await ImageStore.load(id);
+    if(src){
+      box.style.backgroundImage = `url(${src})`;
+    }
+  }
+}
 
