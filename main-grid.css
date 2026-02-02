@@ -92,6 +92,19 @@
 .card-date {
   text-align: right;
 }
+/* ===============================
+   썸네일 (그리드 전용)
+================================ */
+.grid-thumb{
+  width: 100%;
+  height: 92px;              /* ✅ 카드 체급(190px) 고려: 80~110이 안정 */
+  border-radius: 8px;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid #7E8FB8;
+  background-size: cover;
+  background-position: center;
+  flex: 0 0 auto;            /* ✅ 썸네일 눌림 방지 */
+}
 
 
 
