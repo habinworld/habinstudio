@@ -57,11 +57,8 @@
         <td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
         <td>${p.writer || "하빈"}</td>
         <td>
-  <span class="list-thumb"
-        ${thumbId ? `data-img-id="${thumbId}"` : `style="display:none;"`}></span>
-  <a class="title-link"
-     href="post.html?mode=view&id=${p.id}&board=${getBoardFromURL()}">
-     ${p.isNotice ? "📌 " : ""}${p.title}
+  <a href="post.html?mode=view&id=${p.id}&board=${getBoardFromURL()}" class="title-link">
+    ${p.isNotice ? "📌 " : ""}${p.title}
   </a>
 </td>
         <td>${formatDate(p.date)}</td>
