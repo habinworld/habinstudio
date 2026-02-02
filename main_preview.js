@@ -29,6 +29,13 @@
   if (!currentPage || currentPage < 1) currentPage = 1;
 
   const totalPages = Math.ceil(posts.length / itemsPerPage);
+   /* 0️⃣ 메인프리뷰 테이블 썸네일용 */
+  function extractFirstImageIdFromContent(html){
+    const temp = document.createElement("div");
+    temp.innerHTML = html || "";
+    const box = temp.querySelector(".hb-img-box[data-img-id]");
+    return box ? (box.dataset.imgId || null) : null;
+  }
 
   function getPagePosts() {
     const start = (currentPage - 1) * itemsPerPage;
