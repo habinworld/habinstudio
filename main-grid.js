@@ -6,7 +6,13 @@
    - localStorage 접근 ❌
    - 전달받은 글 목록을 카드형으로 렌더링 ⭕
 -------------------------------------------------- */
-
+/* 0️⃣ 썸네일용: 본문에서 첫 이미지 id 추출 */
+function extractFirstImageIdFromContent(html){
+  const temp = document.createElement("div");
+  temp.innerHTML = html || "";
+  const box = temp.querySelector(".hb-img-box[data-img-id]");
+  return box ? (box.dataset.imgId || null) : null;
+}
 function renderMainGrid(postList) {
   const grid = document.getElementById("current-exhibit");
   if (!grid) return;
