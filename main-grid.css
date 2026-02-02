@@ -105,6 +105,11 @@
   background-position: center;
   flex: 0 0 auto;            /* ✅ 썸네일 눌림 방지 */
 }
-
+.grid-item.no-thumb::before{
+  content:"";
+  display:block;
+  height:92px;
+  flex: 0 0 auto;
+}
 
 
