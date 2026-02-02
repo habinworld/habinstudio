@@ -36,8 +36,9 @@ function renderMainGrid(postList) {
     /* 4️⃣ 카드 생성 */
     const item = document.createElement("div");
     item.className = "grid-item";
-
+    const thumbId = extractFirstImageIdFromContent(p.content);
     item.innerHTML = `
+    <div class="grid-thumb" ${thumbId ? `data-img-id="${thumbId}"` : ""}></div>
       <div class="card-title">
         ${p.isNotice ? "📌 " : ""}${p.title}
       </div>
