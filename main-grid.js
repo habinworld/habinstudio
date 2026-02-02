@@ -40,6 +40,8 @@ function renderMainGrid(postList) {
 
    
    // ✅ 존재/비존재 단일 규칙
+   item.classList.toggle("has-thumb", !!thumbId);
+   item.classList.toggle("no-thumb", !thumbId);  
 item.innerHTML = `
   ${thumbId ? `<div class="grid-thumb" data-img-id="${thumbId}"></div>` : ``}
 
