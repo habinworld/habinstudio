@@ -196,14 +196,16 @@ body.is-admin .admin-only{
     .grid-floor {
       margin-top: 28px;
     }
+/* 🖼 리스트(테이블) 썸네일 */
 .list-thumb{
-  width:48px;
-  height:48px;
+  width:42px;
+  height:42px;
   border-radius:6px;
   background:#eee;
   background-size:cover;
   background-position:center;
   display:inline-block;
-  margin-right:8px;
   vertical-align:middle;
+  margin-right:8px;
+  border:1px solid #7E8FB8;
 }
