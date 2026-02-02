@@ -196,3 +196,14 @@ body.is-admin .admin-only{
     .grid-floor {
       margin-top: 28px;
     }
+.list-thumb{
+  width:48px;
+  height:48px;
+  border-radius:6px;
+  background:#eee;
+  background-size:cover;
+  background-position:center;
+  display:inline-block;
+  margin-right:8px;
+  vertical-align:middle;
+}
