@@ -169,7 +169,7 @@ function renderList() {
   pagePosts.forEach((p, idx) => {
     const realIndex = (currentPage - 1) * itemsPerPage + idx;
     const tr = document.createElement("tr");
-    
+ const thumbId = extractFirstImageIdFromContent(p.content);   
 tr.innerHTML = `
 <td class="admin-only admin-actions" style="text-align:center; white-space:nowrap;">
   <!------------ 📦 게시판 이동--------- -->
