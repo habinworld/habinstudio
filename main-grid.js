@@ -62,6 +62,8 @@ function renderMainGrid(postList) {
     /* 6️⃣ 그리드에 추가 */
     grid.appendChild(item);
   });
+ /* 7️⃣ 썸네일 이미지 로딩 */
+renderGridThumbs();  
 }
 
 
