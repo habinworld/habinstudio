@@ -53,7 +53,7 @@
 
     pagePosts.forEach((p, idx) => {
       const tr = document.createElement("tr");
-      onst thumbId = extractFirstImageIdFromContent(p.content); 
+      const thumbId = extractFirstImageIdFromContent(p.content); 
       tr.innerHTML = `
         <td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
         <td>${p.writer || "하빈"}</td>
