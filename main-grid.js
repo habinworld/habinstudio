@@ -20,6 +20,20 @@ function renderMainGrid(postList) {
   grid.innerHTML = "";
 
   postList.forEach(p => {
+     const item = document.createElement("div");
+    item.className = "grid-item";
+
+    const thumbId = extractFirstImageIdFromContent(p.content);
+     // 🔥 존재/비존재 단일 규칙
+if (thumbId) {
+  // 📷 썸네일 카드
+  item.innerHTML = `
+    <div class="grid-thumb" data-img-id="${thumbId}"></div>
+    <div class="card-title">
+      ${p.isNotice ? "📌 " : ""}${p.title || ""}
+    </div>
+  `;
+} else {
 
     /* 1️⃣ 본문 HTML 제거 → 텍스트만 */
     const textOnly = (p.content || "")
