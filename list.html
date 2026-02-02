@@ -122,25 +122,7 @@ function saveAllPosts() {
 function findIndexById(id) {
   return allPosts.findIndex(p => p.id === id);
 }
-/* ===============================
-   🖼 LIST THUMB HELPERS
-=============================== */
-function extractFirstImageIdFromContent(html){
-  const temp = document.createElement("div");
-  temp.innerHTML = html || "";
-  const box = temp.querySelector(".hb-img-box[data-img-id]");
-  return box ? (box.dataset.imgId || null) : null;
-}
 
-async function renderListThumbs(){
-  const boxes = document.querySelectorAll(".list-thumb[data-img-id]");
-  for(const box of boxes){
-    const id = box.dataset.imgId;
-    if(!id) continue;
-    const src = await ImageStore.load(id);
-    if(src) box.style.backgroundImage = `url(${src})`;
-  }
-}
 /* ===============================
    📄 PAGINATION
 =============================== */
@@ -269,7 +251,7 @@ function moveBoard(i, targetBoard) {
 renderList();
 renderPagination();
 renderGrid();
-renderListThumbs();  
+
 </script>
 
 </body>
