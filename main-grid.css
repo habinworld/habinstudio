@@ -111,5 +111,7 @@
   height:92px;
   flex: 0 0 auto;
 }
-
+.grid-item.no-thumb .card-preview {
+  margin-bottom: 0;
+}
 
