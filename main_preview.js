@@ -65,7 +65,7 @@
         <td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
         <td>${p.writer || "하빈"}</td>
         <td>
-  <a href="post.html?mode=view&id=${p.id}&board=${getBoardFromURL()}" class="title-link">
+  <a href="post.html?mode=view&id=${p.id}" class="title-link">
     ${p.isNotice ? "📌 " : ""}${p.title}
   </a>
 </td>
