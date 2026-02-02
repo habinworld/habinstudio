@@ -145,7 +145,7 @@ if (noticeSection && noticeList && notices.length > 0) {
   renderTable();
   renderPagination();
   renderGrid();
-  renderListThumbs(); 
+ 
 })();
 
 
