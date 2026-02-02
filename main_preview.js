@@ -18,8 +18,8 @@
 
   /* 🖥 화면 출력용 파생 데이터 */
   const posts = allPosts
-    .filter(p => p.board === BOARD)
-  posts.reverse(); // 🔥 최신 글이 위로 오도록 
+    .filter(p => p.board === BOARD);
+     posts.reverse(); // 🔥 최신 글이 위로 오도록 
     
   /* 📄 페이지 상태 */
   let currentPage = parseInt(
