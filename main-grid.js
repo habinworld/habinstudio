@@ -41,11 +41,10 @@ function renderMainGrid(postList) {
    
    // ✅ 존재/비존재 단일 규칙
    item.innerHTML = `
-  ${thumbId ? `<div class="grid-thumb" data-img-id="${thumbId}"></div>` : ``}
-
-  <div class="card-title">
+   <div class="card-title">
     ${p.isNotice ? "📌 " : ""}${p.title || ""}
   </div>
+  ${thumbId ? `<div class="grid-thumb" data-img-id="${thumbId}"></div>` : ``}
 
   ${!thumbId ? `
     <div class="card-preview">
