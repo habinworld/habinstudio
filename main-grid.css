@@ -65,7 +65,7 @@
   line-height: 1.45;
 
   margin-top: 2px;
-  margin-bottom: auto;            /* ✅ 세로 안정 핵심 */
+ height: 113px;           /* ✅ 텍스트 6줄 체급 고정 */
 
   display: -webkit-box;
   -webkit-line-clamp: 6;          /* 메인에선 3줄이 안정 */
@@ -97,7 +97,7 @@
 ================================ */
 .grid-thumb{
   width: 100%;
-  height: 92px;              /* ✅ 카드 체급(190px) 고려: 80~110이 안정 */
+  height: 113px;              /* ✅ 카드 체급(190px) 고려 */
   border-radius: 8px;
   background: rgba(255,255,255,0.55);
   border: 1px solid #7E8FB8;
