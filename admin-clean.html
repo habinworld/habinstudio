@@ -8,16 +8,17 @@
 </head>
 
 <body class="admin-page">
-  <h1>🧹 정리실 · 캐시 청소(이미지)</h1>
-
-  <div class="top-buttons">
-    <button id="btn-scan" class="btn">스캔</button>
-    <button id="btn-delete" class="btn">영구삭제 실행</button>
+  <div class="admin-wrapper">
+    <h1 class="admin-title">🧹 정리실 · 캐시 청소(이미지)</h1>
+    <div class="admin-panel">
+      <div class="top-buttons admin-buttons">
+        <button id="btn-scan" class="btn">스캔</button>
+        <button id="btn-delete" class="btn danger">영구삭제 실행</button>
       </div>
-  
-  <div id="gc-summary" class="gc-summary" style="margin:12px 0;"></div>
-
-  <pre id="gc-log" style="white-space:pre-wrap; padding:10px; border:1px solid #ddd; border-radius:10px; min-height:160px;"></pre>
+      <div id="gc-summary" class="gc-summary"></div>
+      <pre id="gc-log" class="gc-log"></pre>
+    </div>
+  </div>
 
   <script>
     // ✅ 관리자만
