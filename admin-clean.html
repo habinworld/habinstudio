@@ -82,10 +82,9 @@
         return;
       }
 
-      const input = prompt(
-        `유령 이미지 ${last.ghostCount}개를 영구 삭제합니다.\n되돌릴 수 없습니다.\n\nDELETE 를 입력하세요.`
-      );
-      if (input !== "DELETE") return;
+      if (!confirm(
+  `유령 이미지 ${last.ghostCount}개를 영구 삭제합니다.\n되돌릴 수 없습니다.\n\n진행할까요?`
+)) return;
 
       logEl.textContent += "\n영구 삭제 실행 중...\n";
       const r = await ImageStoreClean.run({ dryRun: false });
