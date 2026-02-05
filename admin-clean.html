@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>정리실(캐시 청소) · 관리자</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="admin-page">
+  <h1>🧹 정리실 · 캐시 청소(이미지)</h1>
+
+  <div class="top-buttons">
+    <button id="btn-scan" class="btn">스캔</button>
+    <button id="btn-delete" class="btn">영구삭제 실행</button>
+    <a href="list.html" class="btn">목록으로</a>
+  </div>
+
+  <div id="gc-summary" class="gc-summary" style="margin:12px 0;"></div>
+
+  <pre id="gc-log" style="white-space:pre-wrap; padding:10px; border:1px solid #ddd; border-radius:10px; min-height:160px;"></pre>
+
+  <script>
+    // ✅ 관리자만
+    window.IS_ADMIN = localStorage.getItem("habin_admin") === "true";
+    if (!window.IS_ADMIN) {
+      alert("관리자만 접근 가능합니다.");
+      location.href = "index.html";
+    }
+  </script>
+
+  <!-- ✅ 단일진실(이미지) -->
+  <script src="image-store.js"></script>
+
+  <!-- ✅ 캐시 청소 엔진(유령 이미지 정리) -->
+  <script src="image-store-clean.js"></script>
+
+  <script>
+    // ✅ 파일 추가 없이 여기서만 제어 (캐시 청소 전용)
+    const logEl = document.getElementById("gc-log");
+    const sumEl = document.getElementById("gc-summary");
+    const btnScan = document.getElementById("btn-scan");
+    const btnDelete = document.getElementById("btn-delete");
+
+    let last = null;
+
+    const MB = (b) => (b / (1024 * 1024)).toFixed(2) + " MB";
+
+    function renderSummary(r) {
+      if (!r) return;
+      const parts = [
+        `총 이미지: <b>${r.allCount}</b>`,
+        `사용 중: <b>${r.usedCount}</b>`,
+        `유령: <b>${r.ghostCount}</b>`
+      ];
+      if (typeof r.ghostBytes === "number") parts.push(`정리 가능: <b>${MB(r.ghostBytes)}</b>`);
+      sumEl.innerHTML = parts.join(" <span style='color:#999;'>•</span> ");
+    }
+
+    btnScan.onclick = async () => {
+      logEl.textContent = "스캔 중...\n";
+      const r = await ImageStoreClean.run({ dryRun: true });
+      last = r;
+
+      renderSummary(r);
+
+      if (!r.ghostCount) {
+        logEl.textContent += "정리할 유령 이미지 없음 ✅\n";
+        return;
+      }
+
+      logEl.textContent += `유령 이미지 ID (${r.ghostCount}):\n`;
+      r.ghostIds.forEach(id => (logEl.textContent += `- ${id}\n`));
+    };
+
+    btnDelete.onclick = async () => {
+      if (!last) {
+        alert("먼저 스캔을 실행하세요.");
+        return;
+      }
+      if (!last.ghostCount) {
+        alert("삭제할 유령 이미지가 없습니다.");
+        return;
+      }
+
+      const input = prompt(
+        `유령 이미지 ${last.ghostCount}개를 영구 삭제합니다.\n되돌릴 수 없습니다.\n\nDELETE 를 입력하세요.`
+      );
+      if (input !== "DELETE") return;
+
+      logEl.textContent += "\n영구 삭제 실행 중...\n";
+      const r = await ImageStoreClean.run({ dryRun: false });
+      last = r;
+
+      renderSummary(r);
+      logEl.textContent += `완료 ✅ 삭제 후 유령 이미지: ${r.ghostCount}\n`;
+    };
+  </script>
+</body>
+</html>
+
