@@ -315,7 +315,11 @@
   border-color: #3558A8;
   color: #3558A8;
 }
-
+.sidebar-bottom {
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(53,88,168,0.4);
+}
 /* ===============================
    🌙 Night Mode (ONE BLOCK)
 ================================ */
