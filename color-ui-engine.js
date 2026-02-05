@@ -72,10 +72,12 @@
      실행 연결 (판단 없음)
   =============================== */
   function applyColor(value) {
-    if (type === "text") {
-      ColorTextEngine.apply(value);
-    } else {
-      ColorBgEngine.apply(value);
+  const isNone = (value === "" || value === null || value === "__NONE__");
+
+  if (type === "text") {
+    isNone ? ColorTextEngine.none() : ColorTextEngine.apply(value);
+  } else {
+    isNone ? ColorBgEngine.none() : ColorBgEngine.apply(value);
     }
   }
 
