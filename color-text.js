@@ -70,7 +70,7 @@ window.ColorTextEngine = (function () {
     // selection 정리
     sel.removeAllRanges();
   }
-
+  function none() { apply("#000000"); }   // 색없음 = 검정
   return { apply };
 })();
 
