@@ -174,11 +174,8 @@
   background: #FF0000 !important;
 }
 /* 여백 미세 조정 */
-#clock-box {
-  display: flex;
-  justify-content: center;
-  margin: 12px 0 22px;
-}
+#clock-box { display:flex; justify-content:center; margin:12px 0 22px; transform:scale(0.7); transform-origin:center top; }
+
 
 /* ----------------------------------------
    🌦 날씨 영역
