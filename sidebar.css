@@ -174,7 +174,7 @@
   background: #FF0000 !important;
 }
 /* 여백 미세 조정 */
-#clock-box { display:flex; justify-content:center; margin:12px 0 22px; transform:scale(0.8); transform-origin:center top; }
+#clock-box { display:flex; justify-content:center; margin:12px 0 22px; transform:scale(0.9); transform-origin:center top; }
 
 
 /* ----------------------------------------
