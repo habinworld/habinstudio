@@ -62,7 +62,7 @@ window.ColorBgEngine = (function () {
 
     sel.removeAllRanges();
   }
-
+  function none() { apply("#FFFFFF"); }   // 색없음 = 흰색
   return { apply };
 })();
 
