@@ -175,8 +175,11 @@
 }
 /* 여백 미세 조정 */
 #clock-box { display:flex; justify-content:center; margin:12px 0 22px; transform:scale(0.9); transform-origin:center top; }
-
-
+#clock {
+  box-shadow:
+    0 0 8px rgba(58,103,201,0.35),
+    0 0 18px rgba(58,103,201,0.18);
+}
 /* ----------------------------------------
    🌦 날씨 영역
 ---------------------------------------- */
