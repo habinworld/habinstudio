@@ -221,3 +221,37 @@ body.night #habin-footer {
 body.night #habin-footer .ft-hidden {
   color: #94A3B8;
 }  
+/* ===== admin-clean ===== */
+.admin-wrapper{
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 16px;
+}
+.admin-title{
+  margin: 0 0 14px 0;
+}
+.admin-panel{
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+.admin-buttons{
+  margin-bottom: 12px;
+}
+.gc-summary{
+  margin: 12px 0;
+}
+.gc-log{
+  white-space: pre-wrap;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  min-height: 160px;
+}
+/* 위험 버튼 (원하면 색은 나중에 조정) */
+.btn.danger{
+  background: #c0392b;
+  color: #fff;
+}
