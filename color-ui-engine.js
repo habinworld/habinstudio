@@ -1,7 +1,7 @@
 /* ======================================================
    🎨 color-ui-engine.js — Color MODE Controller (FINAL)
    ====================================================== */
-
+console.log("[ColorUI] handleSelect value =", value, "type =", type);
 (function () {
 
   const MODE_BASIC = 0;
