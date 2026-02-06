@@ -57,7 +57,7 @@
     if (value === "__ADVANCED__") {
       mode = MODE_ADVANCED;
       render();
-      return;
+      return{ apply, none };
     }
     applyColor(value);
   }
