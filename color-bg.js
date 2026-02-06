@@ -59,6 +59,8 @@ window.ColorBgEngine = (function () {
       span.appendChild(nodeRange.extractContents());
       nodeRange.insertNode(span);
     });
+    }
+     
   return { apply };
 })();
 
