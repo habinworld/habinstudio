@@ -75,9 +75,15 @@
    const isBase = (value === "" || value === null || value === "__NONE__" || value === "__BASE__");
   const engine = (type === "text") ? ColorTextEngine : ColorBgEngine;
 
-  const color = isBase ? "#000000" : value;
+  const baseText = "#000000";
+  const baseBg   = "#ffffff";
+
+  const color = isBase
+    ? (type === "text" ? baseText : baseBg)
+    : value;
+
   engine.apply(color);
-}   
+}
 
 })();
 
