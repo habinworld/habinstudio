@@ -66,6 +66,8 @@ window.ColorTextEngine = (function () {
       span.appendChild(nodeRange.extractContents());
       nodeRange.insertNode(span);
     });
+    }
+     
 // 색없슴 처리
    function none() {
   const sel = window.getSelection();
