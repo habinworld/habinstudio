@@ -56,8 +56,7 @@
   function handleSelect(value) {
     if (value === "__ADVANCED__") {
       mode = MODE_ADVANCED;
-      render();
-      return{ apply, none };
+      render return();
     }
     applyColor(value);
   }
