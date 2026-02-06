@@ -67,52 +67,7 @@ window.ColorTextEngine = (function () {
       nodeRange.insertNode(span);
     });
     }
-     
-// 색없슴 처리
-   function none() {
-  const sel = window.getSelection();
-  if (!sel || sel.rangeCount === 0) return;
-
-  const range = sel.getRangeAt(0);
-  if (range.collapsed) return;
-
-  const editor = document.getElementById("hb-editor");
-  if (!editor) return;
-
-  const targets = [];
-  const walker = document.createTreeWalker(
-    editor,
-    NodeFilter.SHOW_ELEMENT,
-    {
-      acceptNode(el) {
-        if (!range.intersectsNode(el)) return NodeFilter.FILTER_REJECT;
-        if (el.tagName === "SPAN" && el.style && el.style.color) {
-          return NodeFilter.FILTER_ACCEPT;
-        }
-        return NodeFilter.FILTER_REJECT;
-      }
-    }
-  );
-
-  let el;
-  while ((el = walker.nextNode())) targets.push(el);
-
-  for (let i = targets.length - 1; i >= 0; i--) {
-    const s = targets[i];
-    s.style.removeProperty("color");
-
-    // style이 비면 span 제거
-    const styleAttr = (s.getAttribute("style") || "").trim();
-    const hasOtherAttrs = [...s.attributes].some(a => a.name !== "style");
-    if (!styleAttr && !hasOtherAttrs) {
-      const p = s.parentNode;
-      while (s.firstChild) p.insertBefore(s.firstChild, s);
-      p.removeChild(s);
-    }
-  }
-}
-
-// ✅ 반드시 이렇게 export
-return { apply, none };
+    
+return { apply };
 })();
 
