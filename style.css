@@ -232,7 +232,7 @@ body.night #habin-footer .ft-hidden {
 }
 .admin-panel{
   background: #fff;
-  border: 1px solid #ddd;
+  border: 1px solid #3558A8;
   border-radius: 12px;
   padding: 18px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
@@ -246,7 +246,7 @@ body.night #habin-footer .ft-hidden {
 .gc-log{
   white-space: pre-wrap;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #C0C0C0;
   border-radius: 10px;
   min-height: 160px;
 }
