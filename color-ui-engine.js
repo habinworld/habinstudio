@@ -73,13 +73,10 @@
   =============================== */
   function applyColor(value) {
   const isNone = (value === "" || value === null || value === "__NONE__");
-
-  if (type === "text") {
-    isNone ? ColorTextEngine.none() : ColorTextEngine.apply(value);
-  } else {
-    isNone ? ColorBgEngine.none() : ColorBgEngine.apply(value);
-    }
-  }
+  const engine = (type === "text") ? ColorTextEngine : ColorBgEngine;
+  const fn = isNone ? "none" : "apply";
+  engine[fn](value);
+}   
 
 })();
 
