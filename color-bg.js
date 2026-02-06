@@ -59,10 +59,6 @@ window.ColorBgEngine = (function () {
       span.appendChild(nodeRange.extractContents());
       nodeRange.insertNode(span);
     });
-
-    sel.removeAllRanges();
-  }
-  function none() { apply("#FFFFFF"); }   // 색없음 = 흰색
   return { apply };
 })();
 
