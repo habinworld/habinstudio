@@ -37,10 +37,10 @@ body {
    🌱 Seasonal Theme (CSS only)
    계절 표현은 여기서만
 ================================ */
-body.spring { --bgmain: #F6FBFF; } /* 맑은 봄하늘 (회색 착시 제거) */
-body.summer { --bgmain: #F2FFF6; } /* 연민트 (시원, 깨끗) */
-body.autumn { --bgmain: #FFF6E8; } /* 크림살구 (따뜻, 탁함 없음) */
-body.winter { --bgmain: #F7F9FF; } /* 눈빛 라일락 (차가운데 밝음) */
+body.spring { background-color: #F6FBFF; } /* 맑은 봄하늘 (회색 착시 제거) */
+body.summer { background-color: #F2FFF6; } /* 연민트 (시원, 깨끗) */
+body.autumn { background-color: #FFF6E8; } /* 크림살구 (따뜻, 탁함 없음) */
+body.winter { background-color: #F7F9FF; } /* 눈빛 라일락 (차가운데 밝음) */
 
 /* ===============================
    Season Particles Canvas
