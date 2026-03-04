@@ -167,6 +167,11 @@ body.winter { background-color: #F7F9FF; } /* 눈빛 라일락 (차가운데 밝
 .ft-star   { font-size: 15px;color: #DAA520; font-weight: 700; }
 .ft-hidden { color: #C0C0C0;font-size: 15px; font-style: italic;margin-left: 6px;opacity: 0.9; }
 
+/* Layout wrapper는 배경을 가지지 않음 */
+#layout,
+#content {
+  background: transparent;
+}
 /* ===============================
    Content Scrollbar
 ================================ */
