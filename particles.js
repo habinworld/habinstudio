@@ -157,10 +157,13 @@ function animateParticles() {
 /* -----------------------------------------------------
    📌 외부 호출: 계절에 따라 자동 실행
 ----------------------------------------------------- */
-function startParticles(season) {
+function startParticles(season, isNight) {
   initCanvas();
 
-  if (season === 'spring') springParticles();
+  if (isNight) {
+    nightParticles();
+  }
+  else if (season === 'spring') springParticles();
   else if (season === 'summer') summerParticles();
   else if (season === 'autumn') autumnParticles();
   else if (season === 'winter') winterParticles();
