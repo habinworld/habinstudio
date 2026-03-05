@@ -119,7 +119,8 @@ function drawParticle(p) {
 } else if (p.shape === 'leaf') {
   ctx.ellipse(p.x, p.y, p.size * 0.7, p.size, 0, 0, Math.PI * 2);
 } else if (p.shape === 'star') {
-  ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(255,255,255,0.9)';
+  ctx.fillRect(p.x, p.y, 2, 2);
 } else {
   ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
 }
