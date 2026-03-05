@@ -74,14 +74,14 @@
   width: 100%;
   table-layout: fixed; 
   border-collapse: collapse;
-  border-top: 1px solid rgba(92,142,219,0.45); 
+  border-top: 1px solid rgba(92,142,219,0.8); 
   margin-top: 10px;
 }
 
 .post-table th {
   text-align: center;
   padding: 12px 0;
-  border-bottom: 1px solid rgba(92,142,219,0.45); 
+  border-bottom: 1px solid rgba(92,142,219,0.8); 
   font-size: 15px;
   color: #94a3b8; 
 }
