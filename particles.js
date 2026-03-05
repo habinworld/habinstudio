@@ -115,12 +115,14 @@ function drawParticle(p) {
   ctx.beginPath();
 
   if (p.shape === 'petal') {
-    ctx.ellipse(p.x, p.y, p.size, p.size * 0.6, 0, 0, Math.PI * 2);
-  } else if (p.shape === 'leaf') {
-    ctx.ellipse(p.x, p.y, p.size * 0.7, p.size, 0, 0, Math.PI * 2);
-  } else {
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-  }
+  ctx.ellipse(p.x, p.y, p.size, p.size * 0.6, 0, 0, Math.PI * 2);
+} else if (p.shape === 'leaf') {
+  ctx.ellipse(p.x, p.y, p.size * 0.7, p.size, 0, 0, Math.PI * 2);
+} else if (p.shape === 'star') {
+  ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+} else {
+  ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+}
 
   ctx.fillStyle = p.color;
   ctx.fill();
