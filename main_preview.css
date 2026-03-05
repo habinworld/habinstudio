@@ -34,7 +34,7 @@
 .notice-writer {
   width: 60px;
   text-align: center;
-  color: #cbd5f5;
+  color: #94a3b8;
   font-weight: 500;
   margin-right: 20px; 
 }
@@ -43,7 +43,7 @@
 .notice-title {
   flex: 1;
   font-weight: 600;
-  color: #e5e7eb;
+  color: #94a3b8;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
