@@ -103,7 +103,7 @@ function nightParticles() {
   createParticles(
     60,
     'star',
-    'rgba(255,255,255,0.75)',
+    'rgba(190,220,255,0.85)',
     2,
     0.25
   );
