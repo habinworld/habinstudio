@@ -67,7 +67,9 @@ body.winter { background-color: #FFD1E8; }  /* 겨울 : 연핑크 눈빛 */
   height: auto; 
   min-height: 100vh;
 }
-
+#content{
+  color:#94A3B8;
+}
 /* ===============================
    Top Banner
 ================================ */
