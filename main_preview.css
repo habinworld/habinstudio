@@ -143,13 +143,13 @@
   border: 1px solid rgba(255,255,255,0.25); 
   font-size: 15px;
   font-weight: 600;
-  color: #cdd9ff; 
+  color: #94a3b8; 
   text-decoration: none;
 }
 .page-btn.active {
-  background: #3558A8;
+  background: #94a3b8;
   color: #fff;
-  border-color: #3558A8;
+  border-color: #94a3b8;
 }
 .main-page .post-table {
   border-top: 2px solid rgba(255,255,255,0.5);
