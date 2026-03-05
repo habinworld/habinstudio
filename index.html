@@ -130,13 +130,16 @@
   }
 
   const season = getSeason(new Date().getMonth() + 1);
+  const hour = new Date().getHours();
+  const isNight = (hour >= 18 || hour < 6);
+  document.body.classList.toggle('night', isNight);
 
   // 🎨 계절 클래스 (CSS 전용)
   document.body.classList.add(season);
 
   // 🍃 계절 효과 (particles)
   if (typeof startParticles === "function") {
-    startParticles(season);
+    startParticles(season, isNight);
   }
 </script>  
 <script>
@@ -203,6 +206,7 @@ function initSidebarOnly() {
 
  </body>
 </html>
+
 
 
 
