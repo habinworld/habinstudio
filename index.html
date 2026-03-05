@@ -142,10 +142,6 @@
     startParticles(season, isNight);
   }
 </script>  
-<script>
-  const hour = new Date().getHours();
-  document.body.classList.toggle('night', (hour >= 18 || hour < 6));
-</script> 
  
 <script>
 fetch("sidebar.html")
@@ -206,6 +202,7 @@ function initSidebarOnly() {
 
  </body>
 </html>
+
 
 
 
