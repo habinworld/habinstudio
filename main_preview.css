@@ -27,14 +27,14 @@
 .notice-no {
   width: 24px;
   text-align: center;
-  color: #8696AD;
+  color: #778AA2;
 }
 
 /* 작성자 */
 .notice-writer {
   width: 60px;
   text-align: center;
-  color: #8696AD;
+  color: #778AA2;
   font-weight: 500;
   margin-right: 20px; 
 }
@@ -83,14 +83,14 @@
   padding: 12px 0;
   border-bottom: 1px solid rgba(92,142,219,0.8); 
   font-size: 15px;
-  color: #94a3b8; 
+  color: #778AA2; 
 }
 
 .post-table td {
   padding: 6px 10px;
   border-bottom: none; 
   font-size: 14px;
-  color: #94a3b8; 
+  color: #778AA2; 
 }
 
 .post-table td:nth-child(1),
@@ -101,24 +101,24 @@
 .post-table td:nth-child(4) {
   text-align: right;
   font-size: 14px;
-  color: #94a3b8; 
+  color: #778AA2; 
 }
 
 .title-link {
   display: block; 
   text-align: left;  
   font-weight: 600;
-  color: #94a3b8; 
+  color: #778AA2; 
   text-decoration: none;
   transition: color 0.2s; 
 }
 .title-link:hover {
-  color: #94a3b8;
+  color: #778AA2;
 }
 .empty {
   text-align: center;
   padding: 18px 0;
-  color: #94a3b8;  
+  color: #778AA2;  
 }
 /* 링크 배경 완전 제거 */
 .post-table a,
