@@ -43,7 +43,7 @@
 .notice-title {
   flex: 1;
   font-weight: 600;
-  color: #8696AD;
+  color: #778AA2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -52,7 +52,7 @@
 /* 날짜 */
 .notice-date {
   font-size: 13px;
-  color: #94a3b8;
+  color: #778AA2;
   white-space: nowrap;
 }
 .board-wrap {
