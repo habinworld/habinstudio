@@ -177,4 +177,13 @@
   background: #EAF2FF;
   color: #3558A8;
 }
-
+.hb-color-chip {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-left: 4px;
+  border: 1px solid #999;
+  border-radius: 2px;
+  vertical-align: middle;
+  background: #ffffff;
+}
