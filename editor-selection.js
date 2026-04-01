@@ -26,16 +26,27 @@ function hbEnsureCaretVisible() {
 }
 
 // ==============================
+// selection 처리
+// ==============================
+function hbHandleSelectionChange() {
+  hbEnsureCaretVisible();
+
+  if (typeof hbUpdateToolbarState === 'function') {
+    hbUpdateToolbarState();
+  }
+}
+
+// ==============================
 // 이벤트 연결
 // ==============================
 function hbBindSelectionEvents() {
   const editor = document.getElementById('hb-editor');
   if (!editor) return;
 
-  document.addEventListener('selectionchange', hbEnsureCaretVisible);
-
-  editor.addEventListener('keyup', hbEnsureCaretVisible);
-  editor.addEventListener('mouseup', hbEnsureCaretVisible);
+  document.addEventListener('selectionchange', hbHandleSelectionChange);
+  editor.addEventListener('keyup', hbHandleSelectionChange);
+  editor.addEventListener('mouseup', hbHandleSelectionChange);
+  editor.addEventListener('click', hbHandleSelectionChange);
 }
 
 // ==============================
