@@ -126,7 +126,7 @@ function render(containerId, items) {
       b.className = "hb-btn";
 
       item.icon && b.classList.add("icon");
-      b.textContent = item.label;
+      b.innerHTML = item.label;
 
       bar.appendChild(b);
     })();
