@@ -407,29 +407,3 @@ body.night #habin-footer .ft-hidden {
   color:#94a3b8;
   text-align:center;
 }
-
-/* 모바일 */
-@media (max-width:480px){
-  #hb-trace-section{
-    margin-top:30px;
-    padding:22px 12px 14px;
-  }
-
-  .hb-trace-guide{
-    font-size:13px;
-  }
-
-  #hb-trace-toggle,
-  #hb-trace-btn{
-    font-size:12px;
-  }
-
-  #hb-trace-name,
-  #hb-trace-text{
-    font-size:12px;
-  }
-
-  .hb-trace-text{
-    font-size:12px;
-  }
-}
