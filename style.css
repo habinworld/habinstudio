@@ -355,3 +355,7 @@ body.night #habin-footer .ft-hidden {
   margin:18px auto 0;
   text-align:left;
 }
+#hb-trace-toggle{
+  background:red !important;
+  color:white !important;
+}
