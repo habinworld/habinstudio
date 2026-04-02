@@ -81,38 +81,7 @@
   <div class="grid-floor">
   <div id="current-exhibit" class="main-grid"></div>
 </div>
-  <section id="hb-trace-section">
-
-  <p class="hb-trace-guide">
-    잠시 머문 당신의 흔적을 남겨주세요
-  </p>
-
-  <button id="hb-trace-toggle" type="button">
-    흔적 남기기
-  </button>
-
-  <div id="hb-trace-box" class="hb-trace-box">
-    <input
-      id="hb-trace-name"
-      type="text"
-      maxlength="20"
-      placeholder="이름 (익명도 괜찮아요)"
-    >
-
-    <textarea
-      id="hb-trace-text"
-      maxlength="200"
-      placeholder="잠시 머문 마음을 남겨주세요"
-    ></textarea>
-
-    <div class="hb-trace-actions">
-      <button id="hb-trace-btn" type="button">남기기</button>
-    </div>
-  </div>
-
-  <div id="hb-trace-list" class="hb-trace-list"></div>
-
-</section>  
+  
  </div>
   <!-- ✅ 본문 끝 -->
    
@@ -230,18 +199,7 @@ function initSidebarOnly() {
   }
 }
   </script>
- <script>
-const hbTraceToggle = document.getElementById('hb-trace-toggle');
-const hbTraceBox = document.getElementById('hb-trace-box');
-
-if (hbTraceToggle && hbTraceBox) {
-  hbTraceToggle.onclick = function(){
-    hbTraceBox.classList.toggle('is-open');
-  };
-} 
-</script>
-
-
+<script src="hb-trace.js"></script>
  </body>
 </html>
 
