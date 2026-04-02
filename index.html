@@ -229,6 +229,15 @@ function initSidebarOnly() {
         : "none";
   }
 }
+ <script>
+const hbTraceToggle = document.getElementById('hb-trace-toggle');
+const hbTraceBox = document.getElementById('hb-trace-box');
+
+if (hbTraceToggle && hbTraceBox) {
+  hbTraceToggle.onclick = function(){
+    hbTraceBox.classList.toggle('is-open');
+  };
+} 
 </script>
 
 
