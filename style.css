@@ -262,3 +262,148 @@ body.night #habin-footer .ft-hidden {
   background: #c0392b;
   color: #fff;
 }
+/* ==============================
+   다녀간 흔적
+============================== */
+#hb-trace-section{
+  margin-top:40px;
+  padding:28px 20px 18px;
+  text-align:center;
+  border-top:1px solid rgba(92,142,219,0.22);
+}
+
+.hb-trace-guide{
+  margin:0 0 12px;
+  color:#94a3b8;
+  font-size:14px;
+  font-style:italic;
+  line-height:1.8;
+}
+
+/* 토글 버튼 */
+#hb-trace-toggle{
+  display:inline-block;
+  min-width:120px;
+  padding:8px 14px;
+  background:#ffffff;
+  color:#3558A8;
+  border:1px solid rgba(53,88,168,0.45);
+  border-radius:999px;
+  font-size:13px;
+  cursor:pointer;
+  transition:transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+}
+
+#hb-trace-toggle:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 14px rgba(53,88,168,0.10);
+  border-color:rgba(53,88,168,0.70);
+}
+
+/* 펼쳐지는 입력창 */
+.hb-trace-box{
+  max-width:520px;
+  margin:0 auto;
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  transform:translateY(-6px);
+  transition:
+    max-height 0.38s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    margin-top 0.25s ease;
+}
+
+.hb-trace-box.is-open{
+  max-height:260px;
+  opacity:1;
+  transform:translateY(0);
+  margin-top:14px;
+}
+
+#hb-trace-name,
+#hb-trace-text{
+  width:100%;
+  box-sizing:border-box;
+  border:1px solid rgba(53,88,168,0.35);
+  border-radius:10px;
+  background:#ffffff;
+  color:#2b2b2b;
+  font-size:13px;
+  font-family:'Noto Sans KR', sans-serif;
+}
+
+#hb-trace-name{
+  height:40px;
+  padding:0 12px;
+  margin-bottom:8px;
+}
+
+#hb-trace-text{
+  min-height:96px;
+  padding:12px;
+  resize:none;
+  line-height:1.7;
+  margin-bottom:8px;
+}
+
+#hb-trace-name:focus,
+#hb-trace-text:focus{
+  outline:none;
+  border-color:#3558A8;
+  box-shadow:0 0 0 3px rgba(53,88,168,0.10);
+}
+
+.hb-trace-actions{
+  text-align:right;
+}
+
+#hb-trace-btn{
+  display:inline-block;
+  min-width:96px;
+  height:38px;
+  padding:0 14px;
+  background:#3558A8;
+  color:#ffffff;
+  border:none;
+  border-radius:999px;
+  font-size:13px;
+  cursor:pointer;
+}
+
+#hb-trace-btn:hover{
+  filter:brightness(1.05);
+}
+
+/* 흔적 목록 */
+.hb-trace-list{
+  max-width:520px;
+  margin:18px auto 0;
+  text-align:left;
+}
+
+.hb-trace-item{
+  padding:12px 2px 12px;
+  border-bottom:1px solid rgba(148,163,184,0.18);
+}
+
+.hb-trace-meta{
+  margin-bottom:4px;
+  font-size:12px;
+  color:#94a3b8;
+}
+
+.hb-trace-text{
+  font-size:13px;
+  color:#2b2b2b;
+  line-height:1.8;
+  word-break:keep-all;
+}
+
+.hb-trace-empty{
+  padding:10px 0 2px;
+  font-size:12px;
+  color:#94a3b8;
+  text-align:center;
+}
