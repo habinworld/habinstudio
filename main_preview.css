@@ -27,14 +27,14 @@
 .notice-no {
   width: 24px;
   text-align: center;
-  color: #3558A8;
+  color: #1f2937;
 }
 
 /* 작성자 */
 .notice-writer {
   width: 60px;
   text-align: center;
-  color: #3558A8;
+  color: #1f2937;
   font-weight: 500;
   margin-right: 20px; 
 }
@@ -43,7 +43,7 @@
 .notice-title {
   flex: 1;
   font-weight: 600;
-  color: #3558A8;
+  color: #1f2937;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -52,7 +52,7 @@
 /* 날짜 */
 .notice-date {
   font-size: 13px;
-  color: #3558A8;
+  color: #1f2937;
   white-space: nowrap;
 }
 .board-wrap {
