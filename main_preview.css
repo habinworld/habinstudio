@@ -68,7 +68,10 @@
   align-items: center;
   margin: 20px 0 12px;
 }
-
+.main-board-header h2 {
+  color: #3558A8;
+  font-weight: 700;
+}
 /* --------------------- Table --------------------- */
 .post-table {
   width: 100%;
