@@ -197,7 +197,7 @@ body.winter { background-color: #FFD1E8; }  /* 겨울 : 연핑크 눈빛 */
 .notice-more a {
   float: right;
   margin-right: 20px; 
-  font-size: 13px;
+  font-size: 14px;
   color: rgba(255,255,255,0.5);
   text-decoration: none;
   transition: all 0.2s ease;
