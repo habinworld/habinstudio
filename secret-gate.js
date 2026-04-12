@@ -1,6 +1,6 @@
 /* -----------------------------------------------------
    🔐 Ha-Bin Studio — secret-gate.js
-   비밀의 문 (관리자 키) 2026.01.09
+   비밀의 문 (관리자 키) 2026.04.12
 ----------------------------------------------------- */
 function initSecretGate() {
   const input = document.getElementById("secret-input");
@@ -27,12 +27,26 @@ function initSecretGate() {
       if (box) box.style.display = "none";
 
       setTimeout(() => (msg.textContent = ""), 2000);
-    } else {
+       return;
+  }
+     // ✅ 관리자 OFF 추가 (여기!)
+  if (key === "종료" || key === "exit") {
+    localStorage.removeItem("habin_admin");
+
+    logo.classList.remove("logo-gold");
+    logo.classList.add("logo-off");
+
+    msg.textContent = "관리자 모드 해제";
+    msg.style.color = "#999";
+
+    setTimeout(() => (msg.textContent = ""), 2000);
+    return;
+  }
+    // ❌ 실패
       msg.textContent = "잘못된 키입니다.";
       msg.style.color = "#FF5050";
     }
-  }
-
+  
   btn.onclick = checkKey;
   input.onkeydown = (e) => {
     if (e.key === "Enter") checkKey();
