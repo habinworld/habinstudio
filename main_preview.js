@@ -115,7 +115,7 @@
    📢 공지 렌더 (메인 프리뷰)
 ========================= */
 
-const NOTICE_LIMIT = 5;
+const NOTICE_LIMIT = 8;
 
 const notices = allPosts
   .filter(p => (p.board) === BOARD && p.isNotice === true)
