@@ -1,5 +1,5 @@
 /* -----------------------------------------------------
-   🌿 Ha-Bin Studio — style.css (CLEAN BASE)2026.01.07
+   🌿 Ha-Bin Studio — style.css (CLEAN BASE) 2026.04.12
    역할: 전역 / 레이아웃 / 계절 / Night Mode / 메인 UI
 ----------------------------------------------------- */
 
@@ -198,7 +198,7 @@ body.winter { background-color: #FFD1E8; }  /* 겨울 : 연핑크 눈빛 */
   float: right;
   margin-right: 20px; 
   font-size: 14px;
-  color: rgba(255,255,255,0.5);
+  color: #94a3b8;
   text-decoration: none;
   transition: all 0.2s ease;
 }
@@ -239,6 +239,13 @@ body.night #habin-footer {
 body.night #habin-footer .ft-hidden {
   color: #94A3B8;
 }  
+body.night .notice-more a {
+  color: rgba(255,255,255,0.5);
+}
+
+body.night .notice-more a:hover {
+  color: #FFFFFF;
+}
 /* ===== admin-clean ===== */
 .admin-wrapper{
   max-width: 900px;
