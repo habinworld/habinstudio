@@ -201,5 +201,5 @@ body.night .notice-item {
 body.night .notice-item:hover {
   color: #FFFFFF;
   transform: translateY(-2px);
-  text-shadow: 0 0 8px rgba(92,142,219,0.8)
+  text-shadow: 0 0 6px rgba(120,180,255,0.8);
 }
