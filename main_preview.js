@@ -138,8 +138,13 @@ if (noticeSection && noticeList && notices.length > 0) {
         <span class="notice-date">${formatDate(n.date)}</span>
       </div>
     `)
-    .join("");
-}
+    .join("")
+     + `
+    <div class="notice-more">
+      <a href="list.html">+ 공지 더보기</a>
+    </div>
+    ;
+   }
 
   /* ▶ 실행 */
   renderTable();
