@@ -190,3 +190,7 @@ body.night .card-title { color:#F8FAFC; }
 body.night .card-preview { color:#CBD5E1; }
 body.night .card-meta { color:#9FB2FF; }
 
+body.night .notice-item,
+body.night .notice-item * {
+  color: rgba(255,255,255,0.7);
+}
