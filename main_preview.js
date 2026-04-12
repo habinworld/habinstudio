@@ -143,7 +143,7 @@ if (noticeSection && noticeList && notices.length > 0) {
     <div class="notice-more">
       <a href="list.html">+ 공지 더보기</a>
     </div>
-    ;
+    `;
    }
 
   /* ▶ 실행 */
