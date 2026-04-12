@@ -194,9 +194,15 @@ body.winter { background-color: #FFD1E8; }  /* 겨울 : 연핑크 눈빛 */
 #content::-webkit-scrollbar-thumb:hover {
   background: #9FD4B2;
 }
-.notice-more {
-  float: right;
-  margin-right: 20px;
+.notice-more a {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.notice-more a:hover {
+  color: #FFFFFF;
 }
 /* ===============================
    🌙 Night Mode (ONE BLOCK)
