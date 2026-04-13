@@ -271,7 +271,10 @@
             <option value="">게시판 이동</option>
             <option value="kr">한글</option>
             <option value="en">English</option>
+            <option value="qna">질문의 공간</option>
             <option value="forge">대장간</option>
+            <option value="gallery">갤러리</option>
+            <option value="video">동영상</option>
             <option value="studio">Studio</option>
             <option value="etc">기타</option>
           </select>
