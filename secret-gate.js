@@ -13,7 +13,14 @@ function initSecretGate() {
   const cleanLink = document.getElementById("admin-clean");
    
   if (!input || !btn || !msg || !logo) return;
-
+ // 처음 로딩 시 관리자 상태 반영
+  if (localStorage.getItem("habin_admin") === "true") {
+    if (adminLink) adminLink.style.display = "inline-flex";
+    if (cleanLink) cleanLink.style.display = "inline-flex";
+  } else {
+    if (adminLink) adminLink.style.display = "none";
+    if (cleanLink) cleanLink.style.display = "none";
+  }
   function checkKey() {
     const key = input.value.trim().toLowerCase();
 
