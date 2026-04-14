@@ -320,8 +320,9 @@
   padding-top: 12px;
   border-top: 1px dashed rgba(53,88,168,0.4);
   display: flex; 
-  justify-content: space-between;
-  align-items: center;  
+  justify-content: center;
+  align-items: center; 
+  gap: 8px; 
 }
 /* ===============================
    🌙 Night Mode (ONE BLOCK)
