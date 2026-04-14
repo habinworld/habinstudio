@@ -18,8 +18,8 @@ function initSecretGate() {
     if (key === "글진동" || key === "rmfwlsehd") {
       localStorage.setItem("habin_admin", "true");
 
-      logo.classList.remove("logo-off", "logo-moon", "logo-gold");
-      logo.classList.add("logo-gold");
+      localStorage.setItem("habin_admin", "true");
+      hbApplyLogoMode();
 
       msg.textContent = "관리자 모드 활성화!";
       msg.style.color = "#DAA520";
@@ -34,8 +34,8 @@ function initSecretGate() {
   if (key === "종료" || key === "exit") {
     localStorage.removeItem("habin_admin");
 
-    logo.classList.remove("logo-gold");
-    logo.classList.add("logo-off");
+    localStorage.removeItem("habin_admin");
+    hbApplyLogoMode();
 
     msg.textContent = "관리자 모드 해제";
     msg.style.color = "#999";
