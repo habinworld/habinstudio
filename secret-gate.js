@@ -3,6 +3,7 @@
    비밀의 문 (관리자 키) 2026.04.12
 ----------------------------------------------------- */
 function initSecretGate() {
+  const toggle = document.getElementById("secret-toggle");
   const input = document.getElementById("secret-input");
   const btn = document.getElementById("secret-btn");
   const msg = document.getElementById("secret-msg");
