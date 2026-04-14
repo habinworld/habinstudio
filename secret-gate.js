@@ -19,8 +19,8 @@ function initSecretGate() {
 
     if (key === "글진동" || key === "rmfwlsehd") {
       localStorage.setItem("habin_admin", "true");
-
-      localStorage.setItem("habin_admin", "true");
+      if (adminLink) adminLink.style.display = "inline-flex";
+      if (cleanLink) cleanLink.style.display = "inline-flex"; 
       hbApplyLogoMode();
 
       msg.textContent = "관리자 모드 활성화!";
@@ -35,9 +35,9 @@ function initSecretGate() {
      // ✅ 관리자 OFF 추가 (여기!)
   if (key === "종료" || key === "exit") {
     localStorage.removeItem("habin_admin");
-
-    localStorage.removeItem("habin_admin");
-    hbApplyLogoMode();
+    if (adminLink) adminLink.style.display = "none";
+    if (cleanLink) cleanLink.style.display = "none";   
+     hbApplyLogoMode();
 
     msg.textContent = "관리자 모드 해제";
     msg.style.color = "#999";
