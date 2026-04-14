@@ -9,7 +9,9 @@ function initSecretGate() {
   const msg = document.getElementById("secret-msg");
   const logo = document.getElementById("main-logo");
   const box = document.getElementById("secret-box");
-
+  const adminLink = document.getElementById("admin-mode");
+  const cleanLink = document.getElementById("admin-clean");
+   
   if (!input || !btn || !msg || !logo) return;
 
   function checkKey() {
