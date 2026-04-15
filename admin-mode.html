@@ -112,7 +112,10 @@
   const btnDeletePost = document.getElementById('btn-delete-post');
 
   const allPosts = JSON.parse(localStorage.getItem('habin_posts') || '[]');
+  const adminBoardTabs = document.querySelectorAll('.admin-board-tab');
+
   let selectedIndex = null;
+  let currentAdminBoard = 'all';
 
   function hbSetAdminMode(isAdmin) {
     window.IS_ADMIN = isAdmin;
