@@ -182,31 +182,33 @@ function getBoardLabel(board) {
   `;
 }
   function renderAdminPostList() {
-    adminPostList.innerHTML = '';
+  const filteredPosts = getFilteredPosts();
 
-    if (!allPosts.length) {
-      adminPostList.innerHTML = '<li class="admin-post-item">게시글이 없습니다.</li>';
-      renderPicked();
-      return;
-    }
+  adminPostList.innerHTML = '';
 
-    allPosts.forEach((p, index) => {
-      const li = document.createElement('li');
-      li.className = 'admin-post-item' + (selectedIndex === index ? ' active' : '');
-      li.innerHTML = `
-        ${p.isNotice ? '📌 ' : ''}${p.title || '(제목 없음)'}
-        <small>${p.writer || '하빈'} · ${p.board || 'kr'}</small>
-      `;
-      li.onclick = function () {
-        selectedIndex = index;
-        renderAdminPostList();
-        renderPicked();
-      };
-      adminPostList.appendChild(li);
-    });
-
+  if (!filteredPosts.length) {
+    adminPostList.innerHTML = '<li class="admin-post-item">게시글이 없습니다.</li>';
     renderPicked();
+    return;
   }
+
+  filteredPosts.forEach((p, index) => {
+    const li = document.createElement('li');
+    li.className = 'admin-post-item' + (selectedIndex === index ? ' active' : '');
+    li.innerHTML = `
+      ${p.isNotice ? '📌 ' : ''}${p.title || '(제목 없음)'}
+      <small>${p.writer || '하빈'} · ${getBoardLabel(p.board || 'kr')}</small>
+    `;
+    li.onclick = function () {
+      selectedIndex = index;
+      renderAdminPostList();
+      renderPicked();
+    };
+    adminPostList.appendChild(li);
+  });
+
+  renderPicked();
+}
 
   function requireSelectedPost() {
     if (selectedIndex === null || !allPosts[selectedIndex]) {
