@@ -162,6 +162,10 @@ function getBoardLabel(board) {
   };
   return map[board] || board || 'kr';
 }
+  function getFilteredPosts() {
+  if (currentAdminBoard === 'all') return allPosts;
+  return allPosts.filter(post => (post.board || 'kr') === currentAdminBoard);
+}
   function renderPicked() {
     if (selectedIndex === null || !allPosts[selectedIndex]) {
       adminPicked.innerHTML = '선택된 글이 없습니다.';
