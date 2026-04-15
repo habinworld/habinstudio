@@ -167,19 +167,20 @@ function getBoardLabel(board) {
   return allPosts.filter(post => (post.board || 'kr') === currentAdminBoard);
 }
   function renderPicked() {
-    if (selectedIndex === null || !allPosts[selectedIndex]) {
-      adminPicked.innerHTML = '선택된 글이 없습니다.';
-      return;
-    }
+  const filteredPosts = getFilteredPosts();
 
-    const p = allPosts[selectedIndex];
-    adminPicked.innerHTML = `
-      <strong>${p.title || '(제목 없음)'}</strong><br>
-      작성자: ${p.writer || '하빈'}<br>
-      게시판: ${p.board || 'kr'} ${p.isNotice ? ' / 공지글' : ''}
-    `;
+  if (selectedIndex === null || !filteredPosts[selectedIndex]) {
+    adminPicked.innerHTML = '선택된 글이 없습니다.';
+    return;
   }
 
+  const p = filteredPosts[selectedIndex];
+  adminPicked.innerHTML = `
+    <strong>${p.title || '(제목 없음)'}</strong><br>
+    작성자: ${p.writer || '하빈'}<br>
+    게시판: ${getBoardLabel(p.board || 'kr')}${p.isNotice ? ' / 공지글' : ''}
+  `;
+}
   function renderAdminPostList() {
     adminPostList.innerHTML = '';
 
