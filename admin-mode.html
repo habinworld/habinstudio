@@ -148,7 +148,20 @@
   function saveAllPosts() {
     localStorage.setItem('habin_posts', JSON.stringify(allPosts));
   }
-
+function getBoardLabel(board) {
+  const map = {
+    all: '전체',
+    kr: '한글',
+    en: 'English',
+    qna: '질문의 공간',
+    forge: '대장간',
+    gallery: '갤러리',
+    video: '동영상',
+    studio: 'Studio',
+    etc: '기타'
+  };
+  return map[board] || board || 'kr';
+}
   function renderPicked() {
     if (selectedIndex === null || !allPosts[selectedIndex]) {
       adminPicked.innerHTML = '선택된 글이 없습니다.';
