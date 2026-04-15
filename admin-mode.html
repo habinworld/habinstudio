@@ -257,23 +257,41 @@ function getSelectedPostRealIndex() {
   renderAdminPostList();
 }
 
-  function moveUpBySelected() {
-    if (!requireSelectedPost()) return;
-    if (selectedIndex <= 0) return;
-    [allPosts[selectedIndex - 1], allPosts[selectedIndex]] = [allPosts[selectedIndex], allPosts[selectedIndex - 1]];
-    selectedIndex -= 1;
-    saveAllPosts();
-    renderAdminPostList();
+ function moveUpBySelected() {
+  if (currentAdminBoard !== 'all') {
+    alert('위아래 이동은 지금은 전체 탭에서만 가능합니다.');
+    return;
   }
 
+  if (!requireSelectedPost()) return;
+
+  const realIndex = getSelectedPostRealIndex();
+  if (realIndex <= 0) return;
+
+  [allPosts[realIndex - 1], allPosts[realIndex]] = [allPosts[realIndex], allPosts[realIndex - 1]];
+  selectedIndex = realIndex - 1;
+
+  saveAllPosts();
+  renderAdminPostList();
+}
+
   function moveDownBySelected() {
-    if (!requireSelectedPost()) return;
-    if (selectedIndex >= allPosts.length - 1) return;
-    [allPosts[selectedIndex + 1], allPosts[selectedIndex]] = [allPosts[selectedIndex], allPosts[selectedIndex + 1]];
-    selectedIndex += 1;
-    saveAllPosts();
-    renderAdminPostList();
+  if (currentAdminBoard !== 'all') {
+    alert('위아래 이동은 지금은 전체 탭에서만 가능합니다.');
+    return;
   }
+
+  if (!requireSelectedPost()) return;
+
+  const realIndex = getSelectedPostRealIndex();
+  if (realIndex >= allPosts.length - 1) return;
+
+  [allPosts[realIndex + 1], allPosts[realIndex]] = [allPosts[realIndex], allPosts[realIndex + 1]];
+  selectedIndex = realIndex + 1;
+
+  saveAllPosts();
+  renderAdminPostList();
+}
 
  function deletePostBySelected() {
   if (!requireSelectedPost()) return;
