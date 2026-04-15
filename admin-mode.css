@@ -210,10 +210,30 @@ body {
   font-size: 13px;
   line-height: 1.8;
 }
+.admin-board-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
 
-@media (max-width: 860px) {
-  .admin-login-grid,
-  .admin-board-box {
-    grid-template-columns: 1fr;
-  }
+.admin-board-tab {
+  border: 1px solid var(--hb-line);
+  border-radius: 999px;
+  padding: 8px 14px;
+  background: #fff;
+  color: var(--hb-main);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.admin-board-tab:hover {
+  background: #f7f9ff;
+}
+
+.admin-board-tab.active {
+  background: var(--hb-main);
+  color: #fff;
+  border-color: var(--hb-main);
 }
