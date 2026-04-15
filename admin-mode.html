@@ -209,7 +209,17 @@ function getBoardLabel(board) {
 
   renderPicked();
 }
+function getSelectedPostInFiltered() {
+  const filteredPosts = getFilteredPosts();
+  if (selectedIndex === null || !filteredPosts[selectedIndex]) return null;
+  return filteredPosts[selectedIndex];
+}
 
+function getSelectedPostRealIndex() {
+  const selectedPost = getSelectedPostInFiltered();
+  if (!selectedPost) return -1;
+  return allPosts.findIndex(post => post.id === selectedPost.id);
+}
   function requireSelectedPost() {
     if (selectedIndex === null || !allPosts[selectedIndex]) {
       alert('먼저 글을 선택하세요.');
