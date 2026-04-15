@@ -248,11 +248,14 @@ function getSelectedPostRealIndex() {
   alert('게시판 이동 완료');
 }
   function toggleNoticeBySelected() {
-    if (!requireSelectedPost()) return;
-    allPosts[selectedIndex].isNotice = !allPosts[selectedIndex].isNotice;
-    saveAllPosts();
-    renderAdminPostList();
-  }
+  if (!requireSelectedPost()) return;
+
+  const realIndex = getSelectedPostRealIndex();
+  allPosts[realIndex].isNotice = !allPosts[realIndex].isNotice;
+
+  saveAllPosts();
+  renderAdminPostList();
+}
 
   function moveUpBySelected() {
     if (!requireSelectedPost()) return;
