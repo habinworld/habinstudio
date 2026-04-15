@@ -275,20 +275,20 @@ function getSelectedPostRealIndex() {
     renderAdminPostList();
   }
 
-  function deletePostBySelected() {
-    if (!requireSelectedPost()) return;
-    const title = allPosts[selectedIndex].title || '(제목 없음)';
-    if (!confirm(`정말 삭제할까요?\n\n${title}`)) return;
-    allPosts.splice(selectedIndex, 1);
-    if (selectedIndex >= allPosts.length) {
-      selectedIndex = allPosts.length - 1;
-    }
-    if (allPosts.length === 0) {
-      selectedIndex = null;
-    }
-    saveAllPosts();
-    renderAdminPostList();
-  }
+ function deletePostBySelected() {
+  if (!requireSelectedPost()) return;
+
+  const realIndex = getSelectedPostRealIndex();
+  const title = allPosts[realIndex].title || '(제목 없음)';
+
+  if (!confirm(`정말 삭제할까요?\n\n${title}`)) return;
+
+  allPosts.splice(realIndex, 1);
+  selectedIndex = null;
+
+  saveAllPosts();
+  renderAdminPostList();
+}
 
   hbBtnLogin.addEventListener('click', hbLogin);
   hbBtnLogout.addEventListener('click', hbLogout);
