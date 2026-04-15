@@ -221,12 +221,13 @@ function getSelectedPostRealIndex() {
   return allPosts.findIndex(post => post.id === selectedPost.id);
 }
   function requireSelectedPost() {
-    if (selectedIndex === null || !allPosts[selectedIndex]) {
-      alert('먼저 글을 선택하세요.');
-      return false;
-    }
-    return true;
+  const realIndex = getSelectedPostRealIndex();
+  if (realIndex === -1) {
+    alert('먼저 글을 선택하세요.');
+    return false;
   }
+  return true;
+}
 
   function moveBoardBySelected() {
     if (!requireSelectedPost()) return;
