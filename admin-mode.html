@@ -316,6 +316,17 @@ function getSelectedPostRealIndex() {
   btnMoveDown.addEventListener('click', moveDownBySelected);
   btnDeletePost.addEventListener('click', deletePostBySelected);
 
+  adminBoardTabs.forEach(tab => {
+  tab.addEventListener('click', function () {
+    currentAdminBoard = this.dataset.board || 'all';
+    selectedIndex = null;
+
+    adminBoardTabs.forEach(btn => btn.classList.remove('active'));
+    this.classList.add('active');
+
+    renderAdminPostList();
+  });
+});
   hbSetAdminMode(localStorage.getItem('habin_admin') === 'true');
   renderAdminPostList();
 </script>
