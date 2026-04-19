@@ -211,71 +211,123 @@ function getBoardLabel(board) {
   }
 
   function getFilteredPosts() {
-  if (currentAdminBoard === 'all') return allPosts;
-  return allPosts.filter(post => (post.board || 'kr') === currentAdminBoard);
-}
-  function renderPicked() {
-  const filteredPosts = getFilteredPosts();
+    const posts = currentAdminBoard === 'all'
+      ? [...allPosts]
+      : allPosts.filter(post => (post.board || 'kr') === currentAdminBoard);
 
-  if (selectedIndex === null || !filteredPosts[selectedIndex]) {
-    adminPicked.innerHTML = '선택된 글이 없습니다.';
-    return;
+    return posts.sort((a, b) => {
+      const noticeA = a.isNotice ? 1 : 0;
+      const noticeB = b.isNotice ? 1 : 0;
+
+      if (noticeA !== noticeB) {
+        return noticeB - noticeA;
+      }
+
+      const boardA = a.board || 'kr';
+      const boardB = b.board || 'kr';
+
+      if (currentAdminBoard === 'all' && boardA !== boardB) {
+        return boardA.localeCompare(boardB);
+      }
+
+      const aOrder = typeof a.order === 'number' ? a.order : 0;
+      const bOrder = typeof b.order === 'number' ? b.order : 0;
+      return aOrder - bOrder;
+    });
   }
 
-  const p = filteredPosts[selectedIndex];
-  adminPicked.innerHTML = `
-    <strong>${p.title || '(제목 없음)'}</strong><br>
-    작성자: ${p.writer || '하빈'}<br>
-    게시판: ${getBoardLabel(p.board || 'kr')}${p.isNotice ? ' / 공지글' : ''}
-  `;
-}
-  function renderAdminPostList() {
-  const filteredPosts = getFilteredPosts();
-
-  adminPostList.innerHTML = '';
-
-  if (!filteredPosts.length) {
-    adminPostList.innerHTML = '<li class="admin-post-item">게시글이 없습니다.</li>';
-    renderPicked();
-    return;
+  function getSelectedPostInFiltered() {
+    const filteredPosts = getFilteredPosts();
+    if (selectedIndex === null || !filteredPosts[selectedIndex]) return null;
+    return filteredPosts[selectedIndex];
   }
 
-  filteredPosts.forEach((p, index) => {
-    const li = document.createElement('li');
-    li.className = 'admin-post-item' + (selectedIndex === index ? ' active' : '');
-    li.innerHTML = `
-      ${p.isNotice ? '📌 ' : ''}${p.title || '(제목 없음)'}
-      <small>${p.writer || '하빈'} · ${getBoardLabel(p.board || 'kr')}</small>
-    `;
-    li.onclick = function () {
-      selectedIndex = index;
-      renderAdminPostList();
-      renderPicked();
-    };
-    adminPostList.appendChild(li);
-  });
+  function getSelectedPostRealIndex() {
+    const selectedPost = getSelectedPostInFiltered();
+    if (!selectedPost) return -1;
+    return allPosts.findIndex(post => post.id === selectedPost.id);
+  }
 
-  renderPicked();
-}
-function getSelectedPostInFiltered() {
-  const filteredPosts = getFilteredPosts();
-  if (selectedIndex === null || !filteredPosts[selectedIndex]) return null;
-  return filteredPosts[selectedIndex];
-}
+  function resetSelectedIndexByPostId(postId) {
+    const filteredPosts = getFilteredPosts();
+    selectedIndex = filteredPosts.findIndex(post => post.id === postId);
+  }
 
-function getSelectedPostRealIndex() {
-  const selectedPost = getSelectedPostInFiltered();
-  if (!selectedPost) return -1;
-  return allPosts.findIndex(post => post.id === selectedPost.id);
-}
   function requireSelectedPost() {
-  const realIndex = getSelectedPostRealIndex();
-  if (realIndex === -1) {
-    alert('먼저 글을 선택하세요.');
-    return false;
+    const realIndex = getSelectedPostRealIndex();
+    if (realIndex === -1) {
+      alert('먼저 글을 선택하세요.');
+      return false;
+    }
+    return true;
   }
-  return true;
-}
+
+  function getNextOrderForBoard(board, excludePostId = null) {
+    const sameBoardPosts = allPosts.filter(post => {
+      const isSameBoard = (post.board || 'kr') === board;
+      const isNotSelf = excludePostId ? post.id !== excludePostId : true;
+      return isSameBoard && isNotSelf;
+    });
+
+    if (!sameBoardPosts.length) return 1000;
+
+    const maxOrder = Math.max(...sameBoardPosts.map(post => {
+      return typeof post.order === 'number' ? post.order : 0;
+    }));
+
+    return maxOrder + 1000;
+  }
+
+  function renderPicked() {
+    const filteredPosts = getFilteredPosts();
+
+    if (selectedIndex === null || !filteredPosts[selectedIndex]) {
+      adminPicked.innerHTML = '선택된 글이 없습니다.';
+      return;
+    }
+
+    const p = filteredPosts[selectedIndex];
+    adminPicked.innerHTML = `
+      <strong>${p.title || '(제목 없음)'}</strong><br>
+      작성자: ${p.writer || '하빈'}<br>
+      게시판: ${getBoardLabel(p.board || 'kr')}<br>
+      상태: ${p.isNotice ? '공지글' : '일반글'}<br>
+      순서값: ${typeof p.order === 'number' ? p.order : '-'}
+    `;
+  }
+
+  function renderAdminPostList() {
+    const filteredPosts = getFilteredPosts();
+
+    adminPostList.innerHTML = '';
+
+    if (!filteredPosts.length) {
+      adminPostList.innerHTML = '<li class="admin-post-item">게시글이 없습니다.</li>';
+      renderPicked();
+      return;
+    }
+
+    filteredPosts.forEach((p, index) => {
+      const li = document.createElement('li');
+      li.className = 'admin-post-item' + (selectedIndex === index ? ' active' : '');
+
+      li.innerHTML = `
+        ${p.isNotice ? '📌 ' : ''}${p.title || '(제목 없음)'}
+        <small>${p.writer || '하빈'} · ${getBoardLabel(p.board || 'kr')} · order ${typeof p.order === 'number' ? p.order : '-'}</small>
+      `;
+
+      li.onclick = function () {
+        selectedIndex = index;
+        renderAdminPostList();
+        renderPicked();
+      };
+
+      adminPostList.appendChild(li);
+    });
+
+    renderPicked();
+  }
+
 
    function moveBoardBySelected() {
     if (!requireSelectedPost()) return;
