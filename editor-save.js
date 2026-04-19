@@ -84,7 +84,7 @@ function normalizeContent(html) {
    - 미래: 서버 API 연결 예정
 ============================ */
 function SavePosts(posts) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(habin_posts));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
 }
  
   /* ============================
