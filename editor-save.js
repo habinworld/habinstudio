@@ -78,6 +78,15 @@ function normalizeContent(html) {
 
       return maxOrder + 1000;
     }
+     /* ============================
+   💾 저장 엔진 (Storage Engine)
+   - 현재: localStorage 저장
+   - 미래: 서버 API 연결 예정
+============================ */
+function hbSavePosts(posts) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+}
+ 
   /* ============================
    ✅ 콘텐츠 존재 판단 (추가 위치 = 여기)
    - 텍스트 OR 이미지 중 하나라도 있으면 true
