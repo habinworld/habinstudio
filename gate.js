@@ -3,12 +3,12 @@
    비밀의 문 (관리자 키) 2026.04.19
 ----------------------------------------------------- */
 function initGate() {
-  const toggle = document.getElementById("gate-toggle");
-  const input = document.getElementById("gate-input");
-  const btn = document.getElementById("gate-btn");
-  const msg = document.getElementById("gate-msg");
+  const gatetoggle = document.getElementById("gate-toggle");
+  const gateinput = document.getElementById("gate-input");
+  const gatebtn = document.getElementById("gate-btn");
+  const gatemsg = document.getElementById("gate-msg");
   const logo = document.getElementById("main-logo");
-  const box = document.getElementById("gate-box");
+  const gatebox = document.getElementById("gate-box");
   const adminLink = document.getElementById("admin-mode");
   const cleanLink = document.getElementById("admin-clean");
    
