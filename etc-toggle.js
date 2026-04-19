@@ -1,11 +1,11 @@
 /* -----------------------------------------------------
-   🔐 Ha-Bin Studio — secret-toggle.js
+   🔐 Ha-Bin Studio — etc-toggle.js
    비밀문 열기 / 닫기 전용
    2026.04.14
 ----------------------------------------------------- */
 function initSecretToggle() {
-  const toggle = document.getElementById("secret-toggle");
-  const box = document.getElementById("secret-box");
+  const toggle = document.getElementById("etc-toggle");
+  const box = document.getElementById("etc-box");
 
   if (!toggle || !box) return;
 
