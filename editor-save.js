@@ -45,8 +45,17 @@ function normalizeContent(html) {
      ✅ 게시판값 정리
   ============================ */
   function getSafeBoard(board) {
-    return board || window.CURRENT_BOARD || CURRENT_BOARD || "kr";
-  }
+      return board || window.CURRENT_BOARD || CURRENT_BOARD || "kr";
+    }
+
+    function getPosts() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      } catch (error) {
+        console.error("[editor-save] posts parse 오류", error);
+        return [];
+      }
+    }
    /* ============================
      ✅ order 계산
      - 같은 게시판의 마지막 order + 1000
