@@ -6,7 +6,10 @@
 
 <title>하빈 스튜디오 · 낮엔 정원, 밤엔 천문대</title>
 <script>
-  window.CURRENT_BOARD = "kr";
+  (function () {
+    const savedBoard = localStorage.getItem('habin_main_board') || 'kr';
+    window.CURRENT_BOARD = savedBoard;
+  })();
 </script>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="main_preview.css">
