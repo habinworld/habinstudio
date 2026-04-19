@@ -149,28 +149,6 @@
   }
 </script>  
  
-<script>
-  /* ⏰ 날짜 / 시계 */
-  if (typeof startDateTimeClock === "function") {
-    startDateTimeClock();
-  }
-
-  /* 🌦 날씨 */
-  if (typeof startWeather === "function") {
-    startWeather();
-  }
-
-   /* 📂 접이식 메뉴 */
-  const menuToggle = document.getElementById("menu-toggle");
-  const menu = document.getElementById("sidebar-menu");
-
-  if (menuToggle && menu) {
-    menuToggle.onclick = () => {
-      menu.style.display =
-        menu.style.display === "block" ? "none" : "block";
-    };
-  }
-    </script>
   </body>
 </html>
 
