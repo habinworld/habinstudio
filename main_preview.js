@@ -111,6 +111,32 @@
       renderMainGrid(getPagePosts());
     }
   }
+   function getBoardTitle(board) {
+  const map = {
+    kr: "한글게시판",
+    en: "English",
+    qna: "질문의 공간",
+    forge: "대장간",
+    gallery: "갤러리",
+    video: "동영상",
+    studio: "Studio",
+    etc: "기타"
+  };
+  return map[board] || "한글게시판";
+}
+
+function renderBoardHeader() {
+  const titleEl = document.getElementById("main-board-title");
+  const moreEl = document.getElementById("main-board-more");
+
+  if (titleEl) {
+    titleEl.textContent = `/ ${getBoardTitle(BOARD)} /`;
+  }
+
+  if (moreEl) {
+    moreEl.href = `list.html?board=${BOARD}`;
+  }
+}
 /* =========================
    📢 공지 렌더 (메인 프리뷰)
 ========================= */
