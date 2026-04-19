@@ -123,28 +123,37 @@ function hasContent() {
         isNotice: noticeEl?.checked === true
       };
     }
-
+    function goListPage(board) {
+      const listPage = window.HABIN_LIST_PAGE || "list.html";
+      location.href = listPage + "?board=" + getSafeBoard(board);
+    }
   /* ============================
      SAVE — 새 글
   ============================ */
   function saveNew() {
-    const title = titleEl?.value.trim() || "";
+      try {
+        const title = titleEl?.value.trim() || "";
 
-    if (!title && !hasContent()) {
-      alert("제목 또는 내용을 입력하세요.");
-      return;
+        if (!title && !hasContent()) {
+          alert("제목 또는 내용을 입력하세요.");
+          return;
+        }
+
+        const posts = getPosts();
+        const newPost = collectNewData();
+
+        posts.push(newPost);
+        savePosts(posts);
+
+        console.log("[editor-save] 새 글 저장 완료", newPost);
+
+        alert("저장 완료");
+        goListPage(newPost.board);
+      } catch (error) {
+        console.error("[editor-save] saveNew 오류", error);
+        alert("저장 중 오류: " + error.message);
+      }
     }
-
-    const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    posts.push(collectNewData());
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-
-    setTimeout(() => {
-      alert("저장 완료");
-      location.href = window.HABIN_LIST_PAGE + "?board=" + getSafeBoard(window.CURRENT_BOARD);
-    }, 0);
-  }
    /* ============================
      UPDATE — 기존 글 수정
      - 수정 시 order 유지
