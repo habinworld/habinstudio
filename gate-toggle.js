@@ -12,7 +12,7 @@ function initGateToggle() {
   const isAdmin = localStorage.getItem("habin_admin") === "true";
 
   // 처음 로딩 시 기본 상태 정리
-  box.style.display = "none";
+  gatebox.style.display = "none";
 
   // 관리자 상태면 비밀문은 열리지 않게 유지
   if (isAdmin) return;
