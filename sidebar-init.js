@@ -9,11 +9,11 @@ fetch("sidebar.html")
   });
 
 function hbInitSidebar() {
-  /*-----⏰ 날짜 / 시계-----*/
+  /*---⏰ 날짜 / 시계---*/
   if (typeof startDateTimeClock === "function") {
     startDateTimeClock();
   }
-
+/* ---🌦 날씨---*/
   if (typeof startWeather === "function") {
     startWeather();
   }
