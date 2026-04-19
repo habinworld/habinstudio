@@ -11,15 +11,14 @@ function initGateToggle() {
 
   const isAdmin = document.body.dataset.isAdmin === "true";
 
-  // 처음 로딩 시 기본 상태 정리
-  gatebox.style.display = "none";
+  // 처음엔 닫기
+  gateBox.style.display = "none";
 
-  // 관리자 상태면 비밀문은 열리지 않게 유지
-  if (!isAdmin) return;
+  gateToggle.onclick = function () {
+    if (!isAdmin) return;
 
-    gatetoggle.onclick = function () {
-    const isOpen = gatebox.style.display === "block";
-    gatebox.style.display = isOpen ? "none" : "block";
+    const isOpen = gateBox.style.display === "block";
+    gateBox.style.display = isOpen ? "none" : "block";
   };
 }
 
