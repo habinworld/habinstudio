@@ -132,32 +132,48 @@ function hasContent() {
   /* ============================
      UPDATE — 기존 글 수정
   ============================ */
+  /* ============================
+     UPDATE — 기존 글 수정
+     - 수정 시 order 유지
+  ============================ */
   function updatePost() {
-  if (!Number.isInteger(POST_ID)) {
-    alert("수정 실패: 글 ID 없음");
-    return;
-  }
- const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    if (!Number.isInteger(POST_ID)) {
+      alert("수정 실패: 글 ID 없음");
+      return;
+    }
+
+    const title = titleEl?.value.trim() || "";
+
+    if (!title && !hasContent()) {
+      alert("제목 또는 내용을 입력하세요.");
+      return;
+    }
+
+    const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
 
     const nextPosts = posts.map(post =>
       post.id === POST_ID
         ? {
             ...post,
+            board: getSafeBoard(post.board),
+            order: typeof post.order === "number" && !Number.isNaN(post.order)
+              ? post.order
+              : getNextOrderForBoard(post.board || "kr"),
             title: titleEl?.value.trim() || post.title,
             content: normalizeContent(editorEl?.innerHTML || post.content),
-            images: collectImageIds(),   // ← 🔥 이 줄 추가
+            images: collectImageIds(),
             isNotice: noticeEl?.checked === true
           }
         : post
     );
 
     localStorage.setItem(STORAGE_KEY, JSON.stringify(nextPosts));
-    setTimeout(() => {
-  alert("저장 완료");
-  location.href = window.HABIN_LIST_PAGE + "?board=" + window.CURRENT_BOARD;
-}, 0);
-  }
 
+    setTimeout(() => {
+      alert("저장 완료");
+      location.href = window.HABIN_LIST_PAGE + "?board=" + getSafeBoard(window.CURRENT_BOARD);
+    }, 0);
+  }
   /* ============================
      DELETE — 삭제
   ============================ */
