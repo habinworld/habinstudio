@@ -134,10 +134,6 @@ function renderList() {
   pagePosts.forEach((p, idx) => {
     const realIndex = (currentPage - 1) * itemsPerPage + idx;
     const tr = document.createElement("tr");
- 
-/*리스트배열  ✅ 번호/작성자/제목/날짜 */
- const tr = document.createElement("tr");
-
 tr.innerHTML = `
 <td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
 <td>${p.writer || "하빈"}</td>
