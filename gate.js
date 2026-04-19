@@ -22,7 +22,7 @@ function initGate() {
     if (cleanLink) cleanLink.style.display = "none";
   }
   function checkKey() {
-    const key = input.value.trim().toLowerCase();
+    const key = gateinput.value.trim().toLowerCase();
 
     if (key === "글진동" || key === "rmfwlsehd") {
       localStorage.setItem("habin_admin", "true");
@@ -36,7 +36,7 @@ function initGate() {
 
       if (gatebox) gatebox.style.display = "none";
 
-      setTimeout(() => (msg.textContent = ""), 2000);
+      setTimeout(() => (gatemsg.textContent = ""), 2000);
        return;
   }
      // ✅ 관리자 OFF 추가 (여기!)
