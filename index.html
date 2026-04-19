@@ -150,21 +150,6 @@
 </script>  
  
 <script>
-fetch("sidebar.html")
-  .then(res => res.text())
-  .then(html => {
-    const container = document.getElementById("sidebar-container");
-    if (!container) return;
-
-    /* 1️⃣ 사이드바 DOM 삽입 */
-    container.innerHTML = html;
-
-    /* 2️⃣ 사이드바 전용 기능 초기화 */
-    initSidebarOnly();
-  });
-
-function initSidebarOnly() {
-
   /* ⏰ 날짜 / 시계 */
   if (typeof startDateTimeClock === "function") {
     startDateTimeClock();
