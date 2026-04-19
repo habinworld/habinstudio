@@ -4,21 +4,21 @@
    2026.04.19
 ----------------------------------------------------- */
 function initGateToggle() {
-  const gatetoggle = document.getElementById("gate-toggle");
-  const gatebox = document.getElementById("gate-box");
+  const gateToggle = document.getElementById("gate-toggle");
+  const gateBox = document.getElementById("gate-box");
 
-  if (!gatetoggle || !gatebox) return;
+  if (!gatetToggle || !gateBox) return;
 
   const isAdmin = document.body.dataset.isAdmin === "true";
 
   // 처음엔 닫기
-  gatebox.style.display = "none";
+  gateBox.style.display = "none";
 
-  gatetoggle.onclick = function () {
+  gateToggle.onclick = function () {
     if (!isAdmin) return;
 
-    const isOpen = gatebox.style.display === "block";
-    gatebox.style.display = isOpen ? "none" : "block";
+    const isOpen = gateBox.style.display === "block";
+    gateBox.style.display = isOpen ? "none" : "block";
   };
 }
 
