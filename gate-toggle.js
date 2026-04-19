@@ -1,11 +1,11 @@
 /* -----------------------------------------------------
-   🔐 Ha-Bin Studio — etc-toggle.js
+   🔐 Ha-Bin Studio  (gate-toggle.js)
    비밀문 열기 / 닫기 전용
-   2026.04.14
+   2026.04.19
 ----------------------------------------------------- */
 function initSecretToggle() {
-  const toggle = document.getElementById("etc-toggle");
-  const box = document.getElementById("etc-box");
+  const toggle = document.getElementById("gate-toggle");
+  const box = document.getElementById("gate-box");
 
   if (!toggle || !box) return;
 
