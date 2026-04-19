@@ -93,13 +93,16 @@ function hasContent() {
      데이터 수집 (새 글 전용)
   ============================ */
   function collectNewData() {
+    const board = getSafeBoard(window.CURRENT_BOARD);
+
     return {
       id: Date.now(),
-      board: window.CURRENT_BOARD,   // 🧷 이 한 줄 
+      board: board,
+      order: getNextOrderForBoard(board),
       title: titleEl?.value.trim() || "제목 없음",
       writer: "하빈",
       content: normalizeContent(editorEl?.innerHTML || ""),
-      images: collectImageIds(),  // ← 🔥 이 줄 추가
+      images: collectImageIds(),
       date: new Date().toISOString(),
       isNotice: noticeEl?.checked === true
     };
@@ -108,16 +111,24 @@ function hasContent() {
   /* ============================
      SAVE — 새 글
   ============================ */
- function saveNew() {
-  const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-  posts.push(collectNewData());
+  function saveNew() {
+    const title = titleEl?.value.trim() || "";
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-  setTimeout(() => {
-    alert("저장 완료");
-    location.href = window.HABIN_LIST_PAGE + "?board=" + window.CURRENT_BOARD;
-  }, 0);
-}
+    if (!title && !hasContent()) {
+      alert("제목 또는 내용을 입력하세요.");
+      return;
+    }
+
+    const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    posts.push(collectNewData());
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
+
+    setTimeout(() => {
+      alert("저장 완료");
+      location.href = window.HABIN_LIST_PAGE + "?board=" + getSafeBoard(window.CURRENT_BOARD);
+    }, 0);
+  }
   /* ============================
      UPDATE — 기존 글 수정
   ============================ */
