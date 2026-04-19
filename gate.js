@@ -13,11 +13,13 @@ function initGate() {
   const cleanLink = document.getElementById("admin-clean");
    
   if (!gateinput || !gatebtn || !gatemsg || !logo) return;
- // 처음 로딩 시 관리자 상태 반영
-  if (localStorage.getItem("habin_admin") === "true") {
-    if (adminLink) adminLink.style.display = "inline-flex";
-    if (cleanLink) cleanLink.style.display = "inline-flex";
-  } else {
+ 
+  const isAdmin = document.body.dataset.isAdmin === "true"; 
+    // 관리자 UI 반영
+  if (adminLink) adminLink.style.display = isAdmin ? "inline-flex" : "none";
+  if (cleanLink) cleanLink.style.display = isAdmin ? "inline-flex" : "none";
+   
+  else {
     if (adminLink) adminLink.style.display = "none";
     if (cleanLink) cleanLink.style.display = "none";
   }
