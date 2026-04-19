@@ -60,40 +60,37 @@ function normalizeContent(html) {
      ✅ order 계산
      - 같은 게시판의 마지막 order + 1000
   ============================ */
-  function getNextOrderForBoard(board) {
-    const safeBoard = getSafeBoard(board);
-    const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+ function getNextOrderForBoard(board) {
+      const safeBoard = getSafeBoard(board);
+      const posts = getPosts();
 
-    const sameBoardPosts = posts.filter(post => {
-      return (post.board || "kr") === safeBoard;
-    });
+      const sameBoardPosts = posts.filter(post => {
+        return (post.board || "kr") === safeBoard;
+      });
 
-    if (!sameBoardPosts.length) return 1000;
+      if (!sameBoardPosts.length) return 1000;
 
-    const maxOrder = Math.max(
-      ...sameBoardPosts.map(post => {
-        return typeof post.order === "number" && !Number.isNaN(post.order)
-          ? post.order
-          : 0;
-      })
-    );
+      const maxOrder = Math.max(
+        ...sameBoardPosts.map(post =>
+          typeof post.order === "number" && !Number.isNaN(post.order) ? post.order : 0
+        )
+      );
 
-    return maxOrder + 1000;
-  }
+      return maxOrder + 1000;
+    }
   /* ============================
    ✅ 콘텐츠 존재 판단 (추가 위치 = 여기)
    - 텍스트 OR 이미지 중 하나라도 있으면 true
 ============================ */
 function hasContent() {
-    const text = (editorEl?.innerText || "")
-      .replace(/\u200B/g, "")
-      .replace(/\s+/g, "")
-      .trim();
+      const text = (editorEl?.innerText || "")
+        .replace(/\u200B/g, "")
+        .replace(/\s+/g, "")
+        .trim();
 
-    const imageCount = collectImageIds().length;
-
-    return !!text || imageCount > 0;
-  }
+      const imageCount = collectImageIds().length;
+      return !!text || imageCount > 0;
+    }
  /* ============================
      🖼 이미지 ID 수집 (헌법 제10조)
   ============================ */
