@@ -121,8 +121,9 @@ function renderList() {
     const tr = document.createElement("tr");
  
 <!---------리스트배열  ✅ 번호/작성자/제목/날짜 --------------->
-  <!-- 🔥 번호 계산 (내림차순) -->
-<tr>    
+ const tr = document.createElement("tr");
+
+tr.innerHTML = `
 <td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
 <td>${p.writer || "하빈"}</td>
 <td>
@@ -133,11 +134,6 @@ function renderList() {
 </td>
 <td>${formatDate(p.date)}</td>
 `;
-
-    if (p.isNotice) tr.classList.add("notice-row");
-    tbody.appendChild(tr);
-  });
-}
 /* ===============================
    🔁 PAGINATION UI
 =============================== */
