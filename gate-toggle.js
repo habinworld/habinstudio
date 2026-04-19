@@ -9,13 +9,13 @@ function initGateToggle() {
 
   if (!gatetoggle || !gatebox) return;
 
-  const isAdmin = localStorage.getItem("habin_admin") === "true";
+  const isAdmin = document.body.dataset.isAdmin === "true";
 
   // 처음 로딩 시 기본 상태 정리
   gatebox.style.display = "none";
 
   // 관리자 상태면 비밀문은 열리지 않게 유지
-  if (isAdmin) return;
+  if (!isAdmin) return;
 
     gatetoggle.onclick = function () {
     const isOpen = gatebox.style.display === "block";
