@@ -171,6 +171,7 @@ if (noticeSection && noticeList && notices.length > 0) {
    }
 
   /* ▶ 실행 */
+  renderBoardHeader(); 
   renderTable();
   renderPagination();
   renderGrid();
