@@ -4,8 +4,8 @@
    2026.04.19
 ----------------------------------------------------- */
 function initGateToggle() {
-  const toggle = document.getElementById("gate-toggle");
-  const box = document.getElementById("gate-box");
+  const gatetoggle = document.getElementById("gate-toggle");
+  const gatebox = document.getElementById("gate-box");
 
   if (!gatetoggle || !gatebox) return;
 
