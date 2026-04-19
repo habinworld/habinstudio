@@ -3,17 +3,28 @@
    Ha-Bin Studio — Save / Update Engine (CLEAN STABLE)
 ---------------------------------------------------- */
 (function () {
-  const POST_ID = window.POST_ID;
-  const STORAGE_KEY = window.HABIN_STORAGE_KEY || "habin_posts";
-  const CURRENT_BOARD = getBoardFromURL();  
+  const STORAGE_KEY = "habin_posts";
+  const POST_ID = Number(window.POST_ID);
+  const CURRENT_BOARD = (typeof getBoardFromURL === "function" ? getBoardFromURL() : "") || "kr";
+
   /* ============================
      DOM 요소
   ============================ */
-  const btnSave   = document.getElementById("hb-btn-save");
-  const btnDelete = document.getElementById("hb-btn-delete");
-  const editorEl  = document.getElementById("hb-editor");
-  const titleEl   = document.getElementById("hb-title");
-  const noticeEl  = document.getElementById("hb-notice");
+   function initEditorSave() {
+    const btnSave = document.getElementById("hb-btn-save");
+    const btnDelete = document.getElementById("hb-btn-delete");
+    const editorEl = document.getElementById("hb-editor");
+    const titleEl = document.getElementById("hb-title");
+    const noticeEl = document.getElementById("hb-notice");
+
+    if (!btnSave || !editorEl || !titleEl) {
+      console.warn("[editor-save] 필수 DOM 없음", {
+        btnSave: !!btnSave,
+        editorEl: !!editorEl,
+        titleEl: !!titleEl
+      });
+      return;
+    }
 /* ============================
    🔒 Step 1 — 저장 전 정규화 (FINAL)
    - 이미지 placeholder ❌
