@@ -19,50 +19,31 @@ function initGate() {
   if (adminLink) adminLink.style.display = isAdmin ? "inline-flex" : "none";
   if (cleanLink) cleanLink.style.display = isAdmin ? "inline-flex" : "none";
    
-  else {
-    if (adminLink) adminLink.style.display = "none";
-    if (cleanLink) cleanLink.style.display = "none";
-  }
-  function checkKey() {
-    const key = gateinput.value.trim().toLowerCase();
-
-    if (key === "글진동" || key === "rmfwlsehd") {
-      localStorage.setItem("habin_admin", "true");
-      if (adminLink) adminLink.style.display = "inline-flex";
-      if (cleanLink) cleanLink.style.display = "inline-flex"; 
-      hbApplyLogoMode();
-
-      gatemsg.textContent = "관리자 모드 활성화!";
-      gatemsg.style.color = "#DAA520";
-      gatemsg.style.fontWeight = "700";
-
-      if (gatebox) gatebox.style.display = "none";
-
-      setTimeout(() => (gatemsg.textContent = ""), 2000);
-       return;
-  }
-     // ✅ 관리자 OFF 추가 (여기!)
-  if (key === "종료" || key === "exit") {
-    localStorage.removeItem("habin_admin");
-    if (adminLink) adminLink.style.display = "none";
-    if (cleanLink) cleanLink.style.display = "none";   
-     hbApplyLogoMode();
-
-    gatemsg.textContent = "관리자 모드 해제";
-    gatemsg.style.color = "#999";
-
-    setTimeout(() => (msg.textContent = ""), 2000);
-    return;
-  }
-    // ❌ 실패
-      gatemsg.textContent = "잘못된 키입니다.";
-      gatemsg.style.color = "#FF5050";
+  // 서버 기준이므로 입력 버튼은 안내만
+  gateBtn.onclick = function () {
+    if (!isAdmin) {
+      gateMsg.textContent = "";
+      return;
     }
-  
-  gatebtn.onclick = checkKey;
-  gateinput.onkeydown = (e) => {
-    if (e.key === "Enter") checkKey();
-  };
-}
-;
 
+    gateMsg.textContent = "서버 관리자 연결 상태입니다.";
+    gateMsg.style.color = "#DAA520";
+    gateMsg.style.fontWeight = "700";
+
+    if (gateBox) gateBox.style.display = "none";
+
+    setTimeout(() => {
+      gateMsg.textContent = "";
+    }, 1500);
+  };
+
+  gateInput.onkeydown = function (e) {
+    if (e.key === "Enter") {
+      gateBtn.click();
+    }
+  };
+
+  if (typeof hbApplyLogoMode === "function") {
+    hbApplyLogoMode();
+  }
+}
