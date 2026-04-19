@@ -92,10 +92,8 @@ const btnList =document.getElementById("btn-list");
    📦 LOAD DATA
 =============================== */
 const allPosts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
-const posts = allPosts.filter(p => (p.board || "kr") === CURRENT_BOARD);const allPosts = JSON.parse(localStorage.getItem("habin_posts") || "[]");
 
-const posts = allPosts
-  .filter(p => (p.board || "kr") === CURRENT_BOARD);
+const posts = allPosts.filter(p => (p.board || "kr") === CURRENT_BOARD);
 
 posts.sort((a, b) => {
   if ((b.isNotice ? 1 : 0) !== (a.isNotice ? 1 : 0)) {
