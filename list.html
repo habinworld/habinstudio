@@ -29,14 +29,10 @@
 </head>
 
 <body class="list-page">
-
 <script src="date-utils.js"></script>
 <script src="image-store.js"></script>  
-
 <div class="page-container">
-
   <h1 class="page-title" id="board-title">📚 한글 게시판</h1>
-
   <div class="top-buttons">
     <a id="btn-new-post" class="btn">글쓰기</a>
     <a id="btn-list" class="btn">목록</a>
@@ -65,11 +61,9 @@
   </div>
 
 </div>
-
 <script src="main-grid.js"></script>
 <script src="admin-actions.js"></script>
 <script>
-
   /*----- 제목 세팅------ */
     (function () {
      const board = window.CURRENT_BOARD;
@@ -107,17 +101,6 @@ const posts = allPosts.filter(p => (p.board || "kr") === CURRENT_BOARD);
 // 🔥 최신 글이 위로 오도록 순서 뒤집기 (게시판 기본 규칙)
 posts.reverse();  
 window.posts = posts; // 관리자 액션용
-
-/* ===============================
-   🔧 HELPERS
-=============================== */
-function saveAllPosts() {
-  localStorage.setItem("habin_posts", JSON.stringify(allPosts));
-}
-function findIndexById(id) {
-  return allPosts.findIndex(p => p.id === id);
-}
-
 /* ===============================
    📄 PAGINATION
 =============================== */
@@ -128,7 +111,6 @@ function getCurrentPagePosts() {
   const start = (currentPage - 1) * itemsPerPage;
   return posts.slice(start, start + itemsPerPage);
 }
-
 /* ===============================
    🧾 RENDER LIST
 =============================== */
@@ -142,7 +124,6 @@ function renderList() {
       `<tr><td colspan="5" class="empty">작성된 글이 없습니다.</td></tr>`;
     return;
   }
-
   pagePosts.forEach((p, idx) => {
     const realIndex = (currentPage - 1) * itemsPerPage + idx;
     const tr = document.createElement("tr");
@@ -165,7 +146,6 @@ function renderList() {
     tbody.appendChild(tr);
   });
 }
-
 /* ===============================
    🔁 PAGINATION UI
 =============================== */
@@ -199,19 +179,6 @@ function renderGrid() {
   if (typeof renderMainGrid === "function") {
         renderMainGrid(getCurrentPagePosts());
 }
-}
-/* ===============================
-   🔁 BOARD MOVE (ADMIN)
-=============================== */
-function moveBoard(i, targetBoard) {
-  if (!targetBoard) return;
-  const postId = posts[i].id;
-  const idx = findIndexById(postId);
-  if (idx === -1) return;
-
-  allPosts[idx].board = targetBoard;
-  saveAllPosts();
-  location.reload();
 }
 
 /* ===============================
