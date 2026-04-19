@@ -32,16 +32,15 @@
    - 이미지 실체 = ImageStore
 ============================ */
 function normalizeContent(html) {
-  const temp = document.createElement("div");
-  temp.innerHTML = html;
+      const temp = document.createElement("div");
+      temp.innerHTML = html || "";
 
-  // 🔥 img 태그 제거 (이미지는 ImageStore에만 존재)
-  temp.querySelectorAll(".hb-img-box img").forEach(img => {
-    img.remove();
-  });
+      temp.querySelectorAll(".hb-img-box img").forEach(img => {
+        img.remove();
+      });
 
-  return temp.innerHTML;
-}
+      return temp.innerHTML;
+    }
    /* ============================
      ✅ 게시판값 정리
   ============================ */
