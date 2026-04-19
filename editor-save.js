@@ -95,16 +95,16 @@ function hasContent() {
      🖼 이미지 ID 수집 (헌법 제10조)
   ============================ */
   function collectImageIds() {
-    const boxes = editorEl.querySelectorAll(".hb-img-box[data-img-id]");
-    const ids = [];
+      const boxes = editorEl?.querySelectorAll(".hb-img-box[data-img-id]") || [];
+      const ids = [];
 
-    boxes.forEach(box => {
-      const id = box.dataset.imgId;
-      if (id) ids.push(id);
-    });
+      boxes.forEach(box => {
+        const id = box.dataset.imgId;
+        if (id) ids.push(id);
+      });
 
-    return ids;
-  }  
+      return ids;
+    }
   /* ============================
      데이터 수집 (새 글 전용)
   ============================ */
