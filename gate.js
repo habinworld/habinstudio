@@ -1,6 +1,6 @@
 /* -----------------------------------------------------
-   🔐 Ha-Bin Studio (gate.js)
-   비밀의 문 (관리자 키) 2026.04.19
+    Ha-Bin Studio (gate.js)
+   게이트 (관리자 키) 2026.04.19
 ----------------------------------------------------- */
 function initGate() {
   const gatetoggle = document.getElementById("gate-toggle");
