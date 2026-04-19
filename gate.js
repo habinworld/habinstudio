@@ -1,14 +1,14 @@
 /* -----------------------------------------------------
-   🔐 Ha-Bin Studio — etc-gate.js
+   🔐 Ha-Bin Studio (gate.js)
    비밀의 문 (관리자 키) 2026.04.12
 ----------------------------------------------------- */
 function initSecretGate() {
-  const toggle = document.getElementById("etc-toggle");
-  const input = document.getElementById("etc-input");
-  const btn = document.getElementById("etc-btn");
-  const msg = document.getElementById("etc-msg");
+  const toggle = document.getElementById("gate-toggle");
+  const input = document.getElementById("gate-input");
+  const btn = document.getElementById("gate-btn");
+  const msg = document.getElementById("gate-msg");
   const logo = document.getElementById("main-logo");
-  const box = document.getElementById("etc-box");
+  const box = document.getElementById("gate-box");
   const adminLink = document.getElementById("admin-mode");
   const cleanLink = document.getElementById("admin-clean");
    
