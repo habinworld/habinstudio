@@ -29,12 +29,12 @@ function hbInitSidebar() {
   }
 
   // 🔐 여기서만 비밀문 호출
-  if (typeof initSecretToggle === "function") {
-    initSecretToggle();
+  if (typeof initGateToggle === "function") {
+    initGateToggle();
   }
 
-  if (typeof initSecretGate === "function") {
-    initSecretGate();
+  if (typeof initGate === "function") {
+    initGate();
   }
 }
 
