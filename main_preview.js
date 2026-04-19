@@ -111,6 +111,9 @@
       renderMainGrid(getPagePosts());
     }
   }
+    /* =========================
+     🧱 게시판 렌더
+  ========================= */
    function getBoardTitle(board) {
   const map = {
     kr: "한글게시판",
