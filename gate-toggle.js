@@ -3,11 +3,11 @@
    비밀문 열기 / 닫기 전용
    2026.04.19
 ----------------------------------------------------- */
-function initSecretToggle() {
+function initGateToggle() {
   const toggle = document.getElementById("gate-toggle");
   const box = document.getElementById("gate-box");
 
-  if (!toggle || !box) return;
+  if (!gatetoggle || !gatebox) return;
 
   const isAdmin = localStorage.getItem("habin_admin") === "true";
 
@@ -17,9 +17,9 @@ function initSecretToggle() {
   // 관리자 상태면 비밀문은 열리지 않게 유지
   if (isAdmin) return;
 
-  toggle.onclick = function () {
+  gatetoggle.onclick = function () {
     const isOpen = box.style.display === "block";
-    box.style.display = isOpen ? "none" : "block";
+    gatebox.style.display = isOpen ? "none" : "block";
   };
 }
 
