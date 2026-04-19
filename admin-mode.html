@@ -200,6 +200,16 @@ function getBoardLabel(board) {
 
     saveAllPosts();
   } 
+   function renumberBoardOrders(board) {
+    const sameBoardPosts = allPosts
+      .filter(post => (post.board || 'kr') === board)
+      .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+    sameBoardPosts.forEach((post, index) => {
+      post.order = (index + 1) * 1000;
+    });
+  }
+
   function getFilteredPosts() {
   if (currentAdminBoard === 'all') return allPosts;
   return allPosts.filter(post => (post.board || 'kr') === currentAdminBoard);
