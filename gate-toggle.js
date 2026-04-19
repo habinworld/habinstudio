@@ -7,7 +7,7 @@ function initGateToggle() {
   const gateToggle = document.getElementById("gate-toggle");
   const gateBox = document.getElementById("gate-box");
 
-  if (!gatetToggle || !gateBox) return;
+  if (!gateToggle || !gateBox) return;
 
   const isAdmin = document.body.dataset.isAdmin === "true";
 
