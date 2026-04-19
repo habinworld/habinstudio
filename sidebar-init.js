@@ -9,7 +9,7 @@ fetch("sidebar.html")
   });
 
 function hbInitSidebar() {
-
+  /*-----⏰ 날짜 / 시계-----*/
   if (typeof startDateTimeClock === "function") {
     startDateTimeClock();
   }
