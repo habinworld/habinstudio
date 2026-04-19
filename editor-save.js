@@ -1,5 +1,5 @@
 /* ---------------------------------------------------
-   editor-save.js / 2026.01.18
+   editor-save.js / 2026.04.19
    Ha-Bin Studio — Save / Update Engine (CLEAN STABLE)
 ---------------------------------------------------- */
 (function () {
@@ -129,10 +129,7 @@ function hasContent() {
       location.href = window.HABIN_LIST_PAGE + "?board=" + getSafeBoard(window.CURRENT_BOARD);
     }, 0);
   }
-  /* ============================
-     UPDATE — 기존 글 수정
-  ============================ */
-  /* ============================
+   /* ============================
      UPDATE — 기존 글 수정
      - 수정 시 order 유지
   ============================ */
