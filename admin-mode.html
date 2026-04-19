@@ -360,19 +360,22 @@ function getSelectedPostRealIndex() {
   }
 
  function deletePostBySelected() {
-  if (!requireSelectedPost()) return;
+    if (!requireSelectedPost()) return;
 
-  const realIndex = getSelectedPostRealIndex();
-  const title = allPosts[realIndex].title || '(제목 없음)';
+    const realIndex = getSelectedPostRealIndex();
+    const post = allPosts[realIndex];
+    const board = post.board || 'kr';
+    const title = post.title || '(제목 없음)';
 
-  if (!confirm(`정말 삭제할까요?\n\n${title}`)) return;
+    if (!confirm(`정말 삭제할까요?\n\n${title}`)) return;
 
-  allPosts.splice(realIndex, 1);
-  selectedIndex = null;
+    allPosts.splice(realIndex, 1);
+    renumberBoardOrders(board);
 
-  saveAllPosts();
-  renderAdminPostList();
-}
+    selectedIndex = null;
+    saveAllPosts();
+    renderAdminPostList();
+  }
 
   hbBtnLogin.addEventListener('click', hbLogin);
   hbBtnLogout.addEventListener('click', hbLogout);
