@@ -17,8 +17,8 @@ function initGateToggle() {
   // 관리자 상태면 비밀문은 열리지 않게 유지
   if (isAdmin) return;
 
-  gatetoggle.onclick = function () {
-    const isOpen = box.style.display === "block";
+    gatetoggle.onclick = function () {
+    const isOpen = gatebox.style.display === "block";
     gatebox.style.display = isOpen ? "none" : "block";
   };
 }
