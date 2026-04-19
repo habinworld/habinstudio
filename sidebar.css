@@ -202,10 +202,10 @@
   color: #000;
 }
 /* ----------------------------------------
-   🔐 관리자 모드 — 비밀의 문
+ 관리자 모드 — 게이트
 ---------------------------------------- */
 
-.secret-toggle {
+.gate-toggle {
   font-family: 'HCR Batang','Batang',serif;
   font-size: 16px;
   font-weight: 700;
@@ -219,11 +219,11 @@
   transition: 0.25s ease;
 }
 
-.secret-toggle:hover {
+.gate-toggle:hover {
   color: #5C8EDB;
 }
 
-.secret-box {
+.gate-box {
   display: none;
   width: 90%;
   margin: 10px auto 0;
@@ -235,7 +235,7 @@
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-.secret-box input {
+.gate-box input {
   width: 100%;
   padding: 8px 10px;
   margin-bottom: 8px;
@@ -249,12 +249,12 @@
   transition: 0.25s ease;
 }
 
-.secret-box input:focus {
+.gate-box input:focus {
   border-color: #5C8EDB;
   box-shadow: 0 0 4px rgba(92,142,219,0.4);
 }
 
-.secret-box button {
+.gate-box button {
   width: 100%;
   padding: 8px 10px;
   background: #5C8EDB;
@@ -267,11 +267,11 @@
   transition: 0.25s ease;
 }
 
-.secret-box button:hover {
+.gate-box button:hover {
   background: #3558A8;
 }
 
-#secret-msg {
+#gate-msg {
   margin-top: 8px;
   font-size: 14px;
   font-weight: 600;
@@ -388,11 +388,11 @@ body.night #weather-location,
 body.night #weather-box {
   color: #E5E7EB ;
 }
-/* 비밀문 */
-body.night .secret-box {
+/* 게이트 */
+body.night .gate-box {
   background: #0F172A ;
   border-color: #334155 ;
 }
-body.night .secret-toggle {
+body.night .gate-toggle {
   color: #9CA3AF ;
 }
