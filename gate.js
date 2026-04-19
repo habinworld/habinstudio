@@ -20,26 +20,26 @@ function initGate() {
   if (cleanLink) cleanLink.style.display = isAdmin ? "inline-flex" : "none";
    
   // 서버 기준이므로 입력 버튼은 안내만
-  gateBtn.onclick = function () {
+  gatebtn.onclick = function () {
     if (!isAdmin) {
-      gateMsg.textContent = "";
+      gatemsg.textContent = "";
       return;
     }
 
-    gateMsg.textContent = "서버 관리자 연결 상태입니다.";
-    gateMsg.style.color = "#DAA520";
-    gateMsg.style.fontWeight = "700";
+    gatemsg.textContent = "서버 관리자 연결 상태입니다.";
+    gatemsg.style.color = "#DAA520";
+    gatemsg.style.fontWeight = "700";
 
-    if (gateBox) gateBox.style.display = "none";
+    if (gatebox) gatebox.style.display = "none";
 
     setTimeout(() => {
-      gateMsg.textContent = "";
+      gatemsg.textContent = "";
     }, 1500);
   };
 
-  gateInput.onkeydown = function (e) {
+  gateinput.onkeydown = function (e) {
     if (e.key === "Enter") {
-      gateBtn.click();
+      gatebtn.click();
     }
   };
 
