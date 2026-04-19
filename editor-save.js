@@ -108,21 +108,21 @@ function hasContent() {
   /* ============================
      데이터 수집 (새 글 전용)
   ============================ */
-  function collectNewData() {
-    const board = getSafeBoard(window.CURRENT_BOARD);
+   function collectNewData() {
+      const board = getSafeBoard(window.CURRENT_BOARD);
 
-    return {
-      id: Date.now(),
-      board: board,
-      order: getNextOrderForBoard(board),
-      title: titleEl?.value.trim() || "제목 없음",
-      writer: "하빈",
-      content: normalizeContent(editorEl?.innerHTML || ""),
-      images: collectImageIds(),
-      date: new Date().toISOString(),
-      isNotice: noticeEl?.checked === true
-    };
-  }
+      return {
+        id: Date.now(),
+        board,
+        order: getNextOrderForBoard(board),
+        title: titleEl?.value.trim() || "제목 없음",
+        writer: "하빈",
+        content: normalizeContent(editorEl?.innerHTML || ""),
+        images: collectImageIds(),
+        date: new Date().toISOString(),
+        isNotice: noticeEl?.checked === true
+      };
+    }
 
   /* ============================
      SAVE — 새 글
