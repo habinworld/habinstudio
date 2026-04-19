@@ -145,6 +145,10 @@ tr.innerHTML = `
 </td>
 <td>${formatDate(p.date)}</td>
 `;
+ if (p.isNotice) tr.classList.add("notice-row");
+  tbody.appendChild(tr);
+});
+}   
 /* ===============================
    🔁 PAGINATION UI
 =============================== */
@@ -170,7 +174,6 @@ function renderPagination() {
     `<a href="?board=${CURRENT_BOARD}&page=${currentPage + 1}" class="page-btn">다음</a>`;
 }
 }
-
 /* ===============================
    🧱 GRID
 =============================== */
@@ -179,7 +182,6 @@ function renderGrid() {
         renderMainGrid(getCurrentPagePosts());
 }
 }
-
 /* ===============================
    🚀 INIT
 =============================== */
@@ -188,7 +190,6 @@ renderPagination();
 renderGrid();
 
 </script>
-
 </body>
 </html>
 
