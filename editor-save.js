@@ -83,7 +83,7 @@ function normalizeContent(html) {
    - 현재: localStorage 저장
    - 미래: 서버 API 연결 예정
 ============================ */
-function hbSavePosts(posts) {
+function SavePosts(posts) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
 }
  
