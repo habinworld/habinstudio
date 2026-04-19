@@ -126,29 +126,32 @@ function renderList() {
   tbody.innerHTML = "";
 
   const pagePosts = getCurrentPagePosts();
+
   if (!pagePosts.length) {
     tbody.innerHTML =
-      `<tr><td colspan="5" class="empty">작성된 글이 없습니다.</td></tr>`;
+      `<tr><td colspan="4" class="empty">작성된 글이 없습니다.</td></tr>`;
     return;
   }
+
   pagePosts.forEach((p, idx) => {
-    const realIndex = (currentPage - 1) * itemsPerPage + idx;
     const tr = document.createElement("tr");
-tr.innerHTML = `
-<td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
-<td>${p.writer || "하빈"}</td>
-<td>
-  <a class="title-link"
-     href="post.html?mode=view&id=${p.id}&board=${getBoardFromURL()}">
-     ${p.isNotice ? "📌 " : ""}${p.title}
-  </a>
-</td>
-<td>${formatDate(p.date)}</td>
-`;
- if (p.isNotice) tr.classList.add("notice-row");
-  tbody.appendChild(tr);
-});
-}   
+
+    tr.innerHTML = `
+      <td>${posts.length - ((currentPage - 1) * itemsPerPage + idx)}</td>
+      <td>${p.writer || "하빈"}</td>
+      <td>
+        <a class="title-link"
+           href="post.html?mode=view&id=${p.id}&board=${getBoardFromURL()}">
+           ${p.isNotice ? "📌 " : ""}${p.title}
+        </a>
+      </td>
+      <td>${formatDate(p.date)}</td>
+    `;
+
+    if (p.isNotice) tr.classList.add("notice-row");
+    tbody.appendChild(tr);
+  });
+}
 /* ===============================
    🔁 PAGINATION UI
 =============================== */
