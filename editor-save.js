@@ -159,70 +159,94 @@ function hasContent() {
      - 수정 시 order 유지
   ============================ */
   function updatePost() {
-    if (!Number.isInteger(POST_ID)) {
-      alert("수정 실패: 글 ID 없음");
-      return;
+      try {
+        if (!Number.isInteger(POST_ID)) {
+          alert("수정 실패: 글 ID 없음");
+          return;
+        }
+
+        const title = titleEl?.value.trim() || "";
+
+        if (!title && !hasContent()) {
+          alert("제목 또는 내용을 입력하세요.");
+          return;
+        }
+
+        const posts = getPosts();
+
+        const nextPosts = posts.map(post =>
+          post.id === POST_ID
+            ? {
+                ...post,
+                board: getSafeBoard(post.board),
+                order:
+                  typeof post.order === "number" && !Number.isNaN(post.order)
+                    ? post.order
+                    : getNextOrderForBoard(post.board || "kr"),
+                title: titleEl?.value.trim() || post.title,
+                content: normalizeContent(editorEl?.innerHTML || post.content),
+                images: collectImageIds(),
+                isNotice: noticeEl?.checked === true
+              }
+            : post
+        );
+
+        savePosts(nextPosts);
+        console.log("[editor-save] 수정 완료", POST_ID);
+
+        alert("저장 완료");
+        goListPage(window.CURRENT_BOARD);
+      } catch (error) {
+        console.error("[editor-save] updatePost 오류", error);
+        alert("수정 중 오류: " + error.message);
+      }
     }
-
-    const title = titleEl?.value.trim() || "";
-
-    if (!title && !hasContent()) {
-      alert("제목 또는 내용을 입력하세요.");
-      return;
-    }
-
-    const posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-
-    const nextPosts = posts.map(post =>
-      post.id === POST_ID
-        ? {
-            ...post,
-            board: getSafeBoard(post.board),
-            order: typeof post.order === "number" && !Number.isNaN(post.order)
-              ? post.order
-              : getNextOrderForBoard(post.board || "kr"),
-            title: titleEl?.value.trim() || post.title,
-            content: normalizeContent(editorEl?.innerHTML || post.content),
-            images: collectImageIds(),
-            isNotice: noticeEl?.checked === true
-          }
-        : post
-    );
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(nextPosts));
-
-    setTimeout(() => {
-      alert("저장 완료");
-      location.href = window.HABIN_LIST_PAGE + "?board=" + getSafeBoard(window.CURRENT_BOARD);
-    }, 0);
-  }
   /* ============================
      DELETE — 삭제
   ============================ */
   function deletePost() {
-    if (!Number.isInteger(POST_ID)) {
-      alert("삭제 실패: 글 ID 없음");
-      return;
+      try {
+        if (!Number.isInteger(POST_ID)) {
+          alert("삭제 실패: 글 ID 없음");
+          return;
+        }
+
+        if (!confirm("정말 삭제할까요?")) return;
+
+        const posts = getPosts().filter(post => post.id !== POST_ID);
+        savePosts(posts);
+
+        console.log("[editor-save] 삭제 완료", POST_ID);
+        goListPage(window.CURRENT_BOARD);
+      } catch (error) {
+        console.error("[editor-save] deletePost 오류", error);
+        alert("삭제 중 오류: " + error.message);
+      }
     }
-
-    if (!confirm("정말 삭제할까요?")) return;
-
-    let posts = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-     posts = posts.filter(post => post.id !== POST_ID);
-
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(posts));
-    location.href = window.HABIN_LIST_PAGE + "?board=" + window.CURRENT_BOARD;
-  }
     
   /* ============================
      버튼 연결 (최종 판단)
   ============================ */
-  btnSave && btnSave.addEventListener("click", () => {
-  window.POST_MODE === "edit" ? updatePost() : saveNew();
-  });
+ btnSave.addEventListener("click", () => {
+      window.POST_MODE === "edit" ? updatePost() : saveNew();
+    });
 
-  btnDelete && btnDelete.addEventListener("click", deletePost);
+    if (btnDelete) {
+      btnDelete.addEventListener("click", deletePost);
+    }
 
+    console.log("[editor-save] 초기화 완료", {
+      STORAGE_KEY,
+      CURRENT_BOARD,
+      POST_MODE: window.POST_MODE
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initEditorSave);
+  } else {
+    initEditorSave();
+  }
 })();
 
 
