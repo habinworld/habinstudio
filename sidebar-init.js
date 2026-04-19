@@ -28,7 +28,7 @@ function hbInitSidebar() {
     };
   }
 
-  // 🔐 여기서만 비밀문 호출
+  // 게이트 호출
   if (typeof initGateToggle === "function") {
     initGateToggle();
   }
