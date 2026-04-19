@@ -306,40 +306,58 @@ function getSelectedPostRealIndex() {
 }
 
  function moveUpBySelected() {
-  if (currentAdminBoard !== 'all') {
-    alert('위아래 이동은 지금은 전체 탭에서만 가능합니다.');
-    return;
+    if (!requireSelectedPost()) return;
+
+    const selectedPost = getSelectedPostInFiltered();
+    if (!selectedPost) return;
+
+    const currentBoard = selectedPost.board || 'kr';
+
+    const sameBoardPosts = allPosts
+      .filter(post => (post.board || 'kr') === currentBoard)
+      .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+    const currentPos = sameBoardPosts.findIndex(post => post.id === selectedPost.id);
+    if (currentPos <= 0) return;
+
+    const prevPost = sameBoardPosts[currentPos - 1];
+
+    const tempOrder = selectedPost.order;
+    selectedPost.order = prevPost.order;
+    prevPost.order = tempOrder;
+
+    renumberBoardOrders(currentBoard);
+    saveAllPosts();
+    resetSelectedIndexByPostId(selectedPost.id);
+    renderAdminPostList();
   }
-
-  if (!requireSelectedPost()) return;
-
-  const realIndex = getSelectedPostRealIndex();
-  if (realIndex <= 0) return;
-
-  [allPosts[realIndex - 1], allPosts[realIndex]] = [allPosts[realIndex], allPosts[realIndex - 1]];
-  selectedIndex = realIndex - 1;
-
-  saveAllPosts();
-  renderAdminPostList();
-}
 
   function moveDownBySelected() {
-  if (currentAdminBoard !== 'all') {
-    alert('위아래 이동은 지금은 전체 탭에서만 가능합니다.');
-    return;
+    if (!requireSelectedPost()) return;
+
+    const selectedPost = getSelectedPostInFiltered();
+    if (!selectedPost) return;
+
+    const currentBoard = selectedPost.board || 'kr';
+
+    const sameBoardPosts = allPosts
+      .filter(post => (post.board || 'kr') === currentBoard)
+      .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+    const currentPos = sameBoardPosts.findIndex(post => post.id === selectedPost.id);
+    if (currentPos === -1 || currentPos >= sameBoardPosts.length - 1) return;
+
+    const nextPost = sameBoardPosts[currentPos + 1];
+
+    const tempOrder = selectedPost.order;
+    selectedPost.order = nextPost.order;
+    nextPost.order = tempOrder;
+
+    renumberBoardOrders(currentBoard);
+    saveAllPosts();
+    resetSelectedIndexByPostId(selectedPost.id);
+    renderAdminPostList();
   }
-
-  if (!requireSelectedPost()) return;
-
-  const realIndex = getSelectedPostRealIndex();
-  if (realIndex >= allPosts.length - 1) return;
-
-  [allPosts[realIndex + 1], allPosts[realIndex]] = [allPosts[realIndex], allPosts[realIndex + 1]];
-  selectedIndex = realIndex + 1;
-
-  saveAllPosts();
-  renderAdminPostList();
-}
 
  function deletePostBySelected() {
   if (!requireSelectedPost()) return;
