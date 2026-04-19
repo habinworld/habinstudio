@@ -12,13 +12,13 @@ function initGateToggle() {
   const isAdmin = document.body.dataset.isAdmin === "true";
 
   // 처음엔 닫기
-  gateBox.style.display = "none";
+  gatebox.style.display = "none";
 
-  gateToggle.onclick = function () {
+  gatetoggle.onclick = function () {
     if (!isAdmin) return;
 
-    const isOpen = gateBox.style.display === "block";
-    gateBox.style.display = isOpen ? "none" : "block";
+    const isOpen = gatebox.style.display === "block";
+    gatebox.style.display = isOpen ? "none" : "block";
   };
 }
 
