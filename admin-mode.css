@@ -97,7 +97,11 @@ body {
   color: var(--hb-main);
   border: 1px solid var(--hb-line);
 }
-
+.admin-btn.main {
+  background-color: #6FCF97; /* 연두 */
+  color: #ffffff;
+  border: none;
+}
 .admin-btn.danger {
   background: var(--hb-danger);
 }
