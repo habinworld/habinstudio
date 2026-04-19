@@ -57,7 +57,7 @@ body {
 
 .admin-row {
   display: flex;
-  gap: 30px;
+  gap: 20px;
   flex-wrap: wrap;
 }
 
@@ -98,7 +98,7 @@ body {
   border: 1px solid var(--hb-line);
 }
 .admin-btn.main {
-  background-color: #6FCF97; /* 연두 */
+  background-color: #5ABF85; /* 연두 */
   color: #ffffff;
   border: none;
 }
