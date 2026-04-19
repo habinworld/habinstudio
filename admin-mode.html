@@ -162,6 +162,44 @@ function getBoardLabel(board) {
   };
   return map[board] || board || 'kr';
 }
+  function ensurePostDefaults(post) {
+    if (!post.board) post.board = 'kr';
+    if (!post.writer) post.writer = '하빈';
+    if (typeof post.isNotice !== 'boolean') post.isNotice = false;
+  }
+
+  function normalizeOrders() {
+    const boardMap = {};
+
+    allPosts.forEach(post => {
+      ensurePostDefaults(post);
+
+      const board = post.board || 'kr';
+      if (!boardMap[board]) boardMap[board] = [];
+      boardMap[board].push(post);
+    });
+
+    Object.keys(boardMap).forEach(board => {
+      const posts = boardMap[board];
+
+      let needsSave = false;
+      posts.forEach((post, index) => {
+        if (typeof post.order !== 'number' || Number.isNaN(post.order)) {
+          post.order = (index + 1) * 1000;
+          needsSave = true;
+        }
+      });
+
+      if (needsSave) {
+        posts.sort((a, b) => a.order - b.order);
+        posts.forEach((post, index) => {
+          post.order = (index + 1) * 1000;
+        });
+      }
+    });
+
+    saveAllPosts();
+  } 
   function getFilteredPosts() {
   if (currentAdminBoard === 'all') return allPosts;
   return allPosts.filter(post => (post.board || 'kr') === currentAdminBoard);
