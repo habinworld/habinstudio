@@ -17,7 +17,7 @@ function hbInitSidebar() {
   if (typeof startWeather === "function") {
     startWeather();
   }
-
+ /* ---📂 접이식 메뉴--- */
   const menuToggle = document.getElementById("menu-toggle");
   const menu = document.getElementById("sidebar-menu");
 
