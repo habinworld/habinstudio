@@ -244,7 +244,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
+
+.admin-toggle {
+  display: flex;
+  gap: 8px;
+}
+
 .admin-toggle .admin-btn {
   padding: 4px 10px;
   font-size: 12px;
