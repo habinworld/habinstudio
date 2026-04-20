@@ -267,3 +267,8 @@ body {
   background: #FF6B6B;
   color: #fff;
 }
+#hb-login-status{
+  display:inline-block;
+  width:fit-content;
+  margin-top:8px;
+}
