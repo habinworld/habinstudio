@@ -240,20 +240,20 @@ body {
   color: #fff;
   border-color: var(--hb-main);
 }
-.admin-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 10px;
+.admin-head-row{
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:12px;
+  flex-wrap:wrap;
 }
 
-.admin-toggle {
-  display: flex;
-  gap: 8px;
+.admin-section-title{
+  margin:0;
 }
 
-.admin-toggle .admin-btn {
-  padding: 4px 10px;
-  font-size: 12px;
-  border-radius: 8px;
+.admin-toggle{
+  display:flex;
+  align-items:center;
+  gap:8px;
 }
