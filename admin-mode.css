@@ -273,3 +273,6 @@ body {
   width:fit-content;
   margin-top:8px;
 }
+.admin-row + .admin-row{
+  margin-top: 14px;
+}
