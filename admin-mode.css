@@ -258,3 +258,12 @@ body {
   align-items:center;
   gap:8px;
 }
+#hb-btn-login {
+  background: #00B040;
+  color: #fff;
+}
+
+#hb-btn-logout {
+  background: #FF6B6B;
+  color: #fff;
+}
