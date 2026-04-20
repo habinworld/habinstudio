@@ -44,15 +44,15 @@ body {
 
 .admin-section-title {
   margin: 0 0 12px;
-  font-size: 18px;
+  font-size: 16px;
   color: var(--hb-main);
 }
 
 .admin-sub {
   margin: 0 0 14px;
   color: var(--hb-sub);
-  font-size: 14px;
-  line-height: 1.7;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
 .admin-row {
