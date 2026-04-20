@@ -38,8 +38,8 @@ body {
   border: 1px solid var(--hb-line);
   border-radius: var(--hb-radius);
   box-shadow: var(--hb-shadow);
-  padding: 18px;
-  margin-bottom: 18px;
+  padding: 14px;
+  margin-bottom: 14px;
 }
 
 .admin-section-title {
