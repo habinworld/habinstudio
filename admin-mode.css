@@ -67,9 +67,9 @@ body {
 .admin-post-select {
   width: 100%;
   border: 1px solid var(--hb-line);
-  border-radius: 12px;
-  padding: 10px 12px;
-  font-size: 14px;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 13px;
   background: #fff;
   color: var(--hb-text);
 }
