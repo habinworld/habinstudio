@@ -222,7 +222,7 @@ body {
 }
 
 .admin-board-tab {
-  border: 1px solid var(--hb-line);
+  border: 2px solid #3558A8;
   border-radius: 10px;
   padding: 8px 14px;
   background: #fff;
