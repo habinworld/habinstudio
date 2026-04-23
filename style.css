@@ -205,6 +205,13 @@ body.winter { background-color: #FFD1E8; }  /* 겨울 : 연핑크 눈빛 */
 .notice-more a:hover {
   color: #FFFFFF;
 }
+.top-sub {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #C0C0C0;
+  font-style: italic;
+  white-space: nowrap; /* 한 줄 고정 */
+}
 /* ===============================
    🌙 Night Mode (ONE BLOCK)
 ================================ */
