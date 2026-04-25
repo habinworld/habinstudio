@@ -36,7 +36,6 @@ function hbHandleSelectionChange() {
   if (typeof hbUpdateToolbarState === 'function') {
     hbUpdateToolbarState();
   }
-}
  // ==============================
   // 글자색 / 배경색 현재값 표시
   // ==============================
