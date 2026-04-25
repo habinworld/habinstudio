@@ -81,8 +81,8 @@ function hbNormalizeLineHeight(style) {
 // 색상 미리보기 반영
 // ==============================
 function hbUpdateColorPreview(style) {
-  const textPreview = document.getElementById('hb-preview-text');
-  const bgPreview = document.getElementById('hb-preview-bg');
+  const textPreview = document.getElementById('hb-current-text');
+  const bgPreview = document.getElementById('hb-current-bg');
 
   if (textPreview) {
     textPreview.style.backgroundColor = style.color;
