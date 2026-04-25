@@ -78,32 +78,6 @@ function hbNormalizeLineHeight(style) {
 }
 
 // ==============================
-// 색상 미리보기 반영
-// ==============================
-function hbUpdateColorPreview(style) {
-  const textPreview = document.getElementById('hb-current-text');
-  const bgPreview = document.getElementById('hb-current-bg');
-
-  if (textPreview) {
-    textPreview.style.backgroundColor = style.color;
-  }
-
-  if (bgPreview) {
-    let bgColor = style.backgroundColor;
-
-    if (
-      !bgColor ||
-      bgColor === 'transparent' ||
-      bgColor === 'rgba(0, 0, 0, 0)'
-    ) {
-      bgColor = '#ffffff';
-    }
-
-    bgPreview.style.backgroundColor = bgColor;
-  }
-}
-
-// ==============================
 // 전체 툴바 상태 갱신
 // ==============================
 function hbUpdateToolbarState() {
