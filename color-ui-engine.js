@@ -88,9 +88,8 @@
     // ===============================
     if (typeof hbUpdateColorCurrentValue === "function") {
       hbUpdateColorCurrentValue();
-}
-}
-
+    }
+  }
 })();
 
 
