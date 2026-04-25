@@ -30,21 +30,16 @@ function hbEnsureCaretVisible() {
 // ==============================
 function hbHandleSelectionChange() {
   hbEnsureCaretVisible();
-
+// ==============================
+  // 기존 툴바 상태 업데이트
+  // ==============================
   if (typeof hbUpdateToolbarState === 'function') {
     hbUpdateToolbarState();
   }
 }
  // ==============================
-  // ✨ [추가] 글자색 / 배경색 현재값 표시
+  // 글자색 / 배경색 현재값 표시
   // ==============================
-function hbHandleSelectionChange() {
-  hbEnsureCaretVisible();
-
-  if (typeof hbUpdateToolbarState === 'function') {
-    hbUpdateToolbarState();
-  }
-
   if (typeof hbUpdateColorCurrentValue === 'function') {
     hbUpdateColorCurrentValue();
   }
