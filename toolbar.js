@@ -71,14 +71,14 @@ options: Array.from({ length: 33 }, (_, i) => {
 
     { 
   id: "hb-btn-color", 
-  label: '🖌️ <span class="hb-color-chip" id="hb-preview-text"></span>', 
+  label: '🖌️ <span class="hb-color-chip" id="hb-current-text"></span>', 
   icon: true, 
   popup: true 
 },
 
 { 
   id: "hb-btn-bgcolor", 
-  label: '🎨 <span class="hb-color-chip" id="hb-preview-bg"></span>', 
+  label: '🎨 <span class="hb-color-chip" id="hb-current-bg"></span>', 
   icon: true, 
   popup: true 
 },
