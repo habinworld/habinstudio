@@ -80,26 +80,7 @@
 
   const color = isBase
     ? (type === "text" ? baseText : baseBg)
-    : value;
-
-   // ===============================
-  // ✨ 현재값 칩 직접 반영 (핵심!)
-  // ===============================
-  const chipId = (type === "text") ? "hb-current-text" : "hb-current-bg";
-  const chip = document.getElementById(chipId);
-
-  if (chip) {
-    chip.style.backgroundColor = color;
-     
-   // ===============================
-  // ✨ 현재값 칩 직접 반영 (핵심!)
-  // ===============================
-  const chipId = (type === "text") ? "hb-current-text" : "hb-current-bg";
-  const chip = document.getElementById(chipId);
-
-  if (chip) {
-    chip.style.backgroundColor = color;
-     
+    : value;  
    // ===============================
   // ✨ 현재값 칩 직접 반영 (핵심!)
   // ===============================
