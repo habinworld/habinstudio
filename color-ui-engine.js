@@ -83,6 +83,12 @@
     : value;
 
   engine.apply(color);
+     // ===============================
+    // ✨ 글자색 / 배경색 현재값 표시 갱신
+    // ===============================
+    if (typeof hbUpdateColorCurrentValue === "function") {
+      hbUpdateColorCurrentValue();
+}
 }
 
 })();
