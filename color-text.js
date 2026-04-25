@@ -66,6 +66,6 @@ textNodes.forEach(textNode => {
   span.appendChild(nodeRange.extractContents());
   nodeRange.insertNode(span);
 });
-
+  }
   return { apply };
 })();
