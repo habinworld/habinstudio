@@ -35,7 +35,20 @@ function hbHandleSelectionChange() {
     hbUpdateToolbarState();
   }
 }
+ // ==============================
+  // ✨ [추가] 글자색 / 배경색 현재값 표시
+  // ==============================
+function hbHandleSelectionChange() {
+  hbEnsureCaretVisible();
 
+  if (typeof hbUpdateToolbarState === 'function') {
+    hbUpdateToolbarState();
+  }
+
+  if (typeof hbUpdateColorCurrentValue === 'function') {
+    hbUpdateColorCurrentValue();
+  }
+}
 // ==============================
 // 이벤트 연결
 // ==============================
