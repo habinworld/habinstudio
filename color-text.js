@@ -67,13 +67,7 @@ window.ColorTextEngine = (function () {
       nodeRange.insertNode(span);
     });
     }
-   // ==============================
-    // ✨ 글자색 현재값 표시 갱신
-    // ==============================
-    if (typeof hbUpdateColorCurrentValue === "function") {
-      hbUpdateColorCurrentValue();
-    }
-  } 
+   
 return { apply };
 })();
 
