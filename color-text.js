@@ -4,7 +4,7 @@
    - 드래그된 텍스트만 적용
    - 여러 줄 드래그 가능
    - 각 줄별로 분리 적용
-   - 커서만 있으면 아무것도 안 함
+   - 커서만 있으면 아무것도 안 함 26.04.25
 ====================================================== */
 
 window.ColorTextEngine = (function () {
@@ -67,7 +67,13 @@ window.ColorTextEngine = (function () {
       nodeRange.insertNode(span);
     });
     }
-    
+   // ==============================
+    // ✨ 글자색 현재값 표시 갱신
+    // ==============================
+    if (typeof hbUpdateColorCurrentValue === "function") {
+      hbUpdateColorCurrentValue();
+    }
+  } 
 return { apply };
 })();
 
