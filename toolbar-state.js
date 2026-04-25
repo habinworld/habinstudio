@@ -5,7 +5,7 @@ function hbGetCurrentNode() {
   const sel = window.getSelection();
   if (!sel || sel.rangeCount === 0) return null;
 
-  let node = sel.focusNode || sel.anchorNode || sel.getRangeAt(0).startContainer;
+  let node = sel.getRangeAt(0).startContainer;
 
   if (node.nodeType === 3) {
     node = node.parentNode;
