@@ -60,7 +60,13 @@ window.ColorBgEngine = (function () {
       nodeRange.insertNode(span);
     });
     }
-     
+    // ==============================
+    // ✨ 현재값 갱신
+    // ==============================
+    if (typeof hbUpdateColorCurrentValue === "function") {
+      hbUpdateColorCurrentValue();
+    }
+  } 
   return { apply };
 })();
 
