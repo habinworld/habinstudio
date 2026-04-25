@@ -41,7 +41,9 @@ window.ColorTextEngine = (function () {
       textNodes.push(node);
     }
 
-    // 각 텍스트 노드별로 실제 선택 범위만 처리
+        // 각 텍스트 노드별로 실제 선택 범위만 처리
+    let lastSpan = null;
+
     textNodes.forEach(textNode => {
       const nodeRange = document.createRange();
       nodeRange.selectNodeContents(textNode);
@@ -65,9 +67,22 @@ window.ColorTextEngine = (function () {
 
       span.appendChild(nodeRange.extractContents());
       nodeRange.insertNode(span);
-    });
-    }
-   
-return { apply };
-})();
 
+      lastSpan = span;
+    });
+
+    // ==============================
+    // 선택영역을 마지막 span 안으로 다시 잡기
+    // ==============================
+    if (lastSpan) {
+      const newRange = document.createRange();
+      newRange.selectNodeContents(lastSpan);
+
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(newRange);
+    }
+  }
+
+  return { apply };
+})();
