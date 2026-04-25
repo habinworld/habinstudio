@@ -71,8 +71,8 @@
   /* ===============================
      실행 연결 (판단 없음)
   =============================== */
-  function applyColor(value) {
-   const isBase = (value === "" || value === null || value === "__NONE__" || value === "__BASE__");
+ function applyColor(value) {
+  const isBase = (value === "" || value === null || value === "__NONE__" || value === "__BASE__");
   const engine = (type === "text") ? ColorTextEngine : ColorBgEngine;
 
   const baseText = "#000000";
@@ -82,14 +82,21 @@
     ? (type === "text" ? baseText : baseBg)
     : value;
 
+  // ===============================
+  // 실제 텍스트 색 적용
+  // ===============================
   engine.apply(color);
-     // ===============================
-    // ✨ 글자색 / 배경색 현재값 표시 갱신
-    // ===============================
-    if (typeof hbUpdateToolbarState === "function") {
-        hbUpdateToolbarState();
-    }
+
+  // ===============================
+  // ✨ 현재값 칩 직접 반영 (핵심!)
+  // ===============================
+  const chipId = (type === "text") ? "hb-current-text" : "hb-current-bg";
+  const chip = document.getElementById(chipId);
+
+  if (chip) {
+    chip.style.backgroundColor = color;
   }
+}
 })();
 
 
