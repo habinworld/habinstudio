@@ -41,48 +41,31 @@ window.ColorTextEngine = (function () {
       textNodes.push(node);
     }
 
-        // 각 텍스트 노드별로 실제 선택 범위만 처리
-    let lastSpan = null;
+       // 각 텍스트 노드별로 실제 선택 범위만 처리
+textNodes.forEach(textNode => {
+  const nodeRange = document.createRange();
+  nodeRange.selectNodeContents(textNode);
 
-    textNodes.forEach(textNode => {
-      const nodeRange = document.createRange();
-      nodeRange.selectNodeContents(textNode);
+  const start = Math.max(
+    range.startContainer === textNode ? range.startOffset : 0,
+    0
+  );
+  const end = Math.min(
+    range.endContainer === textNode ? range.endOffset : textNode.length,
+    textNode.length
+  );
 
-      const start = Math.max(
-        range.startContainer === textNode ? range.startOffset : 0,
-        0
-      );
-      const end = Math.min(
-        range.endContainer === textNode ? range.endOffset : textNode.length,
-        textNode.length
-      );
+  if (start >= end) return;
 
-      if (start >= end) return;
+  nodeRange.setStart(textNode, start);
+  nodeRange.setEnd(textNode, end);
 
-      nodeRange.setStart(textNode, start);
-      nodeRange.setEnd(textNode, end);
+  const span = document.createElement("span");
+  span.style.color = color;
 
-      const span = document.createElement("span");
-      span.style.color = color;
-
-      span.appendChild(nodeRange.extractContents());
-      nodeRange.insertNode(span);
-
-      lastSpan = span;
-    });
-
-    // ==============================
-    // 선택영역을 마지막 span 안으로 다시 잡기
-    // ==============================
-    if (lastSpan) {
-      const newRange = document.createRange();
-      newRange.selectNodeContents(lastSpan);
-
-      const sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(newRange);
-    }
-  }
+  span.appendChild(nodeRange.extractContents());
+  nodeRange.insertNode(span);
+});
 
   return { apply };
 })();
