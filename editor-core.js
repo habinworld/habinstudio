@@ -149,7 +149,28 @@ if (!editor.querySelector("[data-hb-paragraph]")) {
     sel.removeAllRanges();
     sel.addRange(range);
   }
+  /* =================================================
+        6-1) font-family 직접 적용
+  ================================================= */
+  function applyFontFamilyToSelection(fontFamily) {
+    const sel = window.getSelection();
+    if (!sel || !sel.rangeCount) return;
 
+    const range = sel.getRangeAt(0);
+    if (range.collapsed) return;
+    if (!editor.contains(range.commonAncestorContainer)) return;
+
+    const span = document.createElement("span");
+    span.style.fontFamily = fontFamily;
+
+    span.appendChild(range.extractContents());
+    range.insertNode(span);
+
+    range.setStartAfter(span);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
   function applyFontSizePx(px) {
     const sel = window.getSelection();
     if (!sel || !sel.rangeCount) return;
