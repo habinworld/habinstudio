@@ -182,15 +182,9 @@ function bindEvents() {
 /* -------------------------------
    font-family (속도 안정화)
 -------------------------------- */
-let ffTimer = null;
-
 font && font.addEventListener("change", e => {
   const v = e.target.value;
-  if (ffTimer) cancelAnimationFrame(ffTimer);
-
-  ffTimer = requestAnimationFrame(() => {
-    EditorCore.setFont(v);
-  });
+  EditorCore.setFont(v);
 });
 const fontBtn = document.getElementById("hb-font-family-btn");
 const fontSel = document.getElementById("hb-font-family");
