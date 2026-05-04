@@ -38,7 +38,13 @@ window.Toolbar = (function () {
   { value: "'Nanum Gothic', sans-serif", label: "나눔" },
   { value: "'Gowun Dodum', sans-serif", label: "고운" },
   { value: "'Nanum Myeongjo', serif", label: "명조" },
-  { value: "'HCR Batang', '함초롱바탕', serif", label: "함초롱" }
+  { value: "'HCR Batang', '함초롱바탕', serif", label: "함초롱" },
+  { value: "'Gulim', '굴림', sans-serif", label: "굴림" },
+  { value: "'Dotum', '돋움', sans-serif", label: "돋움" },
+  { value: "'Gungsuh', '궁서', serif", label: "궁서" },
+  { value: "'Batang', '바탕', serif", label: "바탕" },
+  { value: "'Arial', sans-serif", label: "Arial" },
+  { value: "'Times New Roman', serif", label: "Times" }    
   ]
 },
 {
