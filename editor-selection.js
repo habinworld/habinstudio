@@ -1,5 +1,5 @@
 // ==============================
-// 커서가 화면 안에 보이게
+// 커서가 화면 안에 보이게 26. 5. 4
 // ==============================
 function hbEnsureCaretVisible() {
   const sel = window.getSelection();
