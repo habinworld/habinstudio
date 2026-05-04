@@ -103,3 +103,15 @@ function hbUpdateToolbarState() {
   lineBtn &&
     (lineBtn.innerHTML = lineHeight + " ▼");
 }
+// ==============================
+// 초기 툴바 기본값 표시
+// ==============================
+function hbSetInitialToolbarLabels() {
+  const fontBtn = document.getElementById("hb-font-family-btn");
+  const sizeBtn = document.getElementById("hb-font-size-btn");
+  const lineBtn = document.getElementById("hb-line-height-btn");
+
+  fontBtn && (fontBtn.innerHTML = "함초롱 ▼");
+  sizeBtn && (sizeBtn.innerHTML = "16 ▼");
+  lineBtn && (lineBtn.innerHTML = "1.6 ▼");
+}
