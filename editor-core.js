@@ -252,7 +252,12 @@ function insertAtCursor(editor, frag) {
       isLocked = false;
       return;
     }
-
+    // --- Font Family ---
+    if (cmd === "fontName") {
+      applyFontFamilyToSelection(value);
+      isLocked = false;
+      return;
+    }
       
     // --- Color (실행 전용 엔진 호출) ---
     if (cmd === "color-text") {
