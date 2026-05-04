@@ -36,11 +36,7 @@ function hbHandleSelectionChange() {
   if (typeof hbUpdateToolbarState === 'function') {
     hbUpdateToolbarState();
   }
-   // 현재값 표시 업데이트
-  if (typeof hbUpdateCurrentValues === 'function') {
-    hbUpdateCurrentValues();
-  }
-}
+ }
 // ==============================
 // 이벤트 연결
 // ==============================
