@@ -13,7 +13,6 @@ function hbGetCurrentNode() {
 
   return node;
 }
-
 // ==============================
 // 현재 스타일 읽기
 // ==============================
@@ -31,7 +30,6 @@ function hbGetCurrentStyle() {
     backgroundColor: style.backgroundColor
   };
 }
-
 // ==============================
 // select 값 반영
 // ==============================
@@ -56,7 +54,6 @@ function hbUpdateSelect(id, value, isFont) {
 
   el.value = value;
 }
-
 // ==============================
 // 줄간격 정규화
 // normal / px 값을 1.x 형태로 변환
@@ -73,10 +70,8 @@ function hbNormalizeLineHeight(style) {
     if (!fs || !lhpx) return '1.6';
     return (lhpx / fs).toFixed(1);
   }
-
   return lh;
 }
-
 // ==============================
 // 전체 툴바 상태 갱신
 // ==============================
@@ -88,3 +83,20 @@ function hbUpdateToolbarState() {
   hbUpdateSelect('hb-font-size', style.fontSize, false);
   hbUpdateSelect('hb-line-height', hbNormalizeLineHeight(style), false);
   }
+ // ==============================
+  // 현재값을 버튼에 표시
+  // ==============================
+  const fontSelect = document.getElementById("hb-font-family");
+  const fontBtn = document.getElementById("hb-font-family-btn");
+  const sizeBtn = document.getElementById("hb-font-size-btn");
+  const lineBtn = document.getElementById("hb-line-height-btn");
+
+  fontBtn && fontSelect && fontSelect.selectedOptions[0] &&
+    (fontBtn.innerHTML = fontSelect.selectedOptions[0].textContent + " ▼");
+
+  sizeBtn &&
+    (sizeBtn.innerHTML = parseFloat(style.fontSize) + " ▼");
+
+  lineBtn &&
+    (lineBtn.innerHTML = hbNormalizeLineHeight(style) + " ▼");
+}
