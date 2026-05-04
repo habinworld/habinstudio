@@ -55,6 +55,11 @@ function hbBindSelectionEvents() {
 // ==============================
 document.addEventListener('DOMContentLoaded', () => {
   hbBindSelectionEvents();
+
+  if (typeof hbSetInitialToolbarLabels === 'function') {
+    hbSetInitialToolbarLabels();
+  }
+
   if (typeof hbUpdateToolbarState === 'function') {
     hbUpdateToolbarState();
   }
