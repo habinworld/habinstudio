@@ -292,43 +292,6 @@ btnBgColor && btnBgColor.addEventListener("click", e => {
   openBgColorUI(btnBgColor, HB_COLOR_POPUP);
 });
  }  
-   /* ==============================
-       4-1 ⭐ 현재값 표시 함수 
-   ============================== */
-   function hbUpdateCurrentValues(){
-
-  const sel = window.getSelection();
-  if(!sel || sel.rangeCount === 0) return;
-
-  let el = sel.anchorNode;
-  if(!el) return;
-  if(el.nodeType === 3) el = el.parentElement;
-
-  const style = window.getComputedStyle(el);
-
-  // 글자체
-  const font = style.fontFamily.split(",")[0].replace(/["']/g,"");
-
-  // 글자크기
-  const size = parseFloat(style.fontSize);
-
-  // 줄간격
-  let line = style.lineHeight;
-  if(line.includes("px")){
-    line = (parseFloat(line) / size).toFixed(1);
-  }
-
-  // 버튼 가져오기
-  const fontBtn = document.getElementById("hb-font-family-btn");
-  const sizeBtn = document.getElementById("hb-font-size-btn");
-  const lineBtn = document.getElementById("hb-line-height-btn");
-
-  // 값 반영
-  fontBtn && (fontBtn.innerHTML = font + " ▼");
-  sizeBtn && (sizeBtn.innerHTML = size + " ▼");
-  lineBtn && (lineBtn.innerHTML = line + " ▼");
-}
-   window.hbUpdateCurrentValues = hbUpdateCurrentValues;
   /* =====================================================
      5) Init
   ===================================================== */
