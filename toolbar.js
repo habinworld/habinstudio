@@ -328,6 +328,7 @@ btnBgColor && btnBgColor.addEventListener("click", e => {
   sizeBtn && (sizeBtn.innerHTML = size + " ▼");
   lineBtn && (lineBtn.innerHTML = line + " ▼");
 }
+   window.hbUpdateCurrentValues = hbUpdateCurrentValues;
   /* =====================================================
      5) Init
   ===================================================== */
