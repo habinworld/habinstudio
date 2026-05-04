@@ -79,10 +79,14 @@ function hbUpdateToolbarState() {
   const style = hbGetCurrentStyle();
   if (!style) return;
 
+  const fontSize = parseFloat(style.fontSize);
+  const lineHeight = hbNormalizeLineHeight(style);
+
   hbUpdateSelect('hb-font-family', style.fontFamily, true);
-  hbUpdateSelect('hb-font-size', style.fontSize, false);
-  hbUpdateSelect('hb-line-height', hbNormalizeLineHeight(style), false);
-   // ==============================
+  hbUpdateSelect('hb-font-size', fontSize, false);
+  hbUpdateSelect('hb-line-height', lineHeight, false);
+
+  // ==============================
   // 현재값을 버튼에 표시
   // ==============================
   const fontSelect = document.getElementById("hb-font-family");
@@ -94,8 +98,8 @@ function hbUpdateToolbarState() {
     (fontBtn.innerHTML = fontSelect.selectedOptions[0].textContent + " ▼");
 
   sizeBtn &&
-    (sizeBtn.innerHTML = parseFloat(style.fontSize) + " ▼");
+    (sizeBtn.innerHTML = fontSize + " ▼");
 
   lineBtn &&
-    (lineBtn.innerHTML = hbNormalizeLineHeight(style) + " ▼");
+    (lineBtn.innerHTML = lineHeight + " ▼");
 }
