@@ -125,7 +125,25 @@ if (!editor.querySelector("[data-hb-paragraph]")) {
     range.insertNode(span);
     ensureCaretInsideTextNode(z, 1);
   }
+function applyTypingFontFamily(fontFamily) {
+  if (document.activeElement !== editor) editor.focus();
 
+  removeTypingSpanIfEmpty();
+
+  const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
+  const range = sel.getRangeAt(0);
+
+  const span = document.createElement("span");
+  span.setAttribute("data-hb-typing", "1");
+  span.style.fontFamily = fontFamily;
+
+  const z = document.createTextNode("\u200B");
+  span.appendChild(z);
+
+  range.insertNode(span);
+  ensureCaretInsideTextNode(z, 1);
+}
   /* =================================================
         6) px 기반 폰트 크기
   ================================================= */
