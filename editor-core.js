@@ -8,7 +8,7 @@
    - 엔진 호출 (TextEngine / ColorTextEngine / ColorBgEngine / ImageEngine)
    ❌ UI 상태 저장
    ❌ 색상 계산/판단
-   ❌ 이미지 DOM 조작/좌표 처리
+   ❌ 이미지 DOM 조작/좌표 처리       26. 5. 4
 ---------------------------------------------------- */
 
 window.EditorCore = (function () {
@@ -175,7 +175,8 @@ function applyTypingFontFamily(fontFamily) {
     if (!sel || !sel.rangeCount) return;
 
     const range = sel.getRangeAt(0);
-    if (range.collapsed) return;
+    if (range.collapsed) { applyTypingFontFamily(fontFamily);
+  return;}
     if (!editor.contains(range.commonAncestorContainer)) return;
 
     const span = document.createElement("span");
