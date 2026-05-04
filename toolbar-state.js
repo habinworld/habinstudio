@@ -82,8 +82,7 @@ function hbUpdateToolbarState() {
   hbUpdateSelect('hb-font-family', style.fontFamily, true);
   hbUpdateSelect('hb-font-size', style.fontSize, false);
   hbUpdateSelect('hb-line-height', hbNormalizeLineHeight(style), false);
-  }
- // ==============================
+   // ==============================
   // 현재값을 버튼에 표시
   // ==============================
   const fontSelect = document.getElementById("hb-font-family");
