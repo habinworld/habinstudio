@@ -28,15 +28,7 @@ const isAdmin = window.HABIN_IS_ADMIN === true;
   // 요소 참조
      const editor = document.getElementById("hb-editor");
   const title  = document.getElementById("hb-title");
-
-  // 관리자 버튼 표시 제어
-const isAdmin = localStorage.getItem("habin_admin") === "true";
-
-["hb-btn-save", "hb-btn-update", "hb-btn-delete"].forEach(id => {
-  const btn = document.getElementById(id);
-  btn && (btn.style.display = isAdmin ? "inline-flex" : "none");
-}); 
-   
+     
  const btnUpdate = document.getElementById("hb-btn-update");
 btnUpdate &&
 btnUpdate.addEventListener("click", () => {
@@ -126,7 +118,14 @@ function restoreImagesInEditor(post) {
   mode === "new"  && modeNew();
   mode === "edit" && modeEdit();
   mode === "view" && modeView();
+   
+  // 관리자 버튼 표시 제어
+const isAdmin = localStorage.getItem("habin_admin") === "true";
 
+["hb-btn-save", "hb-btn-update", "hb-btn-delete"].forEach(id => {
+  const btn = document.getElementById(id);
+  btn && (btn.style.display = isAdmin ? "inline-flex" : "none");
+}); 
 })();
 
 
