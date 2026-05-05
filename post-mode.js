@@ -19,6 +19,12 @@
   const mode = params.get("mode") || "new";
 // 🔒 전역 모드 공개 (저장 엔진에서 사용)
   window.POST_MODE = mode;
+
+const isAdmin = window.HABIN_IS_ADMIN === true;
+// view가 아니고 + 관리자가 아니면 차단
+!isAdmin && mode !== "view" &&
+  (location.href = window.HABIN_LIST_PAGE + "?board=" + board);   
+   
   // 요소 참조
   const editor = document.getElementById("hb-editor");
   const title  = document.getElementById("hb-title");
