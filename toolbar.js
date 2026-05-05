@@ -218,7 +218,10 @@ fontBtn && fontSel && fontBtn.addEventListener("click", e => {
       : [],
     value => {
       fontSel.value = value;
-      EditorCore.setFont(value);
+  EditorCore.setFont(value);
+
+  fontBtn.innerHTML =
+    fontSel.selectedOptions[0].textContent + " ▼";
     }
   );
 });
@@ -251,7 +254,9 @@ sizeBtn && sizeSel && sizeBtn.addEventListener("click", e => {
     })),
     value => {
       sizeSel.value = value;
-      EditorCore.setSize(value);
+  EditorCore.setSize(value);
+
+  sizeBtn.innerHTML = value + " ▼";
     }
   );
 });   
