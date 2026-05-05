@@ -277,6 +277,10 @@ lhBtn && lhBtn.addEventListener("mousedown", e => {
     LH_OPTIONS.map(v => ({ value: v, label: v })),
     v => {
       EditorCore.requestLineHeight(v);
+       const lineBtn = document.getElementById("hb-line-height-btn");
+  lineBtn && (lineBtn.innerHTML = v + " ▼");
+
+  setTimeout(hbUpdateToolbarState, 0); 
     }
   );
 });
