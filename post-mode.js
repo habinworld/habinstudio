@@ -119,15 +119,15 @@ function restoreImagesInEditor(post) {
   mode === "edit" && modeEdit();
   mode === "view" && modeView();
    
-  // 관리자 버튼 표시 제어
-const isAdmin = localStorage.getItem("habin_admin") === "true";
+  // 🔒 관리자 버튼 최종 표시 제어
+const isAdminFinal =
+  localStorage.getItem("habin_admin") === "true";
 
 ["hb-btn-save", "hb-btn-update", "hb-btn-delete"].forEach(id => {
   const btn = document.getElementById(id);
-  btn && (btn.style.display = isAdmin ? "inline-flex" : "none");
-}); 
+  btn && (btn.style.display = isAdminFinal ? "inline-flex" : "none");
+});
 })();
-
 
   
 
