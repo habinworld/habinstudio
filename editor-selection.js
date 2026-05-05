@@ -28,6 +28,27 @@ function hbEnsureCaretVisible() {
 // ==============================
 // selection 처리
 // ==============================
+// ⭐ 현재 줄간격 읽기
+function hbGetCurrentLineHeight() {
+  const sel = window.getSelection();
+  if (!sel || sel.rangeCount === 0) return "1.0";
+
+  let node = sel.anchorNode;
+  if (node && node.nodeType === 3) node = node.parentElement;
+
+  const paragraph = node?.closest?.("[data-hb-paragraph]");
+  if (!paragraph) return "1.0";
+
+  return paragraph.style.lineHeight || "1.0";
+}
+// ⭐ 줄간격 버튼 표시
+function hbUpdateLineHeightLabel() {
+  const btn = document.getElementById("hb-lineheight-btn");
+  if (!btn) return;
+
+  btn.textContent = hbGetCurrentLineHeight() + " ▼";
+}
+
 function hbHandleSelectionChange() {
   hbEnsureCaretVisible();
 // ==============================
