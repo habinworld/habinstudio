@@ -353,33 +353,21 @@ function insertAtCursor(editor, frag) {
 ================================================= */
 Core.requestLineHeight = function (variant) {
   const sel = window.getSelection();
+  if (!sel || !sel.rangeCount) return;
+
+  const range = sel.getRangeAt(0);
   const editor = document.getElementById("hb-editor");
   if (!editor) return;
 
-  const range = sel && sel.rangeCount ? sel.getRangeAt(0) : null;
+  const paragraphs = Array.from(
+    editor.querySelectorAll("[data-hb-paragraph]")
+  );
 
-  let node = range ? range.startContainer : document.activeElement;
-  if (node && node.nodeType === 3) node = node.parentNode;
-
-  const currentParagraph =
-  (node && node.closest && node.closest("[data-hb-paragraph]")) ||
-  (node && node.closest && node.closest("p, div, li, h1, h2, h3, h4, h5, h6"));
-
-  if (range && !range.collapsed) {
-    const paragraphs = Array.from(editor.querySelectorAll("[data-hb-paragraph]"));
-    let applied = false;
-
-    paragraphs.forEach(p => {
-      if (range.intersectsNode(p)) {
-        window.LineHeightEngine?.apply(p, variant);
-        applied = true;
-      }
-    });
-
-    if (applied) return;
-  }
-
-  currentParagraph && window.LineHeightEngine?.apply(currentParagraph, variant);
+  paragraphs.forEach(p => {
+    if (range.intersectsNode(p)) {
+      window.LineHeightEngine && window.LineHeightEngine.apply(p, variant);
+    }
+  });
 };
 
   // 이미지
