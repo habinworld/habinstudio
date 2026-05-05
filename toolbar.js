@@ -227,9 +227,10 @@ fontBtn && fontSel && fontBtn.addEventListener("click", e => {
 
   setTimeout(() => {
     hbToolbarLock = false;
-  }, 100);
- }
-
+   }, 100);
+    }
+  );
+});
 /* -------------------------------
    font-size (속도 안정화)
 -------------------------------- */
