@@ -228,8 +228,8 @@ fontBtn && fontSel && fontBtn.addEventListener("click", e => {
   setTimeout(() => {
     hbToolbarLock = false;
   }, 100);
-  );
-});
+ }
+
 /* -------------------------------
    font-size (속도 안정화)
 -------------------------------- */
@@ -319,7 +319,7 @@ btnBgColor && btnBgColor.addEventListener("click", e => {
   render("hb-toolbar-advanced", ADVANCED_BUTTONS);
   bindEvents();
   hbSetInitialToolbarLabels();  
-  document.addEventListener("selectionchange", hbupdateToolbarState);  
+  document.addEventListener("selectionchange", hbUpdateToolbarState);  
 }
 
 return { init };
