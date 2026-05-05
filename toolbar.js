@@ -64,18 +64,25 @@ options: Array.from({ length: 33 }, (_, i) => {
 // ===============================
 
 {
-  id: "hb-line-height",
+  id: "hb-lineheight-btn",
   popup: true,
-  label: "줄간격",
+  label: "1.0",
   options: [
-    { value: "default", label: "기본" },
-    { value: "lh-tight", label: "좁게" },
-    { value: "lh-normal", label: "보통" },
-    { value: "lh-wide", label: "넓게" }
+    { value: "1.0", label: "1.0" },
+    { value: "1.2", label: "1.2" },
+    { value: "1.4", label: "1.4" },
+    { value: "1.6", label: "1.6" },
+    { value: "1.8", label: "1.8" },
+    { value: "2.0", label: "2.0" },
+    { value: "2.2", label: "2.2" },
+    { value: "2.4", label: "2.4" },
+    { value: "2.6", label: "2.6" },
+    { value: "2.8", label: "2.8" },
+    { value: "3.0", label: "3.0" }
   ]
 },
 
-    { 
+   { 
   id: "hb-btn-color", 
   label: '🖌️ <span class="hb-color-chip" id="hb-current-text"></span>', 
   icon: true, 
