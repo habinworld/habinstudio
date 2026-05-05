@@ -94,7 +94,7 @@ const btnList =document.getElementById("btn-list");
 
 btnNewPost &&
 (btnNewPost.style.display =
-  window.HABIN_IS_ADMIN ? "inline-flex" : "none");
+  localStorage.getItem("habin_admin") === "true" ? "inline-flex" : "none");
 
 const btnList = document.getElementById("btn-list");
 if (btnList) {
