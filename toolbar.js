@@ -293,9 +293,11 @@ sizeBtn && sizeSel && sizeBtn.addEventListener("click", e => {
 /* ===============================
    📏 Line-height Toolbar (Final)
 ================================ */
-
 const lhBtn = document.getElementById("hb-line-height-btn");
-const lhSel = document.getElementById("hb-line-height");
+const LH_OPTIONS = [
+  "1.0","1.2","1.4","1.6","1.8",
+  "2.0","2.2","2.4","2.6","2.8","3.0"
+];
 
 lhBtn && lhBtn.addEventListener("mousedown", e => {
   e.preventDefault();
@@ -306,17 +308,12 @@ lhBtn && lhBtn.addEventListener("mousedown", e => {
   Popup.openAt(
     r.left,
     r.bottom,
-    Array.from(lhSel.options).map(o => ({
-      value: o.value,
-      label: o.textContent
-    })),
+    LH_OPTIONS.map(v => ({ value: v, label: v })),
     v => {
       EditorCore.requestLineHeight(v);
     }
   );
 });
-
-
 /* =====================================================
    COLOR — Toolbar (MODE Entry Only)
    역할:
