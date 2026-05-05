@@ -87,18 +87,17 @@
 =============================== */
 document.getElementById("btn-new-post").href =
   "post.html?mode=new&board=" + CURRENT_BOARD;
-const btnList =document.getElementById("btn-list");
- if (btnList) {btnList.href= "list.html?board=" + CURRENT_BOARD;
-               
- const btnNewPost = document.getElementById("btn-new-post");
 
+// 글쓰기 버튼 숨김 (관리자만)
+const btnNewPost = document.getElementById("btn-new-post");
 btnNewPost &&
 (btnNewPost.style.display =
   localStorage.getItem("habin_admin") === "true" ? "inline-flex" : "none");
 
+// 목록 버튼
 const btnList = document.getElementById("btn-list");
 if (btnList) {
-  btnList.href = "list.html?board=" + CURRENT_BOARD;            
+  btnList.href = "list.html?board=" + CURRENT_BOARD;
 }
 
 /* ===============================
