@@ -297,7 +297,7 @@ sizeBtn && sizeSel && sizeBtn.addEventListener("click", e => {
 const lhBtn = document.getElementById("hb-line-height-btn");
 const lhSel = document.getElementById("hb-line-height");
 
-lhBtn && lhSel && lhBtn.addEventListener("mousedown", e => {
+lhBtn && lhBtn.addEventListener("mousedown", e => {
   e.preventDefault();
   e.stopPropagation();
 
