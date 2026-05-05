@@ -76,6 +76,7 @@ function hbNormalizeLineHeight(style) {
 // 전체 툴바 상태 갱신
 // ==============================
 function hbUpdateToolbarState() {
+  if (hbToolbarLock) return;
   const style = hbGetCurrentStyle();
   if (!style) return;
 
