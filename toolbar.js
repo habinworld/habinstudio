@@ -1,7 +1,7 @@
 /* ---------------------------------------------------
    🎛 toolbar.js — FINAL Split Edition
    Ha-Bin Studio — BASIC / ADVANCED Toolbar
-   구조 확정 / 기능 확장 안전
+   구조 확정 / 기능 확장 안전            26. 5. 5
 ---------------------------------------------------- */
 window.Toolbar = (function () {
    const EditorCore = window.EditorCore;
