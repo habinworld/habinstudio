@@ -217,12 +217,17 @@ fontBtn && fontSel && fontBtn.addEventListener("click", e => {
         }))
       : [],
     value => {
-      fontSel.value = value;
+       hbToolbarLock = true;
+
+  fontSel.value = value;
   EditorCore.setFont(value);
 
   fontBtn.innerHTML =
     fontSel.selectedOptions[0].textContent + " ▼";
-    }
+
+  setTimeout(() => {
+    hbToolbarLock = false;
+  }, 100);
   );
 });
 /* -------------------------------
