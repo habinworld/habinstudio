@@ -142,6 +142,41 @@ function render(containerId, items) {
       b.innerHTML = item.label;
 
       bar.appendChild(b);
+       
+       item.popup && item.options && b.addEventListener("click", () => {
+  const old = document.querySelector(".hb-popup-menu");
+  old && old.remove();
+
+  const menu = document.createElement("div");
+  menu.className = "hb-popup-menu";
+
+  item.options.forEach(opt => {
+    const btn = document.createElement("button");
+    btn.type = "button";
+
+    const value = opt.value || opt;
+    const label = opt.label || opt;
+
+    btn.textContent = label;
+
+    btn.addEventListener("click", () => {
+      window.EditorCore &&
+        window.EditorCore.requestLineHeight &&
+        window.EditorCore.requestLineHeight(value);
+
+      b.innerHTML = label + " ▼";
+      menu.remove();
+
+      if (typeof hbUpdateToolbarState === "function") {
+        hbUpdateToolbarState();
+      }
+    });
+
+    menu.appendChild(btn);
+  });
+
+  b.after(menu);
+});
     })();
   });
 }
