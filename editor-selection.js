@@ -43,7 +43,7 @@ function hbGetCurrentLineHeight() {
 }
 // ⭐ 줄간격 버튼 표시
 function hbUpdateLineHeightLabel() {
-  const btn = document.getElementById("hb-lineheight-btn");
+  const btn = document.getElementById("hb-line-height");
   if (!btn) return;
 
   btn.textContent = hbGetCurrentLineHeight() + " ▼";
