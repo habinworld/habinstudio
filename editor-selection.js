@@ -36,6 +36,9 @@ function hbHandleSelectionChange() {
   if (typeof hbUpdateToolbarState === 'function') {
     hbUpdateToolbarState();
   }
+  if (typeof hbUpdateLineHeightLabel === 'function') {
+    hbUpdateLineHeightLabel();
+  }
  }
 // ==============================
 // 이벤트 연결
