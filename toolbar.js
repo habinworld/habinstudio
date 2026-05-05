@@ -304,6 +304,7 @@ btnBgColor && btnBgColor.addEventListener("click", e => {
   render("hb-toolbar-basic", BASIC_BUTTONS);
   render("hb-toolbar-advanced", ADVANCED_BUTTONS);
   bindEvents();
+  document.addEventListener("selectionchange", updateToolbarState);  
 }
 
 return { init };
