@@ -362,8 +362,8 @@ Core.requestLineHeight = function (variant) {
   if (node && node.nodeType === 3) node = node.parentNode;
 
   const currentParagraph =
-    node?.closest?.("[data-hb-paragraph]") ||
-    node?.closest?.("p, div, li, h1, h2, h3, h4, h5, h6");
+  (node && node.closest && node.closest("[data-hb-paragraph]")) ||
+  (node && node.closest && node.closest("p, div, li, h1, h2, h3, h4, h5, h6"));
 
   if (range && !range.collapsed) {
     const paragraphs = Array.from(editor.querySelectorAll("[data-hb-paragraph]"));
