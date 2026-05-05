@@ -360,7 +360,7 @@ Core.requestLineHeight = function (variant) {
   if (!editor) return;
 
   const paragraphs = Array.from(
-    editor.querySelectorAll("[data-hb-paragraph]")
+    editor.querySelectorAll("[data-hb-paragraph], div")
   );
 
   paragraphs.forEach(p => {
