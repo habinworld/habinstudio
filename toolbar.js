@@ -113,7 +113,7 @@ function render(containerId, items) {
   items.forEach(item => {
 
     // 존재하면 생성: select
-    item.options && !item.popup && (() => {
+    item.options && item.id !== "hb-line-height" && (() => {
       const s = document.createElement("select");
       s.id = item.id;
       s.className = "hb-select";
