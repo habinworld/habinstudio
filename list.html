@@ -88,7 +88,18 @@
 document.getElementById("btn-new-post").href =
   "post.html?mode=new&board=" + CURRENT_BOARD;
 const btnList =document.getElementById("btn-list");
- if (btnList) {btnList.href= "list.html?board=" + CURRENT_BOARD;}
+ if (btnList) {btnList.href= "list.html?board=" + CURRENT_BOARD;
+               
+ const btnNewPost = document.getElementById("btn-new-post");
+
+btnNewPost &&
+(btnNewPost.style.display =
+  window.HABIN_IS_ADMIN ? "inline-flex" : "none");
+
+const btnList = document.getElementById("btn-list");
+if (btnList) {
+  btnList.href = "list.html?board=" + CURRENT_BOARD;            
+}
 
 /* ===============================
    📦 LOAD DATA
