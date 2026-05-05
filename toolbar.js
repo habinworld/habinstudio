@@ -64,7 +64,7 @@ options: Array.from({ length: 33 }, (_, i) => {
 // ===============================
 
 {
-  id: "hb-lineheight-btn",
+  id: "hb-line-height",
   popup: true,
   label: "1.0",
   options: [
