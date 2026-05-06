@@ -126,6 +126,12 @@ function hasContent() {
         order: getNextOrderForBoard(board),
         title: titleEl?.value.trim() || "제목 없음",
         writer: "하빈",
+         
+         qnaPassword:
+         board === "qna"
+         ? sessionStorage.getItem("habin_qna_write_pw")
+         : "",
+         
         content: normalizeContent(editorEl?.innerHTML || ""),
         images: collectImageIds(),
         date: new Date().toISOString(),
