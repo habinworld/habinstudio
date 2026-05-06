@@ -288,3 +288,16 @@ body.night .notice-more a:hover {
   background: #c0392b;
   color: #fff;
 }
+.msg-btn {
+  margin-left: 10px;
+  cursor: pointer;
+  color: #5C8EDB;
+  font-weight: bold;
+}
+
+.msg-box {
+  margin-top: 10px;
+  padding: 10px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+}
