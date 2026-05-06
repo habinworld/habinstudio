@@ -27,7 +27,7 @@ const isQuestionBoard = board === "qna";
 !isAdmin && !isQuestionBoard && mode !== "view" &&
   (location.href = window.HABIN_LIST_PAGE + "?board=" + board); 
 
-!isAdmin && isQnaBoard && mode !== "view" &&
+!isAdmin && isQuestionBoard && mode !== "view" &&
   sessionStorage.getItem("habin_qna_pass") !== "true" &&
   (location.href = "qna-gate.html?board=qna");   
    
