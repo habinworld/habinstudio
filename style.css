@@ -320,6 +320,7 @@ body.night .msg-btn:hover {
 
 /* 💬 쪽지창 */
 .msg-box {
+  display: none; 
   margin-top: 10px;
   padding: 10px;
   background: rgba(255,255,255,0.1);
