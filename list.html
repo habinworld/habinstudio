@@ -88,12 +88,14 @@
 document.getElementById("btn-new-post").href =
   "post.html?mode=new&board=" + CURRENT_BOARD;
 
-// 글쓰기 버튼 숨김 (관리자만)
+// 글쓰기 버튼 표시 제어
 const btnNewPost = document.getElementById("btn-new-post");
+const isAdmin = localStorage.getItem("habin_admin") === "true";
+const isQnaBoard = CURRENT_BOARD === "qna";
 btnNewPost &&
 (btnNewPost.style.display =
-  localStorage.getItem("habin_admin") === "true" ? "inline-flex" : "none");
-
+  (isAdmin || isQnaBoard) ? "inline-flex" : "none");
+  
 // 목록 버튼
 const btnList = document.getElementById("btn-list");
 if (btnList) {
