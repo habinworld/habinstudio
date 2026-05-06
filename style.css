@@ -294,6 +294,7 @@ body.night .notice-more a:hover {
   cursor: pointer;
   color: #5C8EDB;
   font-weight: bold;
+  font-size: 13px; 
   text-decoration: none;
   transition: all 0.25s ease;
 }
