@@ -168,9 +168,11 @@
   msgOpen && msgOpen.addEventListener("click", function (e) {
     e.preventDefault();
 
-    msgBox &&
-    (msgBox.style.display =
-      msgBox.style.display === "none" ? "block" : "none");
+    if (!msgBox) return;
+const isOpen =
+  getComputedStyle(msgBox).display !== "none";
+msgBox.style.display =
+  isOpen ? "none" : "block";
   });
    // 💬 쪽지 보내기 엔진
 const msgSend = document.getElementById("msg-send");
