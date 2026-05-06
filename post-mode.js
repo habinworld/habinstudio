@@ -28,8 +28,11 @@ const isQuestionBoard = board === "qna";
   (location.href = window.HABIN_LIST_PAGE + "?board=" + board); 
 
 !isAdmin && isQuestionBoard && mode !== "view" &&
-  sessionStorage.getItem("habin_qna_pass") !== "true" &&
-  (location.href = "qna-gate.html?board=qna");   
+  sessionStorage.getItem("habin_qna_pass_once") !== "true" &&
+  (location.href = "qna-gate.html?board=qna");
+
+!isAdmin && isQuestionBoard && mode !== "view" &&
+  sessionStorage.removeItem("habin_qna_pass_once"); 
    
   // 요소 참조
      const editor = document.getElementById("hb-editor");
