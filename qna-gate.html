@@ -19,17 +19,34 @@ body{
 }
 
 .qna-gate{
+  position: relative;
   width:400px;
   padding:40px;
 
   border:2px solid #DAA520;
   border-radius:14px;
+    background:#ffffff;
 
-  background:#ffffff;
+   /* 🟠 바깥 주황빛 */
+  border:2px solid #D97706;
+  border-radius:20px;
+  box-shadow:
+    0 0 12px rgba(217,119,6,0.18);
+}
 
-  box-shadow:0 8px 30px rgba(0,0,0,0.08);
+/* ✨ 안쪽 황금빛 결계 */
+.qna-gate::before{
+  content:"";
+  position:absolute;
 
-  text-align:center;
+  top:6px;
+  left:6px;
+  right:6px;
+  bottom:6px;
+
+  border:1px solid rgba(218,165,32,0.75);
+  border-radius:14px;
+  pointer-events:none;
 }
 
 .qna-title{
