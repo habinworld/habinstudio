@@ -158,6 +158,17 @@
   if (typeof startParticles === "function") {
     startParticles(season, isNight);
   }
+    // 💬 쪽지창 토글
+  const msgOpen = document.getElementById("msg-open");
+  const msgBox = document.getElementById("msg-box");
+
+  msgOpen && msgOpen.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    msgBox &&
+    (msgBox.style.display =
+      msgBox.style.display === "none" ? "block" : "none");
+  });
 </script>  
  
   </body>
