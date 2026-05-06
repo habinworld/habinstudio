@@ -332,3 +332,39 @@ body.night .msg-box {
   background: rgba(255,215,0,0.08);
   border: 1px solid rgba(218,165,32,0.35);
 }
+.msg-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+#msg-name {
+  width: 220px;
+  height: 34px;
+  padding: 6px 10px;
+}
+
+#msg-content {
+  width: 100%;
+  min-height: 90px;
+  padding: 10px;
+  resize: vertical;
+}
+
+#msg-send {
+  height: 34px;
+  padding: 0 14px;
+
+  background: rgba(218,165,32,0.12);
+  border: 1px solid rgba(218,165,32,0.35);
+  color: #DAA520;
+
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+#msg-send:hover {
+  background: rgba(218,165,32,0.22);
+  color: #FFD700;
+}
