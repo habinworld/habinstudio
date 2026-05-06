@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>질문의 공간 · 입장</title>
+
+<style>
+body{
+  margin:0;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#FFFDF8;
+  font-family:'Gowun Dodum',sans-serif;
+}
+
+.qna-gate{
+  width:320px;
+  padding:30px;
+
+  border:1px solid #3558A8;
+  border-radius:14px;
+
+  background:#ffffff;
+
+  box-shadow:0 8px 30px rgba(0,0,0,0.08);
+
+  text-align:center;
+}
+
+.qna-title{
+  font-size:22px;
+  color:#3558A8;
+  margin-bottom:10px;
+}
+
+.qna-desc{
+  font-size:14px;
+  color:#666;
+  margin-bottom:24px;
+  line-height:1.6;
+}
+
+.qna-input{
+  width:100%;
+  height:44px;
+
+  border:1px solid #ccc;
+  border-radius:8px;
+
+  padding:0 12px;
+  box-sizing:border-box;
+
+  font-size:15px;
+}
+
+.qna-btn{
+  width:100%;
+  height:44px;
+
+  margin-top:14px;
+
+  border:none;
+  border-radius:8px;
+
+  background:#3558A8;
+  color:#fff;
+
+  font-size:15px;
+  cursor:pointer;
+}
+
+.qna-btn:hover{
+  opacity:.92;
+}
+</style>
+</head>
+
+<body>
+
+<div class="qna-gate">
+
+  <div class="qna-title">
+    ❓ 질문의 공간
+  </div>
+
+  <div class="qna-desc">
+    비밀번호를 입력해야 입장할 수 있습니다.
+  </div>
+
+  <input
+    type="password"
+    id="qna-password"
+    class="qna-input"
+    placeholder="비밀번호 입력">
+
+  <button id="qna-enter" class="qna-btn">
+    입장하기
+  </button>
+
+</div>
+
+<script>
+const PASSWORD = "1234";
+
+document.getElementById("qna-enter")
+.addEventListener("click", () => {
+
+  const input =
+    document.getElementById("qna-password").value;
+
+  if(input !== PASSWORD){
+    alert("비밀번호가 맞지 않습니다.");
+    return;
+  }
+
+  sessionStorage.setItem("habin_qna_pass", "true");
+
+  location.href =
+    "post.html?mode=new&board=qna";
+});
+</script>
+
+</body>
+</html>
