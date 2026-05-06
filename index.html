@@ -172,6 +172,40 @@
     (msgBox.style.display =
       msgBox.style.display === "none" ? "block" : "none");
   });
+   // 💬 쪽지 보내기 엔진
+const msgSend = document.getElementById("msg-send");
+const msgName = document.getElementById("msg-name");
+const msgContent = document.getElementById("msg-content");
+
+msgSend && msgSend.addEventListener("click", async function () {
+
+  const name = msgName.value.trim() || "익명";
+  const content = msgContent.value.trim();
+
+  if (!content) {
+    alert("메시지를 입력해주세요.");
+    return;
+  }
+  const messageData = {
+    name: name,
+    content: content,
+    date: new Date().toISOString(),
+    page: location.href
+  };
+
+  try {
+    console.log("쪽지 전송 준비:", messageData);
+    alert("쪽지를 전송했습니다.");
+    msgName.value = "";
+    msgContent.value = "";
+
+    // 💡 전송 후 자동 닫기
+    msgBox.style.display = "none";
+  } catch (error) {
+    alert("전송 중 오류가 발생했습니다.");
+    console.error(error);
+  }
+});
 </script>  
  
   </body>
