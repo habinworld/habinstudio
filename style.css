@@ -288,16 +288,46 @@ body.night .notice-more a:hover {
   background: #c0392b;
   color: #fff;
 }
+/* ✉ 쪽지 버튼 */
 .msg-btn {
   margin-left: 10px;
   cursor: pointer;
   color: #5C8EDB;
   font-weight: bold;
+  text-decoration: none;
+  transition: all 0.25s ease;
 }
 
+/* 🌞 hover */
+.msg-btn:hover {
+  color: #DAA520;
+  text-shadow: 0 0 6px rgba(218,165,32,0.45);
+  transform: translateY(-1px);
+}
+
+/* 🌙 나이트모드 */
+body.night .msg-btn {
+  color: #DAA520;
+}
+
+/* 🌙 나이트 hover */
+body.night .msg-btn:hover {
+  color: #FFD700;
+  text-shadow: 0 0 8px rgba(255,215,0,0.65);
+  transform: translateY(-1px);
+}
+
+/* 💬 쪽지창 */
 .msg-box {
   margin-top: 10px;
   padding: 10px;
   background: rgba(255,255,255,0.1);
   border-radius: 8px;
+  backdrop-filter: blur(3px);
+}
+
+/* 🌙 나이트모드 쪽지창 */
+body.night .msg-box {
+  background: rgba(255,215,0,0.08);
+  border: 1px solid rgba(218,165,32,0.35);
 }
