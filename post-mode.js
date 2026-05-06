@@ -83,7 +83,7 @@ btnCancel &&
   const post = posts.find(p => p.id === window.POST_ID);
 
   if (!post) return;
-
+  title.value = post.title || "";
   editor.innerHTML = post.content || "";
   window.ImageEngine && ImageEngine.renderAll();
 }
