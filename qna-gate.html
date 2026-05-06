@@ -120,19 +120,18 @@ body{
 </div>
 
 <script>
-const PASSWORD = "1234";
-
 document.getElementById("qna-enter")
 .addEventListener("click", () => {
 
   const input =
-    document.getElementById("qna-password").value;
+    document.getElementById("qna-password").value.trim();
 
-  if(input !== PASSWORD){
-    alert("비밀번호가 맞지 않습니다.");
+  if (!input) {
+    alert("비밀번호를 입력하세요.");
     return;
   }
 
+  sessionStorage.setItem("habin_qna_write_pw", input);
   sessionStorage.setItem("habin_qna_pass_once", "true");
 
   location.href =
