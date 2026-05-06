@@ -22,7 +22,7 @@
 
 const isAdmin = window.HABIN_IS_ADMIN === true;
 // view가 아니고 + 관리자가 아니면 차단
-const isQuestionBoard = board === "question";
+const isQuestionBoard = board === "qna";
 
 !isAdmin && !isQuestionBoard && mode !== "view" &&
   (location.href = window.HABIN_LIST_PAGE + "?board=" + board); 
