@@ -200,6 +200,14 @@ function hasContent() {
         }
 
         const posts = getPosts();
+        const targetPost = posts.find(post => post.id === POST_ID);
+
+        if (!targetPost) {
+        alert("수정할 글을 찾을 수 없습니다.");
+        return;
+      }
+
+      if (!checkQnaPassword(targetPost)) return; 
 
         const nextPosts = posts.map(post =>
           post.id === POST_ID
