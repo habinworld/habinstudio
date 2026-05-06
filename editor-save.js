@@ -56,6 +56,18 @@ function normalizeContent(html) {
         return [];
       }
     }
+      function checkQnaPassword(post) {
+  if ((post.board || "kr") !== "qna") return true;
+
+  const input = prompt("글 비밀번호를 입력하세요.");
+
+  if (input !== post.qnaPassword) {
+    alert("비밀번호가 맞지 않습니다.");
+    return false;
+  }
+
+  return true;
+}
    /* ============================
      ✅ order 계산
      - 같은 게시판의 마지막 order + 1000
