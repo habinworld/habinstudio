@@ -247,6 +247,14 @@ function hasContent() {
         }
 
         if (!confirm("정말 삭제할까요?")) return;
+         const targetPost = getPosts().find(post => post.id === POST_ID);
+
+       if (!targetPost) {
+       alert("삭제할 글을 찾을 수 없습니다.");
+       return;
+      }
+
+     if (!checkQnaPassword(targetPost)) return;
 
         const posts = getPosts().filter(post => post.id !== POST_ID);
         savePosts(posts);
